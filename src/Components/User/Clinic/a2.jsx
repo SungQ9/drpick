@@ -1,5 +1,6 @@
 import React from 'react';
-import '../../../css/LayoutStyle.css';
+import '../../../css/UserStyle.css';
+import '../../../css/Style.css';
 
 const A2 = () => {
   return (

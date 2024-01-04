@@ -1,6 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import '../../../css/LayoutStyle.css';
+import '../../../css/UserStyle.css';
+import '../../../css/Style.css';
+
 import A0 from './a0';
 import A1 from './a1';
 import A2 from './a2';
