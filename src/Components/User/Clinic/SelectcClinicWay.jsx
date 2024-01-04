@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../../../css/UserStyle.css';
 import '../../../css/Style.css';
 
-const A0 = () => {
+const SelectClinicWay = () => {
   const navigate = useNavigate();
   return (
     <div className='clinicWrapper'>
@@ -13,7 +13,7 @@ const A0 = () => {
             <td
               className='clinicBtn'
               onClick={() => {
-                navigate('/clinic/a1');
+                navigate('/clinic/subject');
               }}
             >
               진료과목
@@ -21,7 +21,7 @@ const A0 = () => {
             <td
               className='clinicBtn'
               onClick={() => {
-                navigate('/clinic/a2');
+                navigate('/clinic/symptom');
               }}
             >
               증상
@@ -33,4 +33,4 @@ const A0 = () => {
   );
 };
 
-export default A0;
+export default SelectClinicWay;
