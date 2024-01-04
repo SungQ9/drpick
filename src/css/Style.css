@@ -32,6 +32,25 @@ button {
   font-weight: bold;
 }
 
+select {
+  width: 150px;
+  padding: 0.8em 0.5em;
+  font-family: inherit;
+  background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg)
+    no-repeat 95% 50%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  color: #acacac;
+  border: 1px solid #cecece;
+  border-radius: 10px;
+}
+
+select::-ms-expand {
+  /* for IE 11 */
+  display: none;
+}
+
 /*///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 /* 헤더 스타일 */
@@ -171,9 +190,22 @@ td.pannel {
 .footerContainer {
   bottom: 0;
   width: 100%;
-  background-color: #e2e2e2;
+  background-color: #f7f7f7;
   padding: 10px;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.textContainer {
+  width: 1250px;
+  max-width: 1250px;
+  text-align: left;
+}
+
+.textContainer span {
+  color: #cecece;
 }
 
 /* span > Input > label 순서로*/
