@@ -1,0 +1,233 @@
+/* 헤더 스타일 */
+.headerContainer {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #ffffff; /* 헤더의 배경색을 원하는 색상으로 지정 */
+  z-index: 1000; /* 다른 요소 위에 헤더를 배치하기 위해 z-index 사용 */
+  display: flex;
+  flex-direction: column; /* 위아래로 배치하도록 설정 */
+  border-bottom: 1px solid #acacac;
+}
+
+/* 로고 헤더 */
+.topHeader {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 80px;
+  justify-content: space-between; /* 양쪽 끝으로 배치 */
+  align-items: center;
+  border-bottom: 1px solid #acacac;
+}
+
+.logoContainer img {
+  width: 250px;
+  height: 100px;
+  margin-left: 5%;
+}
+
+.topHeader ul {
+  list-style: none; /* 리스트의 기본 스타일 제거 */
+  padding: 0; /* 리스트의 패딩 제거 */
+  margin: 0; /* 리스트의 마진 제거 */
+  display: flex; /* 리스트를 가로로 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+}
+
+.topHeader li {
+  display: flex;
+  align-items: center;
+  margin-left: 50px; /* 각 리스트 아이템 사이의 간격 조절 */
+}
+.topHeader li:nth-child(2) {
+  margin-right: 50px;
+}
+
+.topHeader li img {
+  width: 30%;
+  margin-right: 10px; /* 이미지와 텍스트 사이의 간격 조절 */
+}
+
+.ul-Wrapper {
+  margin-right: 50px;
+}
+
+/* 로고 이미지와 ul을 양쪽 끝으로 이동시키기 위한 마진 설정 */
+.logoContainer {
+  margin-left: 5%;
+}
+
+/* 탭메뉴 */
+.tabPane {
+  height: 40px;
+}
+
+.tabContainer {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.tabContainer ul {
+  list-style: none;
+  margin-left: 100px;
+  display: flex; /* ul을 가로로 정렬하기 위해 추가 */
+}
+
+.tabContainer li {
+  display: flex;
+  width: 150px;
+  margin-right: 100px;
+}
+.tabContainer li:first-child {
+  margin-left: 50px;
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////*/
+
+/* 배경 위치 설정 */
+
+.mainContainer {
+  position: relative;
+  background-color: #daf6ee;
+  color: #000000;
+  text-align: center;
+  align-content: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////*/
+/* 메인화면 css*/
+table.menu {
+  border-spacing: 50px 20px;
+  border-collapse: separate;
+}
+
+td.pannel {
+  border: 1px solid #cecece;
+  background-color: #ffffff;
+  color: #000000;
+  font-weight: bold;
+  width: 600px;
+  height: 130px;
+  font-size: 25px;
+  text-align: left;
+  border: none;
+  border-radius: 20px;
+  padding-left: 2%;
+  padding-bottom: 5%;
+}
+
+.mainContainer .menu tr:first-child td:first-child {
+  background-color: #11c2ad;
+  color: #ffffff;
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////*/
+
+/* 푸터 */
+.footerContainer {
+  bottom: 0;
+  width: 100%;
+  background-color: #e2e2e2;
+  padding: 10px;
+  text-align: center;
+}
+
+/* 기능 //////////////////////////////////////////////////////////////////////////////////////*/
+
+/*로그인*/
+.loginForm {
+  background: #ffffff;
+  width: 600px;
+  height: 600px;
+  margin-top: 0px;
+  margin-bottom: 100px;
+  border-radius: 15px;
+}
+
+.loginWrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.loginWrapper h4 {
+  margin-top: 10%;
+  margin-left: 10%;
+  text-align: left;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.loginWrapper span {
+  font-size: 50%;
+  font-weight: normal;
+  margin-left: 10px;
+  color: #cecece;
+}
+
+.inputForm {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputForm input {
+  width: 300px;
+  height: 40px;
+  padding-left: 20px;
+  margin-top: 5px;
+  margin-bottom: 0px;
+  border: 1px solid #cecece;
+  border-radius: 10px;
+  text-align: left;
+}
+::placeholder {
+  color: #cecece;
+}
+
+.inputForm button {
+  margin-top: 50px;
+}
+
+/*회원가입*/
+
+.signUpWrapper {
+  width: 100%;
+  height: 100%;
+}
+
+/* 비대면진료 */
+.clinicWrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.clinicTable {
+  border-spacing: 50px 20px;
+  border-collapse: separate;
+  padding-bottom: 25%;
+}
+
+.clinicBtn {
+  border: 1px solid #cecece;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  width: 350px;
+  height: 350px;
+  color: #727272;
+}

@@ -1,0 +1,63 @@
+/* 기본 css*/
+
+.Form {
+  background: #ffffff;
+  width: 1000px;
+  height: 1000px;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  border-radius: 15px;
+}
+
+input {
+  width: 350px;
+  height: 40px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #cecece;
+  border-radius: 10px;
+  text-align: center;
+}
+::placeholder {
+  color: #cecece;
+}
+
+/* span > Input > label 순서로*/
+
+.formSpan {
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.formInput {
+  border: 0;
+  border-radius: 3px;
+  outline: 0;
+  text-indent: 70px;
+
+  + label {
+    position: absolute;
+    margin-top: 5px;
+    margin-left: 0px;
+    height: 24px;
+    width: 50px;
+
+    top: 0;
+    left: 0;
+    padding: 10px;
+    background: #daf6ee;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+}
+
+button {
+  width: 100px;
+  height: 40px;
+  border: none;
+  border-radius: 7px;
+  background-color: #11c2ad;
+  color: #ffffff;
+  font-weight: bold;
+}
