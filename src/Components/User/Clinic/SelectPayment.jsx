@@ -1,29 +1,26 @@
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../../../css/UserStyle.css';
 import '../../../css/Style.css';
 
-const SelectAccept = () => {
+const SelectPayment = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const testTemp = location.state ? location.state.testTemp : null;
   return (
     <div>
-      <h4>접수방법</h4>
-      <h3>{testTemp}</h3>
+      <h4>결제수단선택</h4>
       <button
         onClick={() => {
-          navigate('/clinic/application');
+          navigate('/clinic/complete');
         }}
       >
-        일반접수
+        카드결제
       </button>
       <button
         onClick={() => {
-          navigate('/clinic/datetime');
+          navigate('/clinic/complete');
         }}
       >
-        예약접수
+        포인트결제
       </button>
       <br />
       <button
@@ -37,4 +34,4 @@ const SelectAccept = () => {
   );
 };
 
-export default SelectAccept;
+export default SelectPayment;
