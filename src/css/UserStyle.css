@@ -191,25 +191,77 @@
 
 /* 비대면진료 */
 .clinicWrapper {
-  width: 100%;
-  height: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
+  flex-direction: column;
+}
+.tableWrapper {
+  display: flex;
+  flex-direction: column;
 }
 
 .clinicTable {
   border-spacing: 50px 20px;
   border-collapse: separate;
-  padding-bottom: 25%;
+  padding: 10% 10% 15% 10%;
 }
 
 .clinicBtn {
   border: 1px solid #cecece;
   border-radius: 10px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-  width: 350px;
-  height: 350px;
+  padding-top: 30px;
+  width: 300px;
+  height: 300px;
   color: #727272;
+}
+
+.clinicBtn img {
+  width: 150px;
+}
+
+.backIcon {
+  margin-top: 20px;
+  margin-left: 20px;
+  width: 60px;
+  height: 100%;
+}
+
+.stepTitle {
+  margin-left: 330px;
+  font-weight: bold;
+}
+
+.titleWrapper {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-start;
+}
+/* 진료과목 */
+
+.subjectList ul {
+  list-style: none;
+}
+
+.subjectList li {
+  border-bottom: 1px solid #d9d9d9;
+  padding: 15px;
+  margin-right: 5%;
+  display: flex;
+}
+
+.subjectList .content {
+  flex: 1; /* 텍스트가 차지하는 영역을 최대한 확보합니다. */
+  text-align: left;
+}
+.subjectList span {
+  color: #6b6b6b;
+  font-weight: bold;
+}
+.subjectList h2,
+.subjectList span {
+  margin-right: 10px;
+}
+
+.subjectList img {
+  width: 130px; /* 이미지 너비 설정 */
 }

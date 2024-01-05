@@ -5,6 +5,7 @@ import '../../../css/Style.css';
 
 const AcceptComplete = () => {
   const navigate = useNavigate();
+
   return (
     <div>
       <h4>진료신청완료</h4>
