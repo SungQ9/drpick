@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../../css/UserStyle.css';
 import '../../css/Style.css';
+
 import axios from 'axios';
 
 const SignUp = () => {

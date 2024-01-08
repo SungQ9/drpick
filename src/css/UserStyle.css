@@ -1,5 +1,4 @@
 /* 기능 //////////////////////////////////////////////////////////////////////////////////////*/
-
 /*로그인*/
 .loginForm {
   background: #ffffff;
@@ -30,7 +29,7 @@
   color: #cecece;
 }
 
-.loginInputForm {
+#loginInputForm {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -39,19 +38,16 @@
   align-items: center;
 }
 
-.loginInputForm button {
+#loginInputForm button {
   margin-top: 50px;
 }
 
-.loginInputForm Span {
+#loginInputForm Span {
   position: relative;
   margin-top: 10px;
   margin-bottom: 15px;
 }
-
-.loginInputForm Input[type='text'],
-[type='password'],
-[type='file'] {
+#loginInputForm input {
   border: 1px solid #cecece;
   border-radius: 10px;
   outline: 0;

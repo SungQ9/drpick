@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../../css/UserStyle.css';
 import '../../css/Style.css';
+
 import mail from '../../img/mail-icon.png';
 import key from '../../img/key-icon.png';
 import axios from 'axios'; // axios 라이브러리 추가
@@ -57,11 +58,16 @@ const Login = () => {
             로그인<span>비대면 진료서비스에 오신것을 환영합니다</span>
           </h4>
 
-          <form action='' className='loginInputForm' onSubmit={handleLogin}>
+          <form
+            action=''
+            id='loginInputForm'
+            className='loginInputForm'
+            onSubmit={handleLogin}
+          >
             <span>
               <input
                 type='text'
-                className='email'
+                id='email'
                 placeholder='아이디 입력'
                 value={memberEmail}
                 onChange={(e) => setMemberEmail(e.target.value)}
@@ -74,12 +80,12 @@ const Login = () => {
             <span>
               <input
                 type='password'
-                className='pwd'
+                id='pwd'
                 placeholder='비밀번호 입력'
                 value={memberPwd}
                 onChange={(e) => setMemberPwd(e.target.value)}
               />
-              <label className='pwdLabel'>
+              <label>
                 <img src={key} alt='Key Icon' />
               </label>
             </span>
