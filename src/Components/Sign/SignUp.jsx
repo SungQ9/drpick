@@ -189,6 +189,9 @@ const SignUp = () => {
                       className='member_pwd'
                       id='pwd'
                       style={{ width: '500px' }}
+                      placeholder='　영어,숫자,특수문자를 포함한 8~20자 '
+                      minLength={8}
+                      maxLength={20}
                     />
                     <label>비밀번호</label>
                   </span>
@@ -201,7 +204,6 @@ const SignUp = () => {
                       type='password'
                       className='member_ckpwd'
                       style={{ width: '500px' }}
-                      placeholder='　영어,숫자,특수문자를 포함한 8~20자 '
                       minLength={8}
                       maxLength={20}
                     />

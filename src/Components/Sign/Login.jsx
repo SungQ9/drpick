@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../css/LayoutStyle.css';
+import '../../css/UserStyle.css';
 import '../../css/Style.css';
 import mail from '../../img/mail-icon.png';
 import key from '../../img/key-icon.png';
@@ -55,11 +55,11 @@ const Login = () => {
             로그인<span>비대면 진료서비스에 오신것을 환영합니다</span>
           </h4>
 
-          <form action='' className='inputForm' onSubmit={handleLogin}>
-            <span className='formSpan'>
+          <form action='' className='loginInputForm' onSubmit={handleLogin}>
+            <span>
               <input
                 type='text'
-                className='formInput'
+                className='email'
                 placeholder='아이디 입력'
                 value={memberEmail}
                 onChange={(e) => setMemberEmail(e.target.value)}
@@ -69,10 +69,10 @@ const Login = () => {
               </label>
             </span>
 
-            <span className='formSpan'>
+            <span>
               <input
                 type='password'
-                className='formInput'
+                className='pwd'
                 placeholder='비밀번호 입력'
                 value={memberPwd}
                 onChange={(e) => setMemberPwd(e.target.value)}
