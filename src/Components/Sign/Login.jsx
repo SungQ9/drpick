@@ -39,7 +39,8 @@ const Login = () => {
 
       // 토큰 콘솔에 출력
       console.log("토큰:", response.data.accessToken);
-
+      localStorage.setItem("accessToken", response.data.accessToken);
+      
       navigate("/");
     } catch (error) {
       // 로그인 실패 후에 할 작업들...

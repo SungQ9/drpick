@@ -16,20 +16,20 @@ import { TokenProvider } from "./TokenContext";
 function App() {
   return (
     <div className="App">
-      <Header />
       <TokenProvider>
-        <Routes>
-          <Route exact path="/" element={<Main />} />
-          <Route path="/signUp" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/clinic/*" element={<Clinic />} />
-          <Route path="/imageSearch/*" element={<ImageSearch />} />
-          <Route path="/chatBot/*" element={<ChatBot />} />
-          <Route path="/searchHospital/*" element={<SearchHospital />} />
-          <Route path="/searchPharmacy/*" element={<SearchPharmacy />} />
+        <Header />
+          <Routes>
+            <Route exact path="/" element={<Main />} />
+            <Route path="/signUp" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/clinic/*" element={<Clinic />} />
+            <Route path="/imageSearch/*" element={<ImageSearch />} />
+            <Route path="/chatBot/*" element={<ChatBot />} />
+            <Route path="/searchHospital/*" element={<SearchHospital />} />
+            <Route path="/searchPharmacy/*" element={<SearchPharmacy />} />
 
-          {/* <Main /> */}
-        </Routes>
+            {/* <Main /> */}
+          </Routes>
       </TokenProvider>
       <Footer />
     </div>
