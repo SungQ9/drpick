@@ -1,46 +1,69 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useClinicContext } from '../../Context/ClinicContext';
+import back from '../../../img/back-arrow-icon.png';
+import wait from '../../../img/wait-icon.png';
+import calendar from '../../../img/calendar-icon.png';
 import '../../../css/UserStyle.css';
 import '../../../css/Style.css';
 
 const SelectAccept = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const resultTemp = location.state ? location.state.testTemp3 : null;
-  const { testProp, testProp2, testProp3, testProp4 } = useClinicContext();
+  const clinicContext = useClinicContext();
+
+  clinicContext.selectDoctor = location.state ? location.state.doctor : null;
+
+  const selectBtnHandler = (temp) => {
+    clinicContext.acceptStatus = temp;
+    if (temp === 'normal') {
+      navigate('/clinic/application');
+    } else {
+      navigate('/clinic/datetime');
+    }
+    console.log(temp);
+  };
 
   return (
-    <div>
-      <h4>접수방법</h4>
-      <h3>이전페이지에서 넘겨받은 값 : {resultTemp}</h3>
-      <h3>Context에서 가져온 값</h3>
-      <h2>{testProp}</h2>
-      <h2>{testProp2}</h2>
-      <h2>{testProp3}</h2>
-      <h2>{testProp4}</h2>
-      <button
-        onClick={() => {
-          navigate('/clinic/application');
-        }}
-      >
-        일반접수
-      </button>
-      <button
-        onClick={() => {
-          navigate('/clinic/datetime');
-        }}
-      >
-        예약접수
-      </button>
-      <br />
-      <button
-        onClick={() => {
-          navigate(-1);
-        }}
-      >
-        뒤로가기
-      </button>
+    <div className='clinicWrapper'>
+      <div className='titleWrapper'>
+        <img
+          className='backIcon'
+          src={back}
+          onClick={() => {
+            navigate(-1);
+          }}
+          alt='back'
+        />
+
+        <h1 className='stepTitle'>접수방법선택</h1>
+      </div>
+      <div className='tableWrapper'>
+        <table className='clinicTable'>
+          <tbody>
+            <tr>
+              <td
+                className='clinicBtn'
+                onClick={() => {
+                  selectBtnHandler('normal');
+                }}
+              >
+                <img src={wait} alt='wait' />
+                <h1>일반접수</h1>
+              </td>
+              <td
+                className='clinicBtn'
+                onClick={() => {
+                  selectBtnHandler('time');
+                }}
+              >
+                <img src={calendar} alt='calendar' />
+                <h1>예약접수</h1>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

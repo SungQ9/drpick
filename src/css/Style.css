@@ -3,7 +3,7 @@
 .Form {
   background: #ffffff;
   width: 1000px;
-  min-height: 1000px;
+  min-height: 800px;
   margin-top: 100px;
   margin-bottom: 100px;
   padding-bottom: 20px;
@@ -241,3 +241,18 @@ Input {
     border-bottom-left-radius: 10px;
   }
 } */
+
+.clinicBtn-mid {
+  width: 200px;
+  height: 80px;
+  border-radius: 15px;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  font-size: 25px;
+}
+.clinicBtn-long {
+  width: 650px;
+  height: 80px;
+  border-radius: 15px;
+  font-size: 20px;
+}

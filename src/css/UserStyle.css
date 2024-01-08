@@ -265,3 +265,181 @@
 .subjectList img {
   width: 130px; /* 이미지 너비 설정 */
 }
+
+/* 의사 선택 */
+
+.doctorList ul {
+  list-style: none;
+}
+
+.doctorList li {
+  border-bottom: 1px solid #d9d9d9;
+  padding: 15px;
+  margin-right: 5%;
+  display: flex;
+}
+
+.doctorList .content {
+  flex: 1;
+  text-align: left;
+  margin: 0;
+}
+
+/* 의사 목록 간격조절 */
+.doctorList .name {
+  display: flex;
+  align-items: baseline;
+}
+
+.doctorList .grade,
+.doctorList .status,
+.doctorList .major {
+  display: flex;
+  align-items: center;
+}
+
+.doctorList .name,
+.doctorList .grade,
+.doctorList .status {
+  margin-bottom: -28px;
+}
+
+.doctorList span {
+  color: #b3b3b3;
+  margin-left: 5px;
+}
+
+.doctorList .status {
+  height: 70px;
+}
+
+.doctorList .status h5 {
+  color: #11c2ad;
+  font-size: 20px;
+  + span {
+    color: #727171;
+  }
+}
+
+.doctorList .major p {
+  border: 1px solid #11c2ad;
+  background-color: #11c2ad;
+  color: #ffffff;
+  border-radius: 7px;
+  padding: 3px 10px 3px 10px;
+  margin: 15px 0px 0px 5px;
+
+  font-size: 12px;
+  text-align: center;
+  vertical-align: middle;
+}
+.doctorList .major p:first-child {
+  margin-left: 0px;
+}
+
+.doctorList img {
+  width: 150px;
+  height: 150px;
+}
+
+/* 의사 상세*/
+.doctorDetail ul {
+  list-style: none;
+}
+
+.doctorDetail li {
+  border: 1px solid #d9d9d9;
+  border-radius: 10px;
+  padding: 15px;
+  margin-right: 5%;
+  margin-bottom: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.doctorDetail .grade {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.doctorDetail .grade .reviewStat {
+  display: flex;
+  align-items: center;
+  width: 500px;
+}
+.doctorDetail .grade .reviewText {
+  color: #727171;
+  margin-left: 20%;
+  width: 500px;
+}
+
+.doctorDetail .introduction textarea {
+  border: none;
+  resize: none;
+  outline: none;
+  overflow: hidden;
+  width: 100%;
+  background-color: transparent;
+}
+
+/* 진료신청서 */
+.writeFormWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #727171;
+}
+
+.writeFormWrapper button {
+  margin-top: 5%;
+  margin-bottom: 25px;
+}
+
+.residentNumber {
+  text-align: left;
+  width: 650px;
+  margin-top: 5%;
+  margin-bottom: 30px;
+}
+.residentNumber input {
+  width: 250px;
+}
+
+.writeSymptom {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  width: 650px;
+}
+.writeSymptom textarea {
+  border: 1px solid #cecece;
+  border-radius: 10px;
+  resize: none;
+  padding: 20px;
+  min-width: 600px;
+  min-height: 250px;
+}
+
+/* 진료신청완료 */
+.completeWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.completeTextarea {
+  max-width: 650px;
+}
+.completeTextarea textarea {
+  border: 1px solid #cecece;
+  border-radius: 10px;
+  font-size: 25px;
+  text-align: left;
+  resize: none;
+  padding: 20px 20px 20px 20px;
+  min-width: 600px;
+  max-width: 650px;
+  min-height: 250px;
+  margin-bottom: 5%;
+}
