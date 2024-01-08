@@ -7,8 +7,8 @@ const HospitalList = () => {
   // 변수 선언
   const [list, setList] = useState([]);
   const navigate = useNavigate();
-  const { accessToken } = useToken(); // 토큰 컨텍스트에서 토큰 가져오기
-  console.log("토큰 : " + accessToken);
+  const { token  } = useToken(); // 토큰 컨텍스트에서 토큰 가져오기
+  console.log("useToken > 토큰 : " + token );
 
   // 렌더링될 때 서버에서 데이터 받아서 변수에 지정
   useEffect(() => {
@@ -17,14 +17,14 @@ const HospitalList = () => {
         // 헤더에 Authorization 추가
         const config = {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${token }`,
           },
         };
 
-        console.log("header :" + config);
+        console.log("header :" + config.headers);
 
         // API 호출
-        const result = await axios.get("/api/hospitalList", config);
+        const result = await axios.get("http://localhost:8080/hospitals/getHospitalList", config);
 
         // 데이터 설정
         const newList = result.data;
@@ -44,7 +44,7 @@ const HospitalList = () => {
     };
 
     fetchData(); // fetchData 함수 호출
-  }, [accessToken, navigate]);
+  }, [token, navigate]);
   return (
     <div>
       <h2 className="text-center">병원 리스트</h2>

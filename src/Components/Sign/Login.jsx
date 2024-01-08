@@ -38,7 +38,9 @@ const Login = () => {
       console.log('로그인 성공:', response.data);
 
       // 토큰 콘솔에 출력
+
       console.log('토큰:', response.data.accessToken);
+      localStorage.setItem('accessToken', response.data.accessToken);
 
       navigate('/');
     } catch (error) {
@@ -77,7 +79,7 @@ const Login = () => {
                 value={memberPwd}
                 onChange={(e) => setMemberPwd(e.target.value)}
               />
-              <label>
+              <label className='pwdLabel'>
                 <img src={key} alt='Key Icon' />
               </label>
             </span>
