@@ -1,5 +1,10 @@
 /* 기본 css*/
 
+.pannel,
+li {
+  cursor: pointer;
+}
+
 .Form {
   background: #ffffff;
   width: 1000px;
@@ -31,6 +36,7 @@ button {
   background-color: #11c2ad;
   color: #ffffff;
   font-weight: bold;
+  cursor: pointer;
 }
 
 select {
@@ -45,6 +51,7 @@ select {
   color: #acacac;
   border: 1px solid #cecece;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 select::-ms-expand {
@@ -81,6 +88,7 @@ select::-ms-expand {
   width: 250px;
   height: 100px;
   margin-left: 5%;
+  cursor: pointer;
 }
 
 .topHeader ul {
@@ -96,13 +104,31 @@ select::-ms-expand {
   align-items: center;
   margin-left: 50px; /* 각 리스트 아이템 사이의 간격 조절 */
 }
-.topHeader li:nth-child(2) {
+.topHeader .loginLi {
   margin-right: 50px;
 }
 
+.topHeader .mypageLi {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.topHeader p {
+  margin-right: 0px;
+}
+
 .topHeader li img {
-  width: 30%;
+  width: 20%;
   margin-right: 10px; /* 이미지와 텍스트 사이의 간격 조절 */
+}
+
+.topHeader span {
+  color: #acacac;
+  font-size: 15px;
+}
+
+.topHeader p {
+  margin-right: 40px;
 }
 
 .ul-Wrapper {
@@ -125,19 +151,56 @@ select::-ms-expand {
   align-items: center;
 }
 
-.tabContainer ul {
+.tabUi {
   list-style: none;
   margin-left: 100px;
   display: flex; /* ul을 가로로 정렬하기 위해 추가 */
 }
 
-.tabContainer li {
+.tabLi {
+  position: relative;
   display: flex;
   width: 150px;
   margin-right: 100px;
 }
-.tabContainer li:first-child {
+.tabLi:first-child {
   margin-left: 50px;
+}
+
+.subtabUi {
+  list-style: none;
+  display: none;
+  position: absolute;
+  width: 120px;
+  margin-top: 8px;
+  padding: 10px;
+  top: 100%;
+  right: 20%;
+  background-color: #ffffff;
+  box-shadow: 5px 5px 7px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 3px 3px 10px 10px;
+}
+
+.subtabLi {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.tabLi.clicked .subtabUi {
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /*//////////////////////////////////////////////////////////////////////////////////////*/
@@ -178,11 +241,16 @@ td.pannel {
   border-radius: 20px;
   padding-left: 2%;
   padding-bottom: 5%;
+  box-shadow: 8px 5px 7px 5px rgba(0, 0, 0, 0.1);
 }
 
 .mainContainer .menu tr:first-child td:first-child {
   background-color: #11c2ad;
   color: #ffffff;
+}
+
+.mainContainer .menu tr:first-child td:nth-child(2) {
+  cursor: default;
 }
 
 /*//////////////////////////////////////////////////////////////////////////////////////*/

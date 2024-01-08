@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function DoctorTab() {
+function DrugStoreTab() {
   const navigate = useNavigate();
 
   return (
@@ -25,7 +25,7 @@ function DoctorTab() {
               navigate('/imageSearch');
             }}
           >
-            비대면진료
+            약주문목록
           </a>
         </li>
         <li>
@@ -35,17 +35,7 @@ function DoctorTab() {
               navigate('/chatBot');
             }}
           >
-            진료기록조회
-          </a>
-        </li>
-        <li>
-          <img src='' alt='' />
-          <a
-            onClick={() => {
-              navigate('/chatBot');
-            }}
-          >
-            의사정보수정
+            약국정보수정
           </a>
         </li>
         <li>
@@ -57,4 +47,4 @@ function DoctorTab() {
   );
 }
 
-export default DoctorTab;
+export default DrugStoreTab;

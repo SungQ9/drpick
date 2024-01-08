@@ -1,66 +1,34 @@
 import React from 'react';
+import { useTokenContext } from '../Context/TokenContext';
+import UserMain from './UserMain';
+import DoctorMain from './DoctorMain';
+import DrugStoreMain from './DrugStoreMain';
+import AdminMain from './AdminMain';
 import '../../css/UserStyle.css';
 import '../../css/Style.css';
-import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
-  const navigate = useNavigate();
+  const tokenContext = useTokenContext();
 
-  return (
-    <div className='mainContainer'>
-      <table className='menu'>
-        <tbody>
-          <tr>
-            <td
-              className='pannel'
-              onClick={() => {
-                navigate('/clinic');
-              }}
-            >
-              비대면 진료 신청하기
-            </td>
-            <td className='pannel'>광고</td>
-          </tr>
-          <tr>
-            <td
-              className='pannel'
-              onClick={() => {
-                navigate('/imageSearch');
-              }}
-            >
-              약 이미지 검색
-            </td>
-            <td
-              className='pannel'
-              onClick={() => {
-                navigate('/imageSearch');
-              }}
-            >
-              챗 봇 검색
-            </td>
-          </tr>
-          <tr>
-            <td
-              className='pannel'
-              onClick={() => {
-                navigate('/searchHospital');
-              }}
-            >
-              병원 찾기
-            </td>
-            <td
-              className='pannel'
-              onClick={() => {
-                navigate('/searchPharmacy');
-              }}
-            >
-              약국 찾기
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  );
+  const DefaultMain = <UserMain />;
+
+  if (tokenContext.memberAuth) {
+    switch (tokenContext.memberAuth) {
+      case 'D':
+        DefaultMain = <DoctorMain />;
+        break;
+      case 'S':
+        DefaultMain = <DrugStoreMain />;
+        break;
+      case 'A':
+        DefaultMain = <AdminMain />;
+        break;
+      default:
+        break;
+    }
+  }
+
+  return <div className='mainContainer'>{DefaultMain}</div>;
 };
 
 export default Main;

@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useTokenContext } from '../Context/TokenContext';
+import axios from 'axios'; // axios 라이브러리 추가
 import '../../css/UserStyle.css';
 import '../../css/Style.css';
 
 import mail from '../../img/mail-icon.png';
 import key from '../../img/key-icon.png';
-import axios from 'axios'; // axios 라이브러리 추가
-import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   // 상태 정의
   const [memberEmail, setMemberEmail] = useState('');
   const [memberPwd, setMemberPwd] = useState('');
   const navigate = useNavigate();
+  const tokenContext = useTokenContext();
 
   // 로그인 함수
   const handleLogin = async (e) => {
@@ -42,6 +44,10 @@ const Login = () => {
 
       console.log('토큰:', response.data.accessToken);
       localStorage.setItem('accessToken', response.data.accessToken);
+
+      tokenContext.memberId = response.data.memberId;
+      tokenContext.memberName = response.data.memberName;
+      tokenContext.memberAuth = response.data.memberAuth;
 
       navigate('/');
     } catch (error) {

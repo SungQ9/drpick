@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-const SearchPharmacy = () => {
+const SearchDrugStrore = () => {
   return (
     <div className='mainContainer'>
       <div className='Form'>
@@ -16,4 +16,4 @@ const SearchPharmacy = () => {
   );
 };
 
-export default SearchPharmacy;
+export default SearchDrugStrore;

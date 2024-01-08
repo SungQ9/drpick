@@ -31,7 +31,10 @@ const DoctorDetail = () => {
       </div>
       <div className='doctorList'>
         <ul>
-          <li className='doctor' style={{ borderBottom: 'none' }}>
+          <li
+            className='doctor'
+            style={{ borderBottom: 'none', cursor: 'default' }}
+          >
             <div className='content'>
               <div className='name'>
                 <h2>{selectDoctor}</h2>
@@ -85,6 +88,7 @@ const DoctorDetail = () => {
             <textarea
               readOnly
               value='안녕하세요 반갑습니다 의사 소개입니다 잘부탁드립니다'
+              style={{ cursor: 'default' }}
             ></textarea>
           </li>
         </ul>

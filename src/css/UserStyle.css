@@ -152,6 +152,7 @@
 .signUpTable input[type='radio'] {
   vertical-align: middle;
   width: 15px;
+  cursor: pointer;
 }
 
 .signUpInputForm button {
@@ -186,6 +187,7 @@
   background-color: #11c2ad;
   color: #ffffff;
   font-weight: bold;
+  cursor: pointer;
 }
 
 /* 비대면진료 */
@@ -212,6 +214,7 @@
   width: 300px;
   height: 300px;
   color: #727272;
+  cursor: pointer;
 }
 
 .clinicBtn img {
@@ -234,6 +237,10 @@
   margin-top: 10px;
   display: flex;
   justify-content: flex-start;
+}
+
+.titleWrapper img {
+  cursor: pointer;
 }
 /* 진료과목 */
 
@@ -355,6 +362,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  cursor: default;
 }
 
 .doctorDetail .grade {
@@ -427,6 +435,28 @@
   flex-direction: column;
   align-items: center;
 }
+.completeText {
+  margin-top: 5%;
+  text-align: center;
+}
+
+.completeText h2 {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20%;
+}
+
+.completeText p {
+  font-size: 25px;
+  font-weight: bold;
+  color: #727272;
+  margin-top: -30px;
+}
+
+.completeText p:nth-of-type(2) {
+  color: #11c2ad;
+}
+
 .completeTextarea {
   max-width: 650px;
 }
@@ -434,11 +464,12 @@
   border: 1px solid #cecece;
   border-radius: 10px;
   font-size: 25px;
-  text-align: left;
+  text-align: center; /* 텍스트 내용을 가운데 정렬로 변경 */
   resize: none;
-  padding: 20px 20px 20px 20px;
-  min-width: 600px;
+  padding: 80px 5px 0px 5px;
+  min-width: 650px;
   max-width: 650px;
   min-height: 250px;
-  margin-bottom: 5%;
+  margin-top: 5%;
+  margin-bottom: 15%;
 }

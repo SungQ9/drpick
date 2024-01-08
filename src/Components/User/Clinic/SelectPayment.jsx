@@ -15,8 +15,11 @@ const SelectPayment = () => {
   const btnHandler = (evt) => {
     const selectedPayment = evt.currentTarget.getAttribute('data-value');
     clinicContext.selectPayment = selectedPayment;
-    navigate('/clinic/complete');
     console.log(selectedPayment);
+
+    // 여기서 context안에 저장된 값들 불러와서 db로 보내고
+    // 성공하면 페이지 이동
+    navigate('/clinic/complete');
   };
 
   return (
