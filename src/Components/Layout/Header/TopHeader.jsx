@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import '../../../css/LayoutStyle.css';
+import '../../../css/Style.css';
 import logo from '../../../img/logo.png';
-import userLogo from '../../../img/icons8-user-100.png';
+import userLogo from '../../../img/user-icon.png';
 import { useNavigate } from 'react-router-dom';
 
 const TopHeader = () => {

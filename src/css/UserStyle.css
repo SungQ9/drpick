@@ -1,0 +1,444 @@
+/* 기능 //////////////////////////////////////////////////////////////////////////////////////*/
+/*로그인*/
+.loginForm {
+  background: #ffffff;
+  width: 600px;
+  height: 600px;
+  margin-top: 0px;
+  margin-bottom: 100px;
+  border-radius: 15px;
+}
+
+.loginWrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.loginWrapper h4 {
+  margin-top: 10%;
+  margin-left: 10%;
+  text-align: left;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.loginWrapper span {
+  font-size: 50%;
+  font-weight: normal;
+  margin-left: 10px;
+  color: #cecece;
+}
+
+#loginInputForm {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+#loginInputForm button {
+  margin-top: 50px;
+}
+
+#loginInputForm Span {
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+#loginInputForm input {
+  border: 1px solid #cecece;
+  border-radius: 10px;
+  outline: 0;
+  text-indent: 70px;
+
+  + label {
+    position: absolute;
+    margin-bottom: 35px;
+    margin-left: 0px;
+    height: 24px;
+    width: 50px;
+    bottom: -15px;
+    left: 0;
+    padding: 10px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    background: #daf6ee;
+    color: #11c2ad;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+}
+
+/*회원가입*/
+
+.signUpForm {
+  background: #ffffff;
+  width: 600px;
+  height: 1200px;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  border-radius: 15px;
+}
+
+.signUpWrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.signUpWrapper h4 {
+  margin-top: 2%;
+  margin-left: 10%;
+  text-align: left;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.signUpWrapper span {
+  font-size: 50%;
+  font-weight: normal;
+  margin-left: 10px;
+  color: #cecece;
+}
+
+.signUpInputForm {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.signUpInputForm Span {
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.signUpInputForm table {
+  border-collapse: separate;
+}
+
+.signUpInputForm Input[type='text'],
+[type='password'],
+[type='file'] {
+  border: 1px solid #cecece;
+  border-radius: 10px;
+  outline: 0;
+  text-indent: 70px;
+
+  + label {
+    position: absolute;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    height: 24px;
+    width: 50px;
+    bottom: -15px;
+    left: 0;
+    padding: 10px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    background: #daf6ee;
+    color: #11c2ad;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+}
+
+.signUpTable input[type='radio'] {
+  vertical-align: middle;
+  width: 15px;
+}
+
+.signUpInputForm button {
+  margin: 20px;
+}
+
+#partnerShipSpan {
+  margin-right: 190px;
+}
+
+#subSpan {
+  margin-left: 40px;
+  color: #cecece;
+  font-weight: bold;
+}
+
+#partnerShip {
+  border: 1px solid #ffffff;
+  padding: 15px;
+  font-weight: bold;
+  color: #11c2ad;
+  background-color: #daf6ee;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+#fileBtn {
+  width: 100px;
+  height: 40px;
+  border: none;
+  border-radius: 7px;
+  background-color: #11c2ad;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* 비대면진료 */
+.clinicWrapper {
+  display: flex;
+  flex-direction: column;
+}
+.tableWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.clinicTable {
+  border-spacing: 50px 20px;
+  border-collapse: separate;
+  padding: 10% 10% 15% 10%;
+}
+
+.clinicBtn {
+  border: 1px solid #cecece;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  padding-top: 30px;
+  width: 300px;
+  height: 300px;
+  color: #727272;
+}
+
+.clinicBtn img {
+  width: 150px;
+}
+
+.backIcon {
+  margin-top: 20px;
+  margin-left: 20px;
+  width: 60px;
+  height: 100%;
+}
+
+.stepTitle {
+  margin-left: 330px;
+  font-weight: bold;
+}
+
+.titleWrapper {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-start;
+}
+/* 진료과목 */
+
+.subjectList ul {
+  list-style: none;
+}
+
+.subjectList li {
+  border-bottom: 1px solid #d9d9d9;
+  padding: 15px;
+  margin-right: 5%;
+  display: flex;
+}
+
+.subjectList .content {
+  flex: 1; /* 텍스트가 차지하는 영역을 최대한 확보합니다. */
+  text-align: left;
+}
+.subjectList span {
+  color: #6b6b6b;
+  font-weight: bold;
+}
+.subjectList h2,
+.subjectList span {
+  margin-right: 10px;
+}
+
+.subjectList img {
+  width: 130px; /* 이미지 너비 설정 */
+}
+
+/* 의사 선택 */
+
+.doctorList ul {
+  list-style: none;
+}
+
+.doctorList li {
+  border-bottom: 1px solid #d9d9d9;
+  padding: 15px;
+  margin-right: 5%;
+  display: flex;
+}
+
+.doctorList .content {
+  flex: 1;
+  text-align: left;
+  margin: 0;
+}
+
+/* 의사 목록 간격조절 */
+.doctorList .name {
+  display: flex;
+  align-items: baseline;
+}
+
+.doctorList .grade,
+.doctorList .status,
+.doctorList .major {
+  display: flex;
+  align-items: center;
+}
+
+.doctorList .name,
+.doctorList .grade,
+.doctorList .status {
+  margin-bottom: -28px;
+}
+
+.doctorList span {
+  color: #b3b3b3;
+  margin-left: 5px;
+}
+
+.doctorList .status {
+  height: 70px;
+}
+
+.doctorList .status h5 {
+  color: #11c2ad;
+  font-size: 20px;
+  + span {
+    color: #727171;
+  }
+}
+
+.doctorList .major p {
+  border: 1px solid #11c2ad;
+  background-color: #11c2ad;
+  color: #ffffff;
+  border-radius: 7px;
+  padding: 3px 10px 3px 10px;
+  margin: 15px 0px 0px 5px;
+
+  font-size: 12px;
+  text-align: center;
+  vertical-align: middle;
+}
+.doctorList .major p:first-child {
+  margin-left: 0px;
+}
+
+.doctorList img {
+  width: 150px;
+  height: 150px;
+}
+
+/* 의사 상세*/
+.doctorDetail ul {
+  list-style: none;
+}
+
+.doctorDetail li {
+  border: 1px solid #d9d9d9;
+  border-radius: 10px;
+  padding: 15px;
+  margin-right: 5%;
+  margin-bottom: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.doctorDetail .grade {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.doctorDetail .grade .reviewStat {
+  display: flex;
+  align-items: center;
+  width: 500px;
+}
+.doctorDetail .grade .reviewText {
+  color: #727171;
+  margin-left: 20%;
+  width: 500px;
+}
+
+.doctorDetail .introduction textarea {
+  border: none;
+  resize: none;
+  outline: none;
+  overflow: hidden;
+  width: 100%;
+  background-color: transparent;
+}
+
+/* 진료신청서 */
+.writeFormWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #727171;
+}
+
+.writeFormWrapper button {
+  margin-top: 5%;
+  margin-bottom: 25px;
+}
+
+.residentNumber {
+  text-align: left;
+  width: 650px;
+  margin-top: 5%;
+  margin-bottom: 30px;
+}
+.residentNumber input {
+  width: 250px;
+}
+
+.writeSymptom {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  width: 650px;
+}
+.writeSymptom textarea {
+  border: 1px solid #cecece;
+  border-radius: 10px;
+  resize: none;
+  padding: 20px;
+  min-width: 600px;
+  min-height: 250px;
+}
+
+/* 진료신청완료 */
+.completeWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.completeTextarea {
+  max-width: 650px;
+}
+.completeTextarea textarea {
+  border: 1px solid #cecece;
+  border-radius: 10px;
+  font-size: 25px;
+  text-align: left;
+  resize: none;
+  padding: 20px 20px 20px 20px;
+  min-width: 600px;
+  max-width: 650px;
+  min-height: 250px;
+  margin-bottom: 5%;
+}

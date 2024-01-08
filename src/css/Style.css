@@ -3,10 +3,11 @@
 .Form {
   background: #ffffff;
   width: 1000px;
-  height: 1000px;
+  min-height: 800px;
   margin-top: 100px;
   margin-bottom: 100px;
-  border-radius: 15px;
+  padding-bottom: 20px;
+  border-radius: 25px;
 }
 
 input {
@@ -22,15 +23,201 @@ input {
   color: #cecece;
 }
 
-/* span > Input > label 순서로*/
+button {
+  width: 100px;
+  height: 40px;
+  border: none;
+  border-radius: 7px;
+  background-color: #11c2ad;
+  color: #ffffff;
+  font-weight: bold;
+}
 
-.formSpan {
+select {
+  width: 150px;
+  padding: 0.8em 0.5em;
+  font-family: inherit;
+  background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg)
+    no-repeat 95% 50%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  color: #acacac;
+  border: 1px solid #cecece;
+  border-radius: 10px;
+}
+
+select::-ms-expand {
+  /* for IE 11 */
+  display: none;
+}
+
+/*///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+/* 헤더 스타일 */
+.headerContainer {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #ffffff; /* 헤더의 배경색을 원하는 색상으로 지정 */
+  z-index: 1000; /* 다른 요소 위에 헤더를 배치하기 위해 z-index 사용 */
+  display: flex;
+  flex-direction: column; /* 위아래로 배치하도록 설정 */
+  border-bottom: 1px solid #acacac;
+}
+
+/* 로고 헤더 */
+.topHeader {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 80px;
+  justify-content: space-between; /* 양쪽 끝으로 배치 */
+  align-items: center;
+  border-bottom: 1px solid #acacac;
+}
+
+.logoContainer img {
+  width: 250px;
+  height: 100px;
+  margin-left: 5%;
+}
+
+.topHeader ul {
+  list-style: none; /* 리스트의 기본 스타일 제거 */
+  padding: 0; /* 리스트의 패딩 제거 */
+  margin: 0; /* 리스트의 마진 제거 */
+  display: flex; /* 리스트를 가로로 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+}
+
+.topHeader li {
+  display: flex;
+  align-items: center;
+  margin-left: 50px; /* 각 리스트 아이템 사이의 간격 조절 */
+}
+.topHeader li:nth-child(2) {
+  margin-right: 50px;
+}
+
+.topHeader li img {
+  width: 30%;
+  margin-right: 10px; /* 이미지와 텍스트 사이의 간격 조절 */
+}
+
+.ul-Wrapper {
+  margin-right: 50px;
+}
+
+/* 로고 이미지와 ul을 양쪽 끝으로 이동시키기 위한 마진 설정 */
+.logoContainer {
+  margin-left: 5%;
+}
+
+/* 탭메뉴 */
+.tabPane {
+  height: 40px;
+}
+
+.tabContainer {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.tabContainer ul {
+  list-style: none;
+  margin-left: 100px;
+  display: flex; /* ul을 가로로 정렬하기 위해 추가 */
+}
+
+.tabContainer li {
+  display: flex;
+  width: 150px;
+  margin-right: 100px;
+}
+.tabContainer li:first-child {
+  margin-left: 50px;
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////*/
+
+/* 배경 위치 설정 */
+
+.mainContainer {
+  position: relative;
+  background-color: #daf6ee;
+  color: #000000;
+  text-align: center;
+  align-content: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+/* 메인화면 css*/
+table.menu {
+  border-spacing: 50px 20px;
+  border-collapse: separate;
+}
+
+td.pannel {
+  border: 1px solid #cecece;
+  background-color: #ffffff;
+  color: #000000;
+  font-weight: bold;
+  width: 600px;
+  height: 130px;
+  font-size: 25px;
+  text-align: left;
+  border: none;
+  border-radius: 20px;
+  padding-left: 2%;
+  padding-bottom: 5%;
+}
+
+.mainContainer .menu tr:first-child td:first-child {
+  background-color: #11c2ad;
+  color: #ffffff;
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////*/
+
+/* 푸터 */
+.footerContainer {
+  bottom: 0;
+  width: 100%;
+  background-color: #f7f7f7;
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.textContainer {
+  width: 1250px;
+  max-width: 1250px;
+  text-align: left;
+}
+
+.textContainer span {
+  color: #cecece;
+}
+
+/* span > Input > label 순서로*/
+/* 
+span {
   position: relative;
   margin-top: 10px;
   margin-bottom: 15px;
 }
 
-.formInput {
+Input {
   border: 0;
   border-radius: 3px;
   outline: 0;
@@ -46,18 +233,26 @@ input {
     top: 0;
     left: 0;
     padding: 10px;
+    text-align: center;
+    font-weight: bold;
     background: #daf6ee;
+    color: #11c2ad;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
   }
-}
+} */
 
-button {
-  width: 100px;
-  height: 40px;
-  border: none;
-  border-radius: 7px;
-  background-color: #11c2ad;
-  color: #ffffff;
-  font-weight: bold;
+.clinicBtn-mid {
+  width: 200px;
+  height: 80px;
+  border-radius: 15px;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  font-size: 25px;
+}
+.clinicBtn-long {
+  width: 650px;
+  height: 80px;
+  border-radius: 15px;
+  font-size: 20px;
 }
