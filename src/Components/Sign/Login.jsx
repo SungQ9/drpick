@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTokenContext } from '../Context/TokenContext';
 import axios from 'axios'; // axios 라이브러리 추가
 import '../../css/UserStyle.css';

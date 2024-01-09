@@ -7,7 +7,7 @@ import { useTokenContext } from '../../Context/TokenContext';
 
 const TopHeader = () => {
   const navigate = useNavigate();
-  const { isLoggedIn, logout, memberName } = useTokenContext();
+  const { isLoggedIn, logout, memberName, memberAuth } = useTokenContext();
 
   const logoutHandler = () => {
     logout();
@@ -45,10 +45,12 @@ const TopHeader = () => {
         <li>
           <p onClick={logoutHandler}>로그아웃</p>
         </li>
-        <li className='mypageLi' onClick={() => navigate('/user')}>
-          마이페이지
-          <img src={userLogo} alt='User' />
-        </li>
+        {memberAuth === 'N' && (
+          <li className='mypageLi' onClick={() => navigate('/user')}>
+            마이페이지
+            <img src={userLogo} alt='User' />
+          </li>
+        )}
       </ul>
     );
   };

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import '../../../css/UserStyle.css';
-import '../../../css/Style.css';
+
 import back from '../../../img/back-arrow-icon.png';
 import doctor from '../../../img/doctor-icon.png';
 import star from '../../../img/star-icon.png';

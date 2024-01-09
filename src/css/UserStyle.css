@@ -484,7 +484,7 @@
   width: 100%;
 }
 
-.mypageWrapper {
+.userPageWrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -492,10 +492,11 @@
   width: 100%;
 }
 
-.mypageTitle {
-  border-bottom: 1px solid #cecece;
-  min-width: 900px;
-  max-width: 900px;
+.userPageTitle {
+  font-size: 18px;
+  font-weight: bold;
+  min-width: 1000px;
+  max-width: 1000px;
 }
 
 /* 마이페이지 메뉴 */
@@ -508,7 +509,7 @@
   align-items: center;
   border-collapse: collapse;
   flex-direction: column;
-  max-width: 900px;
+  max-width: 1000px;
   background-color: white;
   margin-bottom: 5%;
 }
@@ -547,12 +548,14 @@
   width: 300px;
   height: 40px;
   padding: 5px 30px 5px 30px;
+  margin-bottom: 5%;
 }
 /* 마이페이지 최근진료내역  */
 .clinicList h4 {
+  font-size: 20px;
   text-align: left;
   padding-bottom: 15px;
-  max-width: 900px;
+  max-width: 1000px;
   border-bottom: 1px solid #cecece;
 }
 .clinicListTable {
@@ -560,7 +563,7 @@
   border-collapse: collapse;
   display: flex;
   flex-direction: column;
-  width: 900px;
+  width: 1000px;
   background-color: white;
 }
 
@@ -591,22 +594,22 @@
 
 .clinicListTable th:nth-child(1),
 td:nth-child(1) {
-  width: 225px;
+  width: 250px;
 }
 
 .clinicListTable th:nth-child(2),
 td:nth-child(2) {
-  width: 225px;
+  width: 250px;
 }
 
 .clinicListTable th:nth-child(3),
 td:nth-child(3) {
-  width: 225px;
+  width: 250px;
 }
 
 .clinicListTable th:nth-child(4),
 td:nth-child(4) {
-  width: 225px;
+  width: 250px;
 }
 
 .clinicListTable th,

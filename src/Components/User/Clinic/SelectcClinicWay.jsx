@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import back from '../../../img/back-arrow-icon.png';
 import subject from '../../../img/subject-icon.png';
 import sympton from '../../../img/symptom-icon.png';
-import '../../../css/UserStyle.css';
-import '../../../css/Style.css';
 
 const SelectClinicWay = () => {
   const navigate = useNavigate();

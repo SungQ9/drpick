@@ -4,8 +4,6 @@ import { useClinicContext } from '../../Context/ClinicContext';
 import back from '../../../img/back-arrow-icon.png';
 import wait from '../../../img/wait-icon.png';
 import calendar from '../../../img/calendar-icon.png';
-import '../../../css/UserStyle.css';
-import '../../../css/Style.css';
 
 const SelectAccept = () => {
   const navigate = useNavigate();

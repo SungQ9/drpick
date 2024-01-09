@@ -12,7 +12,17 @@ li {
   margin-top: 100px;
   margin-bottom: 100px;
   padding-bottom: 20px;
-  border-radius: 25px;
+  border-radius: 20px;
+}
+
+.mypageForm {
+  background: #ffffff;
+  width: 1200px;
+  min-height: 800px;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  padding-bottom: 20px;
+  border-radius: 20px;
 }
 
 input {
@@ -323,4 +333,142 @@ Input {
   height: 80px;
   border-radius: 15px;
   font-size: 20px;
+}
+
+.clinicSubBtn-mid {
+  background-color: #aeccc8;
+  width: 120px;
+  height: 50px;
+  border-radius: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.clinicSubBtn-short {
+  width: 100px;
+  height: 45px;
+
+  border-radius: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.listBtn-short {
+  width: 80px;
+  height: 45px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.listBtn-mid {
+  width: 160px;
+  height: 45px;
+  margin: 2px;
+}
+
+/* CRUD  목록 */
+/* className 수정 하지말고 id로 stlye 추가 및 변경 해주세요*/
+
+.searchDateWrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 1100px;
+}
+
+.searchDateText {
+  display: flex;
+  align-items: baseline;
+  margin-left: 5px;
+  margin-bottom: -20px;
+}
+
+.searchDateText span {
+  font-size: 12px;
+  font-weight: normal;
+  color: #cecece;
+}
+
+.searchDateForm {
+  display: flex;
+  align-items: center;
+}
+
+.searchDateForm input[type='text'] {
+  width: 250px;
+  height: 35px;
+}
+
+.searchDateForm button {
+  height: 40px;
+}
+
+.listForm {
+  margin-bottom: 5%;
+}
+
+.listTable {
+  border-collapse: collapse;
+  display: flex;
+  flex-direction: column;
+  min-height: 600px;
+  width: 1100px;
+  background-color: white;
+  border: 1px solid #cecece;
+  border-radius: 15px;
+}
+
+.listTable thead {
+  border-bottom: 1px solid #ddd;
+}
+
+.listTable th {
+  padding: 10px;
+  text-align: left;
+  text-align: center;
+  color: #000;
+}
+
+.listTable td {
+  padding: 10px;
+  text-align: left;
+  text-align: center;
+  border-right: none;
+  border-bottom: 1px solid #ddd;
+}
+
+.listTable tbody tr:hover {
+  background-color: #ebebeb;
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.listTable th:nth-child(1),
+td:nth-child(1) {
+  width: 220px;
+}
+
+.listTable th:nth-child(2),
+td:nth-child(2) {
+  width: 220px;
+}
+
+.listTable th:nth-child(3),
+td:nth-child(3) {
+  width: 220px;
+}
+
+.listTable th:nth-child(4),
+td:nth-child(4) {
+  width: 220px;
+}
+.listTable th:nth-child(5),
+td:nth-child(5) {
+  vertical-align: middle;
+  width: 220px;
+}
+
+.listTable th,
+.listTable td {
+  border-left: none;
+  border-right: none;
 }
