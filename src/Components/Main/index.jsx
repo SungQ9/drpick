@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTokenContext } from '../Context/TokenContext';
+
 import UserMain from './UserMain';
 import DoctorMain from './DoctorMain';
 import DrugStoreMain from './DrugStoreMain';
@@ -8,12 +8,12 @@ import '../../css/UserStyle.css';
 import '../../css/Style.css';
 
 const Main = () => {
-  const tokenContext = useTokenContext();
+  const Auth = localStorage.getItem('memberAuth');
 
-  const DefaultMain = <UserMain />;
+  let DefaultMain = <UserMain />;
 
-  if (tokenContext.memberAuth) {
-    switch (tokenContext.memberAuth) {
+  if (Auth) {
+    switch (Auth) {
       case 'D':
         DefaultMain = <DoctorMain />;
         break;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import '../../../css/Style.css';
 import logo from '../../../img/logo.png';
 import userLogo from '../../../img/user-icon.png';
@@ -7,33 +7,12 @@ import { useTokenContext } from '../../Context/TokenContext';
 
 const TopHeader = () => {
   const navigate = useNavigate();
-  const tokenContext = useTokenContext();
-  const [isLoggedIn, setLoggedIn] = useState(false);
+  const { isLoggedIn, logout, memberName } = useTokenContext();
 
   const logoutHandler = () => {
-    tokenContext.memberId = '';
-    tokenContext.memberName = '';
-    tokenContext.memberAuth = '';
-    localStorage.setItem('accessToken', '');
-    console.log('스토리지토큰값: ' + localStorage.getItem('accessToken'));
-    setLoggedIn(false);
+    logout();
+    navigate('/login');
   };
-
-  // 토큰의 값 유무에 따라 로그인상태 확인
-  useEffect(() => {
-    if (
-      tokenContext.memberName != null &&
-      tokenContext.memberName !== '' &&
-      !isLoggedIn
-    ) {
-      setLoggedIn(true);
-    } else if (
-      (tokenContext.memberName == null || tokenContext.memberName === '') &&
-      isLoggedIn
-    ) {
-      setLoggedIn(false);
-    }
-  }, [tokenContext.memberName, isLoggedIn]);
 
   const loginBefore = () => {
     return (
@@ -61,7 +40,7 @@ const TopHeader = () => {
     return (
       <ul>
         <li>
-          <span>{tokenContext.memberName}회원님 어서오세요 </span>
+          <span>{memberName}회원님 어서오세요 </span>
         </li>
         <li>
           <p onClick={logoutHandler}>로그아웃</p>

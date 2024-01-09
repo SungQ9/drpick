@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { redirect, useNavigate } from 'react-router-dom';
 import { useTokenContext } from '../Context/TokenContext';
 import axios from 'axios'; // axios 라이브러리 추가
 import '../../css/UserStyle.css';
@@ -41,13 +41,24 @@ const Login = () => {
       console.log('로그인 성공:', response.data);
 
       // 토큰 콘솔에 출력
-
       console.log('토큰:', response.data.accessToken);
-      localStorage.setItem('accessToken', response.data.accessToken);
 
-      tokenContext.memberId = response.data.memberId;
-      tokenContext.memberName = response.data.memberName;
-      tokenContext.memberAuth = response.data.memberAuth;
+      // 토큰값, 아이디,이름,역할 로컬스토리지 저장
+      if (response.data != null) {
+        localStorage.setItem('accessToken', response.data.accessToken);
+        localStorage.setItem('memberId', response.data.memberId);
+        localStorage.setItem('memberName', response.data.memberName);
+        localStorage.setItem('memberAuth', response.data.memberAuth);
+
+        //  토큰값, 아이디,이름,역할 Context 저장
+        const { accessToken, memberId, memberName, memberAuth } = response.data;
+        tokenContext.setAccessToken({
+          accessToken,
+          memberId,
+          memberName,
+          memberAuth,
+        });
+      }
 
       navigate('/');
     } catch (error) {
