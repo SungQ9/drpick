@@ -473,3 +473,144 @@
   margin-top: 5%;
   margin-bottom: 15%;
 }
+
+/* 마이페이지 */
+
+.mypageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.mypageWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.mypageTitle {
+  border-bottom: 1px solid #cecece;
+  min-width: 900px;
+  max-width: 900px;
+}
+
+/* 마이페이지 메뉴 */
+.menuContainer {
+  padding: 0px 100px 0 100px;
+}
+
+.menuTable {
+  display: flex;
+  align-items: center;
+  border-collapse: collapse;
+  flex-direction: column;
+  max-width: 900px;
+  background-color: white;
+  margin-bottom: 5%;
+}
+
+.menuTable tr {
+  margin-bottom: 30px;
+}
+
+.menuTable td {
+  height: 150px;
+  width: 20px;
+  padding: 10px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.menuTable td img {
+  display: block; /* 이미지를 블록 요소로 설정하여 글자 아래에 표시 */
+  margin: 0 auto 0px; /* 이미지 하단에 5px의 마진을 주어 글자와 간격을 조절 */
+  cursor: pointer;
+}
+.menuTable td p {
+  margin-top: -1px;
+  cursor: pointer;
+}
+.menuTable .pointDetail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #11c2ad;
+  border-radius: 13px;
+  background-color: #11c2ad;
+  color: #ffffff;
+  font-weight: bold;
+  width: 300px;
+  height: 40px;
+  padding: 5px 30px 5px 30px;
+}
+/* 마이페이지 최근진료내역  */
+.clinicList h4 {
+  text-align: left;
+  padding-bottom: 15px;
+  max-width: 900px;
+  border-bottom: 1px solid #cecece;
+}
+.clinicListTable {
+  margin-top: -15px;
+  border-collapse: collapse;
+  display: flex;
+  flex-direction: column;
+  width: 900px;
+  background-color: white;
+}
+
+.clinicListTable thead {
+  border-bottom: 1px solid #ddd;
+}
+
+.clinicListTable th {
+  padding: 10px;
+  text-align: left;
+  text-align: center;
+  color: #000;
+}
+
+.clinicListTable td {
+  padding: 10px;
+  text-align: left;
+  text-align: center;
+  border-right: none;
+  border-bottom: 1px solid #ddd;
+}
+
+.clinicListTable tbody tr:hover {
+  background-color: #ebebeb;
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.clinicListTable th:nth-child(1),
+td:nth-child(1) {
+  width: 225px;
+}
+
+.clinicListTable th:nth-child(2),
+td:nth-child(2) {
+  width: 225px;
+}
+
+.clinicListTable th:nth-child(3),
+td:nth-child(3) {
+  width: 225px;
+}
+
+.clinicListTable th:nth-child(4),
+td:nth-child(4) {
+  width: 225px;
+}
+
+.clinicListTable th,
+.clinicListTable td {
+  border-left: none;
+  border-right: none;
+}

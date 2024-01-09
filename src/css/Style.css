@@ -223,12 +223,12 @@ select::-ms-expand {
 }
 
 /* 메인화면 css*/
-table.menu {
+#menu {
   border-spacing: 50px 20px;
   border-collapse: separate;
 }
 
-td.pannel {
+#pannel {
   border: 1px solid #cecece;
   background-color: #ffffff;
   color: #000000;
@@ -244,12 +244,12 @@ td.pannel {
   box-shadow: 8px 5px 7px 5px rgba(0, 0, 0, 0.1);
 }
 
-.mainContainer .menu tr:first-child td:first-child {
+#menu tr:first-child td:first-child {
   background-color: #11c2ad;
   color: #ffffff;
 }
 
-.mainContainer .menu tr:first-child td:nth-child(2) {
+#menu tr:first-child td:nth-child(2) {
   cursor: default;
 }
 

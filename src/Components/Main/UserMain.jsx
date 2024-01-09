@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../css/UserStyle.css';
 import '../../css/Style.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,23 +6,23 @@ const UserMain = () => {
   const navigate = useNavigate();
 
   return (
-    <div className=''>
-      <table className='menu'>
+    <div id='UserMain'>
+      <table id='menu'>
         <tbody>
           <tr>
             <td
-              className='pannel'
+              id='pannel'
               onClick={() => {
                 navigate('/clinic');
               }}
             >
               비대면 진료 신청하기
             </td>
-            <td className='pannel'>광고</td>
+            <td id='pannel'>광고</td>
           </tr>
           <tr>
             <td
-              className='pannel'
+              id='pannel'
               onClick={() => {
                 navigate('/imageSearch');
               }}
@@ -31,7 +30,7 @@ const UserMain = () => {
               약 이미지 검색
             </td>
             <td
-              className='pannel'
+              id='pannel'
               onClick={() => {
                 navigate('/imageSearch');
               }}
@@ -41,7 +40,7 @@ const UserMain = () => {
           </tr>
           <tr>
             <td
-              className='pannel'
+              id='pannel'
               onClick={() => {
                 navigate('/searchHospital');
               }}
@@ -49,7 +48,7 @@ const UserMain = () => {
               병원 찾기
             </td>
             <td
-              className='pannel'
+              id='pannel'
               onClick={() => {
                 navigate('/searchDrugStore');
               }}
