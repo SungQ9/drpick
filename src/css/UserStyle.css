@@ -47,12 +47,11 @@
   margin-top: 10px;
   margin-bottom: 15px;
 }
-#loginInputForm input {
+#loginInputForm .loginInput {
   border: 1px solid #cecece;
   border-radius: 10px;
   outline: 0;
   text-indent: 70px;
-
   + label {
     position: absolute;
     margin-bottom: 35px;
@@ -72,9 +71,27 @@
   }
 }
 
+#loginInputForm .loginInput + label {
+  position: absolute;
+  margin-bottom: 35px;
+  margin-left: 0px;
+  height: 24px;
+  width: 50px;
+  bottom: -15px;
+  left: 0;
+  padding: 10px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  background: #daf6ee;
+  color: #11c2ad;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
 /*회원가입*/
 
-.signUpForm {
+#signUpForm {
   background: #ffffff;
   width: 600px;
   height: 1200px;
@@ -83,12 +100,12 @@
   border-radius: 15px;
 }
 
-.signUpWrapper {
+#signUpWrapper {
   width: 100%;
   height: 100%;
 }
 
-.signUpWrapper h4 {
+#signUpWrapper h4 {
   margin-top: 2%;
   margin-left: 10%;
   text-align: left;
@@ -96,14 +113,14 @@
   font-size: 25px;
 }
 
-.signUpWrapper span {
+#signUpWrapper span {
   font-size: 50%;
   font-weight: normal;
   margin-left: 10px;
   color: #cecece;
 }
 
-.signUpInputForm {
+#signUpInputForm {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -112,17 +129,18 @@
   align-items: center;
 }
 
-.signUpInputForm Span {
+#signUpInputForm Span {
   position: relative;
   margin-top: 10px;
   margin-bottom: 15px;
 }
 
-.signUpInputForm table {
+#signUpInputForm table {
   border-collapse: separate;
+  width: 500px;
 }
 
-.signUpInputForm Input[type='text'],
+#signUpInputForm Input[type='text'],
 [type='password'],
 [type='file'] {
   border: 1px solid #cecece;
@@ -149,18 +167,18 @@
   }
 }
 
-.signUpTable input[type='radio'] {
+#signUpTable input[type='radio'] {
   vertical-align: middle;
   width: 15px;
   cursor: pointer;
 }
 
-.signUpInputForm button {
+#ignUpInputForm button {
   margin: 20px;
 }
 
 #partnerShipSpan {
-  margin-right: 190px;
+  margin-right: 30px;
 }
 
 #subSpan {
@@ -177,6 +195,7 @@
   background-color: #daf6ee;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
+  margin-left: -250px;
 }
 
 #fileBtn {
@@ -188,6 +207,35 @@
   color: #ffffff;
   font-weight: bold;
   cursor: pointer;
+}
+
+.uploadFileListTd {
+  position: relative;
+}
+
+.uploadFileListContainer {
+  display: flex;
+  position: absolute;
+  top: 27px;
+  left: 80px;
+  /* 다른 스타일링 속성을 필요에 따라 추가하세요. */
+}
+
+.uploadFileList {
+  display: flex;
+  align-items: center;
+  margin: 0px;
+}
+
+.uploadFileList p {
+  margin: 0;
+  padding-bottom: 5px;
+  cursor: pointer;
+  color: red; /* X 버튼에 적용할 스타일링 예시 */
+}
+
+.signUpBtn {
+  margin: 20px 10px 0px 10px;
 }
 
 /* 비대면진료 */
@@ -495,8 +543,6 @@
 .userPageTitle {
   font-size: 18px;
   font-weight: bold;
-  min-width: 1000px;
-  max-width: 1000px;
 }
 
 /* 마이페이지 메뉴 */
@@ -593,27 +639,100 @@
 }
 
 .clinicListTable th:nth-child(1),
-td:nth-child(1) {
+.clinicListTable td:nth-child(1) {
   width: 250px;
 }
 
 .clinicListTable th:nth-child(2),
-td:nth-child(2) {
+.clinicListTable td:nth-child(2) {
   width: 250px;
 }
 
 .clinicListTable th:nth-child(3),
-td:nth-child(3) {
+.clinicListTable td:nth-child(3) {
   width: 250px;
 }
 
 .clinicListTable th:nth-child(4),
-td:nth-child(4) {
+.clinicListTable td:nth-child(4) {
   width: 250px;
 }
 
 .clinicListTable th,
 .clinicListTable td {
+  border-left: none;
+  border-right: none;
+}
+
+/* 리뷰관리 */
+c .checklistTable {
+  border-collapse: collapse;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  width: 1100px;
+  background-color: white;
+  border: 1px solid #cecece;
+  border-radius: 15px;
+}
+
+.checklistTable thead {
+  border-bottom: 1px solid #ddd;
+}
+
+.checklistTable th {
+  padding: 10px;
+  text-align: left;
+  text-align: center;
+  color: #000;
+}
+
+.checklistTable td {
+  padding: 10px;
+
+  text-align: left;
+  text-align: center;
+  border-right: none;
+  border-bottom: 1px solid #ddd;
+}
+
+.checklistTable tbody tr:hover {
+  background-color: #ebebeb;
+  opacity: 0.9;
+}
+
+.checklistTable th:nth-child(1),
+.checklistTable td:nth-child(1) {
+  width: 100px;
+}
+
+.checklistTable th:nth-child(2),
+.checklistTable td:nth-child(2) {
+  width: 200px;
+}
+
+.checklistTable th:nth-child(3),
+.checklistTable td:nth-child(3) {
+  width: 200px;
+}
+
+.checklistTable th:nth-child(4),
+.checklistTable td:nth-child(4) {
+  width: 200px;
+}
+.checklistTable th:nth-child(5),
+.checklistTable td:nth-child(5) {
+  vertical-align: middle;
+  width: 200px;
+}
+.checklistTable th:nth-child(6),
+.checklistTable td:nth-child(6) {
+  vertical-align: middle;
+  width: 200px;
+}
+
+.checklistTable th,
+.checklistTable td {
   border-left: none;
   border-right: none;
 }

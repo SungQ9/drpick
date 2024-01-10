@@ -4,86 +4,146 @@ import '../../css/Style.css';
 
 import axios from 'axios';
 
-const getElementValue = (id) => document.getElementById(id).value;
-const getCheckedValue = (className) => document.querySelector(`.${className}:checked`).value;
-
 const SignUp = () => {
-  const [selectedFileName, setSelectedFileName] = useState('');
+  const getElementValue = (id) => document.getElementById(id).value;
+  const getCheckedValue = (className) =>
+    document.querySelector(`.${className}:checked`).value;
 
+  const [selectedFileName, setSelectedFileName] = useState('');
+  const [selectedName, setSelectedName] = useState('');
+
+  // 파일 업로드 핸들러
   const handleFileInputChange = (event) => {
     const fileInput = event.target;
-    setSelectedFileName(fileInput.files[0].name);
-  };  
+    const newFiles = Array.from(fileInput.files).map((file) => ({
+      name: file.name,
+      id: Date.now(),
+    }));
+    const totalFiles = selectedFileName.length + newFiles.length;
 
+    if (totalFiles > 3) {
+      alert('파일은 3개까지 올릴 수 있습니다.');
+      return;
+    }
+
+    setSelectedFileName((prevFiles) => [...prevFiles, ...newFiles]);
+  };
+
+  // 업로드 파일 삭제 핸들러
+  const handleDeleteFile = (id) => {
+    setSelectedFileName((prevFiles) =>
+      prevFiles.filter((file) => file.id !== id),
+    );
+  };
+
+  // 업로드 버튼 핸들러
   const handleFileBtnClick = () => {
     document.getElementById('selectedFile').click();
   };
 
+  // 파일다중선택 return
+  const renderFileList = () => {
+    // selectedFileName이 배열인지 확인
+    if (!Array.isArray(selectedFileName)) {
+      console.error('selectedFileName is not an array.');
+      return null; // 또는 다른 적절한 처리를 추가하세요.
+    }
+
+    return selectedFileName.map((file) => (
+      <p className='uploadFileList' key={file.id}>
+        <span style={{ marginRight: '5px' }}>{file.name}</span>
+        <p onClick={() => handleDeleteFile(file.id)}>X</p>
+      </p>
+    ));
+  };
+  // submit
   const submitBtnClick = (event) => {
+    // 폼의 기본 동작 방지 (페이지 새로고침 방지)
     event.preventDefault();
 
+    const email = document.getElementById('email').value;
+    const domain = document.getElementById('email_domain').value;
+    // 이메일과 도메인을 조합한 회원 이메일 생성
+    const memberEmail = domain === '' ? email : email + domain;
     const name = getElementValue('name');
     const birth = getElementValue('birth');
     const sex = getCheckedValue('sex');
-    const email = getElementValue('email');
-    const domain = getElementValue('email_domain');
-    const member_email = email + domain;
     const tel = getElementValue('tel');
     const pwd = getElementValue('pwd');
-    const addr_main = getElementValue('addr_main');
-    const addr_detail = getElementValue('addr_detail');
+    const addrMain = getElementValue('addr_main');
+    const addrDetail = getElementValue('addr_detail');
     const auth = getCheckedValue('auth');
 
     // Null Check
-    if ([name, birth, sex, email, domain, tel, pwd, addr_main, addr_detail, auth].some((value) => !value)) {
+    if (
+      [
+        name,
+        birth,
+        sex,
+        email,
+        domain,
+        tel,
+        pwd,
+        addrMain,
+        addrDetail,
+        auth,
+      ].some((value) => !value)
+    ) {
       console.error('하나 이상의 요소를 찾을 수 없습니다.');
       return;
     }
 
-    // Request Data
+    // FormData 객체 생성
     const formData = new FormData();
 
-    formData.append("signupValue", JSON.stringify({
-      userEmail: member_email,
-      userPwd: pwd,
-      userName: name,
-      userBirth: birth,
-      userSex: sex,
-      userTel: tel,
-      userAddrMain: addr_main,
-      userAddrDetail: addr_detail,
-      userAuth: auth
-    }));
-    
+    // 회원 정보를 FormData에 직접 추가
+    formData.append('userEmail', memberEmail);
+    formData.append('userPwd', pwd);
+    formData.append('userName', name);
+    formData.append('userBirth', birth);
+    formData.append('userSex', sex);
+    formData.append('userTel', tel);
+    formData.append('userAddrMain', addrMain);
+    formData.append('userAddrDetail', addrDetail);
+    formData.append('userAuth', auth);
+
+    // 선택된 파일이 있으면 FormData에 추가
     const selectedFileInput = document.getElementById('selectedFile');
     if (selectedFileInput && selectedFileInput.files.length > 0) {
-      formData.append('file', selectedFileInput.files[0]);
+      Array.from(selectedFileInput.files).forEach((file) => {
+        formData.append('fileList', file);
+      });
     }
-    
-    console.log(formData.get("signupValue"))
-    console.log(formData.get("file"))
-
-    axios.post('http://localhost:8080/users/signup', formData)
-    .then((res) => {
-      console.log(res.data);
-    })
-    .catch((e) => {
-      console.error('회원가입에러' + e.message);
-    });
+    // 회원가입 요청을 서버에 전송
+    axios
+      .post('http://localhost:8080/users/signup', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // 이 부분이 중요합니다.
+        },
+      })
+      .then((res) => {
+        // 성공적으로 응답 받았을 때의 처리
+        console.log(res.data);
+      })
+      .catch((e) => {
+        // 오류 발생 시의 처리
+        console.error('회원가입 에러: ' + e.message);
+      });
+    for (var pair of formData.entries()) {
+      console.log('폼데이터', pair[0] + ', ' + pair[1]);
+    }
   };
-   
+  // ... (handleFileBtnClick 등의 함수는 그대로 유지)
+
   return (
     <div className='mainContainer'>
-      <div className='signUpForm'>
-        <div className='signUpWrapper'>
+      <div id='signUpForm' className='signUpForm'>
+        <div id='signUpWrapper' className='signUpWrapper'>
           <h4>
             회원가입<span>회원가입</span>
           </h4>
-          <div 
-            id="signUpInputForm"
-            className='signUpInputForm'
-          >
-            <table className='signUpTable'>
+          <div id='signUpInputForm' className='signUpInputForm'>
+            <table id='signUpTable' className='signUpTable'>
               <tr>
                 <td colSpan={2}>
                   <span>
@@ -95,6 +155,10 @@ const SignUp = () => {
                       style={{ width: '500px' }}
                       minLength={2}
                       max={15}
+                      value={selectedName.trim()}
+                      onChange={(e) => {
+                        setSelectedName(e.target.value);
+                      }}
                     />
                     <label>이름</label>
                   </span>
@@ -115,9 +179,22 @@ const SignUp = () => {
                   </span>
                 </td>
                 <td>
-                  <input type='radio' className='sex' id='sexM' value='M' name="sex" defaultChecked  />
+                  <input
+                    type='radio'
+                    className='sex'
+                    id='sexM'
+                    value='M'
+                    name='sex'
+                    defaultChecked
+                  />
                   남자
-                  <input type='radio' className='sex' id='sexF' value='F' name="sex"/>
+                  <input
+                    type='radio'
+                    className='sex'
+                    id='sexF'
+                    value='F'
+                    name='sex'
+                  />
                   여자
                 </td>
               </tr>
@@ -235,24 +312,44 @@ const SignUp = () => {
                 <td colSpan={2}>
                   <span id='partnerShipSpan'>
                     <label id='partnerShip'>회원유형</label>
-                    <td>
-                      <input type='radio' className='auth' id='authN' value='N' name='auth' defaultChecked  />
-                      일반
-                      <input type='radio' className='auth' id='authD' value='D' name='auth' />
-                      의사
-                      <input type='radio' className='auth' id='authS' value='S' name='auth' />
-                      약국
-                    </td>
                   </span>
+                  <input
+                    type='radio'
+                    className='auth'
+                    id='authN'
+                    value='N'
+                    name='auth'
+                    defaultChecked
+                  />
+                  일반
+                  <input
+                    type='radio'
+                    className='auth'
+                    id='authD'
+                    value='D'
+                    name='auth'
+                  />
+                  의사
+                  <input
+                    type='radio'
+                    className='auth'
+                    id='authS'
+                    value='S'
+                    name='auth'
+                  />
+                  약국
                 </td>
               </tr>
               <tr>
-                <td>
-                  <span>
-                    <input type='text' value={selectedFileName} readOnly />
-                    <label>증명파일</label>
+                <td className='uploadFileListTd'>
+                  <span id='partnerShipSpan'>
+                    <label id='partnerShip'>증명파일</label>
                   </span>
+                  <div className='uploadFileListContainer'>
+                    {renderFileList()}
+                  </div>
                 </td>
+
                 <td>
                   <input
                     type='button'
@@ -271,8 +368,10 @@ const SignUp = () => {
               </tr>
               <tr>
                 <td colSpan={2}>
-                <button onClick={submitBtnClick}>확인</button>
-                  <button>취소</button>
+                  <button className='signUpBtn' onClick={submitBtnClick}>
+                    확인
+                  </button>
+                  <button className='signUpBtn'>취소</button>
                 </td>
               </tr>
             </table>

@@ -38,6 +38,11 @@ input {
   color: #cecece;
 }
 
+input[type='checkbox'] {
+  width: 20px;
+  margin: 0px;
+}
+
 button {
   width: 100px;
   height: 40px;
@@ -383,7 +388,7 @@ Input {
 }
 
 .searchDateText span {
-  font-size: 12px;
+  font-size: 15px;
   font-weight: normal;
   color: #cecece;
 }
@@ -402,6 +407,26 @@ Input {
   height: 40px;
 }
 
+.listWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.listTitle {
+  display: flex;
+  font-size: 18px;
+  font-weight: bold;
+  width: 1150px;
+}
+
+.listTitle img {
+  margin-right: 35%;
+  height: 50px;
+}
+
 .listForm {
   margin-bottom: 5%;
 }
@@ -410,7 +435,7 @@ Input {
   border-collapse: collapse;
   display: flex;
   flex-direction: column;
-  min-height: 600px;
+  height: 500px;
   width: 1100px;
   background-color: white;
   border: 1px solid #cecece;
@@ -439,7 +464,6 @@ Input {
 .listTable tbody tr:hover {
   background-color: #ebebeb;
   opacity: 0.9;
-  cursor: pointer;
 }
 
 .listTable th:nth-child(1),
@@ -471,4 +495,16 @@ td:nth-child(5) {
 .listTable td {
   border-left: none;
   border-right: none;
+}
+
+#writeBtn {
+  position: relative;
+  top: 165px;
+  left: 45px;
+}
+
+#deleteBtn {
+  position: relative;
+  top: 245px;
+  left: 935px;
 }

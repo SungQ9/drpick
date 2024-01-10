@@ -85,11 +85,12 @@ const Login = () => {
               <input
                 type='text'
                 id='email'
+                className='loginInput'
                 placeholder='아이디 입력'
                 value={memberEmail}
                 onChange={(e) => setMemberEmail(e.target.value)}
               />
-              <label>
+              <label id='inputLabel'>
                 <img src={mail} alt='Mail Icon' />
               </label>
             </span>
@@ -98,11 +99,12 @@ const Login = () => {
               <input
                 type='password'
                 id='pwd'
+                className='loginInput'
                 placeholder='비밀번호 입력'
                 value={memberPwd}
                 onChange={(e) => setMemberPwd(e.target.value)}
               />
-              <label>
+              <label id='inputLabel' style={{ marginBottom: '35px' }}>
                 <img src={key} alt='Key Icon' />
               </label>
             </span>
