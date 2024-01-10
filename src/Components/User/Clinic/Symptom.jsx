@@ -1,7 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../../css/UserStyle.css';
-import '../../../css/Style.css';
 
 const Symptom = () => {
   const navigate = useNavigate();

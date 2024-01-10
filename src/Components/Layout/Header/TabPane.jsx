@@ -1,15 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import UserTab from '../../User/UserTab';
 import DoctorTab from '../../Doctor/DoctorTab';
-import PharmacyTab from '../../Pharmacy/PharmacyTab';
+import DrugStoreTab from '../../DrugStrore/DrugStoreTab';
+import AdminTab from '../../Admin/AdminTab';
+import { useTokenContext } from '../../Context/TokenContext'; // TokenContext 불러오기
+
 import '../../../css/Style.css';
 
-// 유저 종류에 따라 menu값으로 넘겨서 메뉴 찍기
+const TabPane = () => {
+  const { memberAuth } = useTokenContext(); // TokenContext로부터 memberAuth 가져오기
+  const [defaultTab, setDefaultTab] = useState(<UserTab />);
 
-const TabPane = ({ menu }) => {
+  useEffect(() => {
+    // memberAuth가 변경될 때마다 업데이트
+    switch (memberAuth) {
+      case 'D':
+        setDefaultTab(<DoctorTab />);
+        break;
+      case 'S':
+        setDefaultTab(<DrugStoreTab />);
+        break;
+      case 'A':
+        setDefaultTab(<AdminTab />);
+        break;
+      default:
+        setDefaultTab(<UserTab />);
+        break;
+    }
+  }, [memberAuth]);
+
   return (
     <div className='tabPane'>
-      <UserTab />
+      <div className='tabContainer'>{defaultTab}</div>
     </div>
   );
 };

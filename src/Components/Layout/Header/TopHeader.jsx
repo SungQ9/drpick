@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import '../../../css/Style.css';
 import logo from '../../../img/logo.png';
 import userLogo from '../../../img/user-icon.png';
 import { useNavigate } from 'react-router-dom';
+import { useTokenContext } from '../../Context/TokenContext';
 
 const TopHeader = () => {
   const navigate = useNavigate();
-  const [isLoggedIn, setLoggedIn] = useState(false); // 로그인하면 true로 바꿔주세요
+  const { isLoggedIn, logout, memberName, memberAuth } = useTokenContext();
+
+  const logoutHandler = () => {
+    logout();
+    navigate('/login');
+  };
 
   const loginBefore = () => {
     return (
@@ -19,6 +25,7 @@ const TopHeader = () => {
           회원가입
         </li>
         <li
+          className='loginLi'
           onClick={() => {
             navigate('/login');
           }}
@@ -32,16 +39,18 @@ const TopHeader = () => {
   const loginAfter = () => {
     return (
       <ul>
-        {/*로그인하면 값 받아서 회원이름  */}
-        <li>OOO회원님 어서오세요 </li>
-        <li
-          onClick={() => {
-            navigate('/signUp');
-          }}
-        >
-          <img src={userLogo} alt='User' />
-          마이페이지
+        <li>
+          <span>{memberName}회원님 어서오세요 </span>
         </li>
+        <li>
+          <p onClick={logoutHandler}>로그아웃</p>
+        </li>
+        {memberAuth === 'N' && (
+          <li className='mypageLi' onClick={() => navigate('/user')}>
+            마이페이지
+            <img src={userLogo} alt='User' />
+          </li>
+        )}
       </ul>
     );
   };
@@ -57,7 +66,6 @@ const TopHeader = () => {
           }}
         />
       </div>
-      {/* 로그인시 li 변경 */}
       <div className='ul-Wrapper'>
         {isLoggedIn ? loginAfter() : loginBefore()}
       </div>

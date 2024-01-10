@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useTokenContext } from '../Context/TokenContext';
+import axios from 'axios'; // axios 라이브러리 추가
 import '../../css/UserStyle.css';
 import '../../css/Style.css';
 
 import mail from '../../img/mail-icon.png';
 import key from '../../img/key-icon.png';
-import axios from 'axios'; // axios 라이브러리 추가
-import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   // 상태 정의
   const [memberEmail, setMemberEmail] = useState('');
   const [memberPwd, setMemberPwd] = useState('');
   const navigate = useNavigate();
+  const tokenContext = useTokenContext();
 
   // 로그인 함수
   const handleLogin = async (e) => {
@@ -39,9 +41,24 @@ const Login = () => {
       console.log('로그인 성공:', response.data);
 
       // 토큰 콘솔에 출력
-
       console.log('토큰:', response.data.accessToken);
-      localStorage.setItem('accessToken', response.data.accessToken);
+
+      // 토큰값, 아이디,이름,역할 로컬스토리지 저장
+      if (response.data != null) {
+        localStorage.setItem('accessToken', response.data.accessToken);
+        localStorage.setItem('memberId', response.data.memberId);
+        localStorage.setItem('memberName', response.data.memberName);
+        localStorage.setItem('memberAuth', response.data.memberAuth);
+
+        //  토큰값, 아이디,이름,역할 Context 저장
+        const { accessToken, memberId, memberName, memberAuth } = response.data;
+        tokenContext.setAccessToken({
+          accessToken,
+          memberId,
+          memberName,
+          memberAuth,
+        });
+      }
 
       navigate('/');
     } catch (error) {

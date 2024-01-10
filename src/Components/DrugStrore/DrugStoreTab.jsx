@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function PharmacyTab() {
+function DrugStoreTab() {
   const navigate = useNavigate();
 
   return (
@@ -15,7 +15,7 @@ function PharmacyTab() {
               navigate('/clinic');
             }}
           >
-            비대면진료
+            대시보드
           </a>
         </li>
         <li>
@@ -25,7 +25,7 @@ function PharmacyTab() {
               navigate('/imageSearch');
             }}
           >
-            약이미지검색
+            약주문목록
           </a>
         </li>
         <li>
@@ -35,16 +35,16 @@ function PharmacyTab() {
               navigate('/chatBot');
             }}
           >
-            챗 봇 검색
+            약국정보수정
           </a>
         </li>
         <li>
           <img src='' alt='' />
-          <a>병원/약국 찾기</a>
+          <a>관리자문의</a>
         </li>
       </ul>
     </div>
   );
 }
 
-export default PharmacyTab;
+export default DrugStoreTab;

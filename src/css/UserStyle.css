@@ -152,6 +152,7 @@
 .signUpTable input[type='radio'] {
   vertical-align: middle;
   width: 15px;
+  cursor: pointer;
 }
 
 .signUpInputForm button {
@@ -186,6 +187,7 @@
   background-color: #11c2ad;
   color: #ffffff;
   font-weight: bold;
+  cursor: pointer;
 }
 
 /* 비대면진료 */
@@ -212,6 +214,7 @@
   width: 300px;
   height: 300px;
   color: #727272;
+  cursor: pointer;
 }
 
 .clinicBtn img {
@@ -234,6 +237,10 @@
   margin-top: 10px;
   display: flex;
   justify-content: flex-start;
+}
+
+.titleWrapper img {
+  cursor: pointer;
 }
 /* 진료과목 */
 
@@ -355,6 +362,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  cursor: default;
 }
 
 .doctorDetail .grade {
@@ -427,6 +435,28 @@
   flex-direction: column;
   align-items: center;
 }
+.completeText {
+  margin-top: 5%;
+  text-align: center;
+}
+
+.completeText h2 {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20%;
+}
+
+.completeText p {
+  font-size: 25px;
+  font-weight: bold;
+  color: #727272;
+  margin-top: -30px;
+}
+
+.completeText p:nth-of-type(2) {
+  color: #11c2ad;
+}
+
 .completeTextarea {
   max-width: 650px;
 }
@@ -434,11 +464,156 @@
   border: 1px solid #cecece;
   border-radius: 10px;
   font-size: 25px;
-  text-align: left;
+  text-align: center; /* 텍스트 내용을 가운데 정렬로 변경 */
   resize: none;
-  padding: 20px 20px 20px 20px;
-  min-width: 600px;
+  padding: 80px 5px 0px 5px;
+  min-width: 650px;
   max-width: 650px;
   min-height: 250px;
+  margin-top: 5%;
+  margin-bottom: 15%;
+}
+
+/* 마이페이지 */
+
+.mypageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.userPageWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.userPageTitle {
+  font-size: 18px;
+  font-weight: bold;
+  min-width: 1000px;
+  max-width: 1000px;
+}
+
+/* 마이페이지 메뉴 */
+.menuContainer {
+  padding: 0px 100px 0 100px;
+}
+
+.menuTable {
+  display: flex;
+  align-items: center;
+  border-collapse: collapse;
+  flex-direction: column;
+  max-width: 1000px;
+  background-color: white;
   margin-bottom: 5%;
+}
+
+.menuTable tr {
+  margin-bottom: 30px;
+}
+
+.menuTable td {
+  height: 150px;
+  width: 20px;
+  padding: 10px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.menuTable td img {
+  display: block; /* 이미지를 블록 요소로 설정하여 글자 아래에 표시 */
+  margin: 0 auto 0px; /* 이미지 하단에 5px의 마진을 주어 글자와 간격을 조절 */
+  cursor: pointer;
+}
+.menuTable td p {
+  margin-top: -1px;
+  cursor: pointer;
+}
+.menuTable .pointDetail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #11c2ad;
+  border-radius: 13px;
+  background-color: #11c2ad;
+  color: #ffffff;
+  font-weight: bold;
+  width: 300px;
+  height: 40px;
+  padding: 5px 30px 5px 30px;
+  margin-bottom: 5%;
+}
+/* 마이페이지 최근진료내역  */
+.clinicList h4 {
+  font-size: 20px;
+  text-align: left;
+  padding-bottom: 15px;
+  max-width: 1000px;
+  border-bottom: 1px solid #cecece;
+}
+.clinicListTable {
+  margin-top: -15px;
+  border-collapse: collapse;
+  display: flex;
+  flex-direction: column;
+  width: 1000px;
+  background-color: white;
+}
+
+.clinicListTable thead {
+  border-bottom: 1px solid #ddd;
+}
+
+.clinicListTable th {
+  padding: 10px;
+  text-align: left;
+  text-align: center;
+  color: #000;
+}
+
+.clinicListTable td {
+  padding: 10px;
+  text-align: left;
+  text-align: center;
+  border-right: none;
+  border-bottom: 1px solid #ddd;
+}
+
+.clinicListTable tbody tr:hover {
+  background-color: #ebebeb;
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.clinicListTable th:nth-child(1),
+td:nth-child(1) {
+  width: 250px;
+}
+
+.clinicListTable th:nth-child(2),
+td:nth-child(2) {
+  width: 250px;
+}
+
+.clinicListTable th:nth-child(3),
+td:nth-child(3) {
+  width: 250px;
+}
+
+.clinicListTable th:nth-child(4),
+td:nth-child(4) {
+  width: 250px;
+}
+
+.clinicListTable th,
+.clinicListTable td {
+  border-left: none;
+  border-right: none;
 }
