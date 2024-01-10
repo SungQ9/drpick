@@ -579,6 +579,7 @@
   cursor: pointer;
 }
 .menuTable td p {
+  min-width: 150px;
   margin-top: -1px;
   cursor: pointer;
 }
@@ -665,7 +666,7 @@
 }
 
 /* 리뷰관리 */
-c .checklistTable {
+.checklistTable {
   border-collapse: collapse;
   display: flex;
   flex-direction: column;
