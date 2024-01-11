@@ -80,7 +80,7 @@ const SearchDate = ({ onSearch }) => {
           최근1개월
         </button>
         <SearchBar
-          Searchtype='N'
+          Searchtype='Date'
           props={[formattedStartDate, formattedEndDate]}
         />
         {/* <button className='clinicSubBtn-short' onClick={handleSearch}>

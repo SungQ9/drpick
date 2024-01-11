@@ -1,99 +1,68 @@
 // 리뷰관리
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import SearchDate from '../../Layout/SearchDate';
-import back from '../../../img/back-arrow-icon.png';
+import ListTitle from '../../Layout/List/ListTitle';
+import List from '../../Layout/List';
 
 const ReviewManagement = () => {
-  const navigate = useNavigate();
-
-  // startDate와 endDate를 상태로 관리
-  const [startDate, setStartDate] = React.useState(new Date());
-  const [endDate, setEndDate] = React.useState(new Date());
+  const headers = [
+    {
+      text: '진료일',
+      value: 'clinicDate',
+    },
+    {
+      text: '병원명',
+      value: 'hospitalName',
+    },
+    {
+      text: '의사명',
+      value: 'doctorName',
+    },
+    {
+      text: '내평점',
+      value: 'grade',
+    },
+    {
+      text: '리뷰상태',
+      value: 'status',
+    },
+  ];
+  const items = [
+    {
+      clinicDate: '2024-01-09',
+      hospitalName: '거구장병원',
+      doctorName: '림의사',
+      grade: '5.0',
+      status: 'RN',
+    },
+    {
+      clinicDate: '2024-01-06',
+      hospitalName: '거구장병원',
+      doctorName: '백의사',
+      grade: '5.0',
+      status: 'RY',
+    },
+    {
+      clinicDate: '2024-01-04',
+      hospitalName: '거구장병원',
+      doctorName: '규의사',
+      grade: '5.0',
+      status: 'RY',
+    },
+    {
+      clinicDate: '2024-01-03',
+      hospitalName: '거구장병원',
+      doctorName: '림의사',
+      grade: '4.0',
+      status: 'RY',
+    },
+  ];
+  const selectable = true;
+  const data = { headers, items, selectable };
 
   return (
     <div className='listWrapper'>
-      <div className='listTitle'>
-        <img
-          className='backIcon'
-          src={back}
-          onClick={() => {
-            navigate(-1);
-          }}
-          alt='back'
-        />
-        <h2>리뷰관리</h2>
-      </div>
-      <div className='searchDateWrapper'>
-        {/* 
-          SearchDate 컴포넌트에 startDate, endDate, 
-          onStartDateChange, onEndDateChange, onSearch를 전달 
-        */}
-        <SearchDate
-          startDate={startDate}
-          endDate={endDate}
-          onStartDateChange={setStartDate}
-          onEndDateChange={setEndDate}
-        />
-      </div>
-      <div className='listForm'>
-        <table className='checklistTable'>
-          <thead>
-            <tr>
-              <th></th>
-              <th>진료일</th>
-              <th>병원명</th>
-              <th>의사명</th>
-              <th>내평점</th>
-              <th>리뷰상태</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <input type='checkbox' />
-              </td>
-              <td>2024-01-10</td>
-              <td>거구장병원</td>
-              <td>백두산의사</td>
-              <td>5.0</td>
-              <td>
-                <button
-                  className='listBtn-short'
-                  style={{ background: '#11c2ad' }}
-                >
-                  작성전
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input type='checkbox' />
-              </td>
-              <td>2024-01-10</td>
-              <td>거구장병원</td>
-              <td>백두산의사</td>
-              <td>5.0</td>
-              <td>
-                <button
-                  className='listBtn-short'
-                  style={{ background: '#11c2ad' }}
-                >
-                  작성전
-                </button>
-              </td>
-            </tr>
-          </tbody>
-
-          <button
-            id='deleteBtn'
-            className='clinicSubBtn-mid'
-            style={{ background: '#11c2ad' }}
-          >
-            리뷰삭제
-          </button>
-        </table>
-      </div>
+      <ListTitle title='리뷰관리' />
+      <List data={data} />
     </div>
   );
 };
