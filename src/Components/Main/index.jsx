@@ -1,9 +1,9 @@
 import React from 'react';
 
 import UserMain from './UserMain';
-import DoctorMain from './DoctorMain';
-import DrugStoreMain from './DrugStoreMain';
-import AdminMain from './AdminMain';
+import DoctorMain from '../Doctor/index';
+import DrugMain from '../DrugStrore/index';
+import AdminMain from '../Admin/index';
 import '../../css/UserStyle.css';
 import '../../css/Style.css';
 
@@ -18,7 +18,7 @@ const Main = () => {
         DefaultMain = <DoctorMain />;
         break;
       case 'S':
-        DefaultMain = <DrugStoreMain />;
+        DefaultMain = <DrugMain />;
         break;
       case 'A':
         DefaultMain = <AdminMain />;

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/esm/locale';
+import SearchBar from '../SearchBar';
 
 const SearchDate = ({ onSearch }) => {
   const [startDate, setStartDate] = useState(new Date());
@@ -15,17 +16,33 @@ const SearchDate = ({ onSearch }) => {
     return `${year}-${month}-${day}`;
   };
 
+  const formattedStartDate = formatDateForDB(startDate);
+  const formattedEndDate = formatDateForDB(endDate);
+
   // 검색 버튼 클릭 시 실행되는 함수
-  const handleSearch = () => {
-    const formattedStartDate = formatDateForDB(startDate);
-    const formattedEndDate = formatDateForDB(endDate);
+  // const handleSearch = () => {
+  //   const formattedStartDate = formatDateForDB(startDate);
+  //   const formattedEndDate = formatDateForDB(endDate);
 
-    console.log('검색 기간:', formattedStartDate, '~', formattedEndDate);
+  //   console.log('검색 기간:', formattedStartDate, '~', formattedEndDate);
 
-    // 부모 컴포넌트로 결과를 전달하거나, 직접 검색 로직을 수행
-    if (onSearch) {
-      onSearch(formattedStartDate, formattedEndDate);
-    }
+  //   // 부모 컴포넌트로 결과를 전달하거나, 직접 검색 로직을 수행
+  //   if (onSearch) {
+  //     onSearch(formattedStartDate, formattedEndDate);
+  //   }
+  // };
+
+  const nowDateClick = () => {
+    setStartDate(new Date());
+    setEndDate(new Date());
+  };
+  const monthDateClick = () => {
+    const today = new Date();
+    const newDay = new Date();
+    newDay.setDate(today.getDate() - 30);
+
+    setStartDate(newDay);
+    setEndDate(today);
   };
 
   return (
@@ -56,12 +73,19 @@ const SearchDate = ({ onSearch }) => {
           endDate={endDate}
           minDate={startDate}
         />
-        <button className='clinicSubBtn-mid'>당일</button>
-        <button className='clinicSubBtn-mid'>최근1개월</button>
-        <input type='text' />
-        <button className='clinicSubBtn-short' onClick={handleSearch}>
-          검색
+        <button className='clinicSubBtn-mid' onClick={nowDateClick}>
+          당일
         </button>
+        <button className='clinicSubBtn-mid' onClick={monthDateClick}>
+          최근1개월
+        </button>
+        <SearchBar
+          Searchtype='N'
+          props={[formattedStartDate, formattedEndDate]}
+        />
+        {/* <button className='clinicSubBtn-short' onClick={handleSearch}>
+          검색
+        </button> */}
       </div>
     </div>
   );

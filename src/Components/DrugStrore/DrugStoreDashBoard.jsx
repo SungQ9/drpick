@@ -2,10 +2,8 @@ import React from 'react';
 
 const DrugStoreDashBoard = () => {
   return (
-    <div className='mainContainer'>
-      <div className='Form'>
-        <h4>의사 대쉬보드 </h4>
-      </div>
+    <div>
+      <h4>의사 대쉬보드 </h4>
     </div>
   );
 };

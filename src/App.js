@@ -21,7 +21,7 @@ function App() {
       <TokenProvider>
         <Header />
         <Routes>
-          <Route exact path='/' element={<Main />} />
+          <Route exact path='/*' element={<Main />} />
           <Route path='/signUp' element={<SignUp />} />
           <Route path='/login' element={<Login />} />
           <Route path='/clinic/*' element={<Clinic />} />

@@ -25,6 +25,17 @@ li {
   border-radius: 20px;
 }
 
+.shortForm {
+  background-color: #ffffff;
+  width: 500px;
+  height: 700px;
+  border-radius: 15px;
+  margin: 1%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 input {
   width: 350px;
   height: 40px;
@@ -407,6 +418,11 @@ Input {
   height: 40px;
 }
 
+.searchBarWrapper {
+  display: flex;
+  align-items: center;
+}
+
 .listWrapper {
   display: flex;
   flex-direction: column;
@@ -507,4 +523,66 @@ td:nth-child(5) {
   position: relative;
   top: 245px;
   left: 935px;
+}
+
+/* 대시보드  */
+.dashBoardWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashBoardTop {
+  display: flex;
+  align-items: center;
+  padding: 2%;
+  width: 1100px;
+}
+
+.dashBoardStatusTable {
+  border-collapse: separate;
+  border-spacing: 20px 20px;
+  width: 600px;
+}
+
+.dashBoardStatusTable td {
+  border-radius: 15px;
+  color: #ffffff;
+  background-color: #11c2ad;
+  height: 90px;
+  font-size: 20px;
+  font-weight: bold;
+  width: 200px;
+}
+
+.dashBoardStatusSubTable {
+  background-color: #daf6ee;
+  border-radius: 15px;
+  padding: 1%;
+  margin-left: 3%;
+  width: 450px;
+  height: 200px;
+  border-collapse: separate;
+}
+
+.dashBoardStatusSubTable th {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.dashBoardStatusSubTable th:nth-child(3) {
+  vertical-align: bottom;
+  color: #acacac;
+  font-size: 15px;
+}
+
+.dashBoardStatusSubTable td {
+  color: #acacac;
+  height: 10px;
+}
+
+.dashBoardBottom {
+}
+
+.dashBoardGraph {
 }
