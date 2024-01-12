@@ -61,10 +61,10 @@ const MypageMain = () => {
             </td>
           </tr>
 
-          <div className='pointDetail' id='pointDetail'>
+          <td className='pointDetail' id='pointDetail'>
             {' '}
             포인트내역 <span>1,000P</span>
-          </div>
+          </td>
         </table>
       </div>
       <div className='clinicList'>

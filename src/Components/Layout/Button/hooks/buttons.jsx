@@ -31,21 +31,40 @@ const generateButtons = (status, handleButtonClick) => {
       );
     case 'IN':
       return (
-        <button className='clinicSubBtn-mid' style={{ background: '#11c2ad' }}>
+        <button
+          className='clinicSubBtn-mid'
+          style={{ background: '#11c2ad' }}
+          onClick={() => handleButtonClick('답변대기')}
+        >
           답변대기
         </button>
       );
     case 'IY':
-      return <button className='clinicSubBtn-mid'>답변완료</button>;
+      return (
+        <button
+          className='clinicSubBtn-mid'
+          onClick={() => handleButtonClick('답변완료')}
+        >
+          답변완료
+        </button>
+      );
     case 'RN':
       return (
-        <button className='listBtn-short' style={{ background: '#11c2ad' }}>
+        <button
+          className='listBtn-short'
+          style={{ background: '#11c2ad' }}
+          onClick={() => handleButtonClick('작성전')}
+        >
           작성전
         </button>
       );
     case 'RY':
       return (
-        <button className='listBtn-short' style={{ background: '#11c2ad' }}>
+        <button
+          className='listBtn-short'
+          style={{ background: '#11c2ad' }}
+          onClick={() => handleButtonClick('수정')}
+        >
           수정
         </button>
       );

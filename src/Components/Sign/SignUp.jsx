@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import Input from '../Layout/Input';
+import Select from '../Layout/Select';
+
 import '../../css/UserStyle.css';
 import '../../css/Style.css';
-
-import axios from 'axios';
 
 const SignUp = () => {
   const getElementValue = (id) => document.getElementById(id).value;
@@ -11,6 +13,13 @@ const SignUp = () => {
 
   const [selectedFileName, setSelectedFileName] = useState('');
   const [selectedName, setSelectedName] = useState('');
+  const [selectedOption, setSelectedOption] = useState('');
+
+  // 이메일 도메인 핸들러
+  const handleSelectChange = (value) => {
+    setSelectedOption(value);
+    console.log(value);
+  };
 
   // 파일 업로드 핸들러
   const handleFileInputChange = (event) => {
@@ -146,37 +155,29 @@ const SignUp = () => {
             <table id='signUpTable' className='signUpTable'>
               <tr>
                 <td colSpan={2}>
-                  <span>
-                    <input
-                      type='text'
-                      className='member_name'
-                      id='name'
-                      placeholder='　이름을 입력하세요'
-                      style={{ width: '500px' }}
-                      minLength={2}
-                      max={15}
-                      value={selectedName.trim()}
-                      onChange={(e) => {
-                        setSelectedName(e.target.value);
-                      }}
-                    />
-                    <label>이름</label>
-                  </span>
+                  <Input
+                    id='name'
+                    className='member_name'
+                    label='이름'
+                    type='text'
+                    placeholder='이름을 입력하세요'
+                    style={{ width: '500px' }}
+                    value={selectedName.trim()}
+                    onChange={(e) => setSelectedName(e.target.value)}
+                  />
                 </td>
               </tr>
               <tr>
                 <td>
-                  <span>
-                    <input
-                      type='text'
-                      className='member_birth'
-                      id='birth'
-                      placeholder='　생년월일 8자리를 입력해주세요 ( 년도/월/일 )'
-                      minLength={8}
-                      maxLength={8}
-                    />
-                    <label>생년월일</label>
-                  </span>
+                  <Input
+                    id='birth'
+                    className='member_birth'
+                    label='생년월일'
+                    type='text'
+                    placeholder='　생년월일 8자리를 입력해주세요 ( 년도/월/일 )'
+                    minLength={8}
+                    maxLength={8}
+                  />
                 </td>
                 <td>
                   <input
@@ -200,35 +201,37 @@ const SignUp = () => {
               </tr>
               <tr>
                 <td>
-                  <span>
-                    <input
-                      type='text'
-                      className='member_email'
-                      id='email'
-                      placeholder='　이메일형식'
-                    />
-                    <label>아이디</label>
-                  </span>
+                  <Input
+                    id='email'
+                    className='member_email'
+                    label='이메일'
+                    type='text'
+                    placeholder='　이메일형식'
+                  />
                 </td>
                 <td>
-                  <select className='member_email_domain' id='email_domain'>
-                    <option value='@naver.com'> @naver.com </option>
-                    <option value='@daum.net'> @daum.net </option>
-                    <option value='@google.com'> @google.com </option>
-                    <option value=''>직접입력</option>
-                  </select>
+                  <Select
+                    id='email_domain'
+                    options={[
+                      { value: '@naver.com', label: '@naver.com' },
+                      { value: '@daum.net', label: '@daum.net' },
+                      { value: '@google.com', label: '@google.com' },
+                      { value: '', label: '직접입력' },
+                    ]}
+                    onChange={(e) => handleSelectChange(e.target.value)}
+                    value={selectedOption} // selectedOption은 적절한 상태로 변경 필요
+                  />
                 </td>
               </tr>
               <tr>
                 <td>
-                  <span>
-                    <input
-                      type='text'
-                      className=''
-                      placeholder='　인증번호를 입력하세요'
-                    />
-                    <label>인증번호</label>
-                  </span>
+                  <Input
+                    id='accessNumber'
+                    className='accessNumber'
+                    label='인증번호'
+                    type='text'
+                    placeholder='　인증번호를 입력하세요'
+                  />
                 </td>
                 <td>
                   <button id='emailBtn'>인증받기</button>
@@ -236,59 +239,52 @@ const SignUp = () => {
               </tr>
               <tr>
                 <td colSpan={2}>
-                  <span>
-                    <input
-                      type='text'
-                      className='member_tel'
-                      id='tel'
-                      placeholder="　'-' 없이 입력하세요"
-                      style={{ width: '500px' }}
-                    />
-                    <label>전화번호</label>
-                  </span>
+                  <Input
+                    id='tel'
+                    className='member_tel'
+                    label='전화번호'
+                    type='text'
+                    style={{ width: '500px' }}
+                    placeholder="　'-' 없이 입력하세요"
+                  />
                 </td>
               </tr>
               <tr>
                 <td colSpan={2}>
-                  <span>
-                    <input
-                      type='password'
-                      className='member_pwd'
-                      id='pwd'
-                      style={{ width: '500px' }}
-                      placeholder='　영어,숫자,특수문자를 포함한 8~20자 '
-                      minLength={8}
-                      maxLength={20}
-                    />
-                    <label>비밀번호</label>
-                  </span>
+                  <Input
+                    id='pwd'
+                    className='member_pwd'
+                    label='비밀번호'
+                    type='password'
+                    style={{ width: '500px' }}
+                    placeholder='　영어,숫자,특수문자를 포함한 8~20자 '
+                    minLength={8}
+                    maxLength={20}
+                  />
                 </td>
               </tr>
               <tr>
                 <td colSpan={2}>
-                  <span>
-                    <input
-                      type='password'
-                      className='member_ckpwd'
-                      style={{ width: '500px' }}
-                      minLength={8}
-                      maxLength={20}
-                    />
-                    <label style={{ fontSize: '12px' }}>비밀번호확인</label>
-                  </span>
+                  <Input
+                    id='ckpwd'
+                    className='member_ckpwd'
+                    label='비밀번호확인'
+                    type='password'
+                    style={{ width: '500px', fontSize: '12px' }}
+                    minLength={8}
+                    maxLength={20}
+                  />
                 </td>
               </tr>
               <tr>
                 <td>
-                  <span>
-                    <input
-                      type='text'
-                      className='member_addr_main'
-                      id='addr_main'
-                      placeholder='　주소를 입력해주세요'
-                    />
-                    <label>주소</label>
-                  </span>
+                  <Input
+                    id='addr_main'
+                    className='member_addr_main'
+                    type='text'
+                    label='주소'
+                    placeholder='　주소를 입력해주세요'
+                  />
                 </td>
                 <td>
                   <button id='addrBtn'>주소검색</button>
@@ -296,16 +292,14 @@ const SignUp = () => {
               </tr>
               <tr>
                 <td colSpan={2}>
-                  <span>
-                    <input
-                      type='text'
-                      className='member_addr_detail'
-                      id='addr_detail'
-                      style={{ width: '500px' }}
-                      placeholder='　나머지 주소를 입력해주세요'
-                    />
-                    <label style={{ fontSize: '11px' }}>상세주소</label>
-                  </span>
+                  <Input
+                    id='addr_detail'
+                    className='member_addr_detail'
+                    type='text'
+                    label='상세주소'
+                    style={{ width: '500px', fontSize: '11px' }}
+                    placeholder='　나머지 주소를 입력해주세요'
+                  />
                 </td>
               </tr>
               <tr>

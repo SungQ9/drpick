@@ -1,7 +1,8 @@
 import React from 'react';
 import Pagination from './Pagination';
-import generateButtons from './Button/buttons';
-import { handleButtonClick } from './Button/buttonHandler';
+import generateButtons from '../Button/hooks/buttons';
+import { handleButtonClick } from '../Button/hooks/buttonHandler';
+
 const CurrentList = (
   { headers, items = [], selectable = false }, // items props 받기, default parameter 빈 배열로 설정
 ) => {
@@ -29,7 +30,7 @@ const CurrentList = (
 
   return (
     <div className='listForm'>
-      <table className='listTable'>
+      <table className={`listTable ${selectable ? 'checklistTable' : ''}`}>
         <thead>
           <tr>
             {selectable && (
@@ -53,7 +54,9 @@ const CurrentList = (
               {/* headerKey를 순회하면서 key를 가져옴 */}
               {headerKey.map((key) => (
                 <td key={key + index}>
-                  {key === 'status' ? generateButtons(item[key]) : item[key]}
+                  {key === 'status'
+                    ? generateButtons(item[key], handleButtonClick)
+                    : item[key]}
                 </td>
               ))}
             </tr>
