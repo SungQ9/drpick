@@ -4,11 +4,9 @@ import '../../../css/UserStyle.css';
 import '../../../css/Style.css';
 
 import MypageMain from './MypageMain';
-import MedicalHistory from './MedicalHistory';
-import Inquiry from './Inquiry';
+import UserManagement from './UserManagement';
 import UserProfileEdit from './UserProfileEdit';
 import PaymentManagement from './PaymentManagement';
-import ReviewManagement from './ReviewManagement';
 
 const UserMyPage = () => {
   return (
@@ -16,11 +14,9 @@ const UserMyPage = () => {
       <div className='mypageForm'>
         <Routes>
           <Route path='/' element={<MypageMain />} />
-          <Route path='/history' element={<MedicalHistory />} />
-          <Route path='/inquiry' element={<Inquiry />} />
+          <Route path='/manager' element={<UserManagement />} />
           <Route path='/profileEdit' element={<UserProfileEdit />} />
           <Route path='/payment' element={<PaymentManagement />} />
-          <Route path='/review' element={<ReviewManagement />} />
         </Routes>
       </div>
     </div>

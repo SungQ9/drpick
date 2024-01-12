@@ -2,14 +2,19 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import card from '../../../img/card-icon.png';
-import data from './sampledata/medicalhistoryData';
-import CurrentList from '../../Layout/List/list';
+import data from '../../SampleData/medicalhistoryData';
+import CurrentList from '../../Layout/List/CurrentList';
 
 const MypageMain = () => {
   const navigate = useNavigate();
 
-  const headers = data.headers.filter((header) => header.value !== 'status');
+  // 버튼 클릭시 지정해둔 입력값에 따라서 해당 목록 전달
+  const handleButtonClick = (type) => {
+    navigate('/user/manager', { state: { selectedType: type } });
+  };
 
+  // 테스트 데이터 처리하는 코드
+  const headers = data.headers.filter((header) => header.value !== 'status');
   const items = data.items.filter((items) => items.value !== 'status');
 
   return (
@@ -22,7 +27,7 @@ const MypageMain = () => {
           <tr>
             <td
               onClick={() => {
-                navigate('/user/history');
+                handleButtonClick('history');
               }}
             >
               <img src={card} alt='' />
@@ -30,7 +35,7 @@ const MypageMain = () => {
             </td>
             <td
               onClick={() => {
-                navigate('/user/inquiry');
+                handleButtonClick('inquiry');
               }}
             >
               {' '}
@@ -57,7 +62,7 @@ const MypageMain = () => {
             </td>
             <td
               onClick={() => {
-                navigate('/user/review');
+                handleButtonClick('review');
               }}
             >
               {' '}
@@ -77,6 +82,7 @@ const MypageMain = () => {
         headers={headers}
         items={items}
         style={{ height: '300px', width: '950px' }}
+        type={'Lite'}
       />
     </div>
   );

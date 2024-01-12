@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 
-const SearchBar = ({ Searchtype, props = [] }) => {
+const SearchBar = ({ type, props = [] }) => {
   const [inputText, setInputText] = useState('');
 
   const prop1 = props[0];
   const prop2 = props[1];
-  const type = Searchtype;
 
   const onChangeInput = (evt) => {
     setInputText(evt.target.value);

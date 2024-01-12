@@ -11,17 +11,14 @@ function AdminTab() {
     setDoctorSubtabVisible(!doctorSubtabVisible);
     setInquirySubtabVisible(false);
   };
-  const handleButtonDoctorClick = (component) => {
-    navigate('/admin/doctor', { state: { selectedComponent: component } });
-  };
 
   const handleInquirySubtab = () => {
     setInquirySubtabVisible(!inquirySubtabVisible);
     setDoctorSubtabVisible(false);
   };
 
-  const handleButtonInquiryClick = (type) => {
-    navigate('/admin/inquiry', { state: { selectedType: type } });
+  const handleButtonClick = (type) => {
+    navigate('/admin', { state: { selectedType: type } });
   };
 
   return (
@@ -42,7 +39,7 @@ function AdminTab() {
           className='tabLi'
           style={{ marginRight: '0px' }}
           onClick={() => {
-            navigate('/admin/user');
+            handleButtonClick('user');
           }}
         >
           <img src='' alt='' />
@@ -61,7 +58,7 @@ function AdminTab() {
                 style={{ marginRight: '0px' }}
                 className='subtabLi'
                 onClick={() => {
-                  handleButtonDoctorClick('doctor');
+                  handleButtonClick('doctor');
                 }}
               >
                 의사관리
@@ -69,7 +66,7 @@ function AdminTab() {
               <li
                 className='subtabLi'
                 onClick={() => {
-                  handleButtonDoctorClick('request');
+                  handleButtonClick('request');
                 }}
               >
                 등록요청목록
@@ -81,7 +78,7 @@ function AdminTab() {
           style={{ marginRight: '0px' }}
           className='tabLi'
           onClick={() => {
-            navigate('/admin/hospital');
+            handleButtonClick('hospital');
           }}
         >
           <img src='' alt='' />
@@ -91,7 +88,7 @@ function AdminTab() {
           style={{ marginRight: '0px' }}
           className='tabLi'
           onClick={() => {
-            navigate('/admin/drugstore');
+            handleButtonClick('drugstore');
           }}
         >
           <img src='' alt='' />
@@ -109,7 +106,7 @@ function AdminTab() {
               <li
                 className='subtabLi'
                 onClick={() => {
-                  handleButtonInquiryClick('user');
+                  handleButtonClick('userInquiry');
                 }}
               >
                 회원문의
@@ -117,7 +114,7 @@ function AdminTab() {
               <li
                 className='subtabLi'
                 onClick={() => {
-                  handleButtonInquiryClick('doctor');
+                  handleButtonClick('doctorInquiry');
                 }}
               >
                 의사문의
@@ -125,7 +122,7 @@ function AdminTab() {
               <li
                 className='subtabLi'
                 onClick={() => {
-                  handleButtonInquiryClick('drugstore');
+                  handleButtonClick('drugstoreInquiry');
                 }}
               >
                 약국문의

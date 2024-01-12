@@ -4,7 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/esm/locale';
 import SearchBar from '../SearchBar';
 
-const SearchDate = ({ onSearch }) => {
+const SearchDate = ({ onSearch, type }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
@@ -79,10 +79,7 @@ const SearchDate = ({ onSearch }) => {
         <button className='clinicSubBtn-mid' onClick={monthDateClick}>
           최근1개월
         </button>
-        <SearchBar
-          Searchtype='Date'
-          props={[formattedStartDate, formattedEndDate]}
-        />
+        <SearchBar type={type} props={[formattedStartDate, formattedEndDate]} />
         {/* <button className='clinicSubBtn-short' onClick={handleSearch}>
           검색
         </button> */}

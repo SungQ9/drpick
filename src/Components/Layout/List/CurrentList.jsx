@@ -1,25 +1,27 @@
 import React from 'react';
 import Pagination from './Pagination';
-import generateButtons from '../Button/hooks/buttons';
-import { handleButtonClick } from '../Button/hooks/buttonHandler';
+import generateButtons from '../../hooks/buttons';
+import { handleButtonClick } from '../../hooks/buttonHandler';
+import SearchBar from '../SearchBar';
+import Button from '../Button';
 
 const CurrentList = (
-  { headers, items = [], selectable = false, style }, // items props 받기, default parameter 빈 배열로 설정
+  {
+    headers,
+    items = [],
+    selectable = false,
+    style,
+    type,
+    buttonType,
+    buttonName,
+  }, // items props 받기, default parameter 빈 배열로 설정
 ) => {
   // 페이지 상태 및 함수 정의
   const [Page, setPage] = React.useState(1);
   const itemsPerPage = 7; // 한 페이지에 보여질 아이템 수
 
-  const medicalHistoryData = [
-    // ... (진료내역 데이터)
-  ];
-
   const indexOfLastItem = Page * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = medicalHistoryData.slice(
-    indexOfFirstItem,
-    indexOfLastItem,
-  );
 
   const paginate = (pageNumber) => setPage(pageNumber);
 
@@ -65,7 +67,19 @@ const CurrentList = (
             </tr>
           ))}
         </tbody>
-        <Pagination />
+        <tfoot>
+          {type !== 'Date' && type !== 'Lite' && (
+            <>
+              <Button
+                buttonName={buttonName}
+                buttonType={buttonType}
+                handleButtonClick={handleButtonClick}
+              />
+              <SearchBar />
+            </>
+          )}
+          <Pagination />
+        </tfoot>
       </table>
     </div>
   );
