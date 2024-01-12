@@ -1,168 +1,237 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import Input from '../Layout/Input';
+import Select from '../Layout/Select';
+
 import '../../css/UserStyle.css';
 import '../../css/Style.css';
 
-import axios from 'axios';
-
 const SignUp = () => {
-  const [selectedFileName, setSelectedFileName] = useState('');
+  const getElementValue = (id) => document.getElementById(id).value;
+  const getCheckedValue = (className) =>
+    document.querySelector(`.${className}:checked`).value;
 
-  const handleFileInputChange = (event) => {
-    const fileInput = event.target;
-    setSelectedFileName(fileInput.files[0].name);
+  const [selectedFileName, setSelectedFileName] = useState('');
+  const [selectedName, setSelectedName] = useState('');
+  const [selectedOption, setSelectedOption] = useState('');
+
+  // 이메일 도메인 핸들러
+  const handleSelectChange = (value) => {
+    setSelectedOption(value);
+    console.log(value);
   };
 
+  // 파일 업로드 핸들러
+  const handleFileInputChange = (event) => {
+    const fileInput = event.target;
+    const newFiles = Array.from(fileInput.files).map((file) => ({
+      name: file.name,
+      id: Date.now(),
+    }));
+    const totalFiles = selectedFileName.length + newFiles.length;
+
+    if (totalFiles > 3) {
+      alert('파일은 3개까지 올릴 수 있습니다.');
+      return;
+    }
+
+    setSelectedFileName((prevFiles) => [...prevFiles, ...newFiles]);
+  };
+
+  // 업로드 파일 삭제 핸들러
+  const handleDeleteFile = (id) => {
+    setSelectedFileName((prevFiles) =>
+      prevFiles.filter((file) => file.id !== id),
+    );
+  };
+
+  // 업로드 버튼 핸들러
   const handleFileBtnClick = () => {
     document.getElementById('selectedFile').click();
   };
 
-  const submitBtnClick = () => {
-    const nameElement = document.getElementById('name');
-    const birthElement = document.getElementById('birth');
-    const sexElement = document.querySelector('.sex:checked');
-    const emailElement = document.getElementById('email');
-    const domainElement = document.getElementById('email_domain');
-    const telElement = document.getElementById('tel');
-    const pwdElement = document.getElementById('pwd');
-    const addrMainElement = document.getElementById('addr_main');
-    const addrDetailElement = document.getElementById('addr_detail');
+  // 파일다중선택 return
+  const renderFileList = () => {
+    // selectedFileName이 배열인지 확인
+    if (!Array.isArray(selectedFileName)) {
+      console.error('selectedFileName is not an array.');
+      return null; // 또는 다른 적절한 처리를 추가하세요.
+    }
 
-    // 각각의 요소가 null인지 확인
+    return selectedFileName.map((file) => (
+      <p className='uploadFileList' key={file.id}>
+        <span style={{ marginRight: '5px' }}>{file.name}</span>
+        <p onClick={() => handleDeleteFile(file.id)}>X</p>
+      </p>
+    ));
+  };
+  // submit
+  const submitBtnClick = (event) => {
+    // 폼의 기본 동작 방지 (페이지 새로고침 방지)
+    event.preventDefault();
+
+    const email = document.getElementById('email').value;
+    const domain = document.getElementById('email_domain').value;
+    // 이메일과 도메인을 조합한 회원 이메일 생성
+    const memberEmail = domain === '' ? email : email + domain;
+    const name = getElementValue('name');
+    const birth = getElementValue('birth');
+    const sex = getCheckedValue('sex');
+    const tel = getElementValue('tel');
+    const pwd = getElementValue('pwd');
+    const addrMain = getElementValue('addr_main');
+    const addrDetail = getElementValue('addr_detail');
+    const auth = getCheckedValue('auth');
+
+    // Null Check
     if (
-      !nameElement ||
-      !birthElement ||
-      !sexElement ||
-      !emailElement ||
-      !domainElement ||
-      !telElement ||
-      !pwdElement ||
-      !addrMainElement ||
-      !addrDetailElement
+      [
+        name,
+        birth,
+        sex,
+        email,
+        domain,
+        tel,
+        pwd,
+        addrMain,
+        addrDetail,
+        auth,
+      ].some((value) => !value)
     ) {
       console.error('하나 이상의 요소를 찾을 수 없습니다.');
       return;
     }
 
-    const name = document.getElementById('name').value;
-    const birth = document.getElementById('birth').value;
-    const sex = document.querySelector('.sex:checked').value;
-    const email = document.getElementById('email').value;
-    const domain = document.getElementById('email_domain').value;
-    const member_email = email + domain;
-    const tel = document.getElementById('tel').value;
-    const pwd = document.getElementById('pwd').value;
-    const addr_main = document.getElementById('addr_main').value;
-    const addr_detail = document.getElementById('addr_detail').value;
+    // FormData 객체 생성
+    const formData = new FormData();
 
-    // 데이터 객체 생성
-    const data = {
-      memberName: name,
-      memberBirth: birth,
-      memberSex: sex,
-      memberEmail: member_email,
-      memberTel: tel,
-      memberPwd: pwd,
-      memberAddrMain: addr_main,
-      memberAddrDetail: addr_detail,
+    // 회원 정보를 FormData에 직접 추가
+    formData.append('userEmail', memberEmail);
+    formData.append('userPwd', pwd);
+    formData.append('userName', name);
+    formData.append('userBirth', birth);
+    formData.append('userSex', sex);
+    formData.append('userTel', tel);
+    formData.append('userAddrMain', addrMain);
+    formData.append('userAddrDetail', addrDetail);
+    formData.append('userAuth', auth);
 
-      // ... 추가 필요한 필드들
-    };
-
-    // 서버로 데이터 전송
+    // 선택된 파일이 있으면 FormData에 추가
+    const selectedFileInput = document.getElementById('selectedFile');
+    if (selectedFileInput && selectedFileInput.files.length > 0) {
+      Array.from(selectedFileInput.files).forEach((file) => {
+        formData.append('fileList', file);
+      });
+    }
+    // 회원가입 요청을 서버에 전송
     axios
-      .post('http://localhost:8080/members/signup', data)
+      .post('http://localhost:8080/users/signup', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // 이 부분이 중요합니다.
+        },
+      })
       .then((res) => {
-        // 서버 응답에 대한 처리
+        // 성공적으로 응답 받았을 때의 처리
         console.log(res.data);
       })
       .catch((e) => {
-        // 오류 처리
-        console.error('회원가입에러' + e.getMeesage);
+        // 오류 발생 시의 처리
+        console.error('회원가입 에러: ' + e.message);
       });
+    for (var pair of formData.entries()) {
+      console.log('폼데이터', pair[0] + ', ' + pair[1]);
+    }
   };
+  // ... (handleFileBtnClick 등의 함수는 그대로 유지)
 
   return (
     <div className='mainContainer'>
-      <div className='signUpForm'>
-        <div className='signUpWrapper'>
+      <div id='signUpForm' className='signUpForm'>
+        <div id='signUpWrapper' className='signUpWrapper'>
           <h4>
             회원가입<span>회원가입</span>
           </h4>
-          <form
-            action='http://localhost:8080/members/signup'
-            method='POST'
-            className='signUpInputForm'
-          >
-            <table className='signUpTable'>
+          <div id='signUpInputForm' className='signUpInputForm'>
+            <table id='signUpTable' className='signUpTable'>
               <tr>
                 <td colSpan={2}>
-                  <span>
-                    <input
-                      type='text'
-                      className='member_name'
-                      id='name'
-                      placeholder='　이름을 입력하세요'
-                      style={{ width: '500px' }}
-                      minLength={2}
-                      max={15}
-                    />
-                    <label>이름</label>
-                  </span>
+                  <Input
+                    id='name'
+                    className='member_name'
+                    label='이름'
+                    type='text'
+                    placeholder='이름을 입력하세요'
+                    style={{ width: '500px' }}
+                    value={selectedName.trim()}
+                    onChange={(e) => setSelectedName(e.target.value)}
+                  />
                 </td>
               </tr>
               <tr>
                 <td>
-                  <span>
-                    <input
-                      type='text'
-                      className='member_birth'
-                      id='birth'
-                      placeholder='　생년월일 8자리를 입력해주세요 ( 년도/월/일 )'
-                      minLength={8}
-                      maxLength={8}
-                    />
-                    <label>생년월일</label>
-                  </span>
+                  <Input
+                    id='birth'
+                    className='member_birth'
+                    label='생년월일'
+                    type='text'
+                    placeholder='　생년월일 8자리를 입력해주세요 ( 년도/월/일 )'
+                    minLength={8}
+                    maxLength={8}
+                  />
                 </td>
                 <td>
-                  <input type='radio' className='sex' id='sex' value='male' />{' '}
+                  <input
+                    type='radio'
+                    className='sex'
+                    id='sexM'
+                    value='M'
+                    name='sex'
+                    defaultChecked
+                  />
                   남자
-                  <input type='radio' className='sex' id='sex' value='female' />
+                  <input
+                    type='radio'
+                    className='sex'
+                    id='sexF'
+                    value='F'
+                    name='sex'
+                  />
                   여자
                 </td>
               </tr>
               <tr>
                 <td>
-                  <span>
-                    <input
-                      type='text'
-                      className='member_email'
-                      id='email'
-                      placeholder='　이메일형식'
-                    />
-                    <label>아이디</label>
-                  </span>
+                  <Input
+                    id='email'
+                    className='member_email'
+                    label='이메일'
+                    type='text'
+                    placeholder='　이메일형식'
+                  />
                 </td>
                 <td>
-                  {' '}
-                  <select className='member_email_domain' id='email_domain'>
-                    <option value='@naver.com'>naver.com</option>
-                    <option value='@daum.net'>daum.net</option>
-                    <option value='@google.com'>google.com</option>
-                    <option value=''>직접입력</option>
-                  </select>
+                  <Select
+                    id='email_domain'
+                    options={[
+                      { value: '@naver.com', label: '@naver.com' },
+                      { value: '@daum.net', label: '@daum.net' },
+                      { value: '@google.com', label: '@google.com' },
+                      { value: '', label: '직접입력' },
+                    ]}
+                    onChange={(e) => handleSelectChange(e.target.value)}
+                    value={selectedOption} // selectedOption은 적절한 상태로 변경 필요
+                  />
                 </td>
               </tr>
               <tr>
                 <td>
-                  <span>
-                    <input
-                      type='text'
-                      className=''
-                      placeholder='　인증번호를 입력하세요'
-                    />
-                    <label>인증번호</label>
-                  </span>
+                  <Input
+                    id='accessNumber'
+                    className='accessNumber'
+                    label='인증번호'
+                    type='text'
+                    placeholder='　인증번호를 입력하세요'
+                  />
                 </td>
                 <td>
                   <button id='emailBtn'>인증받기</button>
@@ -170,59 +239,52 @@ const SignUp = () => {
               </tr>
               <tr>
                 <td colSpan={2}>
-                  <span>
-                    <input
-                      type='text'
-                      className='member_tel'
-                      id='tel'
-                      placeholder="　'-' 없이 입력하세요"
-                      style={{ width: '500px' }}
-                    />
-                    <label>전화번호</label>
-                  </span>
+                  <Input
+                    id='tel'
+                    className='member_tel'
+                    label='전화번호'
+                    type='text'
+                    style={{ width: '500px' }}
+                    placeholder="　'-' 없이 입력하세요"
+                  />
                 </td>
               </tr>
               <tr>
                 <td colSpan={2}>
-                  <span>
-                    <input
-                      type='password'
-                      className='member_pwd'
-                      id='pwd'
-                      style={{ width: '500px' }}
-                      placeholder='　영어,숫자,특수문자를 포함한 8~20자 '
-                      minLength={8}
-                      maxLength={20}
-                    />
-                    <label>비밀번호</label>
-                  </span>
+                  <Input
+                    id='pwd'
+                    className='member_pwd'
+                    label='비밀번호'
+                    type='password'
+                    style={{ width: '500px' }}
+                    placeholder='　영어,숫자,특수문자를 포함한 8~20자 '
+                    minLength={8}
+                    maxLength={20}
+                  />
                 </td>
               </tr>
               <tr>
                 <td colSpan={2}>
-                  <span>
-                    <input
-                      type='password'
-                      className='member_ckpwd'
-                      style={{ width: '500px' }}
-                      minLength={8}
-                      maxLength={20}
-                    />
-                    <label style={{ fontSize: '12px' }}>비밀번호확인</label>
-                  </span>
+                  <Input
+                    id='ckpwd'
+                    className='member_ckpwd'
+                    label='비밀번호확인'
+                    type='password'
+                    style={{ width: '500px', fontSize: '12px' }}
+                    minLength={8}
+                    maxLength={20}
+                  />
                 </td>
               </tr>
               <tr>
                 <td>
-                  <span>
-                    <input
-                      type='text'
-                      className='member_addr_main'
-                      id='addr_main'
-                      placeholder='　주소를 입력해주세요'
-                    />
-                    <label>주소</label>
-                  </span>
+                  <Input
+                    id='addr_main'
+                    className='member_addr_main'
+                    type='text'
+                    label='주소'
+                    placeholder='　주소를 입력해주세요'
+                  />
                 </td>
                 <td>
                   <button id='addrBtn'>주소검색</button>
@@ -230,42 +292,64 @@ const SignUp = () => {
               </tr>
               <tr>
                 <td colSpan={2}>
-                  <span>
-                    <input
-                      type='text'
-                      className='member_addr_detail'
-                      id='addr_detail'
-                      style={{ width: '500px' }}
-                      placeholder='　나머지 주소를 입력해주세요'
-                    />
-                    <label style={{ fontSize: '11px' }}>나머지주소</label>
-                  </span>
+                  <Input
+                    id='addr_detail'
+                    className='member_addr_detail'
+                    type='text'
+                    label='상세주소'
+                    style={{ width: '500px', fontSize: '11px' }}
+                    placeholder='　나머지 주소를 입력해주세요'
+                  />
                 </td>
               </tr>
               <tr>
                 <td colSpan={2}>
                   <span id='partnerShipSpan'>
-                    <label id='partnerShip'>제휴여부</label>{' '}
-                    <input type='radio' className='member_sex' value='male' />{' '}
-                    의사
-                    <input type='radio' className='member_sex' value='female' />
-                    약국 <span id='subSpan'>* 해당 가입자만 작성바랍니다</span>
+                    <label id='partnerShip'>회원유형</label>
                   </span>
+                  <input
+                    type='radio'
+                    className='auth'
+                    id='authN'
+                    value='N'
+                    name='auth'
+                    defaultChecked
+                  />
+                  일반
+                  <input
+                    type='radio'
+                    className='auth'
+                    id='authD'
+                    value='D'
+                    name='auth'
+                  />
+                  의사
+                  <input
+                    type='radio'
+                    className='auth'
+                    id='authS'
+                    value='S'
+                    name='auth'
+                  />
+                  약국
                 </td>
               </tr>
               <tr>
-                <td>
-                  <span>
-                    <input type='text' value={selectedFileName} readOnly />
-                    <label>증명파일</label>
+                <td className='uploadFileListTd'>
+                  <span id='partnerShipSpan'>
+                    <label id='partnerShip'>증명파일</label>
                   </span>
+                  <div className='uploadFileListContainer'>
+                    {renderFileList()}
+                  </div>
                 </td>
+
                 <td>
                   <input
                     type='button'
                     id='fileBtn'
-                    value='파일업로드'
                     onClick={handleFileBtnClick}
+                    value='파일업로드'
                   />
                   <input
                     type='file'
@@ -278,12 +362,14 @@ const SignUp = () => {
               </tr>
               <tr>
                 <td colSpan={2}>
-                  <button onClick={submitBtnClick}>확인</button>
-                  <button>취소</button>
+                  <button className='signUpBtn' onClick={submitBtnClick}>
+                    확인
+                  </button>
+                  <button className='signUpBtn'>취소</button>
                 </td>
               </tr>
             </table>
-          </form>
+          </div>
         </div>
       </div>
     </div>

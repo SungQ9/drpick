@@ -4,8 +4,6 @@ import { useClinicContext } from '../../Context/ClinicContext';
 import back from '../../../img/back-arrow-icon.png';
 import card from '../../../img/card-icon.png';
 import point from '../../../img/point-icon.png';
-import '../../../css/UserStyle.css';
-import '../../../css/Style.css';
 
 const SelectPayment = () => {
   const navigate = useNavigate();
@@ -15,8 +13,11 @@ const SelectPayment = () => {
   const btnHandler = (evt) => {
     const selectedPayment = evt.currentTarget.getAttribute('data-value');
     clinicContext.selectPayment = selectedPayment;
-    navigate('/clinic/complete');
     console.log(selectedPayment);
+
+    // 여기서 context안에 저장된 값들 불러와서 db로 보내고
+    // 성공하면 페이지 이동
+    navigate('/clinic/complete');
   };
 
   return (

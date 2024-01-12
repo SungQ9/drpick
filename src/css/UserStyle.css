@@ -47,12 +47,11 @@
   margin-top: 10px;
   margin-bottom: 15px;
 }
-#loginInputForm input {
+#loginInputForm .loginInput {
   border: 1px solid #cecece;
   border-radius: 10px;
   outline: 0;
   text-indent: 70px;
-
   + label {
     position: absolute;
     margin-bottom: 35px;
@@ -72,9 +71,27 @@
   }
 }
 
+#loginInputForm .loginInput + label {
+  position: absolute;
+  margin-bottom: 35px;
+  margin-left: 0px;
+  height: 24px;
+  width: 50px;
+  bottom: -15px;
+  left: 0;
+  padding: 10px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  background: #daf6ee;
+  color: #11c2ad;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
 /*회원가입*/
 
-.signUpForm {
+#signUpForm {
   background: #ffffff;
   width: 600px;
   height: 1200px;
@@ -83,12 +100,12 @@
   border-radius: 15px;
 }
 
-.signUpWrapper {
+#signUpWrapper {
   width: 100%;
   height: 100%;
 }
 
-.signUpWrapper h4 {
+#signUpWrapper h4 {
   margin-top: 2%;
   margin-left: 10%;
   text-align: left;
@@ -96,14 +113,14 @@
   font-size: 25px;
 }
 
-.signUpWrapper span {
+#signUpWrapper span {
   font-size: 50%;
   font-weight: normal;
   margin-left: 10px;
   color: #cecece;
 }
 
-.signUpInputForm {
+#signUpInputForm {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -112,17 +129,18 @@
   align-items: center;
 }
 
-.signUpInputForm Span {
+#signUpInputForm Span {
   position: relative;
   margin-top: 10px;
   margin-bottom: 15px;
 }
 
-.signUpInputForm table {
+#signUpInputForm table {
   border-collapse: separate;
+  width: 500px;
 }
 
-.signUpInputForm Input[type='text'],
+#signUpInputForm Input[type='text'],
 [type='password'],
 [type='file'] {
   border: 1px solid #cecece;
@@ -149,17 +167,18 @@
   }
 }
 
-.signUpTable input[type='radio'] {
+#signUpTable input[type='radio'] {
   vertical-align: middle;
   width: 15px;
+  cursor: pointer;
 }
 
-.signUpInputForm button {
+#ignUpInputForm button {
   margin: 20px;
 }
 
 #partnerShipSpan {
-  margin-right: 190px;
+  margin-right: 30px;
 }
 
 #subSpan {
@@ -176,6 +195,7 @@
   background-color: #daf6ee;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
+  margin-left: -250px;
 }
 
 #fileBtn {
@@ -186,6 +206,36 @@
   background-color: #11c2ad;
   color: #ffffff;
   font-weight: bold;
+  cursor: pointer;
+}
+
+.uploadFileListTd {
+  position: relative;
+}
+
+.uploadFileListContainer {
+  display: flex;
+  position: absolute;
+  top: 27px;
+  left: 80px;
+  /* 다른 스타일링 속성을 필요에 따라 추가하세요. */
+}
+
+.uploadFileList {
+  display: flex;
+  align-items: center;
+  margin: 0px;
+}
+
+.uploadFileList p {
+  margin: 0;
+  padding-bottom: 5px;
+  cursor: pointer;
+  color: red; /* X 버튼에 적용할 스타일링 예시 */
+}
+
+.signUpBtn {
+  margin: 20px 10px 0px 10px;
 }
 
 /* 비대면진료 */
@@ -212,6 +262,7 @@
   width: 300px;
   height: 300px;
   color: #727272;
+  cursor: pointer;
 }
 
 .clinicBtn img {
@@ -223,6 +274,7 @@
   margin-left: 20px;
   width: 60px;
   height: 100%;
+  cursor: pointer;
 }
 
 .stepTitle {
@@ -234,6 +286,10 @@
   margin-top: 10px;
   display: flex;
   justify-content: flex-start;
+}
+
+.titleWrapper img {
+  cursor: pointer;
 }
 /* 진료과목 */
 
@@ -355,6 +411,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  cursor: default;
 }
 
 .doctorDetail .grade {
@@ -427,6 +484,28 @@
   flex-direction: column;
   align-items: center;
 }
+.completeText {
+  margin-top: 5%;
+  text-align: center;
+}
+
+.completeText h2 {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20%;
+}
+
+.completeText p {
+  font-size: 25px;
+  font-weight: bold;
+  color: #727272;
+  margin-top: -30px;
+}
+
+.completeText p:nth-of-type(2) {
+  color: #11c2ad;
+}
+
 .completeTextarea {
   max-width: 650px;
 }
@@ -434,11 +513,288 @@
   border: 1px solid #cecece;
   border-radius: 10px;
   font-size: 25px;
-  text-align: left;
+  text-align: center; /* 텍스트 내용을 가운데 정렬로 변경 */
   resize: none;
-  padding: 20px 20px 20px 20px;
-  min-width: 600px;
+  padding: 80px 5px 0px 5px;
+  min-width: 650px;
   max-width: 650px;
   min-height: 250px;
+  margin-top: 5%;
+  margin-bottom: 15%;
+}
+
+/* 마이페이지 */
+
+.mypageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.userPageWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.userPageTitle {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* 마이페이지 메뉴 */
+.menuContainer {
+  padding: 0px 100px 0 100px;
+}
+
+.menuTable {
+  display: flex;
+  align-items: center;
+  border-collapse: collapse;
+  flex-direction: column;
+  max-width: 1000px;
+  background-color: white;
   margin-bottom: 5%;
+}
+
+.menuTable tr {
+  margin-bottom: 30px;
+}
+
+.menuTable td {
+  height: 150px;
+  width: 20px;
+  padding: 10px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.menuTable td img {
+  display: block; /* 이미지를 블록 요소로 설정하여 글자 아래에 표시 */
+  margin: 0 auto 0px; /* 이미지 하단에 5px의 마진을 주어 글자와 간격을 조절 */
+  cursor: pointer;
+}
+.menuTable td p {
+  min-width: 150px;
+  margin-top: -1px;
+  cursor: pointer;
+}
+#pointDetail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #11c2ad;
+  border-radius: 13px;
+  background-color: #11c2ad;
+  color: #ffffff;
+  font-weight: bold;
+  width: 300px;
+  height: 40px;
+  padding: 5px 30px 5px 30px;
+  margin-bottom: 5%;
+}
+/* 마이페이지 최근진료내역  */
+.clinicList h4 {
+  font-size: 20px;
+  text-align: left;
+  padding-bottom: 15px;
+  max-width: 1000px;
+  border-bottom: 1px solid #cecece;
+}
+.clinicListTable {
+  margin-top: -15px;
+  border-collapse: collapse;
+  display: flex;
+  flex-direction: column;
+  width: 1000px;
+  background-color: white;
+}
+
+.clinicListTable thead {
+  border-bottom: 1px solid #ddd;
+}
+
+.clinicListTable th {
+  padding: 10px;
+  text-align: left;
+  text-align: center;
+  color: #000;
+}
+
+.clinicListTable td {
+  padding: 10px;
+  text-align: left;
+  text-align: center;
+  border-right: none;
+  border-bottom: 1px solid #ddd;
+}
+
+.clinicListTable tbody tr:hover {
+  background-color: #ebebeb;
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.clinicListTable th:nth-child(1),
+.clinicListTable td:nth-child(1) {
+  width: 250px;
+}
+
+.clinicListTable th:nth-child(2),
+.clinicListTable td:nth-child(2) {
+  width: 250px;
+}
+
+.clinicListTable th:nth-child(3),
+.clinicListTable td:nth-child(3) {
+  width: 250px;
+}
+
+.clinicListTable th:nth-child(4),
+.clinicListTable td:nth-child(4) {
+  width: 250px;
+}
+
+.clinicListTable th,
+.clinicListTable td {
+  border-left: none;
+  border-right: none;
+}
+
+/* 리뷰관리 */
+.checklistTable {
+  border-collapse: collapse;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  width: 1100px;
+  background-color: white;
+  border: 1px solid #cecece;
+  border-radius: 15px;
+}
+
+.checklistTable thead {
+  border-bottom: 1px solid #ddd;
+}
+
+.checklistTable th {
+  padding: 10px;
+  text-align: left;
+  text-align: center;
+  color: #000;
+}
+
+.checklistTable td {
+  padding: 10px;
+
+  text-align: left;
+  text-align: center;
+  border-right: none;
+  border-bottom: 1px solid #ddd;
+}
+
+.checklistTable tbody tr:hover {
+  background-color: #ebebeb;
+  opacity: 0.9;
+}
+
+.checklistTable th:nth-child(1),
+.checklistTable td:nth-child(1) {
+  width: 100px;
+}
+
+.checklistTable th:nth-child(2),
+.checklistTable td:nth-child(2) {
+  width: 200px;
+}
+
+.checklistTable th:nth-child(3),
+.checklistTable td:nth-child(3) {
+  width: 200px;
+}
+
+.checklistTable th:nth-child(4),
+.checklistTable td:nth-child(4) {
+  width: 200px;
+}
+.checklistTable th:nth-child(5),
+.checklistTable td:nth-child(5) {
+  vertical-align: middle;
+  width: 200px;
+}
+.checklistTable th:nth-child(6),
+.checklistTable td:nth-child(6) {
+  vertical-align: middle;
+  width: 200px;
+}
+
+.checklistTable th,
+.checklistTable td {
+  border-left: none;
+  border-right: none;
+}
+
+/* 결제수단관리 */
+
+.formContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+#paymentTitle {
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #cecece;
+  padding-bottom: 2%;
+  height: 70px;
+  width: 350px;
+}
+
+#paymentTitle img {
+  position: relative;
+  margin-right: 8%;
+  bottom: 5px;
+  right: 80px;
+  height: 50px;
+}
+
+.paymentBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #b3b3b3;
+  font-weight: normal;
+}
+
+#priceBtnTable {
+  border-collapse: separate;
+  border-spacing: 7px 7px;
+  width: 450px;
+}
+
+#priceBtnTable td {
+  border-radius: 10px;
+  height: 45px;
+  font-weight: bold;
+  color: #11c2ad;
+  border: 1px solid #11c2ad;
+  background-color: #daf6ee;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+#priceBtnTable td:hover {
+  background-color: #11c2ad;
+  color: #ffffff;
+}
+
+#AdminTab .tabLi {
+  margin-right: 0px;
 }

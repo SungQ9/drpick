@@ -1,5 +1,10 @@
 /* 기본 css*/
 
+.pannel,
+li {
+  cursor: pointer;
+}
+
 .Form {
   background: #ffffff;
   width: 1000px;
@@ -7,7 +12,28 @@
   margin-top: 100px;
   margin-bottom: 100px;
   padding-bottom: 20px;
-  border-radius: 25px;
+  border-radius: 20px;
+}
+
+.mypageForm {
+  background: #ffffff;
+  width: 1200px;
+  min-height: 800px;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  padding-bottom: 20px;
+  border-radius: 20px;
+}
+
+.shortForm {
+  background-color: #ffffff;
+  width: 500px;
+  height: 700px;
+  border-radius: 15px;
+  margin: 1%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 input {
@@ -23,6 +49,11 @@ input {
   color: #cecece;
 }
 
+input[type='checkbox'] {
+  width: 20px;
+  margin: 0px;
+}
+
 button {
   width: 100px;
   height: 40px;
@@ -31,6 +62,7 @@ button {
   background-color: #11c2ad;
   color: #ffffff;
   font-weight: bold;
+  cursor: pointer;
 }
 
 select {
@@ -45,6 +77,7 @@ select {
   color: #acacac;
   border: 1px solid #cecece;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 select::-ms-expand {
@@ -81,6 +114,7 @@ select::-ms-expand {
   width: 250px;
   height: 100px;
   margin-left: 5%;
+  cursor: pointer;
 }
 
 .topHeader ul {
@@ -96,13 +130,31 @@ select::-ms-expand {
   align-items: center;
   margin-left: 50px; /* 각 리스트 아이템 사이의 간격 조절 */
 }
-.topHeader li:nth-child(2) {
+.topHeader .loginLi {
   margin-right: 50px;
 }
 
+.topHeader .mypageLi {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.topHeader p {
+  margin-right: 0px;
+}
+
 .topHeader li img {
-  width: 30%;
+  width: 20%;
   margin-right: 10px; /* 이미지와 텍스트 사이의 간격 조절 */
+}
+
+.topHeader span {
+  color: #acacac;
+  font-size: 15px;
+}
+
+.topHeader p {
+  margin-right: 40px;
 }
 
 .ul-Wrapper {
@@ -125,19 +177,56 @@ select::-ms-expand {
   align-items: center;
 }
 
-.tabContainer ul {
+.tabUi {
   list-style: none;
   margin-left: 100px;
   display: flex; /* ul을 가로로 정렬하기 위해 추가 */
 }
 
-.tabContainer li {
+.tabLi {
+  position: relative;
   display: flex;
   width: 150px;
   margin-right: 100px;
 }
-.tabContainer li:first-child {
+.tabLi:first-child {
   margin-left: 50px;
+}
+
+.subtabUi {
+  list-style: none;
+  display: none;
+  position: absolute;
+  width: 120px;
+  margin-top: 8px;
+  padding: 10px;
+  top: 100%;
+  right: 20%;
+  background-color: #ffffff;
+  box-shadow: 5px 5px 7px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 3px 3px 10px 10px;
+}
+
+.subtabLi {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.tabLi.clicked .subtabUi {
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /*//////////////////////////////////////////////////////////////////////////////////////*/
@@ -160,12 +249,12 @@ select::-ms-expand {
 }
 
 /* 메인화면 css*/
-table.menu {
+#menu {
   border-spacing: 50px 20px;
   border-collapse: separate;
 }
 
-td.pannel {
+#pannel {
   border: 1px solid #cecece;
   background-color: #ffffff;
   color: #000000;
@@ -178,11 +267,16 @@ td.pannel {
   border-radius: 20px;
   padding-left: 2%;
   padding-bottom: 5%;
+  box-shadow: 8px 5px 7px 5px rgba(0, 0, 0, 0.1);
 }
 
-.mainContainer .menu tr:first-child td:first-child {
+#menu tr:first-child td:first-child {
   background-color: #11c2ad;
   color: #ffffff;
+}
+
+#menu tr:first-child td:nth-child(2) {
+  cursor: default;
 }
 
 /*//////////////////////////////////////////////////////////////////////////////////////*/
@@ -255,4 +349,240 @@ Input {
   height: 80px;
   border-radius: 15px;
   font-size: 20px;
+}
+
+.clinicSubBtn-mid {
+  background-color: #aeccc8;
+  width: 120px;
+  height: 50px;
+  border-radius: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.clinicSubBtn-short {
+  width: 100px;
+  height: 45px;
+
+  border-radius: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.listBtn-short {
+  width: 80px;
+  height: 45px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.listBtn-mid {
+  width: 160px;
+  height: 45px;
+  margin: 2px;
+}
+
+/* CRUD  목록 */
+/* className 수정 하지말고 id로 stlye 추가 및 변경 해주세요*/
+
+.searchDateWrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 1100px;
+}
+
+.searchDateText {
+  display: flex;
+  align-items: baseline;
+  margin-left: 5px;
+  margin-bottom: -20px;
+}
+
+.searchDateText span {
+  font-size: 15px;
+  font-weight: normal;
+  color: #cecece;
+}
+
+.searchDateForm {
+  display: flex;
+  align-items: center;
+}
+
+.searchDateForm input[type='text'] {
+  width: 250px;
+  height: 35px;
+}
+
+.searchDateForm button {
+  height: 40px;
+}
+
+.searchBarWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.listWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.listTitle {
+  display: flex;
+  font-size: 18px;
+  font-weight: bold;
+  width: 1150px;
+}
+
+.listTitle img {
+  margin-right: 35%;
+  height: 50px;
+}
+
+.listForm {
+  margin-bottom: 5%;
+}
+
+.listTable {
+  border-collapse: collapse;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  width: 1100px;
+  background-color: white;
+  border: 1px solid #cecece;
+  border-radius: 15px;
+}
+
+.listTable thead {
+  border-bottom: 1px solid #ddd;
+}
+
+.listTable th {
+  padding: 10px;
+  text-align: left;
+  text-align: center;
+  color: #000;
+}
+
+.listTable td {
+  padding: 10px;
+  text-align: left;
+  text-align: center;
+  border-right: none;
+  border-bottom: 1px solid #ddd;
+}
+
+.listTable tbody tr:hover {
+  background-color: #ebebeb;
+  opacity: 0.9;
+}
+
+.listTable th:nth-child(1),
+td:nth-child(1) {
+  width: 220px;
+}
+
+.listTable th:nth-child(2),
+td:nth-child(2) {
+  width: 220px;
+}
+
+.listTable th:nth-child(3),
+td:nth-child(3) {
+  width: 220px;
+}
+
+.listTable th:nth-child(4),
+td:nth-child(4) {
+  width: 220px;
+}
+.listTable th:nth-child(5),
+td:nth-child(5) {
+  vertical-align: middle;
+  width: 220px;
+}
+
+.listTable th,
+.listTable td {
+  border-left: none;
+  border-right: none;
+}
+
+#writeBtn {
+  position: relative;
+  top: 165px;
+  left: 45px;
+}
+
+#deleteBtn {
+  position: relative;
+  top: 245px;
+  left: 935px;
+}
+
+/* 대시보드  */
+.dashBoardWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashBoardTop {
+  display: flex;
+  align-items: center;
+  padding: 2%;
+  width: 1100px;
+}
+
+.dashBoardStatusTable {
+  border-collapse: separate;
+  border-spacing: 20px 20px;
+  width: 600px;
+}
+
+.dashBoardStatusTable td {
+  border-radius: 15px;
+  color: #ffffff;
+  background-color: #11c2ad;
+  height: 90px;
+  font-size: 20px;
+  font-weight: bold;
+  width: 200px;
+}
+
+.dashBoardStatusSubTable {
+  background-color: #daf6ee;
+  border-radius: 15px;
+  padding: 1%;
+  margin-left: 3%;
+  width: 450px;
+  height: 200px;
+  border-collapse: separate;
+}
+
+.dashBoardStatusSubTable th {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.dashBoardStatusSubTable th:nth-child(3) {
+  vertical-align: bottom;
+  color: #acacac;
+  font-size: 15px;
+}
+
+.dashBoardStatusSubTable td {
+  color: #acacac;
+  height: 10px;
+}
+
+.dashBoardBottom {
+}
+
+.dashBoardGraph {
 }

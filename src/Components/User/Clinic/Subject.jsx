@@ -10,8 +10,6 @@ import uterus from '../../../img/subject-uterus-icon.png';
 import cosmetic from '../../../img/subject-cosmetic-icon.png';
 import headache from '../../../img/subject-headache-icon.png';
 import eye from '../../../img/subject-eye-icon.png';
-import '../../../css/UserStyle.css';
-import '../../../css/Style.css';
 
 const Subject = () => {
   const navigate = useNavigate();

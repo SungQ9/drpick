@@ -15,7 +15,7 @@ function DoctorTab() {
               navigate('/clinic');
             }}
           >
-            비대면진료
+            대시보드
           </a>
         </li>
         <li>
@@ -25,7 +25,7 @@ function DoctorTab() {
               navigate('/imageSearch');
             }}
           >
-            약이미지검색
+            비대면진료
           </a>
         </li>
         <li>
@@ -35,12 +35,22 @@ function DoctorTab() {
               navigate('/chatBot');
             }}
           >
-            챗 봇 검색
+            진료기록조회
           </a>
         </li>
         <li>
           <img src='' alt='' />
-          <a>병원/약국 찾기</a>
+          <a
+            onClick={() => {
+              navigate('/chatBot');
+            }}
+          >
+            의사정보수정
+          </a>
+        </li>
+        <li>
+          <img src='' alt='' />
+          <a>관리자문의</a>
         </li>
       </ul>
     </div>
