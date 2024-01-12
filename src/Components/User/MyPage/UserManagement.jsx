@@ -35,7 +35,10 @@ const UserManagement = () => {
   return (
     <div className='listWrapper'>
       <ListTitle title={title} />
-      <List data={defaultData} type='Date' />
+      {selectedType === 'review' && (
+        <List data={defaultData} type='Date' buttonType='Review' />
+      )}
+      {selectedType !== 'review' && <List data={defaultData} type='Date' />}
     </div>
   );
 };

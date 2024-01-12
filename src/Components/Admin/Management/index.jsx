@@ -5,7 +5,6 @@ import ListTitle from '../../Layout/List/ListTitle';
 import List from '../../Layout/List';
 import data from '../../SampleData/MemberData';
 import data2 from '../../SampleData/inquiryData';
-import data3 from '../../SampleData/reviewData';
 
 const InquiryManage = () => {
   const location = useLocation();
@@ -17,7 +16,7 @@ const InquiryManage = () => {
     // eslint-disable-next-line default-case
     switch (selectedType) {
       case 'user':
-        setDefaultData(data);
+        setDefaultData(data2);
         setTitle('회원관리');
         break;
       case 'doctor':
@@ -25,11 +24,11 @@ const InquiryManage = () => {
         setTitle('의사관리');
         break;
       case 'request':
-        setDefaultData(data3);
+        setDefaultData(data2);
         setTitle('등록요청목록');
         break;
       case 'hospital':
-        setDefaultData(data);
+        setDefaultData(data2);
         setTitle('병원관리');
         break;
       case 'drugstore':
@@ -37,11 +36,11 @@ const InquiryManage = () => {
         setTitle('약국관리');
         break;
       case 'userInquiry':
-        setDefaultData(data3);
+        setDefaultData(data2);
         setTitle('회원문의');
         break;
       case 'doctorInquiry':
-        setDefaultData(data);
+        setDefaultData(data2);
         setTitle('의사문의');
         break;
       case 'drugstoreInquiry':
@@ -54,7 +53,16 @@ const InquiryManage = () => {
   return (
     <div className='listWrapper'>
       <ListTitle title={title} />
-      <List data={defaultData} buttonType={'N'} type={'Date'} />
+      {(selectedType === 'hospital' || selectedType === 'drugstore') && (
+        <List data={defaultData} buttonType={''} />
+      )}
+      {selectedType !== 'hospital' && selectedType !== 'drugstore' && (
+        <List
+          data={defaultData}
+          buttonType={'N'}
+          searchBarStyle={{ position: 'absolute', top: '0px', left: '100px' }}
+        />
+      )}
     </div>
   );
 };

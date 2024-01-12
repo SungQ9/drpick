@@ -1,10 +1,8 @@
 import React from 'react';
 import CurrentList from './CurrentList';
 import SearchDate from '../SearchDate';
-import SearchBar from '../SearchBar';
-// 다른 컴포넌트를 import 하세요 (예: import AnotherComponent from './AnotherComponent');
 
-const List = ({ data = [], type, buttonType }) => {
+const List = ({ data = [], type, buttonType, style, searchBarStyle }) => {
   const headers = data.headers;
   const items = data.items;
   const selectable = data.selectable;
@@ -15,7 +13,7 @@ const List = ({ data = [], type, buttonType }) => {
   // DatePicker가 있는 목록
   if (type === 'Date') {
     return (
-      <div className='listWrapper'>
+      <div>
         <div className='searchDateWrapper'>
           <SearchDate
             startDate={startDate}
@@ -32,6 +30,7 @@ const List = ({ data = [], type, buttonType }) => {
             selectable={selectable}
             type={type}
             buttonType={buttonType}
+            style={style}
           />
         </div>
       </div>
@@ -45,6 +44,8 @@ const List = ({ data = [], type, buttonType }) => {
           items={items}
           selectable={selectable}
           buttonType={buttonType}
+          style={style}
+          searchBarStyle={searchBarStyle}
         />
       </div>
     );

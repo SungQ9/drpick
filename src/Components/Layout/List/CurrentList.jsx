@@ -11,6 +11,7 @@ const CurrentList = (
     items = [],
     selectable = false,
     style,
+    searchBarStyle,
     type,
     buttonType,
     buttonName,
@@ -31,57 +32,69 @@ const CurrentList = (
   const headerKey = headers.map((header) => header.value);
 
   return (
-    <div className='listForm'>
-      <table
-        className={`listTable ${selectable ? 'checklistTable' : ''}`}
-        style={style}
-      >
-        <thead>
-          <tr>
+    <table
+      className={`listTable ${selectable ? 'checklistTable' : ''}`}
+      style={style}
+    >
+      <thead>
+        <tr>
+          {selectable && (
+            <th style={style}>
+              <input type='checkbox' />
+            </th>
+          )}
+          {headers.map((header) => (
+            <th style={style} key={header.key}>
+              {header.text}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {items.map((item, index) => (
+          <tr style={style} key={index}>
             {selectable && (
-              <th>
+              <td style={style}>
                 <input type='checkbox' />
-              </th>
+              </td>
             )}
-            {headers.map((header) => (
-              <th key={header.key}>{header.text}</th>
+            {/* headerKey를 순회하면서 key를 가져옴 */}
+            {headerKey.map((key) => (
+              <td style={style} key={key + index}>
+                {key === 'status'
+                  ? generateButtons(item[key], handleButtonClick)
+                  : item[key]}
+              </td>
             ))}
           </tr>
-        </thead>
-        <tbody>
-          {items.map((item, index) => (
-            <tr key={index}>
-              {selectable && (
-                <td>
-                  <input type='checkbox' />
-                </td>
-              )}
-              {/* headerKey를 순회하면서 key를 가져옴 */}
-              {headerKey.map((key) => (
-                <td key={key + index}>
-                  {key === 'status'
-                    ? generateButtons(item[key], handleButtonClick)
-                    : item[key]}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-        <tfoot>
-          {type !== 'Date' && type !== 'Lite' && (
+        ))}
+      </tbody>
+      <tfoot>
+        <div className='tfootWrapper'>
+          {type === 'Date' && buttonType === 'Review' && (
             <>
               <Button
                 buttonName={buttonName}
                 buttonType={buttonType}
                 handleButtonClick={handleButtonClick}
               />
-              <SearchBar />
             </>
           )}
+
+          {type !== 'Date' && type !== 'Lite' && (
+            <div className='tfootSearchWrapper'>
+              <Button
+                buttonName={buttonName}
+                buttonType={buttonType}
+                handleButtonClick={handleButtonClick}
+              />
+              <SearchBar searchBarStyle={searchBarStyle} />
+            </div>
+          )}
           <Pagination />
-        </tfoot>
-      </table>
-    </div>
+        </div>
+      </tfoot>
+    </table>
   );
 };
 

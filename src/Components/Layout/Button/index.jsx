@@ -4,9 +4,10 @@ const Button = ({ buttonType, buttonName, handleButtonClick }) => {
   if (buttonType === 'N') {
     return null;
   } else {
-    if (buttonName === '삭제')
+    if (buttonType === 'Review')
       return (
         <button
+          id='deleteBtn'
           className='listBtn'
           onClick={() => {
             handleButtonClick(buttonName);
@@ -18,6 +19,7 @@ const Button = ({ buttonType, buttonName, handleButtonClick }) => {
     else
       return (
         <button
+          id='addBtn'
           className='listBtn'
           onClick={() => {
             handleButtonClick('추가');

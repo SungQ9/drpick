@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const SearchBar = ({ type, props = [] }) => {
+const SearchBar = ({ type, props = [], searchBarStyle }) => {
   const [inputText, setInputText] = useState('');
 
   const prop1 = props[0];
@@ -30,7 +30,7 @@ const SearchBar = ({ type, props = [] }) => {
     );
   } else {
     return (
-      <div className='searchBarWrapper'>
+      <div className='searchBarWrapper' style={searchBarStyle}>
         <input value={inputText} onChange={onChangeInput} type='text' />
         <button className='listBtn-short' onClick={handleSearch}>
           검색

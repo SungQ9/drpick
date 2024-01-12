@@ -65,6 +65,7 @@ const SignUp = () => {
       </p>
     ));
   };
+
   // submit
   const submitBtnClick = (event) => {
     // 폼의 기본 동작 방지 (페이지 새로고침 방지)

@@ -477,6 +477,22 @@
   min-width: 600px;
   min-height: 250px;
 }
+.fileBtn {
+  display: flex;
+  max-width: 650px;
+}
+
+.fileBtn p {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  margin-left: 2px;
+}
+.fileBtn #fileX {
+  margin-left: 2px;
+  padding-top: 5px;
+  margin-right: 10px;
+}
 
 /* 진료신청완료 */
 .completeWrapper {
@@ -597,146 +613,6 @@
   height: 40px;
   padding: 5px 30px 5px 30px;
   margin-bottom: 5%;
-}
-/* 마이페이지 최근진료내역  */
-.clinicList h4 {
-  font-size: 20px;
-  text-align: left;
-  padding-bottom: 15px;
-  max-width: 1000px;
-  border-bottom: 1px solid #cecece;
-}
-.clinicListTable {
-  margin-top: -15px;
-  border-collapse: collapse;
-  display: flex;
-  flex-direction: column;
-  width: 1000px;
-  background-color: white;
-}
-
-.clinicListTable thead {
-  border-bottom: 1px solid #ddd;
-}
-
-.clinicListTable th {
-  padding: 10px;
-  text-align: left;
-  text-align: center;
-  color: #000;
-}
-
-.clinicListTable td {
-  padding: 10px;
-  text-align: left;
-  text-align: center;
-  border-right: none;
-  border-bottom: 1px solid #ddd;
-}
-
-.clinicListTable tbody tr:hover {
-  background-color: #ebebeb;
-  opacity: 0.9;
-  cursor: pointer;
-}
-
-.clinicListTable th:nth-child(1),
-.clinicListTable td:nth-child(1) {
-  width: 250px;
-}
-
-.clinicListTable th:nth-child(2),
-.clinicListTable td:nth-child(2) {
-  width: 250px;
-}
-
-.clinicListTable th:nth-child(3),
-.clinicListTable td:nth-child(3) {
-  width: 250px;
-}
-
-.clinicListTable th:nth-child(4),
-.clinicListTable td:nth-child(4) {
-  width: 250px;
-}
-
-.clinicListTable th,
-.clinicListTable td {
-  border-left: none;
-  border-right: none;
-}
-
-/* 리뷰관리 */
-.checklistTable {
-  border-collapse: collapse;
-  display: flex;
-  flex-direction: column;
-  height: 500px;
-  width: 1100px;
-  background-color: white;
-  border: 1px solid #cecece;
-  border-radius: 15px;
-}
-
-.checklistTable thead {
-  border-bottom: 1px solid #ddd;
-}
-
-.checklistTable th {
-  padding: 10px;
-  text-align: left;
-  text-align: center;
-  color: #000;
-}
-
-.checklistTable td {
-  padding: 10px;
-
-  text-align: left;
-  text-align: center;
-  border-right: none;
-  border-bottom: 1px solid #ddd;
-}
-
-.checklistTable tbody tr:hover {
-  background-color: #ebebeb;
-  opacity: 0.9;
-}
-
-.checklistTable th:nth-child(1),
-.checklistTable td:nth-child(1) {
-  width: 100px;
-}
-
-.checklistTable th:nth-child(2),
-.checklistTable td:nth-child(2) {
-  width: 200px;
-}
-
-.checklistTable th:nth-child(3),
-.checklistTable td:nth-child(3) {
-  width: 200px;
-}
-
-.checklistTable th:nth-child(4),
-.checklistTable td:nth-child(4) {
-  width: 200px;
-}
-.checklistTable th:nth-child(5),
-.checklistTable td:nth-child(5) {
-  vertical-align: middle;
-  width: 200px;
-}
-.checklistTable th:nth-child(6),
-.checklistTable td:nth-child(6) {
-  vertical-align: middle;
-  width: 200px;
-}
-
-.checklistTable th,
-.checklistTable td {
-  border-left: none;
-  border-right: none;
 }
 
 /* 결제수단관리 */
