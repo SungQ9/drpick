@@ -1,11 +1,16 @@
 // 마이페이지 메인
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import card from '../../../img/card-icon.png';
+import data from './sampledata/medicalhistoryData';
+import CurrentList from '../../Layout/List/list';
 
 const MypageMain = () => {
   const navigate = useNavigate();
+
+  const headers = data.headers.filter((header) => header.value !== 'status');
+
+  const items = data.items.filter((items) => items.value !== 'status');
 
   return (
     <div className='userPageWrapper'>
@@ -67,41 +72,12 @@ const MypageMain = () => {
           </td>
         </table>
       </div>
-      <div className='clinicList'>
-        <h4>최근진료내역</h4>
-        <table className='clinicListTable'>
-          <thead>
-            <tr>
-              <th>진료일</th>
-              <th>병원명</th>
-              <th>의사명</th>
-              <th>결제수단</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              onClick={() => {
-                navigate('/user/history');
-              }}
-            >
-              <td>2024.01.27</td>
-              <td>거구장병원</td>
-              <td>정하림 의사</td>
-              <td>카드결제</td>
-            </tr>
-            <tr
-              onClick={() => {
-                navigate('/user/history');
-              }}
-            >
-              <td>2024.01.27</td>
-              <td>거구장병원</td>
-              <td>백두산 의사</td>
-              <td>포인트결제</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <h4>최근진료내역</h4>
+      <CurrentList
+        headers={headers}
+        items={items}
+        style={{ height: '300px', width: '950px' }}
+      />
     </div>
   );
 };

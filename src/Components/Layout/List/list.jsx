@@ -4,7 +4,7 @@ import generateButtons from '../Button/hooks/buttons';
 import { handleButtonClick } from '../Button/hooks/buttonHandler';
 
 const CurrentList = (
-  { headers, items = [], selectable = false }, // items props 받기, default parameter 빈 배열로 설정
+  { headers, items = [], selectable = false, style }, // items props 받기, default parameter 빈 배열로 설정
 ) => {
   // 페이지 상태 및 함수 정의
   const [Page, setPage] = React.useState(1);
@@ -30,7 +30,10 @@ const CurrentList = (
 
   return (
     <div className='listForm'>
-      <table className={`listTable ${selectable ? 'checklistTable' : ''}`}>
+      <table
+        className={`listTable ${selectable ? 'checklistTable' : ''}`}
+        style={style}
+      >
         <thead>
           <tr>
             {selectable && (

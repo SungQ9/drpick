@@ -1,6 +1,9 @@
 // buttonHelpers.js
 
 const generateButtons = (status, handleButtonClick) => {
+  if (!status) {
+    return null; // status 값이 없으면 null 반환
+  }
   switch (status) {
     case 'UN':
       return (
