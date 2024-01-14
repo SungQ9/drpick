@@ -2,7 +2,14 @@ import React from 'react';
 import CurrentList from './CurrentList';
 import SearchDate from '../SearchDate';
 
-const List = ({ data = [], type, buttonType, style, searchBarStyle }) => {
+const List = ({
+  data = [],
+  type,
+  style,
+  searchBarStyle,
+  buttonType,
+  buttonName,
+}) => {
   const headers = data.headers;
   const items = data.items;
   const selectable = data.selectable;
@@ -30,6 +37,7 @@ const List = ({ data = [], type, buttonType, style, searchBarStyle }) => {
             selectable={selectable}
             type={type}
             buttonType={buttonType}
+            buttonName={buttonName}
             style={style}
           />
         </div>

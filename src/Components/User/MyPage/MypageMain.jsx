@@ -81,7 +81,7 @@ const MypageMain = () => {
       <CurrentList
         headers={headers}
         items={items}
-        style={{ height: '300px', width: '950px' }}
+        style={{ height: '450px', width: '950px' }}
         type={'Lite'}
       />
     </div>

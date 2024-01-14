@@ -3,44 +3,49 @@ import { useNavigate } from 'react-router-dom';
 
 function DrugStoreTab() {
   const navigate = useNavigate();
+  const handleButtonClick = (type) => {
+    navigate('/drugstore', { state: { selectedType: type } });
+  };
 
   return (
-    <div className='tabContainer'>
-      <ul>
-        <li>
+    <div id='DrugStoreTab'>
+      <ul className='tabUi'>
+        <li
+          className='tabLi'
+          onClick={() => {
+            navigate('/');
+          }}
+        >
           {' '}
           <img src='' alt='' />
-          <a
-            onClick={() => {
-              navigate('/clinic');
-            }}
-          >
-            대시보드
-          </a>
+          대시보드
         </li>
-        <li>
+        <li
+          className='tabLi'
+          onClick={() => {
+            handleButtonClick('history');
+          }}
+        >
           <img src='' alt='' />
-          <a
-            onClick={() => {
-              navigate('/imageSearch');
-            }}
-          >
-            약주문목록
-          </a>
+          약주문목록
         </li>
-        <li>
+        <li
+          className='tabLi'
+          onClick={() => {
+            navigate('/drugstore/profile');
+          }}
+        >
           <img src='' alt='' />
-          <a
-            onClick={() => {
-              navigate('/chatBot');
-            }}
-          >
-            약국정보수정
-          </a>
+          약국정보수정
         </li>
-        <li>
+        <li
+          className='tabLi'
+          onClick={() => {
+            handleButtonClick('inquiry');
+          }}
+        >
           <img src='' alt='' />
-          <a>관리자문의</a>
+          관리자문의
         </li>
       </ul>
     </div>

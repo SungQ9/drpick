@@ -1,3 +1,4 @@
+// ApplicationForm
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useClinicContext } from '../../Context/ClinicContext';
@@ -28,6 +29,7 @@ const ApplicationForm = () => {
 
   // 업로드 파일 삭제 핸들러
   const handleDeleteFile = (id) => {
+    clinicContext.removeUploadedFile(id);
     setSelectedFileName((prevFiles) =>
       prevFiles.filter((file) => file.id !== id),
     );
@@ -56,13 +58,18 @@ const ApplicationForm = () => {
 
   // 입력받은 주민등록번호 뒷자리 contex에 저장
   const handleResiNumChange = (evt) => {
-    clinicContext.wirteResidentNumber = evt.target.value;
+    clinicContext.writeResidentNumber = evt.target.value; // 수정된 부분
     console.log(evt.value);
   };
   // 입력받은 증상  contex에 저장
   const handleSymptomChange = (evt) => {
     clinicContext.writeSymptom = evt.target.value;
     console.log(evt.value);
+  };
+
+  const handleNextBtn = () => {
+    clinicContext.uploadedFiles = selectedFileName;
+    navigate('/clinic/payment');
   };
 
   return (
@@ -114,12 +121,7 @@ const ApplicationForm = () => {
             {renderFileList()}
           </div>
         </div>
-        <button
-          className='clinicBtn-long'
-          onClick={() => {
-            navigate('/clinic/payment');
-          }}
-        >
+        <button className='clinicBtn-long' onClick={handleNextBtn}>
           다음
         </button>
       </div>

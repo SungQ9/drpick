@@ -4,7 +4,7 @@ const Button = ({ buttonType, buttonName, handleButtonClick }) => {
   if (buttonType === 'N') {
     return null;
   } else {
-    if (buttonType === 'Review')
+    if (buttonType === 'Y' && buttonName === '삭제')
       return (
         <button
           id='deleteBtn'
@@ -13,21 +13,34 @@ const Button = ({ buttonType, buttonName, handleButtonClick }) => {
             handleButtonClick(buttonName);
           }}
         >
-          삭제
+          {buttonName}
         </button>
       );
-    else
+    else if (buttonType === 'Y' && buttonName === '작성하기')
       return (
         <button
           id='addBtn'
           className='listBtn'
           onClick={() => {
-            handleButtonClick('추가');
+            handleButtonClick(buttonName);
           }}
         >
-          추가
+          {buttonName}
         </button>
       );
+    else {
+      return (
+        <button
+          id='addBtn'
+          className='listBtn'
+          onClick={() => {
+            handleButtonClick(buttonName);
+          }}
+        >
+          {buttonName}
+        </button>
+      );
+    }
   }
 };
 

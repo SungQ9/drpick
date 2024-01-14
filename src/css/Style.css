@@ -540,21 +540,20 @@ td:nth-child(5) {
   right: 25%;
 }
 
-/* .listTable tfoot .listBtn {
+.listTable .tfootSearchWrapper #deleteBtn {
   position: relative;
-  right: 155px;
-  top: 20px;
-  height: 45px;
-} */
-
-#writeBtn {
-  position: relative;
-  top: 165px;
-  left: 45px;
+  right: 25%;
 }
 
-#deleteBtn {
+.listTable .tfootWrapper #deleteBtn {
   position: relative;
+  right: 40%;
+  top: 140px;
+}
+.listTable .tfootWrapper #addBtn {
+  position: relative;
+  right: 40%;
+  top: 140px;
 }
 
 /* 대시보드  */
@@ -581,10 +580,13 @@ td:nth-child(5) {
   border-radius: 15px;
   color: #ffffff;
   background-color: #11c2ad;
-  height: 90px;
   font-size: 20px;
   font-weight: bold;
   width: 200px;
+  height: 90px;
+}
+.dashBoardStatusTable p {
+  margin: 0px;
 }
 
 .dashBoardStatusSubTable {

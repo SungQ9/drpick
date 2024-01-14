@@ -22,7 +22,7 @@ function AdminTab() {
   };
 
   return (
-    <div id='#AdminTab'>
+    <div id='AdminTab'>
       <ul className='tabUi' style={{ marginLeft: '5%' }}>
         <li
           className='tabLi'

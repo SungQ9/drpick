@@ -39,28 +39,26 @@ const CurrentList = (
       <thead>
         <tr>
           {selectable && (
-            <th style={style}>
+            <th style={{ width: '30px' }}>
               <input type='checkbox' />
             </th>
           )}
           {headers.map((header) => (
-            <th style={style} key={header.key}>
-              {header.text}
-            </th>
+            <th key={header.key}>{header.text}</th>
           ))}
         </tr>
       </thead>
       <tbody>
         {items.map((item, index) => (
-          <tr style={style} key={index}>
+          <tr key={index}>
             {selectable && (
-              <td style={style}>
+              <td style={{ width: '30px' }}>
                 <input type='checkbox' />
               </td>
             )}
             {/* headerKey를 순회하면서 key를 가져옴 */}
             {headerKey.map((key) => (
-              <td style={style} key={key + index}>
+              <td key={key + index}>
                 {key === 'status'
                   ? generateButtons(item[key], handleButtonClick)
                   : item[key]}
@@ -71,7 +69,7 @@ const CurrentList = (
       </tbody>
       <tfoot>
         <div className='tfootWrapper'>
-          {type === 'Date' && buttonType === 'Review' && (
+          {type === 'Date' && buttonType === 'Y' && (
             <>
               <Button
                 buttonName={buttonName}

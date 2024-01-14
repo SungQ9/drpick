@@ -1,16 +1,17 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import DrugStoreDashBoard from './DrugStoreDashBoard';
+import DrugStoreManagement from './DrugStoreManagement';
+import DrugStoreProfileEdit from './DrugStoreProfileEdit';
 
 const DrugStore = () => {
   return (
-    <div className='mainContainer'>
-      <div className='Form'>
-        <Routes>
-          <Route path='/' element={<DrugStoreDashBoard />} />
-          <Route path='' element='' />
-        </Routes>
-      </div>
+    <div className='mypageForm'>
+      <Routes>
+        <Route path='/' element={<DrugStoreDashBoard />} />
+        <Route path='/drugstore' element={<DrugStoreManagement />} />
+        <Route path='/drugstore/profile' element={<DrugStoreProfileEdit />} />
+      </Routes>
     </div>
   );
 };

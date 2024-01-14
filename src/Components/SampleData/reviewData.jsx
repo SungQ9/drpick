@@ -16,7 +16,7 @@ const headers = [
     value: 'grade',
   },
   {
-    text: '리뷰상태',
+    text: '',
     value: 'status',
   },
 ];

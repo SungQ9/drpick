@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Input from '../Layout/Input';
 import Select from '../Layout/Select';
@@ -7,6 +8,7 @@ import '../../css/UserStyle.css';
 import '../../css/Style.css';
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const getElementValue = (id) => document.getElementById(id).value;
   const getCheckedValue = (className) =>
     document.querySelector(`.${className}:checked`).value;
@@ -54,7 +56,7 @@ const SignUp = () => {
   const renderFileList = () => {
     // selectedFileName이 배열인지 확인
     if (!Array.isArray(selectedFileName)) {
-      console.error('selectedFileName is not an array.');
+      // console.error('selectedFileName is not an array.');
       return null; // 또는 다른 적절한 처리를 추가하세요.
     }
 
@@ -99,7 +101,7 @@ const SignUp = () => {
         auth,
       ].some((value) => !value)
     ) {
-      console.error('하나 이상의 요소를 찾을 수 없습니다.');
+      // console.error('하나 이상의 요소를 찾을 수 없습니다.');
       return;
     }
 
@@ -134,17 +136,34 @@ const SignUp = () => {
       .then((res) => {
         // 성공적으로 응답 받았을 때의 처리
         console.log(res.data);
+        const message = res.data.body.message;
+        alert(message);
       })
-      .catch((e) => {
-        // 오류 발생 시의 처리
-        console.error('회원가입 에러: ' + e.message);
+      .catch((error) => {
+        console.log(error.response);
+        if (error.response) {
+          // 서버 응답이 있을 경우
+          if (error.response.data && error.response.data.error) {
+            // 서버에서 에러 응답을 보냈을 때
+            const details = error.response.data.details;
+            const errorMessages = Object.values(details).join('\n');
+            alert(`유효성 검증 오류:\n${errorMessages}`);
+          } else {
+            // 기타 서버 응답 오류 처리
+            const errorMessage =
+              error.response.data.body.message || '서버 응답 오류';
+            alert(`${errorMessage}`);
+            navigate('/login');
+          }
+        } else if (error.request) {
+          // 서버로의 요청이 실패했을 경우
+          console.error('서버에 요청을 보내는 중 오류가 발생했습니다.');
+        } else {
+          // 오류를 발생시킨 요청을 설정하는 중에 오류가 발생했을 경우
+          console.error('오류를 설정하는 중에 문제가 발생했습니다.');
+        }
       });
-    for (var pair of formData.entries()) {
-      console.log('폼데이터', pair[0] + ', ' + pair[1]);
-    }
   };
-  // ... (handleFileBtnClick 등의 함수는 그대로 유지)
-
   return (
     <div className='mainContainer'>
       <div id='signUpForm' className='signUpForm'>
