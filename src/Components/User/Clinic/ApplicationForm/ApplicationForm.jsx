@@ -1,8 +1,8 @@
 // ApplicationForm
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useClinicContext } from '../../Context/ClinicContext';
-import back from '../../../img/back-arrow-icon.png';
+import { useClinicContext } from '../../../Context/ClinicContext';
+import back from '../../../../img/back-arrow-icon.png';
 
 const ApplicationForm = () => {
   const navigate = useNavigate();

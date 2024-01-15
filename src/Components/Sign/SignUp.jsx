@@ -70,6 +70,7 @@ const SignUp = () => {
 
   // submit
   const submitBtnClick = (event) => {
+    console.log('확인버튼클릭');
     // 폼의 기본 동작 방지 (페이지 새로고침 방지)
     event.preventDefault();
 
@@ -87,23 +88,23 @@ const SignUp = () => {
     const auth = getCheckedValue('auth');
 
     // Null Check
-    if (
-      [
-        name,
-        birth,
-        sex,
-        email,
-        domain,
-        tel,
-        pwd,
-        addrMain,
-        addrDetail,
-        auth,
-      ].some((value) => !value)
-    ) {
-      // console.error('하나 이상의 요소를 찾을 수 없습니다.');
-      return;
-    }
+    // if (
+    //   [
+    //     name,
+    //     birth,
+    //     sex,
+    //     email,
+    //     domain,
+    //     tel,
+    //     pwd,
+    //     addrMain,
+    //     addrDetail,
+    //     auth,
+    //   ].some((value) => !value)
+    // ) {
+    //   // console.error('하나 이상의 요소를 찾을 수 없습니다.');
+    //   return;
+    // }
 
     // FormData 객체 생성
     const formData = new FormData();
@@ -130,7 +131,7 @@ const SignUp = () => {
     axios
       .post('http://localhost:8080/users/signup', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data', // 이 부분이 중요합니다.
+          'Content-Type': 'multipart/form-data; charset=UTF-8', // 이 부분이 중요합니다.
         },
       })
       .then((res) => {
@@ -385,7 +386,14 @@ const SignUp = () => {
                   <button className='signUpBtn' onClick={submitBtnClick}>
                     확인
                   </button>
-                  <button className='signUpBtn'>취소</button>
+                  <button
+                    className='signUpBtn'
+                    onClick={() => {
+                      navigate(-1);
+                    }}
+                  >
+                    취소
+                  </button>
                 </td>
               </tr>
             </table>

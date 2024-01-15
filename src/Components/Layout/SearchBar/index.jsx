@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const SearchBar = ({ type, props = [], searchBarStyle }) => {
+const SearchBar = ({ type, props = [], searchBarStyle, placeholder }) => {
   const [inputText, setInputText] = useState('');
 
   const prop1 = props[0];
@@ -22,7 +22,12 @@ const SearchBar = ({ type, props = [], searchBarStyle }) => {
   if (type === 'Date') {
     return (
       <div className='searchBarWrapper'>
-        <input value={inputText} onChange={onChangeInput} type='text' />
+        <input
+          value={inputText}
+          onChange={onChangeInput}
+          type='text'
+          placeholder={placeholder}
+        />
         <button className='clinicSubBtn-short' onClick={handleSearch}>
           검색
         </button>

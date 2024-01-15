@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom';
 
 const Panel = ({ label, to }) => {
   const navigate = useNavigate();
+  var a = 2;
+  var b = 3;
+  var new_result = `${a}*${b}=${a + b}`;
+  console.log(new_result);
 
   const handleClick = () => {
     navigate(to);
