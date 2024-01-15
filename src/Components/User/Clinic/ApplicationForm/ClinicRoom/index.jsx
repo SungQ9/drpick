@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Route, useNavigate } from 'react-router-dom';
 
 import back from '../../../../../img/back-arrow-icon.png';
 import ClinicButton from './ClinicButton';
-import ClinicRoomButton from './VideoChat/ClinicRoomButton';
+import ClinicRoomButton from './ClinicRoomButton';
 
 const ClinicRoom = () => {
   const [clinicStatus, setClinicStatus] = useState(false);

@@ -590,6 +590,71 @@
   font-size: 20px;
 }
 
+/* 진료실 (화상채팅)*/
+.roomWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.roomContainer {
+  display: flex;
+  justify-content: center;
+  width: 1200px;
+  margin-top: 2%;
+}
+.leftSide {
+  margin-right: 20px;
+  width: 500px;
+}
+.mainView {
+  border: 1px solid #cecece;
+  width: 500px;
+  height: 500px;
+}
+.rightSide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 20px;
+  width: 500px;
+}
+
+.rightSideTop {
+  display: flex;
+}
+
+.subView {
+  border: 1px solid #cecece;
+  width: 250px;
+  height: 250px;
+}
+
+.optionPart {
+  width: 250px;
+  margin: 0px;
+}
+
+.optionPart input {
+  margin-top: 0px;
+  margin-bottom: 30px;
+}
+
+.logTextArea {
+  border: 1px solid #cecece;
+  width: 500px;
+  height: 235px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logTextArea textarea {
+  border: none;
+  resize: none;
+  width: 480px;
+  height: 225px;
+}
 /* 마이페이지 */
 
 .mypageContainer {

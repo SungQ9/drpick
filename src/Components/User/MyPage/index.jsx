@@ -7,6 +7,7 @@ import MypageMain from './MypageMain';
 import UserManagement from './UserManagement';
 import UserProfileEdit from './UserProfileEdit';
 import PaymentManagement from './PaymentManagement';
+import Video from '../Clinic/ApplicationForm/ClinicRoom/VideoChat';
 
 const UserMyPage = () => {
   return (
@@ -17,6 +18,7 @@ const UserMyPage = () => {
           <Route path='/manager' element={<UserManagement />} />
           <Route path='/profileEdit' element={<UserProfileEdit />} />
           <Route path='/payment' element={<PaymentManagement />} />
+          <Route path='/video' element={<Video />} />
         </Routes>
       </div>
     </div>

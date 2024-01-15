@@ -33,6 +33,25 @@ const SearchBar = ({ type, props = [], searchBarStyle, placeholder }) => {
         </button>
       </div>
     );
+  } else if (type === 'Chat') {
+    return (
+      <div className='searchBarWrapper'>
+        <input
+          style={{ width: '370px', height: '50px' }}
+          value={inputText}
+          onChange={onChangeInput}
+          type='text'
+          placeholder={placeholder}
+        />
+        <button
+          className='clinicSubBtn-short'
+          onClick={handleSearch}
+          style={{ width: '120px', height: '50px' }}
+        >
+          입력
+        </button>
+      </div>
+    );
   } else {
     return (
       <div className='searchBarWrapper' style={searchBarStyle}>
