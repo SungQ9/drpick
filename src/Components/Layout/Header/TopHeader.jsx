@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
-import '../../../css/Style.css';
-import logo from '../../../img/logo.png';
-import userLogo from '../../../img/user-icon.png';
-import { useNavigate } from 'react-router-dom';
-import { useTokenContext } from '../../Context/TokenContext';
+import React, { useEffect } from "react";
+import "../../../css/Style.css";
+import logo from "../../../img/logo.png";
+import userLogo from "../../../img/user-icon.png";
+import { useNavigate } from "react-router-dom";
+import { useTokenContext } from "../../Context/TokenContext";
 
 const TopHeader = () => {
   const navigate = useNavigate();
-  const { isLoggedIn, logout, memberName, memberAuth } = useTokenContext();
+  const { isLoggedIn, logout, userName, userAuth } = useTokenContext();
 
   const logoutHandler = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
   };
 
   const loginBefore = () => {
@@ -19,15 +19,15 @@ const TopHeader = () => {
       <ul>
         <li
           onClick={() => {
-            navigate('/signUp');
+            navigate("/signUp");
           }}
         >
           회원가입
         </li>
         <li
-          className='loginLi'
+          className="loginLi"
           onClick={() => {
-            navigate('/login');
+            navigate("/login");
           }}
         >
           로그인
@@ -40,15 +40,15 @@ const TopHeader = () => {
     return (
       <ul>
         <li>
-          <span>{memberName}회원님 어서오세요 </span>
+          <span>{userName} 회원님 어서오세요 </span>
         </li>
         <li>
           <p onClick={logoutHandler}>로그아웃</p>
         </li>
-        {memberAuth === 'N' && (
-          <li className='mypageLi' onClick={() => navigate('/user')}>
+        {userAuth === "N" && (
+          <li className="mypageLi" onClick={() => navigate("/user")}>
             마이페이지
-            <img src={userLogo} alt='User' />
+            <img src={userLogo} alt="User" />
           </li>
         )}
       </ul>
@@ -56,17 +56,17 @@ const TopHeader = () => {
   };
 
   return (
-    <div className='topHeader'>
-      <div className='logoContainer'>
+    <div className="topHeader">
+      <div className="logoContainer">
         <img
           src={logo}
-          alt='Logo'
+          alt="Logo"
           onClick={() => {
-            navigate('/');
+            navigate("/");
           }}
         />
       </div>
-      <div className='ul-Wrapper'>
+      <div className="ul-Wrapper">
         {isLoggedIn ? loginAfter() : loginBefore()}
       </div>
     </div>

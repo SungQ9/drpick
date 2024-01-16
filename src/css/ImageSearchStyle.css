@@ -1,0 +1,81 @@
+/* ImageSearchStyle.css */
+
+/* 아무것도 검색하지 않았을 때, 초기 상태 스타일 */
+.searchFormWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchFormContainer {
+  width: 100%; /* 컨테이너가 가능한 영역을 최대한 활용 */
+}
+
+#registForm {
+  text-align: center;
+  margin: 50px 10px;
+}
+
+#searchFormTitle {
+  margin-top: 30px;
+}
+
+#registForm h2 {
+  margin-bottom: 50px;
+}
+
+#btn {
+  margin: 10px;
+}
+
+/* 검색 결과가 있는 경우 스타일 추가 */
+.searchFormWrapper.withResults {
+  flex-direction: column;
+  padding: 0 10px;
+}
+
+.EntireFormWrapper {
+  display: flex;
+}
+
+.searchFormWrapper {
+  flex: 1;
+  margin-right: 15px;
+}
+
+.DBSearch.withResults {
+  flex: 1;
+  padding: 10px;
+}
+
+.searchFormContainer.withResults {
+  display: none;
+}
+
+.imageUploadBtn.withResults {
+  display: none;
+}
+
+#registForm.withResults {
+  width: 48%; /* 검색 결과가 있을 때 폭을 줄임 */
+}
+
+#predictContainer {
+  margin-left: 20px; /* 검색 결과가 있을 때 오른쪽 여백 추가 */
+}
+
+/* DrugsPredict 컴포넌트 스타일 */
+#drugsPredict {
+  max-width: 100%; /* 최대 너비를 100%로 설정 */
+}
+
+#drugsPredict img {
+  width: 80%; /* 이미지 너비를 100%로 설정 */
+  height: auto; /* 높이 자동으로 조절 */
+}
+
+.DBForm {
+  flex-basis: 300px; /* DBForm의 폭을 조절하세요 */
+  margin-left: 20px; /* 간격 조절 */
+}
