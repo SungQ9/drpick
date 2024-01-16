@@ -1,15 +1,15 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import SearchForm from "./SearchForm";
+import DrugsPredict from "./Predict";
 
 const ImageSearch = () => {
   return (
-    <div className='mainContainer'>
-      <div className='Form'>
-        {/* 작업할때 h4 태그 지우시고 루트경로 맞춰서 컴포넌트만 변경해주세요 */}
-        <h4>약 이미지 검색</h4>
+    <div className="mainContainer">
+      <div className="Form">
         <Routes>
-          <Route path='/' element='' />
-          <Route path='' element='' />
+          <Route path="/" element={<SearchForm />} />
+          <Route path="/predict" element={<DrugsPredict />} />
         </Routes>
       </div>
     </div>
