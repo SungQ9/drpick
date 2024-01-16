@@ -1,7 +1,8 @@
+// ApplicationForm
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useClinicContext } from '../../Context/ClinicContext';
-import back from '../../../img/back-arrow-icon.png';
+import { useClinicContext } from '../../../Context/ClinicContext';
+import back from '../../../../img/back-arrow-icon.png';
 
 const ApplicationForm = () => {
   const navigate = useNavigate();
@@ -9,24 +10,66 @@ const ApplicationForm = () => {
 
   const [selectedFileName, setSelectedFileName] = useState('');
 
-  // 파일업로드 버튼 변경하는 함수
+  // 파일 업로드 핸들러
   const handleFileInputChange = (event) => {
     const fileInput = event.target;
-    setSelectedFileName(fileInput.files[0].name);
+    const newFiles = Array.from(fileInput.files).map((file) => ({
+      name: file.name,
+      id: Date.now(),
+    }));
+    const totalFiles = selectedFileName.length + newFiles.length;
+
+    if (totalFiles > 3) {
+      alert('파일은 3개까지 올릴 수 있습니다.');
+      return;
+    }
+
+    setSelectedFileName((prevFiles) => [...prevFiles, ...newFiles]);
   };
 
+  // 업로드 파일 삭제 핸들러
+  const handleDeleteFile = (id) => {
+    clinicContext.removeUploadedFile(id);
+    setSelectedFileName((prevFiles) =>
+      prevFiles.filter((file) => file.id !== id),
+    );
+  };
+  // 업로드 버튼 핸들러
   const handleFileBtnClick = () => {
     document.getElementById('selectedFile').click();
   };
+  // 파일다중선택 return
+  const renderFileList = () => {
+    // selectedFileName이 배열인지 확인
+    if (!Array.isArray(selectedFileName)) {
+      console.log('배열확인');
+      return null; // 또는 다른 적절한 처리를 추가하세요.
+    }
+
+    return selectedFileName.map((file) => (
+      <p className='uploadFileList' key={file.id}>
+        <span style={{ marginRight: '5px' }}>{file.name}</span>
+        <p id='fileX' onClick={() => handleDeleteFile(file.id)}>
+          X
+        </p>
+      </p>
+    ));
+  };
+
   // 입력받은 주민등록번호 뒷자리 contex에 저장
   const handleResiNumChange = (evt) => {
-    clinicContext.wirteResidentNumber = evt.target.value;
+    clinicContext.writeResidentNumber = evt.target.value; // 수정된 부분
     console.log(evt.value);
   };
   // 입력받은 증상  contex에 저장
   const handleSymptomChange = (evt) => {
     clinicContext.writeSymptom = evt.target.value;
     console.log(evt.value);
+  };
+
+  const handleNextBtn = () => {
+    clinicContext.uploadedFiles = selectedFileName;
+    navigate('/clinic/payment');
   };
 
   return (
@@ -75,15 +118,10 @@ const ApplicationForm = () => {
               accept='image/*'
               onChange={handleFileInputChange}
             />
-            {selectedFileName}
+            {renderFileList()}
           </div>
         </div>
-        <button
-          className='clinicBtn-long'
-          onClick={() => {
-            navigate('/clinic/payment');
-          }}
-        >
+        <button className='clinicBtn-long' onClick={handleNextBtn}>
           다음
         </button>
       </div>

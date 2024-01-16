@@ -1,60 +1,36 @@
 import React from 'react';
-import '../../css/Style.css';
 import { useNavigate } from 'react-router-dom';
 
-const UserMain = () => {
+const Panel = ({ label, to }) => {
   const navigate = useNavigate();
 
+  const handleClick = () => {
+    navigate(to);
+  };
+
+  return (
+    <td id='panel' onClick={handleClick}>
+      {label}
+    </td>
+  );
+};
+
+const UserMain = () => {
   return (
     <div id='UserMain'>
       <table id='menu'>
         <tbody>
           <tr>
-            <td
-              id='pannel'
-              onClick={() => {
-                navigate('/clinic');
-              }}
-            >
-              비대면 진료 신청하기
-            </td>
-            <td id='pannel'>광고</td>
+            <Panel label='비대면 진료 신청하기' to='/clinic' />
+            <Panel label='광고' />
           </tr>
           <tr>
-            <td
-              id='pannel'
-              onClick={() => {
-                navigate('/imageSearch');
-              }}
-            >
-              약 이미지 검색
-            </td>
-            <td
-              id='pannel'
-              onClick={() => {
-                navigate('/imageSearch');
-              }}
-            >
-              챗 봇 검색
-            </td>
+            <Panel label='약 이미지 검색' to='/imageSearch' />
+            <Panel label='챗 봇 검색' to='/imageSearch' />
           </tr>
           <tr>
-            <td
-              id='pannel'
-              onClick={() => {
-                navigate('/searchHospital');
-              }}
-            >
-              병원 찾기
-            </td>
-            <td
-              id='pannel'
-              onClick={() => {
-                navigate('/searchDrugStore');
-              }}
-            >
-              약국 찾기
-            </td>
+            <Panel label='병원 찾기' to='/searchHospital' />
+            <Panel label='약국 찾기' to='/searchDrugStore' />
           </tr>
         </tbody>
       </table>

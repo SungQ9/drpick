@@ -1,8 +1,10 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Input from "../Layout/Input";
 import Select from "../Layout/Select";
+
 
 import "../../css/UserStyle.css";
 import "../../css/Style.css";
@@ -70,7 +72,9 @@ const SignUp = () => {
 
   // submit
   const submitBtnClick = (event) => {
+
     console.log("확인버튼클릭");
+
     // 폼의 기본 동작 방지 (페이지 새로고침 방지)
     event.preventDefault();
 
@@ -131,7 +135,9 @@ const SignUp = () => {
     axios
       .post("http://localhost:8080/users/signup", formData, {
         headers: {
-          "Content-Type": "multipart/form-data; charset=UTF-8", // 이 부분이 중요합니다.
+
+          'Content-Type': 'multipart/form-data; charset=UTF-8', // 이 부분이 중요합니다.
+
         },
       })
       .then((res) => {
@@ -140,6 +146,7 @@ const SignUp = () => {
         const message = res.data.body.message;
         alert(message);
         navigate("/login");
+
       })
       .catch((error) => {
         console.log(error.response);
@@ -149,10 +156,13 @@ const SignUp = () => {
             // 서버에서 에러 응답을 보냈을 때
             const details = error.response.data.details;
             const errorMessages = Object.values(details).join("\n");
+
             alert(`유효성 검증 오류:\n${errorMessages}`);
           } else {
             // 기타 서버 응답 오류 처리
             const errorMessage =
+
+
               error.response.data.body.message || "서버 응답 오류";
             alert(`${errorMessage}`);
           }
@@ -387,7 +397,9 @@ const SignUp = () => {
                     확인
                   </button>
                   <button
+
                     className="signUpBtn"
+
                     onClick={() => {
                       navigate(-1);
                     }}

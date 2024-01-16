@@ -23,6 +23,7 @@ const clinicContextProps = {
   wirteResidentNumber: '', // 작성한 주민등록번호 뒷자리
   writeSymptom: '', // 작성한증상
   selectPayment: '', // 선택한 결제방법
+  uploadedFiles: [], // 업로드한 파일
 };
 
 const ClinicProvider = ({ children }) => {

@@ -14,6 +14,14 @@ const SelectPayment = () => {
     const selectedPayment = evt.currentTarget.getAttribute('data-value');
     clinicContext.selectPayment = selectedPayment;
     console.log(selectedPayment);
+    console.log('Clinic Context: ', clinicContext);
+
+    const formData = {
+      writeResidentNumber: clinicContext.writeResidentNumber,
+      writeSymptom: clinicContext.writeSymptom,
+      selectPayment: clinicContext.selectPayment,
+      uploadedFiles: clinicContext.uploadedFiles,
+    };
 
     // 여기서 context안에 저장된 값들 불러와서 db로 보내고
     // 성공하면 페이지 이동

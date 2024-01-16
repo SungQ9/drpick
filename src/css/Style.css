@@ -254,7 +254,7 @@ select::-ms-expand {
   border-collapse: separate;
 }
 
-#pannel {
+#panel {
   border: 1px solid #cecece;
   background-color: #ffffff;
   color: #000000;
@@ -268,6 +268,7 @@ select::-ms-expand {
   padding-left: 2%;
   padding-bottom: 5%;
   box-shadow: 8px 5px 7px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 
 #menu tr:first-child td:first-child {
@@ -448,10 +449,12 @@ Input {
 }
 
 .listTable {
+  margin-top: 3%;
   border-collapse: collapse;
   display: flex;
   flex-direction: column;
-  height: 500px;
+  align-items: center;
+  height: 600px;
   width: 1100px;
   background-color: white;
   border: 1px solid #cecece;
@@ -462,11 +465,18 @@ Input {
   border-bottom: 1px solid #ddd;
 }
 
+.listTable th,
+.listTable td {
+  border-left: none;
+  border-right: none;
+}
+
 .listTable th {
   padding: 10px;
   text-align: left;
   text-align: center;
   color: #000;
+  height: 50px;
 }
 
 .listTable td {
@@ -475,6 +485,7 @@ Input {
   text-align: center;
   border-right: none;
   border-bottom: 1px solid #ddd;
+  height: 50px;
 }
 
 .listTable tbody tr:hover {
@@ -507,22 +518,42 @@ td:nth-child(5) {
   width: 220px;
 }
 
-.listTable th,
-.listTable td {
-  border-left: none;
-  border-right: none;
+.listTable tfoot {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  justify-content: center;
+  width: 100%;
 }
 
-#writeBtn {
-  position: relative;
-  top: 165px;
-  left: 45px;
+.listTable .tfootSearchWrapper {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 20%;
+  top: 100px;
 }
 
-#deleteBtn {
+.listTable .tfootSearchWrapper #addBtn {
   position: relative;
-  top: 245px;
-  left: 935px;
+  right: 25%;
+}
+
+.listTable .tfootSearchWrapper #deleteBtn {
+  position: relative;
+  right: 25%;
+}
+
+.listTable .tfootWrapper #deleteBtn {
+  position: relative;
+  right: 40%;
+  top: 140px;
+}
+.listTable .tfootWrapper #addBtn {
+  position: relative;
+  right: 40%;
+  top: 140px;
 }
 
 /* 대시보드  */
@@ -549,10 +580,13 @@ td:nth-child(5) {
   border-radius: 15px;
   color: #ffffff;
   background-color: #11c2ad;
-  height: 90px;
   font-size: 20px;
   font-weight: bold;
   width: 200px;
+  height: 90px;
+}
+.dashBoardStatusTable p {
+  margin: 0px;
 }
 
 .dashBoardStatusSubTable {
