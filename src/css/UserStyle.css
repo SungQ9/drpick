@@ -608,6 +608,7 @@
 }
 .mainView {
   border: 1px solid #cecece;
+  border-radius: 15px;
   width: 500px;
   height: 500px;
 }
@@ -625,6 +626,7 @@
 
 .subView {
   border: 1px solid #cecece;
+  border-radius: 15px;
   width: 250px;
   height: 250px;
 }
@@ -641,6 +643,7 @@
 
 .logTextArea {
   border: 1px solid #cecece;
+  border-radius: 15px;
   width: 500px;
   height: 235px;
   margin-top: 10px;

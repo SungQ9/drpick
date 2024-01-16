@@ -16,6 +16,7 @@ import ApplicationForm from './ApplicationForm/ApplicationForm'; // 진료신청
 import SelectPayment from './SelectPayment'; // 결제수단선택
 import AcceptComplete from './AcceptComplete'; // 접수완료
 import ClinicRoom from './ApplicationForm/ClinicRoom'; // 비대면 진료실
+import SelectPillsReceive from './SelectPillsReceive/index';
 
 // 비대면 진료
 const Clinic = () => {
@@ -35,6 +36,7 @@ const Clinic = () => {
             <Route path='/payment' element={<SelectPayment />} />
             <Route path='/complete' element={<AcceptComplete />} />
             <Route path='/room' element={<ClinicRoom />} />
+            <Route path='/pill' element={<SelectPillsReceive />} />
           </Routes>
         </div>
       </div>
