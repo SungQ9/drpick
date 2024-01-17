@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Kakao from './map';
-import HospitalList from './hospital_list';
+import HospitalList from './hospitalList';
 
 const SearchHospital = () => {
   return (

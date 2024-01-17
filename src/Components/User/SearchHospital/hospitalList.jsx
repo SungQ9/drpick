@@ -48,6 +48,7 @@ const HospitalList = () => {
 
     fetchData(); // fetchData 함수 호출
   }, [token, navigate]);
+
   return (
     <div>
       <h2 className='text-center'>병원 리스트</h2>
@@ -61,13 +62,19 @@ const HospitalList = () => {
             </tr>
           </thead>
           <tbody>
-            {list.map((hospital) => (
-              <tr key={hospital.hospital_id}>
-                <td>{hospital.hospital_name}</td>
-                <td>{hospital.hospital_addr_main}</td>
-                <td>{hospital.partnership_status}</td>
+            {list && list.length > 0 ? (
+              list.map((hospital) => (
+                <tr key={hospital?.hospitalId}>
+                  <td>{hospital?.hospitalName || 'N/A'}</td>
+                  <td>{hospital?.hospitalAddrMain || 'N/A'}</td>
+                  <td>{hospital?.partnershipStatus || 'N/A'}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="3">데이터가 없습니다.</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
