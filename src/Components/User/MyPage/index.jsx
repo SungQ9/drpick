@@ -18,7 +18,7 @@ const UserMyPage = () => {
           <Route path='/manager' element={<UserManagement />} />
           <Route path='/profileEdit' element={<UserProfileEdit />} />
           <Route path='/payment' element={<PaymentManagement />} />
-          <Route path='/video' element={<Video />} />
+          <Route path='/video/:roomName' element={<Video />} />
         </Routes>
       </div>
     </div>
