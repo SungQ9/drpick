@@ -22,8 +22,6 @@ const Video = () => {
 
   // 미디어 스트림을 얻는 함수
   const getMedia = async () => {
-    console.log('getMedia 함수 호출됨');
-
     try {
       const audioConstraints = selectedAudioDevice
         ? { deviceId: { exact: selectedAudioDevice } }
@@ -41,19 +39,6 @@ const Video = () => {
         myVideoRef.current.srcObject = stream;
       }
       if (pcRef.current && socketRef.current) {
-        // 스트림을 peerConnection에 등록
-        stream.getTracks().forEach((track) => {
-          pcRef.current.addTrack(track, stream);
-        });
-
-        pcRef.current.onicecandidate = (e) => {
-          console.log('onicecandidate 등록');
-          if (e.candidate && socketRef.current) {
-            console.log('Sending ICE candidate to server');
-            socketRef.current.emit('candidate', e.candidate, roomName);
-          }
-        };
-
         pcRef.current.ontrack = (e) => {
           console.log('ontrack 호출');
           console.log('Received remote track');
@@ -61,6 +46,18 @@ const Video = () => {
             remoteVideoRef.current.srcObject = e.streams[0];
           }
         };
+
+        pcRef.current.onicecandidate = (e) => {
+          console.log('ICE candidate ', e.candidate);
+          if (e.candidate && socketRef.current) {
+            console.log(' ICE candidate 를 서버에 전송 ');
+            socketRef.current.emit('candidate', e.candidate, roomName);
+          }
+        };
+        // 스트림을 peerConnection에 등록
+        stream.getTracks().forEach((track) => {
+          pcRef.current.addTrack(track, stream);
+        });
       }
     } catch (e) {
       console.error('Error accessing media devices:', e);
@@ -69,31 +66,31 @@ const Video = () => {
 
   // Offer 생성 함수
   const createOffer = async () => {
-    console.log('Creating and sending Offer');
     if (pcRef.current && socketRef.current) {
       try {
         const offer = await pcRef.current.createOffer();
+        console.log('Offer 생성');
         await pcRef.current.setLocalDescription(offer);
-        console.log('Local SDP (Offer):', offer);
         socketRef.current.emit('offer', offer, roomName);
       } catch (e) {
-        console.error('Error creating and sending Offer:', e);
+        console.error('Offer 생성 에러:', e);
       }
     }
   };
 
   // Answer 생성 함수
   const createAnswer = async (offer) => {
-    console.log('Creating and sending Answer');
     if (pcRef.current && socketRef.current) {
       try {
-        await pcRef.current.setRemoteDescription(offer);
+        await pcRef.current.setRemoteDescription(
+          new RTCSessionDescription(offer),
+        );
         const answer = await pcRef.current.createAnswer();
+        console.log('Answer 생성');
         await pcRef.current.setLocalDescription(answer);
-        console.log('Local SDP (Answer):', answer);
         socketRef.current.emit('answer', answer, roomName);
       } catch (e) {
-        console.error('Error creating and sending Answer:', e);
+        console.error('Answer 생성 에러:', e);
       }
     }
   };
@@ -141,12 +138,27 @@ const Video = () => {
     socketRef.current = io('175.114.130.12:4000');
     // WebRTC Peer Connection 생성
     pcRef.current = new RTCPeerConnection({
-      iceServers: [
-        {
-          urls: 'stun:stun.l.google.com:19302',
-        },
-      ],
+      iceServers: [{ urls: 'stun:stun.l.google.com:19302' }],
     });
+
+    pcRef.current.onicecandidate = (e) => {
+      if (e.candidate && socketRef.current) {
+        socketRef.current.emit('candidate', e.candidate, roomName);
+      }
+    };
+
+    pcRef.current.ontrack = (e) => {
+      if (remoteVideoRef.current) {
+        remoteVideoRef.current.srcObject = e.streams[0];
+      }
+    };
+
+    pcRef.current.onconnectionstatechange = (e) => {
+      console.log(`Connection state change: ${pcRef.current.connectionState}`);
+      if (pcRef.current.connectionState === 'connected') {
+        console.log('WebRTC 연결이 성공적으로 설정되었습니다.');
+      }
+    };
 
     // 소켓 이벤트 핸들링
     socketRef.current.on('all_users', (allUsers) => {
@@ -156,18 +168,19 @@ const Video = () => {
     });
 
     socketRef.current.on('getOffer', (offer) => {
-      console.log('Received Offer');
+      console.log('Offer 응답 ');
       createAnswer(offer);
     });
 
     socketRef.current.on('getAnswer', (answer) => {
-      console.log('Received Answer');
+      console.log('Answer 응답');
       if (pcRef.current) {
         pcRef.current.setRemoteDescription(answer);
       }
     });
 
     socketRef.current.on('getCandidate', async (candidate) => {
+      console.log('Candidate 응답');
       if (pcRef.current) {
         await pcRef.current.addIceCandidate(candidate);
       }

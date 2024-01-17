@@ -32,7 +32,7 @@ io.on('connection', (socket) => {
       // 현재 입장하려는 방에 있는 인원수
       const currentRoomLength = rooms[data.room].length;
       if (currentRoomLength === MAXIMUM_USERS_PER_ROOM) {
-        // 인원수가 꽉 찼다면 돌아갑니다.
+        // 인원수가 꽉 찼다면 돌아감
         socket.to(socket.id).emit('room_full');
         return;
       }
@@ -57,17 +57,18 @@ io.on('connection', (socket) => {
   });
 
   // offer를 전달받고 다른 유저들에게 전달
-  socket.on('offer', (sdp, roomName) => {
-    socket.to(roomName).emit('getOffer', sdp);
+  socket.on('offer', (offer, roomName) => {
+    socket.to(roomName).emit('getOffer', offer);
   });
 
   // answer를 전달받고 방의 다른 유저들에게 전달
-  socket.on('answer', (sdp, roomName) => {
-    socket.to(roomName).emit('getAnswer', sdp);
+  socket.on('answer', (answer, roomName) => {
+    socket.to(roomName).emit('getAnswer', answer);
   });
 
   // candidate를 전달받고 방의 다른 유저들에게 전달
   socket.on('candidate', (candidate, roomName) => {
+    console.log('서버의 ICE Candidate');
     socket.to(roomName).emit('getCandidate', candidate);
   });
 
@@ -80,7 +81,7 @@ io.on('connection', (socket) => {
   // 방을 나가면 socketRoom과 users의 정보에서 해당 유저를 삭제
   socket.on('disconnect', () => {
     const roomID = socketRoom[socket.id];
-
+    console.log(`유저가 ${roomID}번방을 떠났습니다`);
     if (rooms[roomID]) {
       rooms[roomID] = rooms[roomID].filter((user) => user.id !== socket.id);
       if (rooms[roomID].length === 0) {
