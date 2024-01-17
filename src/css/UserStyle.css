@@ -624,40 +624,80 @@
   display: flex;
 }
 
-.subView {
-  border: 1px solid #cecece;
-  border-radius: 15px;
+.subView video {
+  border-radius: 25px;
   width: 250px;
-  height: 250px;
 }
 
 .optionPart {
-  width: 250px;
-  margin: 0px;
+  width: 240px;
+  margin: 0px 0px 0px 10px;
 }
 
-.optionPart input {
-  margin-top: 0px;
-  margin-bottom: 30px;
+.optionPart select {
+  width: 240px;
+  height: 45px;
+  white-space: nowrap; /* 텍스트 줄바꿈 금지 */
+  overflow: hidden; /* 내용이 넘칠 때 숨김 처리 */
+  text-overflow: ellipsis; /* 생략 부호로 표시 */
+  font-size: 10px;
+  margin-bottom: 10%;
+}
+
+.optionPart option {
+  width: 240px; /* 원하는 너비로 설정하세요 */
+  height: 100px;
+  white-space: nowrap; /* 텍스트 줄바꿈 금지 */
+  overflow: hidden; /* 내용이 넘칠 때 숨김 처리 */
+  text-overflow: ellipsis; /* 생략 부호로 표시 */
 }
 
 .logTextArea {
   border: 1px solid #cecece;
   border-radius: 15px;
   width: 500px;
-  height: 235px;
+  min-height: 235px;
+  max-height: 235px;
   margin-top: 10px;
+  overflow-y: auto; /* 스크롤이 필요한 경우에만 스크롤이 표시되도록 설정 */
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column; /* 메시지 목록을 위에서 아래로 정렬하도록 설정 */
 }
 
-.logTextArea textarea {
+.logTextArea ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  margin: 0px;
+  padding: 5px 0px 0px 3px;
+  width: 478px;
+}
+
+.message {
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  max-width: 70%; /* 메시지 너비의 최대값을 지정합니다 */
+}
+
+.sent {
+  background-color: #11c2ad; /* 보낸 메시지의 배경색 */
+  color: #ffffff;
+  align-self: flex-end; /* 보낸 메시지는 오른쪽으로 정렬 */
+}
+
+.received {
+  background-color: #aeccc8; /* 받은 메시지의 배경색 */
+  color: #ffffff;
+  align-self: flex-start; /* 받은 메시지는 왼쪽으로 정렬 */
+}
+
+/* .logTextArea textarea {
   border: none;
   resize: none;
   width: 480px;
   height: 225px;
-}
+} */
 /* 마이페이지 */
 
 .mypageContainer {

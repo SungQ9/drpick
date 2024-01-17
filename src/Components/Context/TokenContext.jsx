@@ -12,6 +12,8 @@ export const TokenProvider = ({ children }) => {
       const storedUserId = localStorage.getItem("userId");
       const storedUserName = localStorage.getItem("userName");
       const storedUserAuth = localStorage.getItem("userAuth");
+      const storedRefreshToken = localStorage.getItem("refreshToken");
+      const storedRoomName = localStorage.getItem("roomName");
 
       // 초기 상태 설정
       // 새로고침시 로컬 스토리지 값과 비교해서 로그아웃 전까지 전역적으로 값 세팅
@@ -21,6 +23,8 @@ export const TokenProvider = ({ children }) => {
         userId: storedUserId ? storedUserId : null,
         userName: storedUserName ? storedUserName : null,
         userAuth: storedUserAuth ? storedUserAuth : null,
+        refreshToken: storedRefreshToken ? storedRefreshToken : null,
+        roomName: storedRoomName ? storedRoomName : null,
       };
     } catch (error) {
       // 에러 발생 시 초기화
@@ -31,14 +35,23 @@ export const TokenProvider = ({ children }) => {
         userId: null,
         userName: null,
         userAuth: null,
+        refreshToken: null,
+        roomName: null,
       };
     }
   });
 
   // 로그인시 로컬 스토리지에 저장하면서 같이 넘긴 값  전역적으로 사용 가능하게 지정
-  const setAccessToken = ({ accessToken, userId, userName, userAuth }) => {
+  const setAccessToken = ({
+    accessToken,
+    userId,
+    userName,
+    userAuth,
+    refreshToken,
+  }) => {
     // 토큰과 로그인 상태를 로컬 스토리지에 저장
     localStorage.setItem("accessToken", JSON.stringify(accessToken));
+    localStorage.setItem("refreshToken", JSON.stringify(refreshToken));
 
     // 이전 상태와 새로운 값들을 병합하여 저장
     setUserData((prevData) => ({
@@ -48,6 +61,7 @@ export const TokenProvider = ({ children }) => {
       userId,
       userName,
       userAuth,
+      refreshToken,
     }));
   };
 
@@ -57,6 +71,8 @@ export const TokenProvider = ({ children }) => {
     localStorage.removeItem("userId");
     localStorage.removeItem("userName");
     localStorage.removeItem("userAuth");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("roomName");
 
     // 로그아웃 시 Context 토큰 및 로그인 상태를 삭제
     setUserData({
@@ -65,6 +81,8 @@ export const TokenProvider = ({ children }) => {
       userId: null,
       userName: null,
       userAuth: null,
+      refreshToken: null,
+      roomName: null,
     });
     // 상태 확인용 console
     console.log(
@@ -76,7 +94,11 @@ export const TokenProvider = ({ children }) => {
       "userName : ",
       localStorage.getItem("userName"),
       "userAuth : ",
-      localStorage.getItem("userAuth")
+      localStorage.getItem("userAuth"),
+      "refreshToken : ",
+      localStorage.getItem("refreshToken"),
+      "roomName : ",
+      localStorage.getItem("roomName")
     );
   };
   useEffect(() => {

@@ -43,21 +43,34 @@ const Login = () => {
 
       // 토큰 콘솔에 출력
       console.log("토큰:", response.data.body.accessToken);
+      console.log("리프레시 토큰:", response.data.body.refreshToken);
 
       // 토큰값, 아이디,이름,역할 로컬스토리지 저장
       if (response.data != null) {
         localStorage.setItem("accessToken", response.data.body.accessToken);
+        localStorage.setItem("refreshToken", response.data.body.refreshToken);
         localStorage.setItem("userId", response.data.body.userId);
         localStorage.setItem("userName", response.data.body.userName);
         localStorage.setItem("userAuth", response.data.body.userAuth);
+        localStorage.setItem("roomName", response.data.body.userId);
 
         //  토큰값, 아이디,이름,역할 Context 저장
-        const { accessToken, userId, userName, userAuth } = response.data.body;
+        const {
+          accessToken,
+          userId,
+          userName,
+          userAuth,
+          refreshToken,
+          roomName,
+        } = response.data.body;
+
         tokenContext.setAccessToken({
           accessToken,
           userId,
           userName,
           userAuth,
+          refreshToken,
+          roomName,
         });
       }
 

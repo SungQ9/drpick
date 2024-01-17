@@ -1,26 +1,26 @@
-import React from 'react';
+import React from "react";
 
-import UserMain from './UserMain';
-import DoctorMain from '../Doctor/index';
-import DrugMain from '../DrugStrore/index';
-import AdminMain from '../Admin/index';
-import '../../css/UserStyle.css';
-import '../../css/Style.css';
+import UserMain from "./UserMain";
+import DoctorMain from "../Doctor/index";
+import DrugMain from "../DrugStrore/index";
+import AdminMain from "../Admin/index";
+import "../../css/UserStyle.css";
+import "../../css/Style.css";
 
 const Main = () => {
-  const Auth = localStorage.getItem('memberAuth');
+  const Auth = localStorage.getItem("userAuth");
 
   let DefaultMain = <UserMain />;
 
   if (Auth) {
     switch (Auth) {
-      case 'D':
+      case "D":
         DefaultMain = <DoctorMain />;
         break;
-      case 'S':
+      case "S":
         DefaultMain = <DrugMain />;
         break;
-      case 'A':
+      case "A":
         DefaultMain = <AdminMain />;
         break;
       default:
@@ -28,7 +28,7 @@ const Main = () => {
     }
   }
 
-  return <div className='mainContainer'>{DefaultMain}</div>;
+  return <div className="mainContainer">{DefaultMain}</div>;
 };
 
 export default Main;
