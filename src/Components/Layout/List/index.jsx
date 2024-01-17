@@ -1,6 +1,6 @@
-import React from 'react';
-import CurrentList from './CurrentList';
-import SearchDate from '../SearchDate';
+import React from "react";
+import CurrentList from "./CurrentList";
+import SearchDate from "../SearchDate";
 
 const List = ({
   data = [],
@@ -18,10 +18,10 @@ const List = ({
   const [endDate, setEndDate] = React.useState(new Date());
 
   // DatePicker가 있는 목록
-  if (type === 'Date') {
+  if (type === "Date") {
     return (
       <div>
-        <div className='searchDateWrapper'>
+        <div className="searchDateWrapper">
           <SearchDate
             startDate={startDate}
             endDate={endDate}
@@ -30,7 +30,7 @@ const List = ({
             type={type}
           />
         </div>
-        <div className='listForm'>
+        <div className="listForm">
           <CurrentList
             headers={headers}
             items={items}
@@ -46,7 +46,7 @@ const List = ({
   } else {
     // 일반 목록
     return (
-      <div className='listForm'>
+      <div className="listForm">
         <CurrentList
           headers={headers}
           items={items}

@@ -1,0 +1,46 @@
+/* Pagination.css */
+
+.paginationBttns {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+}
+
+.paginationBttns li {
+  list-style-type: none;
+  padding-right: 15px;
+}
+
+.paginationBttns li a {
+  border: 1px solid #abdfda;
+  padding: 8px 16px;
+  border-radius: 5px;
+  margin: 0 4px;
+  cursor: pointer;
+}
+
+/* Pagination Style */
+.paginationBttns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.previousBttn:hover,
+.nextBttn:hover {
+  background-color: #abdfda;
+  color: rgb(28, 39, 39);
+}
+
+.paginationDisabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.paginationActive a {
+  background-color: #abdfda;
+  color: rgb(28, 39, 39);
+}
