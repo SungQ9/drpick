@@ -3,17 +3,15 @@ import CurrentList from './CurrentList';
 import SearchDate from '../SearchDate';
 
 const List = ({
-  data = [],
+  headers,
+  items = [],
   type,
   style,
   searchBarStyle,
   buttonType,
   buttonName,
+  selectable,
 }) => {
-  const headers = data.headers;
-  const items = data.items;
-  const selectable = data.selectable;
-
   const [startDate, setStartDate] = React.useState(new Date());
   const [endDate, setEndDate] = React.useState(new Date());
 
