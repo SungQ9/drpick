@@ -8,7 +8,7 @@ import "../../css/UserStyle.css";
 import "../../css/Style.css";
 
 const Main = () => {
-  const Auth = localStorage.getItem("memberAuth");
+  const Auth = localStorage.getItem("userAuth");
 
   let DefaultMain = <UserMain />;
 
