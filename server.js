@@ -4,7 +4,7 @@ const http = require('http');
 const { Server } = require('socket.io');
 const server = http.createServer(app);
 
-// cors 설정을 하지 않으면 오류가 생기게 됩니다. 설정해 줍니다.
+// cors 설정
 const io = new Server(server, {
   cors: {
     origin: '*',
@@ -37,10 +37,10 @@ io.on('connection', (socket) => {
         return;
       }
 
-      // 여분의 자리가 있다면 해당 방 배열에 추가해줍니다.
+      // 여분의 자리가 있다면 해당 방 배열에 추가
       rooms[data.room] = [...rooms[data.room], { id: socket.id }];
     } else {
-      // 방이 존재하지 않다면 값을 생성하고 추가해줍시다.
+      // 방이 존재하지 않다면 값을 생성하고 추가
       rooms[data.room] = [{ id: socket.id }];
     }
     socketRoom[socket.id] = data.room;
@@ -49,35 +49,35 @@ io.on('connection', (socket) => {
     socket.join(data.room);
 
     // 입장하기 전 해당 방의 다른 유저들이 있는지 확인하고
-    // 다른 유저가 있었다면 offer-answer을 위해 알려줍니다.
+    // 다른 유저가 있었다면 offer-answer을 위해 알림
     const otherUsers = rooms[data.room].filter((user) => user.id !== socket.id);
     if (otherUsers.length) {
       io.sockets.to(socket.id).emit('all_users', otherUsers);
     }
   });
 
-  // offer를 전달받고 다른 유저들에게 전달해 줍니다.
+  // offer를 전달받고 다른 유저들에게 전달
   socket.on('offer', (sdp, roomName) => {
     socket.to(roomName).emit('getOffer', sdp);
   });
 
-  // answer를 전달받고 방의 다른 유저들에게 전달해 줍니다.
+  // answer를 전달받고 방의 다른 유저들에게 전달
   socket.on('answer', (sdp, roomName) => {
     socket.to(roomName).emit('getAnswer', sdp);
   });
 
-  // candidate를 전달받고 방의 다른 유저들에게 전달해 줍니다.
+  // candidate를 전달받고 방의 다른 유저들에게 전달
   socket.on('candidate', (candidate, roomName) => {
     socket.to(roomName).emit('getCandidate', candidate);
   });
 
-  // message를 전달받고 방의 다른 유저들에게 전달해줍니다
+  // message를 전달받고 방의 다른 유저들에게 전달
   socket.on('message', (message, roomName) => {
     console.log(` ${roomName}번방 메세지: ${message}`);
     socket.to(roomName).emit('getMessage', message);
   });
 
-  // 방을 나가게 된다면 socketRoom과 users의 정보에서 해당 유저를 지워줍니다.
+  // 방을 나가면 socketRoom과 users의 정보에서 해당 유저를 삭제
   socket.on('disconnect', () => {
     const roomID = socketRoom[socket.id];
 
