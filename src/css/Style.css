@@ -444,6 +444,10 @@ Input {
   height: 50px;
 }
 
+.listTitle h2 {
+  margin-left: 40px;
+}
+
 .listForm {
   margin-bottom: 5%;
 }
