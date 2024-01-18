@@ -10,8 +10,8 @@ body {
 .chat_window {
     position: absolute;
     width: calc(100% - 20px);
-    max-width: 800px;
-    height: 500px;
+    max-width: 950px;
+    height: 750px;
     border-radius: 10px;
     left: 50%;
     top: 50%;
@@ -66,7 +66,7 @@ body {
     padding: 20px 10px 0 10px;
     margin: 0;
     height: 347px;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .messages .message {
@@ -118,6 +118,7 @@ body {
 
 .messages .message.appeared {
     opacity: 1;
+    max-width:100%;
 }
 
 .messages .message .avatar {

@@ -92,7 +92,7 @@ function requestChat(messageText, url_pattern) {
 
             if (entities.includes('B-APPOINTMENT_INTENT')) {
                 return sendMessage("예약 관련 도움이 필요하시군요. 병원 예약을 도와드리겠습니다.?", 'left');
-            } else if (entities.includes('S-SYMPTOM') || entities.includes('S-SEVERITY') || entities.includes('S-BODY_PART')) {
+            } else if (entities.includes('S-SYMPTOM') || entities.includes('S-SEVERITY') || entities.includes('S-SYMPTOM')) {
                 const symptom = input.join(' ');
                 return sendMessage(symptom + " 증상을 갖고 계시는 군요. 해당 진료과 의사를 찾겠습니다.", 'left');
             } else {
