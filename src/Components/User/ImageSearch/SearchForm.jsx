@@ -55,7 +55,7 @@ function DrugsSearch() {
 
       // Axios - 이미지 전송
       const response = await axios.post(
-        "http://127.0.0.1:5000/api/flask/ocr",
+        "http://114.207.167.66:5000/api/flask/ocr",
         formData
       );
 
@@ -124,7 +124,10 @@ function DrugsSearch() {
           {imagePath && (
             <div>
               <h3>Uploaded Image</h3>
-              <img src={`http://localhost:5000${imagePath}`} alt="Uploaded" />
+              <img
+                src={`http://114.207.167.66:5000${imagePath}`}
+                alt="Uploaded"
+              />
             </div>
           )}
           <div>

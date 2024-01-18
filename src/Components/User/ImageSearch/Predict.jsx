@@ -9,7 +9,7 @@ const DrugsPredict = ({ predictionResult }) => {
         {predictionResult ? (
           <div className="predictForm">
             <img
-              src={`http://127.0.0.1:5000${predictionResult.image_url}`}
+              src={`http://114.207.167.66:5000${predictionResult.image_url}`}
               alt="알약 이미지"
             />
             <h3>이 약의 색은 "{predictionResult.pill_color}"이며, </h3>
