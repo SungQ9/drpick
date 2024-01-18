@@ -65,8 +65,8 @@ body {
     list-style: none;
     padding: 20px 10px 0 10px;
     margin: 0;
-    height: 347px;
-    overflow: auto;
+    overflow-y: auto; 
+    max-height: 600px; 
 }
 
 .messages .message {
