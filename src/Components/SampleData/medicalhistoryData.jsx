@@ -3,7 +3,7 @@
 const headers = [
   {
     text: '진료일',
-    value: 'clinicDate',
+    value: 'certificateDate',
   },
   {
     text: '병원이름',
@@ -15,7 +15,7 @@ const headers = [
   },
   {
     text: '결제수단',
-    value: 'payment',
+    value: 'transactionType',
   },
   {
     text: '상태',
