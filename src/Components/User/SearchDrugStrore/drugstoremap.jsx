@@ -6,15 +6,15 @@ import {
   MarkerClusterer,
 } from "react-kakao-maps-sdk";
 
-const KakaoHospital = ({ list }) => {
-  const [selectedHospital, setSelectedHospital] = useState(null);
+const KakaoDrugstore = ({ list }) => {
+  const [selectedDrugstore, setSelectedDrugstore] = useState(null);
 
-  const handleMarkerClick = (hospital) => {
-    setSelectedHospital(hospital);
+  const handleMarkerClick = (drugstore) => {
+    setSelectedDrugstore(drugstore);
   };
 
   const handleCloseInfoWindow = () => {
-    setSelectedHospital(null);
+    setSelectedDrugstore(null);
   };
 
   return (
@@ -30,31 +30,28 @@ const KakaoHospital = ({ list }) => {
             minLevel: 10,
           }}
         >
-          {list.map((hospital) => (
+          {list.map((drugstore) => (
             <MapMarker
-              key={hospital.hospitalId}
+              key={drugstore.drugstoreId}
               position={{
-                lat: hospital.hospitalLati,
-                lng: hospital.hospitalLong,
+                lat: drugstore.drugstoreLati,
+                lng: drugstore.drugstoreLong,
               }}
               image={{
-                src:
-                  hospital.partnershipStatus === "Y"
-                    ? process.env.PUBLIC_URL + "/mintMarker.png"
-                    : process.env.PUBLIC_URL + "/grayMarker.png",
+                src: process.env.PUBLIC_URL + "/mintMarker.png",
                 size: { width: 30, height: 30 },
               }}
-              title={hospital.hospitalName}
-              onClick={() => handleMarkerClick(hospital)}
+              title={drugstore.drugstoreName}
+              onClick={() => handleMarkerClick(drugstore)}
             />
           ))}
         </MarkerClusterer>
 
-        {selectedHospital && (
+        {selectedDrugstore && (
           <CustomOverlayMap
             position={{
-              lat: selectedHospital.hospitalLati,
-              lng: selectedHospital.hospitalLong,
+              lat: selectedDrugstore.drugstoreLati,
+              lng: selectedDrugstore.drugstoreLong,
             }}
             yAnchor={1.5}
             onClick={(e) => e.stopPropagation()}
@@ -68,16 +65,10 @@ const KakaoHospital = ({ list }) => {
                   borderRadius: "10px",
                 }}
               >
-                <strong>
-                  {selectedHospital.hospitalName} (
-                  {selectedHospital.partnershipStatus === "Y"
-                    ? "제휴병원"
-                    : "일반병원"}
-                  )
-                </strong>
-                <p>주소: {selectedHospital.hospitalAddrMain}</p>
+                <strong>{selectedDrugstore.drugstoreName}</strong>
+                <p>주소: {selectedDrugstore.drugstoreAddrMain}</p>
                 <a
-                  href={`https://map.kakao.com/link/map/${selectedHospital.hospitalName},${selectedHospital.hospitalLati},${selectedHospital.hospitalLong}`}
+                  href={`https://map.kakao.com/link/map/${selectedDrugstore.drugstoreName},${selectedDrugstore.drugstoreLati},${selectedDrugstore.drugstoreLong}`}
                   style={{ color: "gray" }}
                   target="_blank"
                   rel="noreferrer"
@@ -85,7 +76,7 @@ const KakaoHospital = ({ list }) => {
                   큰지도보기
                 </a>{" "}
                 <a
-                  href={`https://map.kakao.com/link/to/${selectedHospital.hospitalName},${selectedHospital.hospitalLati},${selectedHospital.hospitalLong}`}
+                  href={`https://map.kakao.com/link/to/${selectedDrugstore.drugstoreName},${selectedDrugstore.drugstoreLati},${selectedDrugstore.drugstoreLong}`}
                   style={{ color: "gray" }}
                   target="_blank"
                   rel="noreferrer"
@@ -112,4 +103,4 @@ const KakaoHospital = ({ list }) => {
   );
 };
 
-export default KakaoHospital;
+export default KakaoDrugstore;

@@ -17,5 +17,6 @@ export const Background = styled.div`
 
 export const LoadingText = styled.div`
     font: 1rem "Noto Sans KR";
+  font-weight: bold;
     text-align: center;
 `;
