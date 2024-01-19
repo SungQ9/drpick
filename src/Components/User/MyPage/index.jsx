@@ -8,6 +8,7 @@ import UserManagement from './UserManagement';
 import UserProfileEdit from './UserProfileEdit';
 import PaymentManagement from './PaymentManagement';
 import Video from '../Clinic/ApplicationForm/ClinicRoom/VideoChat';
+import Modal from '../../Layout/Modal/ModalOpen';
 
 const UserMyPage = () => {
   return (
@@ -19,6 +20,7 @@ const UserMyPage = () => {
           <Route path='/profileEdit' element={<UserProfileEdit />} />
           <Route path='/payment' element={<PaymentManagement />} />
           <Route path='/video/:roomName' element={<Video />} />
+          <Route path='/modal' element={<Modal />} />
         </Routes>
       </div>
     </div>

@@ -12,6 +12,11 @@ const UserManagement = () => {
   const selectedType = location.state?.selectedType || 'default';
   const [defaultData, setDefaultData] = useState(data);
   const [title, setTitle] = useState('');
+  const [keyword, setKeyword] = useState('');
+
+  const handleSearch = (key) => {
+    setKeyword(key);
+  };
 
   useEffect(() => {
     console.log('실행');
@@ -37,7 +42,13 @@ const UserManagement = () => {
       <ListTitle title={title} />
 
       {selectedType === 'review' && (
-        <List data={defaultData} type='Date' buttonType='Y' buttonName='삭제' />
+        <List
+          data={defaultData}
+          type='Date'
+          buttonType='Y'
+          buttonName='삭제'
+          onSearch={handleSearch}
+        />
       )}
 
       {selectedType === 'inquiry' && (

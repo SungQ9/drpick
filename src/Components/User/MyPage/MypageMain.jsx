@@ -71,7 +71,13 @@ const MypageMain = () => {
             </td>
           </tr>
 
-          <td className='pointDetail' id='pointDetail'>
+          <td
+            className='pointDetail'
+            id='pointDetail'
+            onClick={() => {
+              navigate('/user/modal');
+            }}
+          >
             {' '}
             포인트내역 <span>1,000P</span>
           </td>

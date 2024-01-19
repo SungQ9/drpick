@@ -26,7 +26,7 @@ const UserMain = () => {
           </tr>
           <tr>
             <Panel label='약 이미지 검색' to='/imageSearch' />
-            <Panel label='챗 봇 검색' to='/imageSearch' />
+            <Panel label='챗 봇 검색' to='/chatBot' />
           </tr>
           <tr>
             <Panel label='병원 찾기' to='/searchHospital' />
