@@ -606,12 +606,7 @@
   margin-right: 20px;
   width: 500px;
 }
-.mainView {
-  border: 1px solid #cecece;
-  border-radius: 15px;
-  width: 500px;
-  height: 500px;
-}
+
 .rightSide {
   display: flex;
   flex-direction: column;
@@ -623,7 +618,10 @@
 .rightSideTop {
   display: flex;
 }
-
+.mainView video {
+  border-radius: 25px;
+  width: 500px;
+}
 .subView video {
   border-radius: 25px;
   width: 250px;

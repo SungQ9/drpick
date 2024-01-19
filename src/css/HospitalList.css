@@ -1,0 +1,19 @@
+.hospitalList {
+  display: flex;
+  padding-top: 50px;
+  padding-right: 25px;
+  flex-direction: row-reverse;
+}
+
+.listForm {
+  flex: 1;
+}
+
+.kakaoMap {
+  flex: 1;
+  padding-top: 72px;
+}
+
+.hospital {
+  text-align: left;
+}

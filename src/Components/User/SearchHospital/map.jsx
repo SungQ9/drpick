@@ -1,33 +1,114 @@
 import { useEffect, useState } from "react";
-import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
+import {
+  CustomOverlayMap,
+  Map,
+  MapMarker,
+  MarkerClusterer,
+} from "react-kakao-maps-sdk";
 
-const Kakao = () => {
-  const { kakao } = window;
+const Kakao = ({ list }) => {
+  const [selectedHospital, setSelectedHospital] = useState(null);
 
-  const locations = [
-    { title: "카카오", latlng: { lat: 33.450705, lng: 126.570677 } },
-    { title: "생태연못", latlng: { lat: 33.450936, lng: 126.569477 } },
-    { title: "텃밭", latlng: { lat: 33.450879, lng: 126.56994 } },
-    { title: "근린공원", latlng: { lat: 33.451393, lng: 126.570738 } },
-  ];
+  const handleMarkerClick = (hospital) => {
+    setSelectedHospital(hospital);
+  };
+
+  const handleCloseInfoWindow = () => {
+    setSelectedHospital(null);
+  };
+
   return (
-    <Map
-      center={{ lat: 33.450701, lng: 126.570667 }} // 지도의 중심 좌표
-      style={{ width: "500px", height: "500px" }} // 지도 크기
-      level={3} // 지도 확대 레벨
-    >
-      {locations.map((loc, idx) => (
-        <MapMarker
-          key={`${loc.title}-${loc.latlng}`}
-          position={loc.latlng}
-          image={{
-            src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
-            size: { width: 24, height: 35 },
+    <>
+      <Map
+        center={{ lat: 35.87345, lng: 128.82198 }}
+        style={{ width: "450px", height: "450px", margin: "0 auto" }}
+        level={3}
+      >
+        <MarkerClusterer
+          options={{
+            averageCenter: true,
+            minLevel: 10,
           }}
-          title={loc.title}
-        />
-      ))}
-    </Map>
+        >
+          {list.map((hospital) => (
+            <MapMarker
+              key={hospital.hospitalId}
+              position={{
+                lat: hospital.hospitalLati,
+                lng: hospital.hospitalLong,
+              }}
+              image={{
+                src:
+                  hospital.partnershipStatus === "Y"
+                    ? process.env.PUBLIC_URL + "/mintMarker.png"
+                    : process.env.PUBLIC_URL + "/grayMarker.png",
+                size: { width: 30, height: 30 },
+              }}
+              title={hospital.hospitalName}
+              onClick={() => handleMarkerClick(hospital)}
+            />
+          ))}
+        </MarkerClusterer>
+
+        {selectedHospital && (
+          <CustomOverlayMap
+            position={{
+              lat: selectedHospital.hospitalLati,
+              lng: selectedHospital.hospitalLong,
+            }}
+            yAnchor={1.5}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div>
+              <div
+                style={{
+                  background: "#fff",
+                  border: "1px solid #ccc",
+                  padding: "10px",
+                  borderRadius: "10px",
+                }}
+              >
+                <strong>
+                  {selectedHospital.hospitalName} (
+                  {selectedHospital.partnershipStatus === "Y"
+                    ? "제휴병원"
+                    : "일반병원"}
+                  )
+                </strong>
+                <p>주소: {selectedHospital.hospitalAddrMain}</p>
+                <a
+                  href={`https://map.kakao.com/link/map/${selectedHospital.hospitalName},${selectedHospital.hospitalLati},${selectedHospital.hospitalLong}`}
+                  style={{ color: "gray" }}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  큰지도보기
+                </a>{" "}
+                <a
+                  href={`https://map.kakao.com/link/to/${selectedHospital.hospitalName},${selectedHospital.hospitalLati},${selectedHospital.hospitalLong}`}
+                  style={{ color: "gray" }}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  길찾기
+                </a>
+              </div>
+              <span
+                style={{
+                  position: "absolute",
+                  top: "5px",
+                  right: "5px",
+                  cursor: "pointer",
+                }}
+                onClick={handleCloseInfoWindow}
+              >
+                X
+              </span>
+            </div>
+          </CustomOverlayMap>
+        )}
+      </Map>
+    </>
   );
 };
 
