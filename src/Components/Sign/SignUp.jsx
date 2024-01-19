@@ -6,12 +6,15 @@ import Select from '../Layout/Select';
 
 import '../../css/UserStyle.css';
 import '../../css/Style.css';
+import { useDaumPostcodePopup } from 'react-daum-postcode';
+import { postcodeScriptUrl } from 'react-daum-postcode/lib/loadPostcode';
 
 const SignUp = () => {
   const navigate = useNavigate();
   const getElementValue = (id) => document.getElementById(id).value;
   const getCheckedValue = (className) =>
-    document.querySelector(`.${className}:checked`).value;
+  document.querySelector(`.${className}:checked`).value;
+  const open = useDaumPostcodePopup(postcodeScriptUrl)
 
   const [selectedFileName, setSelectedFileName] = useState('');
   const [selectedName, setSelectedName] = useState('');
@@ -68,9 +71,33 @@ const SignUp = () => {
     ));
   };
 
+  // 카카오 지도API
+  const searchAddress = () => {
+    open({onComplete: setAddressDatas})
+  }
+
+  const setAddressDatas = (data) =>{
+    let fullAddress = data.address
+    let extraAddress = ""
+    let localAddress = data.sido + " " + data.sigungu
+    if(data.addressType === 'R'){
+      if(data.bname !== ""){
+        extraAddress += data.bname
+      }
+      if(data.buildingName !== ""){
+        extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
+      }
+
+      //지역주소 제외 전체주소 치환
+      fullAddress = fullAddress.replace(localAddress, '');
+
+      getElementValue('addr_main', localAddress);
+      getElementValue('addr_detail', fullAddress += (extraAddress !== '' ? `(${extraAddress})` : ''));
+    }
+  }
+  
   // submit
   const submitBtnClick = (event) => {
-    console.log('확인버튼클릭');
 
     // 폼의 기본 동작 방지 (페이지 새로고침 방지)
     event.preventDefault();
@@ -84,28 +111,16 @@ const SignUp = () => {
     const sex = getCheckedValue('sex');
     const tel = getElementValue('tel');
     const pwd = getElementValue('pwd');
+    const ckpwd = getElementValue("ckpwd")
     const addrMain = getElementValue('addr_main');
     const addrDetail = getElementValue('addr_detail');
     const auth = getCheckedValue('auth');
 
-    // Null Check
-    // if (
-    //   [
-    //     name,
-    //     birth,
-    //     sex,
-    //     email,
-    //     domain,
-    //     tel,
-    //     pwd,
-    //     addrMain,
-    //     addrDetail,
-    //     auth,
-    //   ].some((value) => !value)
-    // ) {
-    //   // console.error('하나 이상의 요소를 찾을 수 없습니다.');
-    //   return;
-    // }
+    // 비밀번호 Check
+    if (pwd !== ckpwd){
+      alert("비밀번호가 다릅니다.")
+      return;
+    }
 
     // FormData 객체 생성
     const formData = new FormData();
@@ -154,8 +169,7 @@ const SignUp = () => {
             alert(`유효성 검증 오류:\n${errorMessages}`);
           } else {
             // 기타 서버 응답 오류 처리
-            const errorMessage =
-              error.response.data.body.message || '서버 응답 오류';
+            const errorMessage = error.response.data.body.message || '서버 응답 오류';
             alert(`${errorMessage}`);
           }
         } else if (error.request) {
@@ -310,7 +324,7 @@ const SignUp = () => {
                   />
                 </td>
                 <td>
-                  <button id='addrBtn'>주소검색</button>
+                  <button id='addrBtn'onClick={searchAddress}>주소검색</button>
                 </td>
               </tr>
               <tr>

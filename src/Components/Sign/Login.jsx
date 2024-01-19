@@ -76,8 +76,27 @@ const Login = () => {
 
       navigate("/");
     } catch (error) {
-      // 로그인 실패 후에 할 작업들...
-      console.error("로그인 실패:", error.message);
+      console.log(error.response);
+        if (error.response) {
+          // 서버 응답이 있을 경우
+          if (error.response.data && error.response.data.error) {
+            // 서버에서 에러 응답을 보냈을 때
+            const details = error.response.data.details;
+            const errorMessages = Object.values(details).join('\n');
+
+            alert(`유효성 검증 오류:\n${errorMessages}`);
+          } else {
+            // 기타 서버 응답 오류 처리
+            const errorMessage = error.response.data.body.message || '서버 응답 오류';
+            alert(`${errorMessage}`);
+          }
+        } else if (error.request) {
+          // 서버로의 요청이 실패했을 경우
+          console.error('서버에 요청을 보내는 중 오류가 발생했습니다.');
+        } else {
+          // 오류를 발생시킨 요청을 설정하는 중에 오류가 발생했을 경우
+          console.error('오류를 설정하는 중에 문제가 발생했습니다.');
+        }
     }
   };
 
