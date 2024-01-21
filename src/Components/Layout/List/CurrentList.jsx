@@ -26,10 +26,6 @@ const CurrentList = ({
     }
   };
 
-  if (!headers || !headers.length) {
-    throw new Error('<CurrentList /> headers is required.');
-  }
-
   const headerKey = headers.map((header) => header.value);
 
   return (
@@ -51,25 +47,34 @@ const CurrentList = ({
           </tr>
         </thead>
         <tbody>
-          {items.map((item, index) => (
-            <tr key={index}>
-              {selectable && (
-                <td style={{ width: '30px' }}>
-                  <input type='checkbox' />
-                </td>
-              )}
-              {headerKey.map((key) => (
-                <td key={key + index}>
-                  {key === 'status' ? (
-                    <GenerateButtons status={item[key]} />
-                  ) : (
-                    item[key]
-                  )}
-                </td>
-              ))}
+          {items && items.length > 0 ? (
+            items.map((item, index) => (
+              <tr key={index}>
+                {selectable && (
+                  <td style={{ width: '30px' }}>
+                    <input type='checkbox' />
+                  </td>
+                )}
+                {headerKey.map((key) => (
+                  <td key={key + index}>
+                    {key === 'status' ? (
+                      <GenerateButtons status={item[key]} />
+                    ) : (
+                      item[key]
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={headerKey.length + (selectable ? 1 : 0)}>
+                조회된 데이터가 없습니다.
+              </td>
             </tr>
-          ))}
+          )}
         </tbody>
+
         <tfoot>
           <div className='tfootWrapper'>
             {type === 'Date' && buttonType === 'Y' && (

@@ -3,7 +3,6 @@ import CurrentList from './CurrentList';
 import SearchDate from '../SearchDate';
 
 const List = ({
-  data = [],
   headers,
   items,
   type,
@@ -13,9 +12,6 @@ const List = ({
   buttonName,
   handleSearch,
 }) => {
-  // const headers = data.headers;
-  // const items = data.items;
-  // const selectable = data.selectable;
   const selectable = false;
   console.log('List의 콘솔', items);
 

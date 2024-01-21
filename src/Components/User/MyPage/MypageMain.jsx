@@ -1,21 +1,58 @@
 // 마이페이지 메인
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTokenContext } from '../../Context/TokenContext';
+import axios from 'axios';
 import card from '../../../img/card-icon.png';
+
 import data from '../../SampleData/medicalhistoryData';
 import CurrentList from '../../Layout/List/CurrentList';
 
 const MypageMain = () => {
   const navigate = useNavigate();
+  const { token, userAuth } = useTokenContext();
+  const [items, setItems] = useState();
+  const [headers, setHeaders] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   // 버튼 클릭시 지정해둔 입력값에 따라서 해당 목록 전달
   const handleButtonClick = (type) => {
     navigate('/user/manager', { state: { selectedType: type } });
   };
 
-  // 테스트 데이터 처리하는 코드
-  const headers = data.headers.filter((header) => header.value !== 'status');
-  const items = data.items.filter((items) => items.value !== 'status');
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    params: {
+      memberId: localStorage.getItem('userId'),
+    },
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get(
+          'http://localhost:8080/members/currentHistory',
+          config,
+        );
+        setItems(response.data);
+        setHeaders(data.headers2);
+      } catch (err) {
+        console.error('약국 에러 :', err);
+        // 여기서 에러 발생 시 대체 데이터 설정 가능
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [token]);
+
+  if (isLoading) {
+    return <div>로딩 중...</div>;
+  }
 
   return (
     <div className='userPageWrapper'>
