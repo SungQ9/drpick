@@ -4,6 +4,8 @@ import SearchDate from '../SearchDate';
 
 const List = ({
   data = [],
+  headers,
+  items,
   type,
   style,
   searchBarStyle,
@@ -11,9 +13,11 @@ const List = ({
   buttonName,
   handleSearch,
 }) => {
-  const headers = data.headers;
-  const items = data.items;
-  const selectable = data.selectable;
+  // const headers = data.headers;
+  // const items = data.items;
+  // const selectable = data.selectable;
+  const selectable = false;
+  console.log('List의 콘솔', items);
 
   const [startDate, setStartDate] = React.useState(new Date());
   const [endDate, setEndDate] = React.useState(new Date());

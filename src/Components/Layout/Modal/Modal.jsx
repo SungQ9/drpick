@@ -5,6 +5,10 @@ import '../../../css/Modal.css';
 const Modal = ({ Name, children, isOpen, onClose }) => {
   if (!isOpen) return null;
 
+  const childrenWithProps = React.Children.map(children, (child) =>
+    React.cloneElement(child, { onClose: onClose }),
+  );
+
   return (
     <div className='modal-overlay'>
       <div className='modal-content'>
@@ -15,7 +19,6 @@ const Modal = ({ Name, children, isOpen, onClose }) => {
               height: '20px',
               width: '20px',
               cursor: 'pointer',
-
               color: '#8d8c8c',
             }}
             onClick={onClose}
@@ -23,7 +26,7 @@ const Modal = ({ Name, children, isOpen, onClose }) => {
             X
           </p>
         </div>
-        {children}
+        {childrenWithProps}
       </div>
     </div>
   );

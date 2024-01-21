@@ -1,9 +1,10 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import DoctorDashBoard from './DoctorDashBoard';
-import DoctorClinic from './DoctorClinic';
+import DoctorClinic from './Clinic';
 import DoctorManagement from './DoctorManagement';
 import DoctorProfileEdit from './DoctorProfileEdit';
+import '../../css/DoctorStyle.css';
 
 const Doctor = () => {
   return (

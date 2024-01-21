@@ -1,10 +1,11 @@
+/* 모달 기본 설정 ( 건드리지마세요 ) */
 .modal-overlay {
   position: absolute;
-  top: 300px;
-  left: 800px;
-  width: 500px;
-  height: 500px;
-
+  top: 50%;
+  left: 50%;
+  max-width: 1000px;
+  max-height: 1000px;
+  transform: translate(-50%, -30%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,4 +30,85 @@
 .close-button {
   margin-top: 20px;
   padding: 10px 20px;
+}
+
+/* 환자 상세 */
+.patientDetail-modal {
+  display: flex;
+  flex-direction: column;
+  width: 650px;
+  padding: 10px;
+}
+.patientDetail-top {
+  border-collapse: separate;
+  border-spacing: 0 0px;
+  width: 650px;
+}
+.patientDetail-top td:first-child,
+.patientDetail-top td:nth-child(3) {
+  width: 120px;
+}
+
+.patientDetail-top td:nth-child(2),
+.patientDetail-top td:nth-child(4) {
+  width: 200px;
+}
+
+.patientDetail-top h3 {
+  font-weight: bold;
+  font-size: 25px;
+  width: 100%;
+  margin: 5px;
+  color: #000000;
+}
+.patientDetail-top td {
+  font-size: 20px;
+  text-align: left;
+  color: #656565;
+}
+
+.patientDetail-bottom {
+  margin-top: 50px;
+  width: 650px;
+  border-collapse: separate;
+  border-spacing: 0 15px;
+}
+
+.patientDetail-bottom h3 {
+  font-weight: bold;
+  font-size: 25px;
+  text-align: start;
+  margin: 5px;
+}
+
+.patientDetail {
+  border-radius: 15px;
+  background-color: #daf6ee;
+  color: #656565;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 10px 0px 10px 0px;
+  width: 530px;
+  height: 150px;
+}
+.patientDetail-bottom tr td:first-child {
+  width: 110px;
+}
+
+.patientInfo {
+  border-spacing: 0px 15px;
+  border-collapse: separate;
+  text-align: left;
+  margin-left: 20px;
+}
+
+.patientInfo tr td:first-child,
+.patientInfo tr td:nth-child(3) {
+  width: 75px;
+}
+
+.patientInfo tr td:nth-child(2),
+.patientInfo tr td:nth-child(4) {
+  width: 130px;
 }

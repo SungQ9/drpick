@@ -1,20 +1,13 @@
-import React, { useState } from 'react';
-import Modal from './Modal';
-
-import SignUp from '../../Sign/SignUp';
-import Sample from './sample';
+import React from 'react';
+import { useModalContext } from '../../Context/ModalContext';
+import InquiryModal from '../../ModalComponent/InquiryModal';
+import PatientDetailModal from '../../ModalComponent/Doctor/PatientDetailModal';
 
 const ModalOpen = ({ onClick, componentName }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalContent, setModalContent] = useState(null);
+  const { openModal } = useModalContext();
 
-  const openModal = (component) => {
-    setIsModalOpen(true);
-    setModalContent(component);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const handleOpenModal = (component, name) => {
+    openModal(component, name);
   };
 
   return (
@@ -22,7 +15,7 @@ const ModalOpen = ({ onClick, componentName }) => {
       <button
         onClick={() => {
           console.log('로그인버튼클릭');
-          openModal(<Sample />);
+          handleOpenModal(<PatientDetailModal />, '환자상세');
         }}
       >
         로그인 모달
@@ -30,17 +23,11 @@ const ModalOpen = ({ onClick, componentName }) => {
       <button
         onClick={() => {
           console.log('회원가입버튼클릭');
-          openModal(<Sample />);
+          handleOpenModal(<InquiryModal />, '1:1 문의');
         }}
       >
         회원가입 모달
       </button>
-
-      {isModalOpen && (
-        <Modal isOpen={isModalOpen} onClose={closeModal} Name={'모달테스트'}>
-          {modalContent}
-        </Modal>
-      )}
     </div>
   );
 };
