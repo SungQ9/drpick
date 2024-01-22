@@ -28,11 +28,12 @@ const InquiryManage = () => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
+
       try {
         // eslint-disable-next-line default-case
         switch (selectedType) {
           case "user":
-            const response = await axios.get(
+            var response = await axios.get(
               "http://localhost:8080/members/currentHistory",
               config
             );
@@ -40,41 +41,67 @@ const InquiryManage = () => {
             setCurrentHeaders(headers.members);
             setTitle("회원관리");
             break;
-          // case 'doctor':
-          //   setItems(response.data);
-          //   setCurrentHeaders(data.headers);
-          //   setTitle('의사관리');
-          //   break;
-          // case 'request':
-          //   setItems(response.data);
-          //   setCurrentHeaders(data.headers);
-          //   setTitle('등록요청목록');
-          //   break;
-          // case 'hospital':
-          //   setItems(response.data);
-          //   setCurrentHeaders(data.headers);
-          //   setTitle('병원관리');
-          //   break;
-          // case 'drugstore':
-          //   setItems(response.data);
-          //   setCurrentHeaders(data.headers);
-          //   setTitle('약국관리');
-          //   break;
-          // case 'userInquiry':
-          //   setDefaultData(data2);
-          //   setCurrentHeaders(data.headers)
-          //   setTitle('회원문의');
-          //   break;
-          // case 'doctorInquiry':
-          //   setDefaultData(data2);
-          //  setCurrentHeaders(data.headers);
-          //   setTitle('의사문의');
-          //   break;
-          // case 'drugstoreInquiry':
-          //   setItems(response.data);
-          //   setCurrentHeaders(data.headers);
-          //   setTitle('약국문의');
-          //   break;
+          case "doctor":
+            var response = await axios.get(
+              "http://localhost:8080/members/currentHistory",
+              config
+            );
+            setItems(response.data);
+            setCurrentHeaders(headers.members);
+            setTitle("의사관리");
+            break;
+          case "request":
+            var response = await axios.get(
+              "http://localhost:8080/members/currentHistory",
+              config
+            );
+            setItems(response.data);
+            setCurrentHeaders(headers.members);
+            setTitle("등록요청목록");
+            break;
+          case "hospital":
+            var response = await axios.get(
+              "http://localhost:8080/members/currentHistory",
+              config
+            );
+            setItems(response.data);
+            setCurrentHeaders(headers.members);
+            setTitle("병원관리");
+            break;
+          case "drugstore":
+            var response = await axios.get(
+              "http://localhost:8080/members/currentHistory",
+              config
+            );
+            setItems(response.data);
+            setCurrentHeaders(headers.members);
+            setTitle("약국관리");
+            break;
+          case "userInquiry":
+            var response = await axios.get(
+              "http://localhost:8080/members/currentHistory",
+              config
+            );
+            setCurrentHeaders(headers.members);
+            setTitle("회원문의");
+            break;
+          case "doctorInquiry":
+            var response = await axios.get(
+              "http://localhost:8080/members/currentHistory",
+              config
+            );
+            setCurrentHeaders(headers.members);
+            setTitle("의사문의");
+            break;
+          case "drugstoreInquiry":
+            var response = await axios.get(
+              "http://localhost:8080/members/currentHistory",
+              config
+            );
+            setItems(response.data);
+            setCurrentHeaders(headers.members);
+            setTitle("약국문의");
+            break;
         }
       } catch (err) {
         console.error("사용자 목록 에러 :", err);
