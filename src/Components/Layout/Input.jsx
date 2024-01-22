@@ -11,6 +11,7 @@ const Input = ({
   minLength,
   maxLength,
   disabled,
+  readOnly,
 }) => {
   return (
     <span>
@@ -24,6 +25,7 @@ const Input = ({
         minLength={minLength}
         maxLength={maxLength}
         disabled={disabled}
+        readOnly={readOnly}
       />
       <label>{label}</label>
     </span>

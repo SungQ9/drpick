@@ -1,0 +1,20 @@
+.doctorClinic-form {
+  border: 1px solid #cecece;
+  border-radius: 15px;
+  width: 350px;
+  height: 680px;
+  margin: 1%;
+}
+
+.doctorClinic-title {
+  border-bottom: 1px solid #cecece;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.doctorClinic-title h2 {
+  margin-left: 20px;
+  font-weight: bold;
+}

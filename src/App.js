@@ -1,6 +1,7 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { TokenProvider } from './Components/Context/TokenContext';
+import { ModalProvider } from './Components/Context/ModalContext';
 
 import Header from './Components/Layout/Header/index';
 import Footer from './Components/Layout/Footer/index';
@@ -19,20 +20,22 @@ function App() {
   return (
     <div className='App'>
       <TokenProvider>
-        <Header />
-        <Routes>
-          <Route exact path='/*' element={<Main />} />
-          <Route path='/signUp' element={<SignUp />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/clinic/*' element={<Clinic />} />
-          <Route path='/imageSearch/*' element={<ImageSearch />} />
-          <Route path='/chatBot/*' element={<ChatBot />} />
-          <Route path='/searchHospital/*' element={<SearchHospital />} />
-          <Route path='/searchDrugStore/*' element={<SearchDrugStrore />} />
-          <Route path='/user/*' element={<UserMyPage />} />
+        <ModalProvider>
+          <Header />
+          <Routes>
+            <Route exact path='/*' element={<Main />} />
+            <Route path='/signUp' element={<SignUp />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/clinic/*' element={<Clinic />} />
+            <Route path='/imageSearch/*' element={<ImageSearch />} />
+            <Route path='/chatBot/*' element={<ChatBot />} />
+            <Route path='/searchHospital/*' element={<SearchHospital />} />
+            <Route path='/searchDrugStore/*' element={<SearchDrugStrore />} />
+            <Route path='/user/*' element={<UserMyPage />} />
 
-          {/* <Main /> */}
-        </Routes>
+            {/* <Main /> */}
+          </Routes>
+        </ModalProvider>
       </TokenProvider>
       <Footer />
     </div>
