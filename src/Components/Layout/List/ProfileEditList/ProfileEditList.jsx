@@ -1,5 +1,6 @@
 import React from 'react';
-import Select from '../Select';
+import Select from '../../Select';
+import WorkTime from './WorkTime';
 
 const ProfileEditList = ({ type, title }) => {
   if (type === 'doctor') {
@@ -58,15 +59,7 @@ const ProfileEditList = ({ type, title }) => {
         </div>
         <div className='profile-bottom'>
           <h3>비대면 진료 시간 설정</h3>
-          <table>
-            <tr>
-              <td>월요일</td>
-              <td>
-                <input />
-                <input />
-              </td>
-            </tr>
-          </table>
+          <WorkTime />
         </div>
         <button>저장</button>
         <button>취소</button>
