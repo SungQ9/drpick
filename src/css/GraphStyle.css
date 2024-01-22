@@ -1,0 +1,29 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 두 컬럼으로 구성 */
+  gap: 30px; /* 간격 조절 */
+}
+
+.entireGraphForm {
+  padding: 10px;
+}
+
+.dashBoardBottomSection {
+  display: flex;
+  flex-direction: column; /* 세로로 나열 */
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
+}
+
+.dashBoardGraphBar {
+  width: 100%; /* 부모의 100%를 차지하도록 설정 */
+}
+
+.dashBoardGraphDoughnut {
+  display: flex;
+  flex-direction: row;
+}
+
+.dou {
+  padding: 50px;
+}

@@ -1,25 +1,23 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Input from '../Layout/Input';
-import Select from '../Layout/Select';
-
-import '../../css/UserStyle.css';
-import '../../css/Style.css';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { postcodeScriptUrl } from 'react-daum-postcode/lib/loadPostcode';
+import Input from '../Layout/Input';
+import Select from '../Layout/Select';
+import Adress from '../Layout/Adress';
+import '../../css/UserStyle.css';
+import '../../css/Style.css';
 
 const SignUp = () => {
   const navigate = useNavigate();
   const getElementValue = (id) => document.getElementById(id).value;
   const getCheckedValue = (className) =>
     document.querySelector(`.${className}:checked`).value;
-  const open = useDaumPostcodePopup(postcodeScriptUrl);
-
   const [selectedFileName, setSelectedFileName] = useState('');
   const [selectedName, setSelectedName] = useState('');
   const [selectedOption, setSelectedOption] = useState('');
-
+  const [address, setAddress] = useState({ main: '', detail: '' });
   // 이메일 도메인 핸들러
   const handleSelectChange = (value) => {
     setSelectedOption(value);
@@ -71,33 +69,9 @@ const SignUp = () => {
     ));
   };
 
-  // 카카오 지도API
-  const searchAddress = () => {
-    open({ onComplete: setAddressDatas });
-  };
-
-  const setAddressDatas = (data) => {
-    let fullAddress = data.address;
-    let extraAddress = '';
-    let localAddress = data.sido + ' ' + data.sigungu;
-    if (data.addressType === 'R') {
-      if (data.bname !== '') {
-        extraAddress += data.bname;
-      }
-      if (data.buildingName !== '') {
-        extraAddress +=
-          extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
-      }
-
-      //지역주소 제외 전체주소 치환
-      fullAddress = fullAddress.replace(localAddress, '');
-
-      getElementValue('addr_main', localAddress);
-      getElementValue(
-        'addr_detail',
-        (fullAddress += extraAddress !== '' ? `(${extraAddress})` : ''),
-      );
-    }
+  // 주소
+  const handleAddressSelect = (selectedAddress) => {
+    setAddress(selectedAddress);
   };
 
   // submit
@@ -115,8 +89,6 @@ const SignUp = () => {
     const tel = getElementValue('tel');
     const pwd = getElementValue('pwd');
     const ckpwd = getElementValue('ckpwd');
-    const addrMain = getElementValue('addr_main');
-    const addrDetail = getElementValue('addr_detail');
     const auth = getCheckedValue('auth');
 
     // 비밀번호 Check
@@ -135,8 +107,8 @@ const SignUp = () => {
     formData.append('userBirth', birth);
     formData.append('userSex', sex);
     formData.append('userTel', tel);
-    formData.append('userAddrMain', addrMain);
-    formData.append('userAddrDetail', addrDetail);
+    formData.append('userAddrMain', address.main);
+    formData.append('userAddrDetail', address.detail);
     formData.append('userAuth', auth);
 
     // 선택된 파일이 있으면 FormData에 추가
@@ -318,31 +290,8 @@ const SignUp = () => {
                 </td>
               </tr>
               <tr>
-                <td>
-                  <Input
-                    id='addr_main'
-                    className='member_addr_main'
-                    type='text'
-                    label='주소'
-                    placeholder='　주소를 입력해주세요'
-                  />
-                </td>
-                <td>
-                  <button id='addrBtn' onClick={searchAddress}>
-                    주소검색
-                  </button>
-                </td>
-              </tr>
-              <tr>
                 <td colSpan={2}>
-                  <Input
-                    id='addr_detail'
-                    className='member_addr_detail'
-                    type='text'
-                    label='상세주소'
-                    style={{ width: '500px', fontSize: '11px' }}
-                    placeholder='　나머지 주소를 입력해주세요'
-                  />
+                  <Adress onAddressSelect={handleAddressSelect} />
                 </td>
               </tr>
               <tr>
