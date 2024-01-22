@@ -1,26 +1,28 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import '../../../css/UserStyle.css';
-import '../../../css/Style.css';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import "../../../css/UserStyle.css";
+import "../../../css/Style.css";
 
-import MypageMain from './MypageMain';
-import UserManagement from './UserManagement';
-import UserProfileEdit from './UserProfileEdit';
-import PaymentManagement from './PaymentManagement';
-import Video from '../Clinic/ApplicationForm/ClinicRoom/VideoChat';
-import Modal from '../../Layout/Modal/ModalOpen';
+import MypageMain from "./MypageMain";
+import UserManagement from "./UserManagement";
+import UserProfileEdit from "./UserProfileEdit";
+import PaymentManagement from "./PaymentManagement";
+import Video from "../Clinic/ApplicationForm/ClinicRoom/VideoChat";
+import Modal from "../../Layout/Modal/ModalOpen";
+import TossPayment from "./TossPayment";
 
 const UserMyPage = () => {
   return (
-    <div className='mainContainer'>
-      <div className='mypageForm'>
+    <div className="mainContainer">
+      <div className="mypageForm">
         <Routes>
-          <Route path='/' element={<MypageMain />} />
-          <Route path='/manager' element={<UserManagement />} />
-          <Route path='/profileEdit' element={<UserProfileEdit />} />
-          <Route path='/payment' element={<PaymentManagement />} />
-          <Route path='/video/:roomName' element={<Video />} />
-          <Route path='/modal' element={<Modal />} />
+          <Route path="/" element={<MypageMain />} />
+          <Route path="/manager" element={<UserManagement />} />
+          <Route path="/profileEdit" element={<UserProfileEdit />} />
+          <Route path="/payment" element={<PaymentManagement />} />
+          <Route path="/payment/tosspay" element={<TossPayment />} />
+          <Route path="/video/:roomName" element={<Video />} />
+          <Route path="/modal" element={<Modal />} />
         </Routes>
       </div>
     </div>
