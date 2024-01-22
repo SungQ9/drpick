@@ -35,7 +35,7 @@ const UserManagement = () => {
       try {
         switch (selectedType) {
           case 'history':
-            const response = await axios.get(
+            var response = await axios.get(
               'http://localhost:8080/members/currentHistory',
               config,
             );
@@ -43,14 +43,24 @@ const UserManagement = () => {
             setCurrentHeaders(headers.medeicalhistory);
             setTitle('진료내역조회');
             break;
-          // case 'inquiry':
-          //   setHeaders(data2.headers);
-          //   setTitle('1:1문의');
-          //   break;
-          // case 'review':
-          //   setHeaders(data3.headers);
-          //   setTitle('리뷰관리');
-          //   break;
+          case 'inquiry':
+            var response = await axios.get(
+              'http://localhost:8080/members/currentHistory',
+              config,
+            );
+            setItems(response.data);
+            setCurrentHeaders(headers.inquiry);
+            setTitle('1:1문의');
+            break;
+          case 'review':
+            var response = await axios.get(
+              'http://localhost:8080/members/currentHistory',
+              config,
+            );
+            setItems(response.data);
+            setCurrentHeaders(headers.reviews);
+            setTitle('리뷰관리');
+            break;
         }
       } catch (err) {
         console.error('사용자 목록 에러 :', err);
