@@ -1,7 +1,7 @@
 /* 기본 css*/
 
 .pannel,
-li {
+.pannel li {
   cursor: pointer;
 }
 
@@ -34,6 +34,14 @@ li {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.profileEditForm {
+  background-color: #ffffff;
+  width: 1000px;
+  height: 800px;
+  margin-top: 100px;
+  border-radius: 15px;
 }
 
 input {
@@ -188,6 +196,7 @@ select::-ms-expand {
   display: flex;
   width: 150px;
   margin-right: 100px;
+  cursor: pointer;
 }
 .tabLi:first-child {
   margin-left: 50px;

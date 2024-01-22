@@ -13,8 +13,8 @@ const SignUp = () => {
   const navigate = useNavigate();
   const getElementValue = (id) => document.getElementById(id).value;
   const getCheckedValue = (className) =>
-  document.querySelector(`.${className}:checked`).value;
-  const open = useDaumPostcodePopup(postcodeScriptUrl)
+    document.querySelector(`.${className}:checked`).value;
+  const open = useDaumPostcodePopup(postcodeScriptUrl);
 
   const [selectedFileName, setSelectedFileName] = useState('');
   const [selectedName, setSelectedName] = useState('');
@@ -73,32 +73,35 @@ const SignUp = () => {
 
   // 카카오 지도API
   const searchAddress = () => {
-    open({onComplete: setAddressDatas})
-  }
+    open({ onComplete: setAddressDatas });
+  };
 
-  const setAddressDatas = (data) =>{
-    let fullAddress = data.address
-    let extraAddress = ""
-    let localAddress = data.sido + " " + data.sigungu
-    if(data.addressType === 'R'){
-      if(data.bname !== ""){
-        extraAddress += data.bname
+  const setAddressDatas = (data) => {
+    let fullAddress = data.address;
+    let extraAddress = '';
+    let localAddress = data.sido + ' ' + data.sigungu;
+    if (data.addressType === 'R') {
+      if (data.bname !== '') {
+        extraAddress += data.bname;
       }
-      if(data.buildingName !== ""){
-        extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
+      if (data.buildingName !== '') {
+        extraAddress +=
+          extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
       }
 
       //지역주소 제외 전체주소 치환
       fullAddress = fullAddress.replace(localAddress, '');
 
       getElementValue('addr_main', localAddress);
-      getElementValue('addr_detail', fullAddress += (extraAddress !== '' ? `(${extraAddress})` : ''));
+      getElementValue(
+        'addr_detail',
+        (fullAddress += extraAddress !== '' ? `(${extraAddress})` : ''),
+      );
     }
-  }
-  
+  };
+
   // submit
   const submitBtnClick = (event) => {
-
     // 폼의 기본 동작 방지 (페이지 새로고침 방지)
     event.preventDefault();
 
@@ -111,14 +114,14 @@ const SignUp = () => {
     const sex = getCheckedValue('sex');
     const tel = getElementValue('tel');
     const pwd = getElementValue('pwd');
-    const ckpwd = getElementValue("ckpwd")
+    const ckpwd = getElementValue('ckpwd');
     const addrMain = getElementValue('addr_main');
     const addrDetail = getElementValue('addr_detail');
     const auth = getCheckedValue('auth');
 
     // 비밀번호 Check
-    if (pwd !== ckpwd){
-      alert("비밀번호가 다릅니다.")
+    if (pwd !== ckpwd) {
+      alert('비밀번호가 다릅니다.');
       return;
     }
 
@@ -169,7 +172,8 @@ const SignUp = () => {
             alert(`유효성 검증 오류:\n${errorMessages}`);
           } else {
             // 기타 서버 응답 오류 처리
-            const errorMessage = error.response.data.body.message || '서버 응답 오류';
+            const errorMessage =
+              error.response.data.body.message || '서버 응답 오류';
             alert(`${errorMessage}`);
           }
         } else if (error.request) {
@@ -324,7 +328,9 @@ const SignUp = () => {
                   />
                 </td>
                 <td>
-                  <button id='addrBtn'onClick={searchAddress}>주소검색</button>
+                  <button id='addrBtn' onClick={searchAddress}>
+                    주소검색
+                  </button>
                 </td>
               </tr>
               <tr>
