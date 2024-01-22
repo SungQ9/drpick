@@ -8,6 +8,8 @@ const InquiryModal = ({ onClose }) => {
   const [selectedValue, setSelectedValue] = useState('');
   const [selectedFileName, setSelectedFileName] = useState('');
 
+  const name = localStorage.getItem('userName');
+
   const handleSelectChange = (event) => {
     setSelectedValue(event.target.value);
   };
@@ -129,6 +131,7 @@ const InquiryModal = ({ onClose }) => {
                     type={'text'}
                     label={'이름'}
                     style={{ width: '525px' }}
+                    value={name}
                     disabled={'disabled'}
                   />
                 </td>
