@@ -20,9 +20,9 @@ const KakaoDrugstore = ({ list }) => {
   return (
     <>
       <Map
-        center={{ lat: 37.49796, lng: 127.02761 }}
+        center={{ lat: 36.49796, lng: 127.62761 }}
         style={{ width: "450px", height: "450px", margin: "0 auto" }}
-        level={7}
+        level={13}
       >
         <MarkerClusterer
           options={{

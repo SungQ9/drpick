@@ -14,9 +14,12 @@ const HospitalList = () => {
   const { token } = useTokenContext(); // 토큰 컨텍스트에서 토큰 가져오기
   const [pageNumber, setPageNumber] = useState(0);
   const listsPerPage = 5; // 페이지 당 보여줄 아이템 수
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // 로딩 상태 확인
   const navigate = useNavigate();
   const [searchKeyword, setSearchKeyword] = useState("");
+  const handleListUpdate = (updatedList) => {
+    setList(updatedList);
+  };
 
   // 렌더링될 때 서버에서 데이터 받아서 변수에 지정
   useEffect(() => {
@@ -121,7 +124,7 @@ const HospitalList = () => {
           />
         </div>
         <div className="kakaoMap">
-          <KakaoHospital list={list} />
+          <KakaoHospital list={list} onListUpdate={handleListUpdate} />
         </div>
       </div>
     </>
