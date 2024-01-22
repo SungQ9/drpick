@@ -1,9 +1,10 @@
 import React from 'react';
+import ProfileEditList from '../Layout/List/ProfileEditList';
 
 const DoctorProfileEdit = () => {
   return (
     <div>
-      <h2>의사 정보수정</h2>
+      <ProfileEditList type={'doctor'} title={'의사정보수정'} />
     </div>
   );
 };

@@ -4,15 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { useTokenContext } from '../../Context/TokenContext';
 import axios from 'axios';
 import card from '../../../img/card-icon.png';
-
-import data from '../../SampleData/medicalhistoryData';
+import headers from '../../SampleData/Headers';
 import CurrentList from '../../Layout/List/CurrentList';
 
 const MypageMain = () => {
   const navigate = useNavigate();
   const { token, userAuth } = useTokenContext();
   const [items, setItems] = useState();
-  const [headers, setHeaders] = useState();
+  const [currentHeaders, setCurrentHeaders] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
   // 버튼 클릭시 지정해둔 입력값에 따라서 해당 목록 전달
@@ -38,9 +37,9 @@ const MypageMain = () => {
           config,
         );
         setItems(response.data);
-        setHeaders(data.headers2);
+        setCurrentHeaders(headers.medeicalhistory);
       } catch (err) {
-        console.error('약국 에러 :', err);
+        console.error('마이페이지 에러 :', err);
         // 여기서 에러 발생 시 대체 데이터 설정 가능
       } finally {
         setIsLoading(false);
@@ -122,7 +121,7 @@ const MypageMain = () => {
       </div>
       <h4>최근진료내역</h4>
       <CurrentList
-        headers={headers}
+        headers={currentHeaders}
         items={items}
         style={{ height: '450px', width: '950px' }}
         type={'Lite'}

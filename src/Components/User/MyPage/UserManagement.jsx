@@ -2,21 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTokenContext } from '../../Context/TokenContext';
 import axios from 'axios';
+import headers from '../../SampleData/Headers';
 import List from '../../Layout/List';
 import ListTitle from '../../Layout/List/ListTitle';
-import data from '../../SampleData/medicalhistoryData';
-import data2 from '../../SampleData/inquiryData';
-import data3 from '../../SampleData/reviewData';
 
 const UserManagement = () => {
   const location = useLocation();
   const { token, userAuth } = useTokenContext();
   const selectedType = location.state?.selectedType || 'default';
-  const [defaultData, setDefaultData] = useState(data);
   const [title, setTitle] = useState('');
   const [keyword, setKeyword] = useState('');
   const [items, setItems] = useState();
-  const [headers, setHeaders] = useState();
+  const [currentHeaders, setCurrentHeaders] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
   const handleSearch = (key) => {
@@ -43,20 +40,20 @@ const UserManagement = () => {
               config,
             );
             setItems(response.data);
-            setHeaders(data.headers);
+            setCurrentHeaders(headers.medeicalhistory);
             setTitle('진료내역조회');
             break;
-          case 'inquiry':
-            setHeaders(data2.headers);
-            setTitle('1:1문의');
-            break;
-          case 'review':
-            setHeaders(data3.headers);
-            setTitle('리뷰관리');
-            break;
+          // case 'inquiry':
+          //   setHeaders(data2.headers);
+          //   setTitle('1:1문의');
+          //   break;
+          // case 'review':
+          //   setHeaders(data3.headers);
+          //   setTitle('리뷰관리');
+          //   break;
         }
       } catch (err) {
-        console.error('약국 에러 :', err);
+        console.error('사용자 목록 에러 :', err);
         // 여기서 에러 발생 시 대체 데이터 설정 가능
       } finally {
         setIsLoading(false);
@@ -76,7 +73,7 @@ const UserManagement = () => {
 
       {selectedType === 'review' && (
         <List
-          headers={headers}
+          headers={currentHeaders}
           items={items}
           type='Date'
           buttonType='Y'
@@ -87,7 +84,7 @@ const UserManagement = () => {
 
       {selectedType === 'inquiry' && (
         <List
-          headers={headers}
+          headers={currentHeaders}
           items={items}
           type='Date'
           buttonType='Y'
@@ -96,7 +93,12 @@ const UserManagement = () => {
       )}
 
       {selectedType !== 'review' && selectedType !== 'inquiry' && (
-        <List headers={headers} items={items} type='Date' buttonType={''} />
+        <List
+          headers={currentHeaders}
+          items={items}
+          type='Date'
+          buttonType={''}
+        />
       )}
     </div>
   );
