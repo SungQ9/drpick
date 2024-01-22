@@ -29,7 +29,6 @@ const ApplicationForm = () => {
 
   // 업로드 파일 삭제 핸들러
   const handleDeleteFile = (id) => {
-    clinicContext.removeUploadedFile(id);
     setSelectedFileName((prevFiles) =>
       prevFiles.filter((file) => file.id !== id),
     );

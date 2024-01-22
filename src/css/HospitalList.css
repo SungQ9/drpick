@@ -1,19 +1,78 @@
-.hospitalList {
+.hospitalList,
+.drugstoreList {
   display: flex;
-  padding-top: 50px;
-  padding-right: 25px;
   flex-direction: row-reverse;
 }
 
 .listForm {
   flex: 1;
+  padding: 20px;
 }
 
 .kakaoMap {
   flex: 1;
-  padding-top: 72px;
+  padding-top: 110px;
 }
 
-.hospital {
+.listtable {
+  width: 100%;
+  border-radius: 15px;
+  border: 1px solid #ccc;
+  margin-bottom: 40px;
+}
+
+.listtable div {
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
   text-align: left;
+}
+
+.listtable div.hospital:last-child {
+  border-bottom: 0;
+}
+
+.listtable div.hospital ul {
+  padding-left: 10px;
+}
+
+.paginationBttns {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.previousBttn,
+.nextBttn {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.paginationDisabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.paginationActive {
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+}
+
+.searchBtn {
+  height: 41px;
+  margin-left: 5px;
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  justify-content: center;
+}
+
+/* SearchHospital > map.jsx */
+.currentLocBtn {
+  margin-top: 20px;
 }

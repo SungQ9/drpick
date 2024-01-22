@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
+import { useTokenContext } from "../../Context/TokenContext"; // useToken 훅 추가
 
 const DBSearch = ({ predictionResult }) => {
   const [drugs, setDrugs] = useState([]);
@@ -9,9 +10,9 @@ const DBSearch = ({ predictionResult }) => {
   const [loading, setLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
   const drugsPerPage = 5; // 페이지 당 보여줄 아이템 수
+  const { token } = useTokenContext();
 
   const searchUrl = "http://localhost:8080/api/drugsSearch";
-  const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
     if (predictionResult) {
@@ -19,16 +20,18 @@ const DBSearch = ({ predictionResult }) => {
       setPillColor(pill_color);
       setPillText(pill_text);
 
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          drugColor: pill_color,
+          drugText: pill_text,
+        },
+      };
+
       axios
-        .get(searchUrl, {
-          params: {
-            drugColor: pill_color,
-            drugText: pill_text,
-          },
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
+        .get(searchUrl, config)
         .then((response) => {
           setDrugs(response.data);
           setLoading(false);

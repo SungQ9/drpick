@@ -1,15 +1,28 @@
 // buttonHelpers.js
+import React from 'react';
+import { useModalContext } from '../../Context/ModalContext';
+import { useNavigate } from 'react-router-dom';
+import CertificateModal from '../../ModalComponent/User/CertificateModal';
+import PrescriptionModal from '../../ModalComponent/User/PrescriptionModal';
 
-const generateButtons = (status, handleButtonClick) => {
+const GenerateButtons = ({ status }) => {
+  const { openModal } = useModalContext();
+  const navigate = useNavigate();
+
   if (!status) {
     return null; // status 값이 없으면 null 반환
   }
+
+  const handleOpenModal = (component, name) => {
+    openModal(component, name);
+  };
+
   switch (status) {
     case 'UN':
       return (
         <button
           className='listBtn-mid'
-          onClick={() => handleButtonClick('진료실입장하기')}
+          onClick={() => navigate('/clinic/room')}
         >
           진료실입장하기
         </button>
@@ -19,35 +32,32 @@ const generateButtons = (status, handleButtonClick) => {
         <div>
           <button
             className='listBtn-short'
-            onClick={() => handleButtonClick('진단서')}
+            onClick={() => handleOpenModal(<CertificateModal />, '진단서')}
           >
             진단서
           </button>
           <button
             className='listBtn-short'
+            onClick={() => handleOpenModal(<PrescriptionModal />, '처방전')}
             style={{ background: '#AECCC8' }}
-            onClick={() => handleButtonClick('처방전')}
           >
             처방전
           </button>
         </div>
       );
-    case 'IN':
+    case 'N':
       return (
         <button
           className='clinicSubBtn-mid'
+          onClick={() => handleOpenModal()}
           style={{ background: '#11c2ad' }}
-          onClick={() => handleButtonClick('답변대기')}
         >
           답변대기
         </button>
       );
-    case 'IY':
+    case 'Y':
       return (
-        <button
-          className='clinicSubBtn-mid'
-          onClick={() => handleButtonClick('답변완료')}
-        >
+        <button className='listBtn-mid' onClick={() => handleOpenModal()}>
           답변완료
         </button>
       );
@@ -55,8 +65,8 @@ const generateButtons = (status, handleButtonClick) => {
       return (
         <button
           className='listBtn-short'
+          onClick={() => handleOpenModal()}
           style={{ background: '#11c2ad' }}
-          onClick={() => handleButtonClick('작성전')}
         >
           작성전
         </button>
@@ -65,8 +75,8 @@ const generateButtons = (status, handleButtonClick) => {
       return (
         <button
           className='listBtn-short'
+          onClick={() => handleOpenModal()}
           style={{ background: '#11c2ad' }}
-          onClick={() => handleButtonClick('수정')}
         >
           수정
         </button>
@@ -76,4 +86,4 @@ const generateButtons = (status, handleButtonClick) => {
   }
 };
 
-export default generateButtons;
+export default GenerateButtons;

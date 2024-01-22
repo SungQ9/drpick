@@ -27,9 +27,12 @@ const Delivery = ({ onButtonClick }) => {
         </div>
         <div>
           <ul style={{ listStyle: 'none' }}>
-            <li>오늘배송</li>
-            <li></li>
-            <li></li>
+            <li onClick={onButtonClick}>
+              오늘배송<span>오늘받아보기</span>
+              <p>5,000원</p>
+            </li>
+            <li onClick={onButtonClick}>택배</li>
+            <li onClick={onButtonClick}>방문수령</li>
           </ul>
         </div>
       </div>

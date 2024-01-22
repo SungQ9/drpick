@@ -1,19 +1,30 @@
 import React, { useState } from 'react';
 
-const SearchBar = ({ type, props = [], searchBarStyle, placeholder }) => {
+const SearchBar = ({
+  type,
+  props = [],
+  searchBarStyle,
+  placeholder,
+  handleSearch,
+}) => {
   const [inputText, setInputText] = useState('');
 
   const prop1 = props[0];
   const prop2 = props[1];
+  const [key, setKey] = useState('');
 
   const onChangeInput = (evt) => {
     setInputText(evt.target.value);
   };
 
-  const handleSearch = () => {
-    if (type === 'Date') console.log('검색버튼클릭 ', prop1, ':', prop2);
-    else console.log('검색버튼클릭2', prop1);
+  const handleClick = (evt) => {
+    setKey();
   };
+
+  // const handleSearch = () => {
+  //   if (type === 'Date') console.log('검색버튼클릭 ', prop1, ':', prop2);
+  //   else console.log('검색버튼클릭2', prop1);
+  // };
 
   const handleReset = () => {
     setInputText('');

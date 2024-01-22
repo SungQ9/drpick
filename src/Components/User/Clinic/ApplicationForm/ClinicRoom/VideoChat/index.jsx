@@ -99,8 +99,7 @@ const Video = () => {
       }
     };
 
-    // PeerConnection 설정
-    socketRef.current = io("175.114.130.12:4000");
+    socketRef.current = io("http://175.114.130.12:4000");
 
     // 미디어 스트림을 얻음
     getMedia();
