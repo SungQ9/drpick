@@ -23,7 +23,6 @@ const DoctorManagement = () => {
       Authorization: `Bearer ${token}`,
     },
     params: {
-      // 의사쪽 userId 이름으로 수정
       doctorId: localStorage.getItem('userId'),
     },
   };
@@ -34,7 +33,6 @@ const DoctorManagement = () => {
       try {
         if (selectedType === 'history') {
           const response = await axios.get(
-            // 의사 쪽 조회하는 url로 수정해주세요
             'http://localhost:8080/doctors/getDoctorCurrentHistory',
             config,
           );
@@ -42,6 +40,18 @@ const DoctorManagement = () => {
           setCurrentHeaders(headers.doctorhistory);
           setTitle('진료기록조회');
         } else if (selectedType === 'inquiry') {
+          const response = await axios.get(
+            'http://localhost:8080/doctors/getDoctorInquiry',
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+              params: {
+                doctorId: localStorage.getItem('userId'),
+              },
+            },
+          );
+          setItems(response.data);
           setCurrentHeaders(headers.inquiry);
           setTitle('문의내역');
         }
