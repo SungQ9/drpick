@@ -5,8 +5,43 @@ import StatusSubTable from "../../Layout/DashBoard/StatusSubTable";
 import BarIndex from "../Statistics/barIndex";
 import DoughnutChartIndex from "../Statistics/doughnutChartIndex";
 import "../../../css/GraphStyle.css";
+import { useTokenContext } from "../../Context/TokenContext";
+import { useEffect } from "react";
+import axios from "axios";
+import { useState } from "react";
 
 const AdminDashBoard = () => {
+  const { token } = useTokenContext();
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const [doctorRequestCount, setDoctorRequestCount] = useState(0);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // 의사 등록 요청 수
+        const response_fifthValue = await axios.get(
+          "http://localhost:8080/doctors/getDoctorRequestCnt",
+          config
+        );
+
+        // 신규 이용자 수 - 회원가입 수 or 진료 처음 받은 회원 수 ?
+        const response_secondValue = await axios.get(
+          "http://localhost:8080/doctors/getDoctorRequestCnt",
+          config
+        );
+
+        setDoctorRequestCount(response_fifthValue.data);
+      } catch (error) {
+        console.error("API 호출 에러:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   const reviewData = [
     { date: "2024.01.11", name: "홍길동", description: "신청이 잘 안됩니다" },
     { date: "2024.01.11", name: "홍길동", description: "신청이 잘 안됩니다" },
@@ -27,7 +62,7 @@ const AdminDashBoard = () => {
             fourthLabel={"확인하지않은문의"}
             fourthValue={`12건`}
             fifthLabel={"의사등록요청"}
-            fifthValue={`2건`}
+            fifthValue={`${doctorRequestCount}건`}
             sixthLabel={"당일충전포인트"}
             sixthValue={`1,230,000원`}
           />

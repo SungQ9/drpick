@@ -34,7 +34,7 @@ const InquiryManage = () => {
         switch (selectedType) {
           case "user":
             var response = await axios.get(
-              "http://localhost:8080/members/currentHistory",
+              "http://localhost:8080/admin/getMemberList",
               config
             );
             setItems(response.data);
@@ -43,7 +43,7 @@ const InquiryManage = () => {
             break;
           case "doctor":
             var response = await axios.get(
-              "http://localhost:8080/members/currentHistory",
+              "http://localhost:8080/doctors/getDoctorsList",
               config
             );
             setItems(response.data);
@@ -52,7 +52,7 @@ const InquiryManage = () => {
             break;
           case "request":
             var response = await axios.get(
-              "http://localhost:8080/members/currentHistory",
+              "http://localhost:8080/doctors/getRegistRequestList",
               config
             );
             setItems(response.data);
@@ -129,7 +129,7 @@ const InquiryManage = () => {
           items={items}
           buttonType={"N"}
           searchBarStyle={{ position: "absolute", top: "0px", left: "100px" }}
-        />
+        ></List>
       )}
     </div>
   );
