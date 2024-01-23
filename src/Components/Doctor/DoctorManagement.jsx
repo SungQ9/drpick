@@ -5,6 +5,7 @@ import axios from 'axios';
 import headers from '../SampleData/Headers';
 import ListTitle from '../Layout/List/ListTitle';
 import List from '../Layout/List';
+import Pagination from '../Layout/List/Pagination';
 
 const DoctorManagement = () => {
   const location = useLocation();
@@ -12,8 +13,10 @@ const DoctorManagement = () => {
   const { token, userAuth } = useTokenContext();
   const [title, setTitle] = useState('');
   const [currentHeaders, setCurrentHeaders] = useState();
-  const [items, setItems] = useState();
+  const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 7; 
 
   const config = {
     headers: {
@@ -21,7 +24,7 @@ const DoctorManagement = () => {
     },
     params: {
       // 의사쪽 userId 이름으로 수정
-      memberId: localStorage.getItem('userId'),
+      doctorId: localStorage.getItem('userId'),
     },
   };
 
@@ -32,11 +35,11 @@ const DoctorManagement = () => {
         if (selectedType === 'history') {
           const response = await axios.get(
             // 의사 쪽 조회하는 url로 수정해주세요
-            'http://localhost:8080/members/currentHistory',
+            'http://localhost:8080/doctors/getDoctorCurrentHistory',
             config,
           );
           setItems(response.data);
-          setCurrentHeaders(headers.medeicalhistory);
+          setCurrentHeaders(headers.doctorhistory);
           setTitle('진료기록조회');
         } else if (selectedType === 'inquiry') {
           setCurrentHeaders(headers.inquiry);
@@ -53,6 +56,14 @@ const DoctorManagement = () => {
     fetchData();
   }, [selectedType, token]);
 
+  const handlePageChange = (selected) => {
+    setCurrentPage(selected.selected);
+  };
+
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const itemsToDisplay = items.slice(startIndex, endIndex);
+
   if (isLoading) {
     return <div>로딩 중...</div>;
   }
@@ -61,21 +72,33 @@ const DoctorManagement = () => {
     <div className='listWrapper'>
       <ListTitle title={title} />
       {selectedType === 'history' && (
-        <List
-          headers={currentHeaders}
-          items={items}
-          type='Date'
-          buttonType={''}
-        />
+        <>
+          <List
+            headers={currentHeaders}
+            items={itemsToDisplay}
+            type='Date'
+            buttonType={''}
+          />
+          <Pagination
+            pageCount={Math.ceil(items.length / itemsPerPage)}
+            onPageChange={handlePageChange}
+          />
+        </>
       )}
       {selectedType === 'inquiry' && (
-        <List
-          headers={currentHeaders}
-          items={items}
-          type='Date'
-          buttonType='Y'
-          buttonName='작성'
-        />
+        <>
+          <List
+            headers={currentHeaders}
+            items={itemsToDisplay}
+            type='Date'
+            buttonType='Y'
+            buttonName='작성'
+          />
+          <Pagination
+            pageCount={Math.ceil(items.length / itemsPerPage)}
+            onPageChange={handlePageChange}
+          />
+        </>
       )}
     </div>
   );

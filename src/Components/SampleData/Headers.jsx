@@ -44,6 +44,29 @@ const medeicalhistory = [
   },
 ];
 
+const doctorhistory = [
+  {
+    text: '이름',
+    value: 'memberName',
+  },
+  {
+    text: '연락처',
+    value: 'memberTel',
+  },
+  {
+    text: '생년월일',
+    value: 'memberBirth',
+  },
+  {
+    text: '진료일',
+    value: 'reservationDate',
+  },
+  {
+    text: '상세보기',
+    value: 'status',
+  },
+];
+
 const members = [
   {
     text: '아이디',
@@ -120,6 +143,7 @@ const headers = {
   members,
   reviews,
   drugstoreReceive,
+  doctorhistory,
 };
 
 export default headers;
