@@ -9,6 +9,7 @@ import { useTokenContext } from "../../Context/TokenContext";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
+import LineIndex from "../Statistics/lineIndex";
 
 const AdminDashBoard = () => {
   const { token } = useTokenContext();
@@ -24,15 +25,15 @@ const AdminDashBoard = () => {
       try {
         // 의사 등록 요청 수
         const response_fifthValue = await axios.get(
-          "http://localhost:8080/doctors/getDoctorRequestCnt",
+          "http://localhost:8080/admin/getDoctorRequestCnt",
           config
         );
 
-        // 신규 이용자 수 - 회원가입 수 or 진료 처음 받은 회원 수 ?
-        const response_secondValue = await axios.get(
-          "http://localhost:8080/doctors/getDoctorRequestCnt",
-          config
-        );
+        // // 신규 이용자 수 - 회원가입 수 or 진료 처음 받은 회원 수 ?
+        // const response_secondValue = await axios.get(
+        //   "http://localhost:8080/doctors/getDoctorRequestCnt",
+        //   config
+        // );
 
         setDoctorRequestCount(response_fifthValue.data);
       } catch (error) {
@@ -66,7 +67,7 @@ const AdminDashBoard = () => {
             sixthLabel={"당일충전포인트"}
             sixthValue={`1,230,000원`}
           />
-          <StatusSubTable title={"문의관리"} data={reviewData} />
+          <LineIndex />
         </div>
       </div>
       <div className="dashBoardBottomSection">

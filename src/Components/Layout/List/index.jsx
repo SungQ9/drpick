@@ -1,7 +1,6 @@
 import React from "react";
 import CurrentList from "./CurrentList";
 import SearchDate from "../SearchDate";
-import Pagination from "./Pagination";
 
 const List = ({
   headers,

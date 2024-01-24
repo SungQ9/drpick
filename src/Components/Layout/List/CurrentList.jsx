@@ -33,7 +33,10 @@ const CurrentList = ({
   const itemsPerPage = 5;
 
   const pagesVisited = pageNumber * itemsPerPage;
-  const displayItems = items.slice(pagesVisited, pagesVisited + itemsPerPage);
+  const displayItems =
+    items && items.length > 0
+      ? items.slice(pagesVisited, pagesVisited + itemsPerPage)
+      : [];
 
   const changePage = ({ selected }) => {
     setPageNumber(selected);
@@ -115,7 +118,7 @@ const CurrentList = ({
         </tfoot>
       </table>
       <Pagination
-        pageCount={Math.ceil(items.length / itemsPerPage)}
+        pageCount={items ? Math.ceil(items.length / itemsPerPage) : 0}
         onPageChange={changePage}
       />
     </div>
