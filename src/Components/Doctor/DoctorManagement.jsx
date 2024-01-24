@@ -16,6 +16,10 @@ const DoctorManagement = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 7;
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const itemsToDisplay = items.slice(startIndex, endIndex);
+
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -24,6 +28,7 @@ const DoctorManagement = () => {
       doctorId: localStorage.getItem('userId'),
     },
   };
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -48,12 +53,13 @@ const DoctorManagement = () => {
               },
             },
           );
+          console.log('의사문의 ');
           setItems(response.data);
           setCurrentHeaders(headers.inquiry);
           setTitle('문의내역');
         }
       } catch (err) {
-        console.error('사용자 목록 에러 :', err);
+        console.error('의사 목록 에러 :', err);
         // 여기서 에러 발생 시 대체 데이터 설정 가능
       } finally {
         setIsLoading(false);
@@ -61,12 +67,11 @@ const DoctorManagement = () => {
     };
     fetchData();
   }, [selectedType, token]);
+
   const handlePageChange = (selected) => {
     setCurrentPage(selected.selected);
   };
-  const startIndex = currentPage * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const itemsToDisplay = items.slice(startIndex, endIndex);
+
   if (isLoading) {
     return <div>로딩 중...</div>;
   }

@@ -41,6 +41,7 @@
   width: 1000px;
   min-height: 800px;
   margin-top: 100px;
+  margin-bottom: 50px;
   border-radius: 15px;
 }
 
@@ -632,6 +633,27 @@ td:nth-child(5) {
 }
 
 .dashBoardGraph {
+}
+
+/* 의사 약국 정보수정 - 정보란*/
+.profile-table input,
+.profile-table h5 {
+  margin: 0px;
+}
+.profile-table h5 {
+  margin-bottom: 5px;
+}
+.profile-table input {
+  height: 45px;
+}
+
+.profile-table h5 {
+  text-align: left;
+  font-size: 18px;
+}
+
+.profile-table span {
+  color: red;
 }
 
 /* 의사 약국 정보수정 - 시간 */
