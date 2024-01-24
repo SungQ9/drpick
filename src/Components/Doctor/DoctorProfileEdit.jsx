@@ -1,5 +1,5 @@
 import React from 'react';
-import ProfileEditList from '../Layout/List/ProfileEditList';
+import ProfileEditList from '../Layout/List/ProfileEditList/ProfileEditList';
 
 const DoctorProfileEdit = () => {
   return (

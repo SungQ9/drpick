@@ -1,5 +1,3 @@
-// Pagination.jsx
-
 import React from "react";
 import ReactPaginate from "react-paginate";
 import "../../../css/Pagination.css"; // 스타일 파일을 추가합니다.
@@ -26,3 +24,4 @@ const Pagination = ({ pageCount, onPageChange }) => {
 };
 
 export default Pagination;
+
