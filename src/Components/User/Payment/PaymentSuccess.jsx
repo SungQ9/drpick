@@ -23,7 +23,6 @@ export function PaymentSuccess() {
       orderId: orderId,
       amount: queryParams["amount"],
       paymentKey: queryParams["paymentKey"],
-      paymentId: queryParams["paymentId"]
     };
 
     const secretKey = "test_sk_QbgMGZzorz5A4kmB9dElVl5E1em4";
@@ -37,18 +36,25 @@ export function PaymentSuccess() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(requestData),
-      })
+      });
 
       const json = await response.json();
 
       if (!response.ok) {
-        navigate(`/payment/failure`)    
+        navigate(`/payment/failure`);
         return;
       }
 
-      setPaymentInfo(json); 
+      // Append requestData to paymentInfo
+      const updatedPaymentInfo = {
+        ...json,
+        requestData: requestData,
+      };
+
+      setPaymentInfo(updatedPaymentInfo);
       navigate("/payment/success", { replace: true });
     }
+
     confirm();
   }, []);
 
@@ -57,12 +63,6 @@ export function PaymentSuccess() {
       <div className="box_section">
         <div>
           <h2 style={{ padding: "20px 0px 10px 0px" }}>결제 성공</h2>
-          <h2>모든 쿼리 파라메타:</h2>
-          {Object.keys(queryParams).map((key) => (
-            <p key={key}>
-              {key}: {queryParams[key]}
-            </p>
-          ))}
           <h2>JSON 데이터:</h2>
           <pre>{JSON.stringify(paymentInfo, null, 2)}</pre>
         </div>
