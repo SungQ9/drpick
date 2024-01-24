@@ -58,7 +58,7 @@ export function TossPaymentModal() {
                   orderName: "토스 티셔츠 외 2건",
                   customerName: "김토스",
                   customerEmail: "customer123@gmail.com",
-                  successUrl: window.location.origin + "/payment/success",
+                  successUrl: window.location.origin + "/payment/success?paymentId=1", //paymentId파라메타는 추후 payment_id값을 받아서 1과 교체
                   failUrl: window.location.origin + "/payment/failure"
                 });
               } catch (error) {

@@ -1,20 +1,31 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export function PaymentSuccess() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [paymentInfo, setPaymentInfo] = useState(null);
 
+  const queryParams = {};
+  searchParams.forEach((value, key) => {
+    queryParams[key] = value;
+  });
+
   useEffect(() => {
+    const orderId = queryParams["orderId"];
+    if (!orderId) {
+      setPaymentInfo({ message: "포인트로 결제" });
+      return;
+    }
+
     const requestData = {
-      orderId: searchParams.get("orderId"),
-      amount: searchParams.get("amount"),
-      paymentKey: searchParams.get("paymentKey"),
+      orderId: orderId,
+      amount: queryParams["amount"],
+      paymentKey: queryParams["paymentKey"],
+      paymentId: queryParams["paymentId"]
     };
 
-    // 스크린샷 찍을시 검열필요
     const secretKey = "test_sk_QbgMGZzorz5A4kmB9dElVl5E1em4";
     const encryptedSecretKey = `Basic ${btoa(secretKey + ":")}`;
 
@@ -31,15 +42,12 @@ export function PaymentSuccess() {
       const json = await response.json();
 
       if (!response.ok) {
-        // TODO: 구매 실패 비즈니스 로직 구현
-        console.log(json);
-        navigate(`/fail?code=${json.code}&message=${json.message}`)    
+        navigate(`/payment/failure`)    
         return;
       }
 
-      // TODO: 구매 완료 비즈니스 로직 구현
-      console.log(json);
-      setPaymentInfo(json);
+      setPaymentInfo(json); 
+      navigate("/payment/success", { replace: true });
     }
     confirm();
   }, []);
@@ -47,16 +55,17 @@ export function PaymentSuccess() {
   return (
     <div className="result wrapper">
       <div className="box_section">
-        <h2 style={{ padding: "20px 0px 10px 0px" }}>
-          결제 성공
-        </h2>
-        {paymentInfo && (
-          <div>
-            <pre>
-              {JSON.stringify(paymentInfo, null, 2)}
-            </pre>
-          </div>
-        )}
+        <div>
+          <h2 style={{ padding: "20px 0px 10px 0px" }}>결제 성공</h2>
+          <h2>모든 쿼리 파라메타:</h2>
+          {Object.keys(queryParams).map((key) => (
+            <p key={key}>
+              {key}: {queryParams[key]}
+            </p>
+          ))}
+          <h2>JSON 데이터:</h2>
+          <pre>{JSON.stringify(paymentInfo, null, 2)}</pre>
+        </div>
         <div className="result wrapper">
           <Link to="https://docs.tosspayments.com/guides/payment-widget/integration">
             <button className="button" style={{ marginTop: '30px', marginRight: '10px' }}>
