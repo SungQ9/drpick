@@ -9,7 +9,6 @@ import UserProfileEdit from "./UserProfileEdit";
 import PaymentManagement from "./PaymentManagement";
 import Video from "../Clinic/ApplicationForm/ClinicRoom/VideoChat";
 import Modal from "../../Layout/Modal/ModalOpen";
-import TossPayment from "./TossPayment";
 
 const UserMyPage = () => {
   return (
@@ -20,7 +19,6 @@ const UserMyPage = () => {
           <Route path="/manager" element={<UserManagement />} />
           <Route path="/profileEdit" element={<UserProfileEdit />} />
           <Route path="/payment" element={<PaymentManagement />} />
-          <Route path="/payment/tosspay" element={<TossPayment />} />
           <Route path="/video/:roomName" element={<Video />} />
           <Route path="/modal" element={<Modal />} />
         </Routes>
