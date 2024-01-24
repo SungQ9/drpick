@@ -5,6 +5,7 @@ import axios from "axios";
 import headers from "../../SampleData/Headers";
 import ListTitle from "../../Layout/List/ListTitle";
 import List from "../../Layout/List";
+import Loading from "../../User/ImageSearch/Loading";
 
 const InquiryManage = () => {
   const location = useLocation();
@@ -20,101 +21,110 @@ const InquiryManage = () => {
       Authorization: `Bearer ${token}`,
     },
     params: {
-      // 관리자쪽 userId 이름으로 수정
       memberId: localStorage.getItem("userId"),
     },
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
+  const fetchInquiryData = async (apiEndpoint, headers, titleKey) => {
+    setIsLoading(true);
 
-      try {
-        // eslint-disable-next-line default-case
-        switch (selectedType) {
-          case "user":
-            var response = await axios.get(
-              "http://localhost:8080/admin/getMemberList",
-              config
-            );
-            setItems(response.data);
-            setCurrentHeaders(headers.members);
-            setTitle("회원관리");
-            break;
-          case "doctor":
-            var response = await axios.get(
-              "http://localhost:8080/doctors/getDoctorsList",
-              config
-            );
-            setItems(response.data);
-            setCurrentHeaders(headers.members);
-            setTitle("의사관리");
-            break;
-          case "request":
-            var response = await axios.get(
-              "http://localhost:8080/doctors/getRegistRequestList",
-              config
-            );
-            setItems(response.data);
-            setCurrentHeaders(headers.members);
-            setTitle("등록요청목록");
-            break;
-          case "hospital":
-            var response = await axios.get(
-              "http://localhost:8080/members/currentHistory",
-              config
-            );
-            setItems(response.data);
-            setCurrentHeaders(headers.members);
-            setTitle("병원관리");
-            break;
-          case "drugstore":
-            var response = await axios.get(
-              "http://localhost:8080/members/currentHistory",
-              config
-            );
-            setItems(response.data);
-            setCurrentHeaders(headers.members);
-            setTitle("약국관리");
-            break;
-          case "userInquiry":
-            var response = await axios.get(
-              "http://localhost:8080/members/currentHistory",
-              config
-            );
-            setCurrentHeaders(headers.members);
-            setTitle("회원문의");
-            break;
-          case "doctorInquiry":
-            var response = await axios.get(
-              "http://localhost:8080/members/currentHistory",
-              config
-            );
-            setCurrentHeaders(headers.members);
-            setTitle("의사문의");
-            break;
-          case "drugstoreInquiry":
-            var response = await axios.get(
-              "http://localhost:8080/members/currentHistory",
-              config
-            );
-            setItems(response.data);
-            setCurrentHeaders(headers.members);
-            setTitle("약국문의");
-            break;
-        }
-      } catch (err) {
-        console.error("사용자 목록 에러 :", err);
-        // 여기서 에러 발생 시 대체 데이터 설정 가능
-      } finally {
+    try {
+      const response = await axios.get(apiEndpoint, config);
+      const convertedItems = response.data.map((item) => {
+        // inquiryType에 따라 한글로 변환
+        item.inquiryType = convertInquiryType(item.inquiryType);
+        return item;
+      });
+      setItems(response.data);
+      setCurrentHeaders(headers);
+      setTitle(titleKey);
+    } catch (err) {
+      console.error("데이터 요청 에러:", err);
+      // 에러 발생 시 대체 데이터 설정 가능
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const convertInquiryType = (inquiryType) => {
+    switch (inquiryType) {
+      case "Q":
+        return "질문";
+      case "A":
+        return "결제";
+      case "I":
+        return "계정";
+      default:
+        return inquiryType;
+    }
+  };
+
+  useEffect(() => {
+    switch (selectedType) {
+      case "user":
+        fetchInquiryData(
+          "http://localhost:8080/admin/getMemberList",
+          headers.members,
+          "회원관리"
+        );
+        break;
+      case "doctor":
+        fetchInquiryData(
+          "http://localhost:8080/admin/getDoctorsList",
+          headers.doctors,
+          "의사관리"
+        );
+        break;
+      case "request":
+        fetchInquiryData(
+          "http://localhost:8080/admin/getRegistRequestList",
+          headers.requestDoctors,
+          "등록요청목록"
+        );
+        break;
+      case "hospital":
+        fetchInquiryData(
+          "http://localhost:8080/admin/getHospitalList",
+          headers.hospitals,
+          "병원관리"
+        );
+        break;
+      case "drugstore":
+        fetchInquiryData(
+          "http://localhost:8080/admin/getDrugstoreList",
+          headers.drugstores,
+          "약국관리"
+        );
+        break;
+      case "userInquiry":
+        fetchInquiryData(
+          "http://localhost:8080/admin/getMemberInquiryList",
+          headers.inquiry,
+          "회원 문의"
+        );
+        break;
+      case "doctorInquiry":
+        fetchInquiryData(
+          "http://localhost:8080/admin/getDoctorInquiryList",
+          headers.inquiry,
+          "의사 문의"
+        );
+        break;
+      case "drugstoreInquiry":
+        fetchInquiryData(
+          "http://localhost:8080/admin/getDrugstoreInquiryList",
+          headers.inquiry,
+          "약국 문의"
+        );
+        break;
+      default:
         setIsLoading(false);
-      }
-    };
-    fetchData();
+        break;
+    }
   }, [selectedType, token]);
 
   if (isLoading) {
-    return <div>로딩 중...</div>;
+    return <Loading />;
   }
 
   return (
@@ -123,14 +133,28 @@ const InquiryManage = () => {
       {(selectedType === "hospital" || selectedType === "drugstore") && (
         <List headers={currentHeaders} items={items} buttonType={""} />
       )}
-      {selectedType !== "hospital" && selectedType !== "drugstore" && (
+      {(selectedType === "userInquiry" ||
+        selectedType === "doctorInquiry" ||
+        selectedType === "drugstoreInquiry") && (
         <List
           headers={currentHeaders}
           items={items}
-          buttonType={"N"}
-          searchBarStyle={{ position: "absolute", top: "0px", left: "100px" }}
-        ></List>
+          buttonType={""}
+          type={"Date"}
+        />
       )}
+      {selectedType !== "hospital" &&
+        selectedType !== "drugstore" &&
+        selectedType !== "userInquiry" &&
+        selectedType !== "doctorInquiry" &&
+        selectedType !== "drugstoreInquiry" && (
+          <List
+            headers={currentHeaders}
+            items={items}
+            buttonType={"N"}
+            searchBarStyle={{ position: "absolute", top: "0px", left: "100px" }}
+          />
+        )}
     </div>
   );
 };

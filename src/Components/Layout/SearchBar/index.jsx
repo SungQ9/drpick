@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
+import { useModalContext } from '../../Context/ModalContext';
 
-const SearchBar = ({
-  type,
-  props = [],
-  searchBarStyle,
-  placeholder,
-  handleSearch,
-}) => {
+const SearchBar = ({ type, props = [], searchBarStyle, placeholder }) => {
   const [inputText, setInputText] = useState('');
-
+  const { setSearchKeyword } = useModalContext(); // ModalContext에서 검색 키워드 가져오기
   const prop1 = props[0];
   const prop2 = props[1];
   const [key, setKey] = useState('');
@@ -17,10 +12,13 @@ const SearchBar = ({
     setInputText(evt.target.value);
   };
 
+  const handleSearch = () => {
+    setSearchKeyword(inputText);
+  };
+
   const handleClick = (evt) => {
     setKey();
   };
-
   // const handleSearch = () => {
   //   if (type === 'Date') console.log('검색버튼클릭 ', prop1, ':', prop2);
   //   else console.log('검색버튼클릭2', prop1);
@@ -30,9 +28,14 @@ const SearchBar = ({
     setInputText('');
   };
 
+  const handleSubmit = (evt) => {
+    evt.preventDefault(); // 폼 제출 시 페이지 리프레시 방지
+    handleSearch();
+  };
+
   if (type === 'Date') {
     return (
-      <div className='searchBarWrapper'>
+      <form onSubmit={handleSubmit} className='searchBarWrapper'>
         <input
           value={inputText}
           onChange={onChangeInput}
@@ -42,11 +45,11 @@ const SearchBar = ({
         <button className='clinicSubBtn-short' onClick={handleSearch}>
           검색
         </button>
-      </div>
+      </form>
     );
   } else if (type === 'Chat') {
     return (
-      <div className='searchBarWrapper'>
+      <form onSubmit={handleSubmit} className='searchBarWrapper'>
         <input
           style={{ width: '370px', height: '50px' }}
           value={inputText}
@@ -61,11 +64,15 @@ const SearchBar = ({
         >
           입력
         </button>
-      </div>
+      </form>
     );
   } else {
     return (
-      <div className='searchBarWrapper' style={searchBarStyle}>
+      <form
+        onSubmit={handleSubmit}
+        className='searchBarWrapper'
+        style={searchBarStyle}
+      >
         <input value={inputText} onChange={onChangeInput} type='text' />
         <button className='listBtn-short' onClick={handleSearch}>
           검색
@@ -78,7 +85,7 @@ const SearchBar = ({
           {' '}
           초기화
         </button>
-      </div>
+      </form>
     );
   }
 };

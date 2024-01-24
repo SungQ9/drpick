@@ -9,27 +9,41 @@ const ModalProvider = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [modalName, setModalName] = useState('');
+  const [type, setType] = useState('');
+  const [searchKeyword, setSearchKeyword] = useState(''); // 검색 키워드 상태 추가
 
-  const openModal = (component, name) => {
-    console.log('openModal 호출됨');
-    console.log(component);
-    console.log(name);
+  const openModal = (component, name, type) => {
     setModalContent(component);
     setModalName(name);
     setIsModalOpen(true);
+    setType(type);
+    setSearchKeyword(''); // 모달을 열 때마다 검색 키워드 초기화
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setSearchKeyword(''); // 모달을 닫을 때 검색 키워드 초기화
   };
 
   return (
     <ModalContext.Provider
-      value={{ isModalOpen, modalContent, openModal, closeModal }}
+      value={{
+        isModalOpen,
+        modalContent,
+        openModal,
+        closeModal,
+        searchKeyword, // 검색 키워드 상태와 함수 제공
+        setSearchKeyword,
+      }}
     >
       {children}
       {isModalOpen && (
-        <Modal isOpen={isModalOpen} onClose={closeModal} Name={modalName}>
+        <Modal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          Name={modalName}
+          type={type}
+        >
           {modalContent}
         </Modal>
       )}

@@ -6,6 +6,7 @@ import axios from 'axios';
 import card from '../../../img/card-icon.png';
 import headers from '../../SampleData/Headers';
 import CurrentList from '../../Layout/List/CurrentList';
+import Loading from '../ImageSearch/Loading';
 
 const MypageMain = () => {
   const navigate = useNavigate();
@@ -50,7 +51,11 @@ const MypageMain = () => {
   }, [token]);
 
   if (isLoading) {
-    return <div>로딩 중...</div>;
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   }
 
   return (

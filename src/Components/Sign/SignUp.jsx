@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useDaumPostcodePopup } from 'react-daum-postcode';
-import { postcodeScriptUrl } from 'react-daum-postcode/lib/loadPostcode';
 import Input from '../Layout/Input';
 import Select from '../Layout/Select';
 import Adress from '../Layout/Adress';
@@ -18,7 +16,7 @@ const SignUp = () => {
   const [selectedName, setSelectedName] = useState('');
   const [selectedOption, setSelectedOption] = useState('');
   const [address, setAddress] = useState({ main: '', detail: '' });
-  const [emailKey, setEmailKey] = useState("")
+  const [emailKey, setEmailKey] = useState('');
 
   // 이메일 도메인 핸들러
   const handleSelectChange = (value) => {
@@ -33,32 +31,32 @@ const SignUp = () => {
     const memberEmail = domain === '' ? email : email + domain;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if(!emailRegex.test(memberEmail)){
-      alert("인증받을 이메일을 올바르게 입력해주세요.")
-      return
+    if (!emailRegex.test(memberEmail)) {
+      alert('인증받을 이메일을 올바르게 입력해주세요.');
+      return;
     }
 
     try {
-        const config = {
-            params: {
-                userEmail: memberEmail,
-            },
-        };
+      const config = {
+        params: {
+          userEmail: memberEmail,
+        },
+      };
 
-        console.log(config);
-        const response = await axios.post(
-            "http://localhost:8080/users/mailConfirm",
-            null,  // You can omit the second parameter or pass null
-            config
-        );
+      console.log(config);
+      const response = await axios.post(
+        'http://localhost:8080/users/mailConfirm',
+        null, // You can omit the second parameter or pass null
+        config,
+      );
 
-        setEmailKey(response.data.body.mailKey)
-        alert(response.data.body.message)
+      setEmailKey(response.data.body.mailKey);
+      alert(response.data.body.message);
     } catch (error) {
-        // 적절하게 오류 처리
-        console.error("이메일 키를 가져오는 중 오류 발생:", error);
+      // 적절하게 오류 처리
+      console.error('이메일 키를 가져오는 중 오류 발생:', error);
     }
-};
+  };
 
   // 파일 업로드 핸들러
   const handleFileInputChange = (event) => {
@@ -126,12 +124,12 @@ const SignUp = () => {
     const pwd = getElementValue('pwd');
     const ckpwd = getElementValue('ckpwd');
     const auth = getCheckedValue('auth');
-    const accessNumber = getElementValue("accessNumber")
+    const accessNumber = getElementValue('accessNumber');
 
     // 인증번호 체크
-    if(accessNumber !== emailKey){
-      alert("인증번호가 다릅니다.")
-      return
+    if (accessNumber !== emailKey) {
+      alert('인증번호가 다릅니다.');
+      return;
     }
 
     // 비밀번호 Check
@@ -139,7 +137,7 @@ const SignUp = () => {
       alert('비밀번호가 다릅니다.');
       return;
     }
-    
+
     // FormData 객체 생성
     const formData = new FormData();
 
@@ -290,13 +288,15 @@ const SignUp = () => {
                   />
                 </td>
                 <td>
-                  <button id='emailBtn' onClick={getEmailKey}>인증받기</button>
-                  <input 
-                    id="emailKey"
-                    className="emailKey"
-                    type="text"
+                  <button id='emailBtn' onClick={getEmailKey}>
+                    인증받기
+                  </button>
+                  <input
+                    id='emailKey'
+                    className='emailKey'
+                    type='text'
                     value={emailKey}
-                    style={{display:"none"}}
+                    style={{ display: 'none' }}
                   />
                 </td>
               </tr>
