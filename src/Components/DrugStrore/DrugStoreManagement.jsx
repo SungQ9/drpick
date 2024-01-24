@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useTokenContext } from '../Context/TokenContext';
-import headers from '../SampleData/Headers';
-import ListTitle from '../Layout/List/ListTitle';
-import List from '../Layout/List';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { useTokenContext } from "../Context/TokenContext";
+import headers from "../SampleData/Headers";
+import ListTitle from "../Layout/List/ListTitle";
+import List from "../Layout/List";
+import axios from "axios";
 
 const DrugStoreManagement = () => {
   const location = useLocation();
-  const selectedType = location.state?.selectedType || 'default';
+  const selectedType = location.state?.selectedType || "default";
   const { token, userAuth } = useTokenContext();
   const [currentHeaders, setCurrentHeaders] = useState();
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
   const [items, setItems] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const config = {
@@ -19,7 +19,7 @@ const DrugStoreManagement = () => {
       Authorization: `Bearer ${token}`,
     },
     params: {
-      drugstoreId: localStorage.getItem('userId'),
+      drugstoreId: localStorage.getItem("userId"),
     },
   };
 
@@ -29,22 +29,22 @@ const DrugStoreManagement = () => {
       setIsLoading(true);
       try {
         let response;
-        if (selectedType === 'history') {
+        if (selectedType === "history") {
           response = await axios.get(
-            'http://localhost:8080/drugstores/getDrugstoreHistoryList',
-            config,
+            "http://localhost:8080/drugstores/getDrugstoreHistoryList",
+            config
           );
 
           setCurrentHeaders(headers.drugstoreReceive);
           setItems(response.data);
           console.log(response.data);
-          setTitle('약주문목록');
-        } else if (selectedType === 'inquiry') {
+          setTitle("약주문목록");
+        } else if (selectedType === "inquiry") {
           setCurrentHeaders(headers.inquiry);
-          setTitle('문의내역');
+          setTitle("문의내역");
         }
       } catch (err) {
-        console.error('약국 에러 :', err);
+        console.error("약국 에러 :", err);
       } finally {
         setIsLoading(false);
       }
@@ -57,24 +57,24 @@ const DrugStoreManagement = () => {
   }
 
   return (
-    <div className='listWrapper'>
+    <div className="listWrapper">
       <ListTitle title={title} />
-      {selectedType === 'history' && (
+      {selectedType === "history" && (
         // <List data={defaultData} type='Date' buttonType={''} />
         <List
           headers={currentHeaders}
           items={items}
-          type='Date'
-          buttonType={''}
+          type="Date"
+          buttonType={""}
         />
       )}
-      {selectedType === 'inquiry' && (
+      {selectedType === "inquiry" && (
         <List
           headers={currentHeaders}
           items={items}
-          type='Date'
-          buttonType='Y'
-          buttonName='작성'
+          type="Date"
+          buttonType="Y"
+          buttonName="작성"
         />
       )}
     </div>
