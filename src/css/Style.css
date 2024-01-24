@@ -39,7 +39,7 @@
 .profileEditForm {
   background-color: #ffffff;
   width: 1000px;
-  height: 800px;
+  min-height: 800px;
   margin-top: 100px;
   border-radius: 15px;
 }
@@ -632,4 +632,21 @@ td:nth-child(5) {
 }
 
 .dashBoardGraph {
+}
+
+/* 의사 약국 정보수정 - 시간 */
+.worktime-table tr,
+.worktime-table td {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.worktime-table tr td {
+  width: 200px;
+  margin: -2px 0px 0px -35px;
+}
+.worktime-table h4 {
+  margin-left: 10px;
+  margin-right: 10px;
 }
