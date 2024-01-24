@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Select from '../../Select';
 
 const time = [
@@ -21,81 +21,214 @@ const time = [
   { value: '23:00', label: '23:00' },
 ];
 
+const week = [
+  {
+    monday: false,
+    tuesday: false,
+    wednesday: false,
+    thursday: false,
+    friday: false,
+    saturday: false,
+    sunday: false,
+    holiday: false,
+  },
+];
+
 const WorkTime = ({ style }) => {
+  const [selectedDay, setSelectedDay] = useState({ week });
+
+  const handleRadioChange = (day) => {
+    console.log(day, '클릭');
+    setSelectedDay((prevState) => ({
+      ...prevState,
+      [day]: !prevState[day],
+    }));
+  };
+
   return (
-    <table style={style}>
+    <table className='worktime-table' style={style}>
       <tr>
         <td>
-          <input type='radio' />
-          월요일
-          <Select options={time} />
+          <input
+            type='checkbox'
+            style={{ width: '15px' }}
+            onChange={() => handleRadioChange('monday')}
+            checked={selectedDay.monday}
+          />
+          <h4>월요일</h4>
+          <Select
+            options={time}
+            style={{ width: '100px' }}
+            disabled={!selectedDay.monday}
+          />
+        </td>
+        <h3>~</h3>
+        <td>
+          <Select
+            options={time}
+            style={{ width: '100px' }}
+            disabled={!selectedDay.monday}
+          />
+        </td>
+        <td>
+          <input
+            type='checkbox'
+            style={{ width: '15px' }}
+            onChange={() => handleRadioChange('tuesday')}
+            checked={selectedDay.tuesday}
+          />
+          <h4>화요일</h4>
+          <Select
+            options={time}
+            style={{ width: '100px' }}
+            disabled={!selectedDay.tuesday}
+          />
         </td>
         ~
         <td>
-          <Select options={time} />
+          <Select
+            options={time}
+            style={{ width: '100px' }}
+            disabled={!selectedDay.tuesday}
+          />
         </td>
+      </tr>
+      <tr>
         <td>
-          <input type='radio' />
-          화요일
-          <Select options={time} />
-        </td>
-        ~
-        <td>
-          <Select options={time} />
-        </td>
-        <td>
-          <input type='radio' />
-          수요일
-          <Select options={time} />
-        </td>
-        ~
-        <td>
-          <Select options={time} />
-        </td>
-        <td>
-          <input type='radio' />
-          목요일
-          <Select options={time} />
+          <input
+            type='checkbox'
+            style={{ width: '15px' }}
+            onChange={() => handleRadioChange('wednesday')}
+            checked={selectedDay.wednesday}
+          />
+          <h4>수요일</h4>
+          <Select
+            options={time}
+            style={{ width: '100px' }}
+            disabled={!selectedDay.wednesday}
+          />
         </td>
         ~
         <td>
-          <Select options={time} />
+          <Select
+            options={time}
+            style={{ width: '100px' }}
+            disabled={!selectedDay.wednesday}
+          />
         </td>
         <td>
-          <input type='radio' />
-          금요일
-          <Select options={time} />
-        </td>
-        ~
-        <td>
-          <Select options={time} />
-        </td>
-        <td>
-          <input type='radio' />
-          토요일
-          <Select options={time} />
-        </td>
-        ~
-        <td>
-          <Select options={time} />
-        </td>
-        <td>
-          <input type='radio' />
-          일요일
-          <Select options={time} />
+          <input
+            type='checkbox'
+            style={{ width: '15px' }}
+            onChange={() => handleRadioChange('thursday')}
+            checked={selectedDay.thursday}
+          />
+          <h4>목요일</h4>
+          <Select
+            options={time}
+            style={{ width: '100px' }}
+            disabled={!selectedDay.thursday}
+          />
         </td>
         ~
         <td>
-          <Select options={time} />
+          <Select
+            options={time}
+            style={{ width: '100px' }}
+            disabled={!selectedDay.thursday}
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input
+            type='checkbox'
+            style={{ width: '15px' }}
+            onChange={() => handleRadioChange('friday')}
+            checked={selectedDay.friday}
+          />
+          <h4>금요일</h4>
+          <Select
+            options={time}
+            style={{ width: '100px' }}
+            disabled={!selectedDay.friday}
+          />
+        </td>
+        <h3>~</h3>
+        <td>
+          <Select
+            options={time}
+            style={{ width: '100px' }}
+            disabled={!selectedDay.friday}
+          />
         </td>
         <td>
-          <input type='radio' />
-          공휴일
-          <Select options={time} />
+          <input
+            type='checkbox'
+            style={{ width: '15px' }}
+            onChange={() => handleRadioChange('saturday')}
+            checked={selectedDay.saturday}
+          />
+          <h4>토요일</h4>
+          <Select
+            options={time}
+            style={{ width: '100px' }}
+            disabled={!selectedDay.saturday}
+          />
         </td>
         ~
         <td>
-          <Select options={time} />
+          <Select
+            options={time}
+            style={{ width: '100px' }}
+            disabled={!selectedDay.saturday}
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input
+            type='checkbox'
+            style={{ width: '15px' }}
+            onChange={() => handleRadioChange('sunday')}
+            checked={selectedDay.sunday}
+          />
+          <h4>일요일</h4>
+          <Select
+            options={time}
+            style={{ width: '100px' }}
+            disabled={!selectedDay.sunday}
+          />
+        </td>
+        ~
+        <td>
+          <Select
+            options={time}
+            style={{ width: '100px' }}
+            disabled={!selectedDay.sunday}
+          />
+        </td>
+        <td>
+          <input
+            type='checkbox'
+            style={{ width: '15px' }}
+            onChange={() => handleRadioChange('holiday')}
+            checked={selectedDay.holiday}
+          />
+          <h4>공휴일</h4>
+          <Select
+            options={time}
+            style={{ width: '100px' }}
+            disabled={!selectedDay.holiday}
+          />
+        </td>
+        ~
+        <td>
+          <Select
+            options={time}
+            style={{ width: '100px' }}
+            disabled={!selectedDay.holiday}
+          />
         </td>
       </tr>
     </table>

@@ -52,14 +52,47 @@ const ProfileEditList = ({ type, title }) => {
             </table>
           </div>
         </div>
-        <div className='profile-mid'>
-          <div>
-            <textarea></textarea>
+        <div
+          className='profile-mid'
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <div
+            style={{
+              width: '800px',
+              height: '180px',
+              border: '1px solid #cecece',
+              borderRadius: '15px',
+            }}
+          >
+            <textarea
+              style={{
+                width: '99%',
+                height: '98%',
+                borderRadius: '15px',
+                border: 'none',
+                resize: 'none',
+              }}
+            ></textarea>
           </div>
         </div>
-        <div className='profile-bottom'>
-          <h3>비대면 진료 시간 설정</h3>
-          <WorkTime />
+        <div
+          className='profile-bottom'
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <h3 style={{ position: 'relative', right: '285px' }}>
+            비대면 진료 시간 설정
+          </h3>
+          <WorkTime
+          // style={{ borderCollapse: "separate", borderSpacing: "5px 5px" }}
+          />
         </div>
         <button>저장</button>
         <button>취소</button>
