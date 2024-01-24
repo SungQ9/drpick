@@ -38,6 +38,14 @@ function UserTab() {
         <img src='' alt='' />챗 봇 검색
       </li>
       <li
+        className='tabLi'
+        onClick={() => {
+          navigate('/payment');
+        }}
+      >
+        <img src='' alt='' />결제모듈경로(추후 삭제)
+      </li>
+      <li
         className={`tabLi ${isSubtabVisible ? 'clicked' : ''}`}
         onClick={handleToggleSubtab}
       >

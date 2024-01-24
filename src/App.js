@@ -13,6 +13,7 @@ import SearchDrugStrore from './Components/User/SearchDrugStrore';
 import ChatBot from './Components/User/ChatBot';
 import SignUp from './Components/Sign/SignUp';
 import Login from './Components/Sign/Login';
+import Payment from './Components/User/Payment'
 
 import UserMyPage from './Components/User/MyPage/index';
 
@@ -29,6 +30,7 @@ function App() {
             <Route path='/clinic/*' element={<Clinic />} />
             <Route path='/imageSearch/*' element={<ImageSearch />} />
             <Route path='/chatBot/*' element={<ChatBot />} />
+            <Route path='/payment/*' element={<Payment />} />
             <Route path='/searchHospital/*' element={<SearchHospital />} />
             <Route path='/searchDrugStore/*' element={<SearchDrugStrore />} />
             <Route path='/user/*' element={<UserMyPage />} />
