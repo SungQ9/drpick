@@ -81,10 +81,6 @@ const DoctorManagement = () => {
             type="Date"
             buttonType={""}
           />
-          <Pagination
-            pageCount={Math.ceil(items.length / itemsPerPage)}
-            onPageChange={handlePageChange}
-          />
         </>
       )}
       {selectedType === "inquiry" && (
@@ -95,10 +91,6 @@ const DoctorManagement = () => {
             type="Date"
             buttonType="Y"
             buttonName="작성"
-          />
-          <Pagination
-            pageCount={Math.ceil(items.length / itemsPerPage)}
-            onPageChange={handlePageChange}
           />
         </>
       )}
