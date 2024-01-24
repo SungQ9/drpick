@@ -35,8 +35,7 @@ const InquiryManage = () => {
         item.inquiryType = convertInquiryType(item.inquiryType);
         return item;
       });
-
-      setItems(convertedItems);
+      setItems(response.data);
       setCurrentHeaders(headers);
       setTitle(titleKey);
     } catch (err) {

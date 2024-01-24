@@ -21,6 +21,29 @@ const inquiry = [
   },
 ];
 
+const drugstoreInquiry = [
+  {
+    text: "문의유형",
+    value: "inquiryType",
+  },
+  {
+    text: "제목",
+    value: "inquiryTitle",
+  },
+  {
+    text: "문의작성일",
+    value: "inquiryRegdate",
+  },
+  {
+    text: "이름",
+    value: "drugstoreName",
+  },
+  {
+    text: "상태",
+    value: "status",
+  },
+];
+
 const medeicalhistory = [
   {
     text: "진료일",
@@ -227,6 +250,7 @@ const drugstoreReceive = [
 // 목록별 헤더 json 방식으로 추가하고  객체배열에 이름 추가
 const headers = {
   inquiry,
+  drugstoreInquiry,
   medeicalhistory,
   members,
   doctors,
