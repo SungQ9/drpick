@@ -41,6 +41,17 @@ const Modal = ({ Name, children, isOpen, onClose, type }) => {
         </div>
       </div>
     );
+  } else if (type === 'Add' || type === 'Modify') {
+    return (
+      <div className='modal-overlay'>
+        <div className='modal-content'>
+          <div className='modal-title'>
+            <h2 style={{ margin: 0 }}>{Name}</h2>
+          </div>
+          {childrenWithProps}
+        </div>
+      </div>
+    );
   } else {
     return (
       <div className='modal-overlay'>
