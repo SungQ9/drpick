@@ -14,6 +14,7 @@ export const TokenProvider = ({ children }) => {
       const storedUserAuth = localStorage.getItem('userAuth');
       const storedRefreshToken = localStorage.getItem('refreshToken');
       const storedRoomName = localStorage.getItem('roomName');
+      const storedUserEmail = localStorage.getItem("userEmail")
 
       // 초기 상태 설정
       // 새로고침시 로컬 스토리지 값과 비교해서 로그아웃 전까지 전역적으로 값 세팅
@@ -25,6 +26,7 @@ export const TokenProvider = ({ children }) => {
         userAuth: storedUserAuth ? storedUserAuth : null,
         refreshToken: storedRefreshToken ? storedRefreshToken : null,
         roomName: storedRoomName ? storedRoomName : null,
+        userEmail: storedUserEmail ? storedUserEmail : null
       };
     } catch (error) {
       // 에러 발생 시 초기화
@@ -37,6 +39,7 @@ export const TokenProvider = ({ children }) => {
         userAuth: null,
         refreshToken: null,
         roomName: null,
+        userEmail: null
       };
     }
   });
@@ -48,6 +51,7 @@ export const TokenProvider = ({ children }) => {
     userName,
     userAuth,
     refreshToken,
+    userEmail
   }) => {
     // 토큰과 로그인 상태를 로컬 스토리지에 저장
     localStorage.setItem('accessToken', JSON.stringify(accessToken));
@@ -62,6 +66,7 @@ export const TokenProvider = ({ children }) => {
       userName,
       userAuth,
       refreshToken,
+      userEmail
     }));
   };
 
@@ -73,6 +78,7 @@ export const TokenProvider = ({ children }) => {
     localStorage.removeItem('userAuth');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('roomName');
+    localStorage.removeItem("userEmail")
 
     // 로그아웃 시 Context 토큰 및 로그인 상태를 삭제
     setUserData({
@@ -83,6 +89,7 @@ export const TokenProvider = ({ children }) => {
       userAuth: null,
       refreshToken: null,
       roomName: null,
+      userEmail:null
     });
     // 상태 확인용 console
     console.log(
@@ -99,6 +106,8 @@ export const TokenProvider = ({ children }) => {
       localStorage.getItem('refreshToken'),
       'roomName : ',
       localStorage.getItem('roomName'),
+      "userEmail: ",
+      localStorage.getItem("userEmail")
     );
   };
   useEffect(() => {

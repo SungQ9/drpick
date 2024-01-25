@@ -53,6 +53,7 @@ const Login = () => {
         localStorage.setItem("userName", response.data.body.userName);
         localStorage.setItem("userAuth", response.data.body.userAuth);
         localStorage.setItem("roomName", response.data.body.userId);
+        localStorage.setItem("userEmail", response.data.body.userEmail);
 
         //  토큰값, 아이디,이름,역할 Context 저장
         const {
@@ -62,6 +63,7 @@ const Login = () => {
           userAuth,
           refreshToken,
           roomName,
+          userEmail
         } = response.data.body;
 
         tokenContext.setAccessToken({
@@ -71,6 +73,7 @@ const Login = () => {
           userAuth,
           refreshToken,
           roomName,
+          userEmail
         });
       }
 
