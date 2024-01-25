@@ -211,7 +211,7 @@ const reviews = [
   },
   {
     text: '내평점',
-    value: 'grade',
+    value: 'rating',
   },
   {
     text: '',

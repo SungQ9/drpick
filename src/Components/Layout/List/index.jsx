@@ -12,8 +12,8 @@ const List = ({
   buttonType,
   buttonName,
   handleSearch,
+  selectable,
 }) => {
-  const selectable = false;
   console.log('List의 콘솔', items);
 
   const [startDate, setStartDate] = React.useState(new Date());
