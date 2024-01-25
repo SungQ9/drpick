@@ -279,9 +279,7 @@ const ProfileEditList = ({ type, title }) => {
           <h3 style={{ position: 'relative', right: '285px' }}>
             <span style={{ color: 'red' }}>*</span> 비대면 진료 시간 설정
           </h3>
-          <WorkTime
-          // style={{ borderCollapse: "separate", borderSpacing: "5px 5px" }}
-          />
+          <WorkTime />
         </div>
         <div
           style={{

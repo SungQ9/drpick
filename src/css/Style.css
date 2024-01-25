@@ -197,10 +197,16 @@ select::-ms-expand {
   display: flex;
   width: 150px;
   margin-right: 100px;
+  align-items: center;
   cursor: pointer;
 }
 .tabLi:first-child {
   margin-left: 50px;
+}
+
+.tabLi img {
+  width: 40px;
+  height: 40px;
 }
 
 .subtabUi {
@@ -282,8 +288,18 @@ select::-ms-expand {
 }
 
 #menu tr:first-child td:first-child {
-  background-color: #11c2ad;
-  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  height: 169px;
+  padding-left: 0%;
+  cursor: default;
+}
+
+#menu tr:first-child td:first-child h4,
+#menu tr:first-child td:first-child button {
+  margin-left: 25px;
 }
 
 #menu tr:first-child td:nth-child(2) {
@@ -400,6 +416,7 @@ Input {
   display: flex;
   flex-direction: column;
   max-width: 1100px;
+  margin-bottom: -55px;
 }
 
 .searchDateText {
@@ -540,34 +557,27 @@ td:nth-child(5) {
   width: 100%;
 }
 
+.listTable .tfootWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .listTable .tfootSearchWrapper {
-  position: absolute;
   display: flex;
   align-items: center;
-  justify-content: center;
-  left: 20%;
-  top: 100px;
 }
 
-.listTable .tfootSearchWrapper #addBtn {
-  position: relative;
-  right: 25%;
-}
-
-.listTable .tfootSearchWrapper #deleteBtn {
-  position: relative;
-  right: 25%;
+.listTable .tfootPaginationWrapper {
 }
 
 .listTable .tfootWrapper #deleteBtn {
   position: relative;
-  right: 40%;
-  top: 140px;
+  right: 100px;
 }
 .listTable .tfootWrapper #addBtn {
   position: relative;
-  right: 40%;
-  top: 140px;
+  right: 100px;
 }
 
 /* 대시보드  */

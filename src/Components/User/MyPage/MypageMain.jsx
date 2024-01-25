@@ -38,7 +38,7 @@ const MypageMain = () => {
           config,
         );
         setItems(response.data);
-        setCurrentHeaders(headers.medeicalhistory);
+        setCurrentHeaders(headers.medeicalhistoryMypage);
       } catch (err) {
         console.error('마이페이지 에러 :', err);
         // 여기서 에러 발생 시 대체 데이터 설정 가능
