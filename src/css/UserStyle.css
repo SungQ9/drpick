@@ -934,3 +934,90 @@
 .timeTable td:hover {
   background-color: #f0f0f0;
 }
+
+/* 약 수령방법 선택 */
+
+.delivery-main {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+}
+.delivery-text {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  height: 200px;
+  text-align: left;
+  margin-left: 50px;
+}
+
+.delivery-list ul {
+  list-style: none;
+  width: 500px;
+}
+.delivery-list li {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #cecece;
+  padding: 10px;
+  margin: 30px 0px 30px 0px;
+}
+.delivery-list-text {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  text-align: left;
+}
+.delivery-list h2 {
+  margin: 0px;
+}
+.delivery-list span {
+  font-size: 20px;
+}
+.delivery-list p {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.receipt-main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 350px;
+  margin-top: 80px;
+  margin-left: 100px;
+}
+
+.receipt-bill {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 50px;
+}
+
+.receipt-bill-price {
+  display: flex;
+  align-items: center;
+  margin-top: 0px;
+}
+
+.receipt-info {
+  margin-bottom: 50px;
+}
+
+.receipt-info li {
+  display: flex;
+  align-items: center;
+  width: 350px;
+  height: 100px;
+}
+
+.receipt-info li img {
+  border: 1px solid #11c2ad;
+  border-radius: 70px;
+  padding: 10px;
+}
+
+.receipt-info li h2 {
+  margin-left: 20px;
+}

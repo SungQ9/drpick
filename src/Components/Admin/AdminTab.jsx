@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import dashboard from '../../img/tab-dashboard-icon.png';
+import member from '../../img/tab-member-icon.png';
+import doctor from '../../img/tab-doctor-icon.png';
+import hospital from '../../img/tab-hospital-icon.png';
+import drugstore from '../../img/tab-drugstore-icon.png';
+import inquiry from '../../img/tab-inquiry-icon.png';
 
 function AdminTab() {
   const navigate = useNavigate();
@@ -26,31 +32,30 @@ function AdminTab() {
       <ul className='tabUi' style={{ marginLeft: '5%' }}>
         <li
           className='tabLi'
-          style={{ marginRight: '0px' }}
+          style={{ marginRight: '5px' }}
           onClick={() => {
             navigate('/');
           }}
         >
-          {' '}
-          <img src='' alt='' />
+          <img src={dashboard} alt='dashboard' />
           대시보드
         </li>
         <li
           className='tabLi'
-          style={{ marginRight: '0px' }}
+          style={{ marginRight: '5px' }}
           onClick={() => {
             handleButtonClick('user');
           }}
         >
-          <img src='' alt='' />
+          <img src={member} alt='member' />
           회원관리
         </li>
         <li
-          style={{ marginRight: '0px' }}
+          style={{ marginRight: '5px' }}
           className={`tabLi ${doctorSubtabVisible ? 'clicked' : ''}`}
           onClick={handleDoctorSubtab}
         >
-          <img src='' alt='' />
+          <img src={doctor} alt='doctor' />
           의사관리
           {doctorSubtabVisible && (
             <ul className='subtabUi' style={{ right: '35%' }}>
@@ -75,31 +80,35 @@ function AdminTab() {
           )}
         </li>
         <li
-          style={{ marginRight: '0px' }}
+          style={{ marginRight: '5px' }}
           className='tabLi'
           onClick={() => {
             handleButtonClick('hospital');
           }}
         >
-          <img src='' alt='' />
+          <img src={hospital} alt='hospital' />
           병원관리
         </li>
         <li
-          style={{ marginRight: '0px' }}
+          style={{ marginRight: '5px' }}
           className='tabLi'
           onClick={() => {
             handleButtonClick('drugstore');
           }}
         >
-          <img src='' alt='' />
+          <img src={drugstore} alt='drugstore' />
           약국관리
         </li>
         <li
-          style={{ marginRight: '0px' }}
+          style={{ marginRight: '5px' }}
           className={`tabLi ${inquirySubtabVisible ? 'clicked' : ''}`}
           onClick={handleInquirySubtab}
         >
-          <img src='' alt='' />
+          <img
+            src={inquiry}
+            alt='inquiry'
+            style={{ width: '35px', height: '35px' }}
+          />
           문의관리
           {inquirySubtabVisible && (
             <ul className='subtabUi' style={{ right: '35%' }}>
@@ -129,15 +138,6 @@ function AdminTab() {
               </li>
             </ul>
           )}
-        </li>
-        <li
-          className='tabLi'
-          onClick={() => {
-            navigate('/admin/statistics');
-          }}
-        >
-          <img src='' alt='' />
-          통계
         </li>
       </ul>
     </div>

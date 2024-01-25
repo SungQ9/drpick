@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import doctor from '../../img/tab-doctor-icon.png';
+import pill from '../../img/tab-pill-icon.png';
+import chat from '../../img/tab-chat-icon.png';
+import hospital from '../../img/tab-hospital-icon.png';
 
 function UserTab() {
   const navigate = useNavigate();
@@ -17,7 +21,7 @@ function UserTab() {
           navigate('/clinic');
         }}
       >
-        <img src='' alt='' />
+        <img src={doctor} alt='doctor' />
         비대면진료
       </li>
       <li
@@ -26,7 +30,7 @@ function UserTab() {
           navigate('/imageSearch');
         }}
       >
-        <img src='' alt='' />
+        <img src={pill} alt='pill' />
         약이미지검색
       </li>
       <li
@@ -35,21 +39,14 @@ function UserTab() {
           navigate('/chatBot');
         }}
       >
-        <img src='' alt='' />챗 봇 검색
+        <img src={chat} alt='chat' />챗 봇 검색
       </li>
-      <li
-        className='tabLi'
-        onClick={() => {
-          navigate('/payment');
-        }}
-      >
-        <img src='' alt='' />결제모듈경로(추후 삭제)
-      </li>
+
       <li
         className={`tabLi ${isSubtabVisible ? 'clicked' : ''}`}
         onClick={handleToggleSubtab}
       >
-        <img src='' alt='' />
+        <img src={hospital} alt='hospital' />
         병원/약국 찾기
         {isSubtabVisible && (
           <ul className='subtabUi'>
@@ -71,6 +68,14 @@ function UserTab() {
             </li>
           </ul>
         )}
+      </li>
+      <li
+        className='tabLi'
+        onClick={() => {
+          navigate('/payment');
+        }}
+      >
+        결제(추후 삭제)
       </li>
     </ul>
   );

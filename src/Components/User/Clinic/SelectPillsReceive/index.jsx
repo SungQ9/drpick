@@ -3,18 +3,16 @@ import Delivery from './Delivery';
 import Receipt from './Receipt';
 
 const SelectPillsReceive = () => {
-  const [currentDisplay, setCurrentDisplay] = useState('delivery');
+  const [selectedPrice, setSelectedPrice] = useState(0);
 
-  const showDelivery = () => {
-    setCurrentDisplay('delivery');
+  const handleSelectPrice = (price) => {
+    setSelectedPrice(price);
   };
 
   return (
-    <div>
-      {currentDisplay === 'delivery' && (
-        <Delivery onButtonClick={() => setCurrentDisplay('receipt')} />
-      )}
-      {currentDisplay === 'receipt' && <Receipt onButtonClick={showDelivery} />}
+    <div style={{ display: 'flex' }}>
+      <Delivery onSelectPrice={handleSelectPrice} />
+      <Receipt selectedPrice={selectedPrice} />
     </div>
   );
 };
