@@ -3,6 +3,8 @@ import { Routes, Route } from 'react-router-dom';
 import PaymentPage from './PaymentPage';
 import PaymentSuccess from './PaymentSuccess'; 
 import PaymentFailure from './PaymentFailure';
+import BillingSuccess from './BillingSuccess';
+import BillingFailure from './BillingFailure';
 
 const Payment = () => {
   return (
@@ -10,8 +12,10 @@ const Payment = () => {
       <div className='Form'>
         <Routes>
           <Route path='/' element={<PaymentPage />} />
-          <Route path='/success' element={<PaymentSuccess />} />
-          <Route path='/failure' element={<PaymentFailure />} />
+          <Route path='/paymentSuccess' element={<PaymentSuccess />} />
+          <Route path='/paymentFailure' element={<PaymentFailure />} />
+          <Route path='/billingSuccess' element={<BillingSuccess />} />
+          <Route path='/billingFailure' element={<BillingFailure />} />
         </Routes>
       </div>
     </div>
