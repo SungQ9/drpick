@@ -5,6 +5,8 @@ import pill from '../../img/panel-pill.png';
 import hospital from '../../img/panel-hospital.png';
 import drugstore from '../../img/panel-drugstore.png';
 import chat from '../../img/panel-chat.png';
+import Carousel from '../Layout/Carousel';
+
 const Panel = ({ label, to, img, button }) => {
   const navigate = useNavigate();
 
@@ -59,7 +61,8 @@ const UserMain = () => {
               img={doctor}
               button={{ label: '신청하기' }}
             />
-            <Panel label='광고' />
+
+            <Carousel />
           </tr>
           <tr>
             <Panel label='약 이미지 검색' to='/imageSearch' img={pill} />

@@ -2,6 +2,7 @@ import React from 'react';
 import { useModalContext } from '../../Context/ModalContext';
 import InquiryModal from '../../ModalComponent/InquiryModal';
 import PatientDetailModal from '../../ModalComponent/Doctor/PatientDetailModal';
+import SimpleSlider from '../Carousel';
 
 const ModalOpen = ({ onClick, componentName }) => {
   const { openModal } = useModalContext();
