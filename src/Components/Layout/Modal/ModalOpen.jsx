@@ -3,6 +3,9 @@ import { useModalContext } from '../../Context/ModalContext';
 import InquiryModal from '../../ModalComponent/InquiryModal';
 import PatientDetailModal from '../../ModalComponent/Doctor/PatientDetailModal';
 import SimpleSlider from '../Carousel';
+import PillReceiveModal from '../../ModalComponent/DrugStore/PillReceiveModal';
+import MemberProfileEdit from '../../ModalComponent/Admin/MemberProfileEdit';
+import DoctorProfileEdit from '../../ModalComponent/Admin/DoctorProfileEdit';
 
 const ModalOpen = ({ onClick, componentName }) => {
   const { openModal } = useModalContext();
@@ -24,7 +27,7 @@ const ModalOpen = ({ onClick, componentName }) => {
       <button
         onClick={() => {
           console.log('회원가입버튼클릭');
-          handleOpenModal(<InquiryModal />, '1:1 문의');
+          handleOpenModal(<DoctorProfileEdit />, '의사정보수정', 'modify');
         }}
       >
         회원가입 모달

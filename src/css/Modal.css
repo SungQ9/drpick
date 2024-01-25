@@ -116,3 +116,20 @@
 .patientInfo tr td:nth-child(4) {
   width: 130px;
 }
+
+/* 수정 */
+
+.modify-content {
+  width: 600px;
+  height: 750px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modify-button {
+  display: flex;
+  justify-content: flex-start;
+  width: 520px;
+  margin: 20px 0px 10px 0px;
+}
