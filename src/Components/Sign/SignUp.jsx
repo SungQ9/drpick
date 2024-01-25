@@ -10,13 +10,13 @@ import '../../css/Style.css';
 const SignUp = () => {
   const navigate = useNavigate();
   const getElementValue = (id) => document.getElementById(id).value;
-  const getCheckedValue = (className) =>
-    document.querySelector(`.${className}:checked`).value;
+  const getCheckedValue = (className) => document.querySelector(`.${className}:checked`).value;
   const [selectedFileName, setSelectedFileName] = useState('');
   const [selectedName, setSelectedName] = useState('');
   const [selectedOption, setSelectedOption] = useState('');
   const [address, setAddress] = useState({ main: '', detail: '' });
   const [emailKey, setEmailKey] = useState('');
+  const formData = new FormData();
 
   // 이메일 도메인 핸들러
   const handleSelectChange = (value) => {
@@ -60,48 +60,63 @@ const SignUp = () => {
 
   // 파일 업로드 핸들러
   const handleFileInputChange = (event) => {
-    const fileInput = event.target;
-    const newFiles = Array.from(fileInput.files).map((file) => ({
-      name: file.name,
-      id: Date.now(),
-    }));
-    const totalFiles = selectedFileName.length + newFiles.length;
-
+    const fileInput = event.target
+    const newFiles = Array.from(fileInput.files)
+  
+    const totalFiles = selectedFileName.length + newFiles.length
+  
     if (totalFiles > 3) {
-      alert('파일은 3개까지 올릴 수 있습니다.');
-      return;
+      alert('파일은 3개까지 올릴 수 있습니다.')
+      return
     }
-
-    setSelectedFileName((prevFiles) => [...prevFiles, ...newFiles]);
-  };
+  
+    setSelectedFileName((prevFiles) => [...prevFiles, ...newFiles])
+  }
 
   // 업로드 파일 삭제 핸들러
-  const handleDeleteFile = (id) => {
+  const handleDeleteFile = (index) => {
     setSelectedFileName((prevFiles) =>
-      prevFiles.filter((file) => file.id !== id),
-    );
-  };
+      prevFiles.filter((prevFile, i) => i !== index)
+    )
+  
+    // formData에서 삭제
+    formData.delete(`fileList[${index}]`)
+  }
 
   // 업로드 버튼 핸들러
   const handleFileBtnClick = () => {
-    document.getElementById('selectedFile').click();
-  };
+    const fileInput = document.getElementById('selectedFile')
+    if (fileInput) {
+      fileInput.click()
+    }
+  }
 
   // 파일다중선택 return
   const renderFileList = () => {
-    // selectedFileName이 배열인지 확인
     if (!Array.isArray(selectedFileName)) {
-      // console.error('selectedFileName is not an array.');
-      return null; // 또는 다른 적절한 처리를 추가하세요.
+      return null
     }
 
-    return selectedFileName.map((file) => (
-      <p className='uploadFileList' key={file.id}>
-        <span style={{ marginRight: '5px' }}>{file.name}</span>
-        <p onClick={() => handleDeleteFile(file.id)}>X</p>
-      </p>
-    ));
-  };
+    return selectedFileName.map((file, index) => (
+        <p
+          className='uploadFileList'
+          key={index}  // 수정: file.id가 아니라 index를 사용
+          style={{ width: '100px', margin: '0px' }}
+        >
+          <span
+            style={{
+              fontSize: '12px',
+              marginRight: '5px',
+              width: '100px',
+              height: '20px',
+            }}
+          >
+            {file.name}
+          </span>
+          <p onClick={() => handleDeleteFile(index)}>X</p>
+        </p>
+      ))
+    }
 
   // 주소
   const handleAddressSelect = (selectedAddress) => {
@@ -137,9 +152,6 @@ const SignUp = () => {
       alert('비밀번호가 다릅니다.');
       return;
     }
-
-    // FormData 객체 생성
-    const formData = new FormData();
 
     // 회원 정보를 FormData에 직접 추가
     formData.append('userEmail', memberEmail);

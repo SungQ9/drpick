@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTokenContext } from '../Context/TokenContext';
+import { useModalContext } from '../Context/ModalContext';
 import headers from '../SampleData/Headers';
 import ListTitle from '../Layout/List/ListTitle';
 import List from '../Layout/List';
@@ -23,7 +24,7 @@ const DrugStoreManagement = () => {
       drugstoreId: localStorage.getItem('userId'),
     },
   };
-
+  const { isModalOpen } = useModalContext();
   useEffect(() => {
     // eslint-disable-next-line default-case
     const fetchData = async () => {
@@ -55,7 +56,7 @@ const DrugStoreManagement = () => {
       }
     };
     fetchData();
-  }, [selectedType, token]);
+  }, [selectedType, token, isModalOpen]);
 
   if (isLoading) {
     return (
