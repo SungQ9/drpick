@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import axios from "axios"; 
+import { useTokenContext } from '../../Context/TokenContext';
 
 export function PaymentSuccess() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [paymentInfo, setPaymentInfo] = useState(null);
+  const { token, userAuth } = useTokenContext();
 
   const queryParams = {};
   searchParams.forEach((value, key) => {
@@ -14,7 +17,8 @@ export function PaymentSuccess() {
 
   useEffect(() => {
     const orderId = queryParams["orderId"];
-    if (!orderId) {
+    const paymentId = queryParams["paymentId"];
+    if (!orderId && paymentId) {
       setPaymentInfo({ message: "포인트로 결제" });
       return;
     }
@@ -23,40 +27,83 @@ export function PaymentSuccess() {
       orderId: orderId,
       amount: queryParams["amount"],
       paymentKey: queryParams["paymentKey"],
+      paymentId: paymentId,
     };
 
     const secretKey = "test_sk_QbgMGZzorz5A4kmB9dElVl5E1em4";
     const encryptedSecretKey = `Basic ${btoa(secretKey + ":")}`;
 
     async function confirm() {
-      const response = await fetch("https://api.tosspayments.com/v1/payments/confirm", {
-        method: "POST",
-        headers: {
-          "Authorization": encryptedSecretKey,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestData),
-      });
+      try {
+        const response = await axios.post(
+          "https://api.tosspayments.com/v1/payments/confirm",
+          requestData,
+          {
+            headers: {
+              Authorization: encryptedSecretKey,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const json = response.data;
 
-      const json = await response.json();
+        if (response.status !== 200) {
+          navigate(`/payment/paymentFailure`);
+          return;
+        }
 
-      if (!response.ok) {
-        navigate(`/payment/failure`);
-        return;
+        //추후 삭제
+        const updatedPaymentInfo = {
+          ...json,
+          requestData: requestData,
+        };
+        setPaymentInfo(updatedPaymentInfo);
+
+        console.log(updatedPaymentInfo)
+
+        let transType = "POINT"; // 아래 해당하는 결재방식이 없으면 포인트 결재로 간주
+
+        if (
+          (updatedPaymentInfo.card && updatedPaymentInfo.card.cardType) ||
+          (updatedPaymentInfo.virtualAccount && updatedPaymentInfo.virtualAccount.accountType) ||
+          (updatedPaymentInfo.easyPay && updatedPaymentInfo.easyPay.provider) ||
+          (updatedPaymentInfo.giftCertificate && updatedPaymentInfo.giftCertificate.approveNo) ||
+          (updatedPaymentInfo.mobilePhone && updatedPaymentInfo.mobilePhone.settlementStatus) ||
+          (updatedPaymentInfo.transfer && updatedPaymentInfo.transfer.settlementStatus)
+        ) {
+          transType = "CASH";
+        } else if (updatedPaymentInfo.card && updatedPaymentInfo.card.cardType) {
+          transType = "CARD";
+        }
+        
+
+        //transanctionType 넣는 값 나중에 변동
+        await axios.put(
+          window.location.origin+"/payments/completePayment",
+          null,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              paymentId: queryParams["paymentId"],
+              transactionType: transType,
+            },
+          }
+        )
+
+        // param 숨기기
+        navigate("/payment/paymentSuccess", { replace: true });
+
+      } catch (error) {
+        //에러가 날시 실패 페이지로 이동
+        console.error("Error:", error);
+        navigate(`/payment/paymentFailure`);
       }
-
-      // Append requestData to paymentInfo
-      const updatedPaymentInfo = {
-        ...json,
-        requestData: requestData,
-      };
-
-      setPaymentInfo(updatedPaymentInfo);
-      navigate("/payment/success", { replace: true });
     }
 
     confirm();
-  }, []);
+  }, [token]);
 
   return (
     <div className="result wrapper">
@@ -68,12 +115,22 @@ export function PaymentSuccess() {
         </div>
         <div className="result wrapper">
           <Link to="https://docs.tosspayments.com/guides/payment-widget/integration">
-            <button className="button" style={{ marginTop: '30px', marginRight: '10px' }}>
+            <button
+              className="button"
+              style={{ marginTop: "30px", marginRight: "10px" }}
+            >
               연동 문서
             </button>
           </Link>
           <Link to="https://discord.gg/A4fRFXQhRu">
-            <button className="button" style={{ marginTop: '30px', backgroundColor: '#e8f3ff', color: '#1b64da' }}>
+            <button
+              className="button"
+              style={{
+                marginTop: "30px",
+                backgroundColor: "#e8f3ff",
+                color: "#1b64da",
+              }}
+            >
               실시간 문의
             </button>
           </Link>
