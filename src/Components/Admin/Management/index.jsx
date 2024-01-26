@@ -49,13 +49,15 @@ const InquiryManage = () => {
   const convertInquiryType = (inquiryType) => {
     switch (inquiryType) {
       case 'Q':
-        return '질문';
-      case 'A':
-        return '결제';
-      case 'I':
-        return '계정';
+        return '이용문의';
+      case 'C':
+        return '진료문의';
+      case 'P':
+        return '결제문의';
+      case 'D':
+        return '배송문의';
       default:
-        return inquiryType;
+        return "기타";
     }
   };
 
