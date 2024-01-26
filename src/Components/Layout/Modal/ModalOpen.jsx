@@ -8,8 +8,7 @@ import DrugstoreEditModal from '../../ModalComponent/Admin/DrugstoreEditModal';
 import InquiryAnswerModal from '../../ModalComponent/Admin/InquiryAnswerModal';
 import PatientDetailModal from '../../ModalComponent/Doctor/PatientDetailModal';
 import PillReceiveModal from '../../ModalComponent/DrugStore/PillReceiveModal';
-import CertificateModal from '../../ModalComponent/User/CertificateModal';
-import PrescriptonModal from '../../ModalComponent/User/PrescriptionModal';
+import ImgModal from '../../ModalComponent/User/ImgModal';
 import ReviewModal from '../../ModalComponent/User/ReviewModal';
 import TossBillingModal from '../../ModalComponent/User/TossBillingModal';
 import TossPaymentModal from '../../ModalComponent/User/TossPaymentModal';
@@ -27,14 +26,14 @@ const ModalOpen = ({ onClick, componentName }) => {
         사용자
         <button
           onClick={() => {
-            handleOpenModal(<CertificateModal />, '진단서');
+            handleOpenModal(<ImgModal />, '진단서');
           }}
         >
           진단서
         </button>
         <button
           onClick={() => {
-            handleOpenModal(<PrescriptonModal />, '처방전');
+            handleOpenModal(<ImgModal />, '처방전');
           }}
         >
           처방전
