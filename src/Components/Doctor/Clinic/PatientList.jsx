@@ -1,8 +1,7 @@
 import React from 'react';
 import { useModalContext } from '../../Context/ModalContext';
 import PatientDetail from '../../ModalComponent/Doctor/PatientDetailModal';
-import CertificateModal from '../../ModalComponent/User/CertificateModal';
-import PrescriptionModal from '../../ModalComponent/User/PrescriptionModal';
+import ImgModal from '../../ModalComponent/User/ImgModal';
 import Video from '../../User/Clinic/ApplicationForm/ClinicRoom/VideoChat/index';
 
 const PatientList = ({ type, data }) => {
@@ -20,10 +19,10 @@ const PatientList = ({ type, data }) => {
       case 'request':
         break;
       case 'certificate':
-        openModal(<CertificateModal />);
+        openModal(<ImgModal />);
         break;
       case 'prescription':
-        openModal(<PrescriptionModal />);
+        openModal(<ImgModal />);
         break;
     }
     console.log(type, '버튼 클릭');

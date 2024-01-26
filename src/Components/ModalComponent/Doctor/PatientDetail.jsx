@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PatientDetail = () => {
+const PatientDetail = ({ item = {} }) => {
   return (
     <table className='patientInfo'>
       <tr>

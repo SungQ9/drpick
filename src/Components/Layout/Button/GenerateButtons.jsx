@@ -2,10 +2,9 @@
 import React from 'react';
 import { useModalContext } from '../../Context/ModalContext';
 import { useNavigate } from 'react-router-dom';
-import CertificateModal from '../../ModalComponent/User/CertificateModal';
-import PrescriptionModal from '../../ModalComponent/User/PrescriptionModal';
+import ImgModal from '../../ModalComponent/User/ImgModal';
 
-const GenerateButtons = ({ status }) => {
+const GenerateButtons = ({ status, item = {} }) => {
   const { openModal } = useModalContext();
   const navigate = useNavigate();
 
@@ -22,7 +21,11 @@ const GenerateButtons = ({ status }) => {
       return (
         <button
           className='listBtn-mid'
-          onClick={() => navigate('/clinic/room')}
+          onClick={() =>
+            navigate(`/clinic/room/${item.certificateNum}`, {
+              state: { certificateNum: item.certificateNum },
+            })
+          }
         >
           진료실입장하기
         </button>
@@ -32,13 +35,13 @@ const GenerateButtons = ({ status }) => {
         <div>
           <button
             className='listBtn-short'
-            onClick={() => handleOpenModal(<CertificateModal />, '진단서')}
+            onClick={() => handleOpenModal(<ImgModal />, '진단서')}
           >
             진단서
           </button>
           <button
             className='listBtn-short'
-            onClick={() => handleOpenModal(<PrescriptionModal />, '처방전')}
+            onClick={() => handleOpenModal(<ImgModal />, '처방전')}
             style={{ background: '#AECCC8' }}
           >
             처방전
