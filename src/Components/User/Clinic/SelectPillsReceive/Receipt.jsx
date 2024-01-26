@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import doctor from '../../../../img/doctor-icon.png';
 import hospital from '../../../../img/hospital-icon.png';
 
 const Receipt = ({ selectedPrice }) => {
   const [price, setPrice] = useState(0); // 기존의 price 상태 (기본값 0으로 설정)
   const [totalPrice, setTotalPrice] = useState(0); // 최종 가격을 저장할 상태
+  const navigate = useNavigate();
 
   useEffect(() => {
     setPrice(2600);
@@ -15,6 +17,11 @@ const Receipt = ({ selectedPrice }) => {
   // 숫자를 천 단위 구분 문자열로 변환하는 함수
   const formatPrice = (price) => {
     return price.toLocaleString('ko-KR');
+  };
+
+  // 결재하기 버튼 클릭시 전체 값을 자동결제 페이지(User/Payment/BillingCharge.jsx) 넘기기
+  const handlePaymentClick = () => {
+    navigate(`/payment/billingCharge?totalPrice=${totalPrice}`);
   };
 
   return (
@@ -42,7 +49,7 @@ const Receipt = ({ selectedPrice }) => {
         </ul>
       </div>
       <div className='receipt-pay'>
-        <button className='clinicBtn-long' style={{ width: '350px' }}>
+        <button className='clinicBtn-long' style={{ width: '350px' }}  onClick={handlePaymentClick}>
           결제하기 & 배송시작{' '}
         </button>
       </div>

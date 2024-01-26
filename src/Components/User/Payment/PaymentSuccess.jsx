@@ -59,7 +59,6 @@ export function PaymentSuccess() {
         };
         setPaymentInfo(updatedPaymentInfo);
 
-        console.log(updatedPaymentInfo)
 
         let transType = "POINT"; // 아래 해당하는 결재방식이 없으면 포인트 결재로 간주
 
@@ -76,10 +75,9 @@ export function PaymentSuccess() {
           transType = "CARD";
         }
         
-
         //transanctionType 넣는 값 나중에 변동
         await axios.put(
-          window.location.origin+"/payments/completePayment",
+          "http://localhost:8080/payments/completePayment",
           null,
           {
             headers: {
@@ -110,8 +108,6 @@ export function PaymentSuccess() {
       <div className="box_section">
         <div>
           <h2 style={{ padding: "20px 0px 10px 0px" }}>결제 성공</h2>
-          <h2>JSON 데이터:</h2>
-          <pre>{JSON.stringify(paymentInfo, null, 2)}</pre>
         </div>
         <div className="result wrapper">
           <Link to="https://docs.tosspayments.com/guides/payment-widget/integration">
