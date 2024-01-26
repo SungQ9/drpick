@@ -1,11 +1,17 @@
+// 의사 정보 수정 모달
 import React, { useState } from 'react';
-import Select from '../../Layout/Select';
 import { useModalContext } from '../../Context/ModalContext';
+import Input from '../../Layout/Input';
+import Select from '../../Layout/Select';
 import SearchHospitalModal from '../Doctor/SearchHospitalModal';
+import WorkTime from '../../Layout/List/ProfileEditList/WorkTime';
 
 const DoctorProfileEdit = ({ onClose }) => {
   const [hospitalName, setHospitalName] = useState('');
+  const [selectedName, setSelectedName] = useState('');
+
   const { openModal } = useModalContext();
+
   const handleOpenModal = (component, name, type) => {
     openModal(component, name, type);
   };
@@ -16,23 +22,39 @@ const DoctorProfileEdit = ({ onClose }) => {
   return (
     <div className='modify-content'>
       <table
+        id='signUpInputForm'
         className='profile-table'
-        style={{ borderCollapse: 'separate', borderSpacing: '10px 5px' }}
+        style={{
+          borderCollapse: 'separate',
+          borderSpacing: '10px 10px',
+          marginTop: '20px',
+        }}
       >
         <tr>
           <td colSpan={2}>
-            <h5>
-              <span>*</span> 의사 이름을 입력해주세요
-            </h5>
-            <input type='text' style={{ width: '100%' }} />
+            <Input
+              id='doctor_name'
+              className='member_name'
+              label='이름'
+              type='text'
+              placeholder='이름을 입력하세요'
+              style={{ width: '580px', height: '40px' }}
+              value={selectedName.trim()}
+              onChange={(e) => setSelectedName(e.target.value)}
+            />
           </td>
         </tr>
         <tr>
           <td>
-            <h5>
-              <span>*</span> 진료과목을 선택해주세요
-            </h5>
-            <input type='text' />
+            <Input
+              id='doctor_subject'
+              className='member_name'
+              label='진료과목'
+              type='text'
+              placeholder='이름을 입력하세요'
+              value={selectedName.trim()}
+              style={{ height: '40px' }}
+            />
           </td>
           <td style={{ verticalAlign: 'bottom' }}>
             <Select
@@ -52,23 +74,27 @@ const DoctorProfileEdit = ({ onClose }) => {
                 { value: '이비인후과', label: '이비인후과' },
                 { value: '치과', label: '치과' },
               ]}
-              style={{ width: '100%', height: '50px' }}
+              style={{ width: '100%', height: '45px' }}
             />
           </td>
         </tr>
         <tr>
           <td>
-            <h5 style={{ marginLeft: '7px' }}>
-              {' '}
-              <span>*</span> 소속병원을 선택해주세요
-            </h5>
-            <input type='text' className='hospitalName' value={hospitalName} />
+            <Input
+              id='doctor_hospital'
+              className='member_name'
+              label='소속병원'
+              type='text'
+              placeholder='이름을 입력하세요'
+              value={hospitalName}
+              style={{ height: '40px' }}
+            />
           </td>
           <td style={{ verticalAlign: 'bottom' }}>
             <button
               style={{
                 width: '100%',
-                height: '50px',
+                height: '44px',
               }}
               onClick={(e) => {
                 e.stopPropagation();
@@ -87,12 +113,32 @@ const DoctorProfileEdit = ({ onClose }) => {
         </tr>
         <tr>
           <td colSpan={2}>
-            <h5 style={{ marginLeft: '7px' }}> 전공을 입력해주세요</h5>
-            <input type='text' style={{ width: '100%' }} />
+            <Input
+              id='doctor_hospital'
+              className='member_name'
+              label='전공'
+              type='text'
+              placeholder='이름을 입력하세요'
+              style={{ width: '580px', height: '40px' }}
+            />
           </td>
         </tr>
       </table>
-
+      <div
+        id='doctor_worktime'
+        className='profile-bottom'
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          marginTop: '20px',
+        }}
+      >
+        <h3 style={{ position: 'relative', right: '235px' }}>
+          <span style={{ color: 'red' }}>*</span> 비대면 진료 시간 설정
+        </h3>
+        <WorkTime style={{ position: 'relative', left: '40px' }} />
+      </div>
       <div className='modify-button'>
         <button
           className='clinicSubBtn-short'

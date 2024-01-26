@@ -120,7 +120,7 @@
 /* 수정 */
 
 .modify-content {
-  width: 600px;
+  width: 800px;
   height: 750px;
   display: flex;
   flex-direction: column;
@@ -129,7 +129,7 @@
 
 .modify-button {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   width: 520px;
   margin: 20px 0px 10px 0px;
 }

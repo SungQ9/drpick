@@ -1,11 +1,10 @@
 import React from 'react';
 import { useModalContext } from '../../Context/ModalContext';
-import InquiryModal from '../../ModalComponent/InquiryModal';
-import PatientDetailModal from '../../ModalComponent/Doctor/PatientDetailModal';
-import SimpleSlider from '../Carousel';
-import PillReceiveModal from '../../ModalComponent/DrugStore/PillReceiveModal';
-import MemberProfileEdit from '../../ModalComponent/Admin/MemberProfileEdit';
-import DoctorProfileEdit from '../../ModalComponent/Admin/DoctorProfileEdit';
+import MemberProfileEditModal from '../../ModalComponent/Admin/MemberProfileEditModal';
+import DoctorRequestModal from '../../ModalComponent/Admin/DoctorRequestModal';
+import HospitalEditModal from '../../ModalComponent/Admin/HospitalEditModal';
+import DrugstoreEditModal from '../../ModalComponent/Admin/DrugstoreEditModal';
+import InquiryAnswerModal from '../../ModalComponent/Admin/InquiryAnswerModal';
 
 const ModalOpen = ({ onClick, componentName }) => {
   const { openModal } = useModalContext();
@@ -18,19 +17,44 @@ const ModalOpen = ({ onClick, componentName }) => {
     <div>
       <button
         onClick={() => {
-          console.log('로그인버튼클릭');
-          handleOpenModal(<PatientDetailModal />, '환자상세');
+          handleOpenModal(<HospitalEditModal type={''} />, '병원추가');
         }}
       >
-        로그인 모달
+        병원추가
       </button>
       <button
         onClick={() => {
-          console.log('회원가입버튼클릭');
-          handleOpenModal(<DoctorProfileEdit />, '의사정보수정', 'modify');
+          handleOpenModal(
+            <HospitalEditModal type={'modify'} />,
+            '병원정보수정',
+          );
         }}
       >
-        회원가입 모달
+        병원정보수정
+      </button>
+      <button
+        onClick={() => {
+          handleOpenModal(<DrugstoreEditModal />, '약국추가');
+        }}
+      >
+        약국추가
+      </button>
+      <button
+        onClick={() => {
+          handleOpenModal(
+            <DrugstoreEditModal type={'modify'} />,
+            '약국정보수정',
+          );
+        }}
+      >
+        약국정보수정
+      </button>
+      <button
+        onClick={() => {
+          handleOpenModal(<InquiryAnswerModal />, '답변하기');
+        }}
+      >
+        답변하기
       </button>
     </div>
   );

@@ -23,9 +23,9 @@ const CurrentList = ({
 
   const handleButtonClick = (item, listbutton) => {
     console.log('CurrenList 내부의 콘솔 ', buttonName);
-    console.log('버튼이 클릭되었습니다');
+    console.log('PK : ', item.pk, '버튼이 클릭되었습니다');
     if (buttonName === '작성') {
-      openModal(<InquiryModal />, '1:1문의');
+      openModal(<InquiryModal itemPK={item.pk} />, '1:1문의');
     } else if (listbutton === '수정') {
       openModal(<InquiryModal />, '수정하기');
     } else if (buttonName === '추가') {

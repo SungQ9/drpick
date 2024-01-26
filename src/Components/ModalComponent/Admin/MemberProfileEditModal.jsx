@@ -1,3 +1,4 @@
+// 회원정보수정 모달
 import React, { useState } from 'react';
 import Input from '../../Layout/Input';
 import Adress from '../../Layout/Adress';
@@ -11,7 +12,14 @@ const MemberProfileEdit = ({ onClose }) => {
   };
 
   return (
-    <div className='modify-content'>
+    <div
+      style={{
+        width: '600px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
       <table id='signUpInputForm' className='signUpTable'>
         <tr>
           <td colSpan={2}>
