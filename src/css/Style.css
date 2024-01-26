@@ -58,7 +58,7 @@ input {
   color: #cecece;
 }
 
-input[type='checkbox'] {
+input[type="checkbox"] {
   width: 20px;
   margin: 0px;
 }
@@ -435,9 +435,11 @@ Input {
 .searchDateForm {
   display: flex;
   align-items: center;
+  position: relative;
+  z-index: 30;
 }
 
-.searchDateForm input[type='text'] {
+.searchDateForm input[type="text"] {
   width: 250px;
   height: 35px;
 }
@@ -449,6 +451,8 @@ Input {
 .searchBarWrapper {
   display: flex;
   align-items: center;
+  position: relative;
+  z-index: 30;
 }
 
 .listWrapper {

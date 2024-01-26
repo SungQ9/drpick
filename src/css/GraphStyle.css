@@ -13,7 +13,7 @@
   flex-direction: column; /* 세로로 나열 */
   justify-content: center; /* 수평 가운데 정렬 */
   align-items: center; /* 수직 가운데 정렬 */
-  padding: 30px;
+  padding: 20px;
 }
 
 .dashBoardGraphBar {
@@ -27,4 +27,14 @@
 
 .dou {
   padding: 50px;
+}
+
+.mypageForm .dashBoardTop {
+  justify-content: space-between;
+}
+
+.graphForm2 {
+  width: 500px;
+  height: 300px;
+  padding-left: 20px;
 }
