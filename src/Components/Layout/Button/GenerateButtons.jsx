@@ -22,7 +22,11 @@ const GenerateButtons = ({ status, item = {} }) => {
       return (
         <button
           className='listBtn-mid'
-          onClick={() => navigate('/clinic/room')}
+          onClick={() =>
+            navigate(`/clinic/room/${item.certificateNum}`, {
+              state: { certificateNum: item.certificateNum },
+            })
+          }
         >
           진료실입장하기
         </button>
