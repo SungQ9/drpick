@@ -1,11 +1,33 @@
 // 결제수단등록
 import React from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import back from "../../../img/back-arrow-icon.png";
 import card from "../../../img/card-icon.png";
+import { useModalContext } from "../../Context/ModalContext";
+import TossBillingModal from "../../ModalComponent/User/TossBillingModal";
+import { useTokenContext } from "../../Context/TokenContext";
 
 const Payment = () => {
   const navigate = useNavigate();
+  const modalContext = useModalContext();
+  const { token, userAuth } = useTokenContext();
+
+  // 토스 자동결제 카드등록 모달 호출
+  const openTossBillingModal = () => {
+    const response = axios.get("http://localhost:8080/payments/getUserPaymentMethodAmount", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: {
+        memberId: localStorage.getItem("userId"),
+      },
+    })
+    
+    const tossBillingModalContent = <TossBillingModal />;
+    modalContext.openModal(tossBillingModalContent, "자동결제");
+  };
+
   return (
     <div className="shortForm">
       <div id="paymentTitle" style={{ justifyContent: "unset " }}>
@@ -25,7 +47,9 @@ const Payment = () => {
         <h3>카드를 등록해주세요</h3>
         <table id="priceBtnTable">
           <tr>
-            <td style={{ height: "100px" }}>카드추가</td>
+            <td style={{ height: "100px" }} onClick={openTossBillingModal}>
+              카드추가
+            </td>
           </tr>
         </table>
       </div>
