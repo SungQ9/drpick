@@ -1,3 +1,4 @@
+// 병원 검색 모달
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useTokenContext } from '../../Context/TokenContext';

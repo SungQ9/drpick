@@ -137,7 +137,12 @@ const DoctorRequestModal = ({ onClose }) => {
           <td
             className='uploadFileListTd'
             colSpan={2}
-            style={{ display: 'flex', alignItems: 'center', width: '500px' }}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              position: 'relative',
+              left: '105px',
+            }}
           >
             <div
               id='partnerShip'
@@ -146,8 +151,6 @@ const DoctorRequestModal = ({ onClose }) => {
                 height: '15px',
                 borderRadius: '10px 0px 0px 10px',
                 fontSize: '11px',
-                position: 'relative',
-                right: '4px',
               }}
             >
               증명파일

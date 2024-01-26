@@ -1,3 +1,4 @@
+// 환자 상세 모달
 import React from 'react';
 import PatientDetail from './PatientDetail';
 
