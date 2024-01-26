@@ -1,39 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import SearchBar from '../../Layout/SearchBar/index';
-import SymptomTable from './SymptomTable';
-import symptom from '../../SampleData/symptomData';
-import symptomKey from '../../SampleData/symptomData2';
+import SymptomCategory from './SymptomCategory';
+import back from '../../../img/back-arrow-icon.png';
+import mask from '../../../img/symptom-mask-icon.png';
+import eye from '../../../img/symptom-eye-icon.png';
+import uterus from '../../../img/symptom-uterus-icon.png';
+
+import ointment from '../../../img/symptom-ointment-icon.png';
+import headache from '../../../img/symptom-headache-icon.png';
+import toothache from '../../../img/symptom-toothache-icon.png';
+import baby from '../../../img/symptom-baby-icon.png';
+import symptomData from '../../SampleData/symptomData';
 
 const Symptom = () => {
   const navigate = useNavigate();
-  const data = symptom;
-  const data2 = symptomKey;
+  const images = [mask, eye, uterus, ointment, headache, toothache, baby];
+
+  const subjectHandler = (subject) => {
+    console.log('Selected Symptom subject:', subject);
+    navigate(`/clinic/doctor/`, { state: { subject } });
+  };
 
   return (
     <div className='symptomWrapper'>
-      <div className='symptomText'>
-        <h2 style={{ paddingRight: '330px' }}>어떻게 아프신가요?</h2>
-      </div>
-      <div className='symptomTop'>
-        <SymptomTable
-          datas={data}
-          style={{ marginTop: '2%', background: '#11C2AD', color: '#FFFFFF' }}
-        />
-      </div>
-      <SearchBar type={'Date'} placeholder={'병원이름,지역,과목증상'} />
-      <div className='symptomBottom'>
-        <div className='symptomText'>
-          <h3>인기검색어</h3>
-        </div>
-        <SymptomTable
-          datas={data2}
-          style={{
-            background: '#AECCC8',
-            color: '#FFFFFF',
-            borderRadius: '40px',
+      <div className='titleWrapper'>
+        <img
+          className='backIcon'
+          src={back}
+          onClick={() => {
+            navigate(-1);
           }}
+          alt='back'
         />
+        <h1 className='stepTitle'>증상선택</h1>
+      </div>
+      <div className='symptomList'>
+        <ul>
+          {symptomData.map((category, index) => (
+            <SymptomCategory
+              key={index}
+              title={category.title}
+              items={category.items}
+              img={images[index % images.length]}
+              subject={category.subject[0]}
+              onSelect={subjectHandler}
+            />
+          ))}
+        </ul>
       </div>
     </div>
   );

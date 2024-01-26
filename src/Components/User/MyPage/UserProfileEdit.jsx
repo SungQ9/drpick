@@ -1,12 +1,22 @@
 // 회원정보수정
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import back from '../../../img/back-arrow-icon.png';
 
 import Input from '../../Layout/Input';
+import Address from '../../Layout/Address';
 
 const UserProfileEdit = () => {
   const navigate = useNavigate();
+  const [address, setAddress] = useState({
+    main: '',
+    detail: '',
+    subdetail: '',
+  });
+  const handleAddressSelect = (selectedAddress) => {
+    setAddress(selectedAddress);
+  };
+
   return (
     <div className='listWrapper'>
       <div className='listTitle'>
@@ -101,33 +111,7 @@ const UserProfileEdit = () => {
               />
             </td>
           </tr>
-          <tr>
-            <td>
-              <Input
-                id='addr_main'
-                className='member_addr_main'
-                type='text'
-                label='주소'
-                placeholder='　주소를 입력해주세요'
-              />
-            </td>
-            <td>
-              <button id='addrBtn'>주소검색</button>
-            </td>
-          </tr>
-          <tr>
-            <td colSpan={2}>
-              <Input
-                id='addr_detail'
-                className='member_addr_detail'
-                type='text'
-                label='상세주소'
-                style={{ width: '500px', fontSize: '11px' }}
-                placeholder='　나머지 주소를 입력해주세요'
-              />
-            </td>
-          </tr>
-
+          <Address onAddressSelect={handleAddressSelect} />
           <tr>
             <td colSpan={2}>
               <button className='signUpBtn'>수정</button>
