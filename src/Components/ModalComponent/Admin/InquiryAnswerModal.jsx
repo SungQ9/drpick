@@ -3,7 +3,7 @@ import React from 'react';
 import { useModalContext } from '../../Context/ModalContext';
 import Input from '../../Layout/Input';
 import DoctorRequest from './DoctorRequest';
-const InquiryAnswerModal = ({ onClose, PK }) => {
+const InquiryAnswerModal = ({ onClose, item = {} }) => {
   const { openModal } = useModalContext();
 
   const handleOpenModal = (component, name, type) => {

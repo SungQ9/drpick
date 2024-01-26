@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Button = ({ buttonType, buttonName, handleButtonClick }) => {
+const Button = ({ buttonType, buttonName, handleButtonClick, item = {} }) => {
   if (buttonType === 'N') {
     return null;
   } else {

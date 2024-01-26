@@ -3,7 +3,7 @@ import Select from '../../Layout/Select';
 import star from '../../../img/star-icon.png';
 
 // 리뷰작성 모달
-const ReivewModal = ({ onClose }) => {
+const ReivewModal = ({ onClose, item = {} }) => {
   const [selectedValue, setSelectedValue] = useState('');
   const [selectedRating, setSelectedRating] = useState('');
 

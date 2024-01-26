@@ -6,7 +6,7 @@ import Select from '../../Layout/Select';
 import SearchHospitalModal from '../Doctor/SearchHospitalModal';
 import WorkTime from '../../Layout/List/ProfileEditList/WorkTime';
 
-const DoctorProfileEdit = ({ onClose }) => {
+const DoctorProfileEdit = ({ onClose, item = {} }) => {
   const [hospitalName, setHospitalName] = useState('');
   const [selectedName, setSelectedName] = useState('');
 

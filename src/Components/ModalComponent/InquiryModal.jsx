@@ -6,7 +6,7 @@ import Select from '../Layout/Select';
 import { useTokenContext } from '../Context/TokenContext';
 import axios from 'axios';
 
-const InquiryModal = ({ onClose, PK }) => {
+const InquiryModal = ({ onClose, item = {} }) => {
   const [selectedValue, setSelectedValue] = useState('');
   const [selectedLabel, setSelectedLabel] = useState('');
   const [selectedFileName, setSelectedFileName] = useState('');

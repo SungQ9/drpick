@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Input from '../../Layout/Input';
 import Adress from '../../Layout/Adress';
 
-const MemberProfileEdit = ({ onClose }) => {
+const MemberProfileEdit = ({ onClose, item = {} }) => {
   const [selectedName, setSelectedName] = useState('');
   const [address, setAddress] = useState({ main: '', detail: '' });
 

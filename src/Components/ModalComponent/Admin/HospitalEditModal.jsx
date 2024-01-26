@@ -5,7 +5,7 @@ import Adress from '../../Layout/Adress';
 
 // data = PK ( 넘어온 PK로 해당 컴포넌트에서 데이터 조회 )
 // type = 추가인지 수정인지 (수정일때만 type='modify')
-const HospitalEditModal = ({ onClose, data, type }) => {
+const HospitalEditModal = ({ onClose, type, item = {} }) => {
   const [selectedName, setSelectedName] = useState('');
   const [address, setAddress] = useState({ main: '', detail: '' });
   const handleAddressSelect = (selectedAddress) => {
@@ -13,13 +13,13 @@ const HospitalEditModal = ({ onClose, data, type }) => {
   };
 
   useEffect(() => {
-    if (type === 'modify' && data) {
+    if (type === 'modify' && item) {
       //  수정 'modify' 일때만   데이터 로드
-      setSelectedName(data.name || '');
-      setAddress(data.address || { main: '', detail: '' });
+      setSelectedName(item.name || '');
+      setAddress(item.address || { main: '', detail: '' });
       // 여기서 스프링에서 데이터를 불러오는 로직을 추가
     }
-  }, [data, type]);
+  }, [item, type]);
 
   return (
     <div

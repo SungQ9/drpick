@@ -2,7 +2,7 @@
 import React from 'react';
 import PatientDetail from './PatientDetail';
 
-const PatientDetailModal = () => {
+const PatientDetailModal = ({ onClose, item = {} }) => {
   return (
     <div className='patientDetail-modal'>
       <table className='patientDetail-top'>

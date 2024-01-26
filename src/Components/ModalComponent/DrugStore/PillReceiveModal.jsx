@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PillReceiveModal = ({ onClose }) => {
+const PillReceiveModal = ({ onClose, item = {} }) => {
   return (
     <div
       style={{

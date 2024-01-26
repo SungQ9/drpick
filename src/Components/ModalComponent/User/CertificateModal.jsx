@@ -1,6 +1,6 @@
 import React from 'react';
 // 진단서 모달
-const CertificateModal = () => {
+const CertificateModal = ({ onClose, item = {} }) => {
   return (
     <div>
       <h4>진단서 이미지가 들어올 위치 </h4>

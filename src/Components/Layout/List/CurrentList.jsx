@@ -25,11 +25,11 @@ const CurrentList = ({
     console.log('CurrenList 내부의 콘솔 ', buttonName);
     console.log('PK : ', item.pk, '버튼이 클릭되었습니다');
     if (buttonName === '작성') {
-      openModal(<InquiryModal itemPK={item.pk} />, '1:1문의');
+      openModal(<InquiryModal item={item} />, '1:1문의');
     } else if (listbutton === '수정') {
-      openModal(<InquiryModal />, '수정하기');
+      openModal(<InquiryModal item={item} />, '수정하기');
     } else if (buttonName === '추가') {
-      openModal(<InquiryModal />, '추가');
+      openModal(<InquiryModal item={item} />, '추가');
     }
   };
 
@@ -80,7 +80,7 @@ const CurrentList = ({
                 {headerKey.map((key) => (
                   <td key={key + index}>
                     {key === 'status' ? (
-                      <GenerateButtons status={item[key]} />
+                      <GenerateButtons status={item[key]} item={item} />
                     ) : (
                       item[key]
                     )}

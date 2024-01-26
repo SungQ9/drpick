@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import CertificateModal from '../../ModalComponent/User/CertificateModal';
 import PrescriptionModal from '../../ModalComponent/User/PrescriptionModal';
 
-const GenerateButtons = ({ status }) => {
+const GenerateButtons = ({ status, item = {} }) => {
   const { openModal } = useModalContext();
   const navigate = useNavigate();
 
