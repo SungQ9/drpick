@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import '../../../css/UserStyle.css';
 import '../../../css/Style.css';
 
@@ -16,14 +16,19 @@ import ApplicationForm from './ApplicationForm/ApplicationForm'; // 진료신청
 import SelectPayment from './SelectPayment'; // 결제수단선택
 import AcceptComplete from './AcceptComplete'; // 접수완료
 import ClinicRoom from './ApplicationForm/ClinicRoom'; // 비대면 진료실
+import Video from './ApplicationForm/ClinicRoom/VideoChat/index';
 import SelectPillsReceive from './SelectPillsReceive/index';
 
 // 비대면 진료
 const Clinic = () => {
+  const location = useLocation();
+  const isVideoRoute =
+    location.pathname.includes('/clinicRoom/') &&
+    !location.pathname.endsWith('/clinicRoom');
   return (
     <ClinicProvider>
       <div className='mainContainer'>
-        <div className='Form'>
+        <div className={isVideoRoute ? 'mypageForm' : 'Form'}>
           <Routes>
             <Route path='/' element={<SelectClinicWay />} />
             <Route path='/subject' element={<Subject />} />
@@ -35,7 +40,8 @@ const Clinic = () => {
             <Route path='/application' element={<ApplicationForm />} />
             <Route path='/payment' element={<SelectPayment />} />
             <Route path='/complete' element={<AcceptComplete />} />
-            <Route path='/room' element={<ClinicRoom />} />
+            <Route path='/room/:roomName' element={<ClinicRoom />} />
+            <Route path='/clinicRoom/:roomName' element={<Video />} />
             <Route path='/pill' element={<SelectPillsReceive />} />
           </Routes>
         </div>

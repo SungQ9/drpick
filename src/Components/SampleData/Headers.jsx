@@ -199,7 +199,7 @@ const drugstores = [
 const reviews = [
   {
     text: '진료일',
-    value: 'clinicDate',
+    value: 'certificateDate',
   },
   {
     text: '병원명',

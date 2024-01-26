@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Route, useNavigate } from 'react-router-dom';
-
+import { useNavigate, useLocation } from 'react-router-dom';
 import back from '../../../../../img/back-arrow-icon.png';
 import ClinicButton from './ClinicButton';
 import ClinicRoomButton from './ClinicRoomButton';
 
-const ClinicRoom = () => {
+const ClinicRoom = ({ item = {} }) => {
   const [clinicStatus, setClinicStatus] = useState(false);
+  const location = useLocation();
+  const { certificateNum } = location.state;
 
   const navigate = useNavigate();
   return (
@@ -26,7 +27,10 @@ const ClinicRoom = () => {
         <div className='room'>
           <h2 style={{ color: '#ffffff' }}>비대면진료실</h2>
           <span style={{ color: '#cecece' }}>이OO의사 밝은이비인후과의원</span>
-          <ClinicRoomButton status={clinicStatus} />
+          <ClinicRoomButton
+            status={clinicStatus}
+            certificateNum={certificateNum}
+          />
         </div>
         <div className='info'>
           <h3

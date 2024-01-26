@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useTokenContext } from "../../Context/TokenContext";
 import axios from "axios";
 import LineChart from "./lineChart";
+import "../../../css/GraphStyle.css";
 
 const LineIndex = () => {
   const [chartData, setChartData] = useState([]);
@@ -22,9 +23,9 @@ const LineIndex = () => {
       });
   }, []);
   return (
-    <div>
+    <div id="lineGraph">
       <h2>월 매출</h2>
-      <div className="graphForm1">
+      <div className="graphForm2">
         <LineChart data={chartData} />
         {/* <MyChart /> */}
       </div>

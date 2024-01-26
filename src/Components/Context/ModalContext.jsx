@@ -6,51 +6,45 @@ const ModalContext = createContext();
 
 // 모달 관리를 위한 Provider 컴포넌트
 const ModalProvider = ({ children }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalContent, setModalContent] = useState(null);
+  const [modals, setModals] = useState([]); // 모달 배열로 관리
   const [modalName, setModalName] = useState('');
   const [type, setType] = useState('');
   const [searchKeyword, setSearchKeyword] = useState(''); // 검색 키워드 상태 추가
 
   const openModal = (component, name, type) => {
-    setModalContent(component);
+    setModals((prevModals) => [...prevModals, { component, name, type }]);
     setModalName(name);
-    setIsModalOpen(true);
     setType(type);
     setSearchKeyword(''); // 모달을 열 때마다 검색 키워드 초기화
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
+    setModals((prevModals) => prevModals.slice(0, prevModals.length - 1));
     setSearchKeyword(''); // 모달을 닫을 때 검색 키워드 초기화
   };
 
+  // 현재 활성화된 모달 정보
+  const currentModal = modals[modals.length - 1] || {};
+
   return (
     <ModalContext.Provider
-      value={{
-        isModalOpen,
-        modalContent,
-        openModal,
-        closeModal,
-        searchKeyword, // 검색 키워드 상태와 함수 제공
-        setSearchKeyword,
-      }}
+      value={{ openModal, closeModal, searchKeyword, setSearchKeyword }}
     >
       {children}
-      {isModalOpen && (
+      {modals.map((modal, index) => (
         <Modal
-          isOpen={isModalOpen}
+          key={index}
+          isOpen={true}
           onClose={closeModal}
-          Name={modalName}
-          type={type}
+          Name={modal.name}
+          type={modal.type}
         >
-          {modalContent}
+          {modal.component}
         </Modal>
-      )}
+      ))}
     </ModalContext.Provider>
   );
 };
-
 // Context를 사용하기 위한 커스텀 훅
 const useModalContext = () => useContext(ModalContext);
 

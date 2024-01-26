@@ -8,7 +8,7 @@ import ListTitle from '../../Layout/List/ListTitle';
 
 const UserManagement = () => {
   const location = useLocation();
-  const { token, userAuth } = useTokenContext();
+  const { token, userAuth, userEmail, userId } = useTokenContext();
   const selectedType = location.state?.selectedType || 'default';
   const [title, setTitle] = useState('');
   const [keyword, setKeyword] = useState('');
@@ -25,7 +25,9 @@ const UserManagement = () => {
       Authorization: `Bearer ${token}`,
     },
     params: {
-      memberId: localStorage.getItem('userId'),
+      userEmail: userEmail,
+      userAuth: userAuth,
+      memberId: userId
     },
   };
 
@@ -44,6 +46,8 @@ const UserManagement = () => {
             setTitle('진료내역조회');
             break;
           case 'inquiry':
+            alert(userEmail)
+            alert(userAuth)
             var response = await axios.get(
               'http://localhost:8080/members/currentHistory',
               config,

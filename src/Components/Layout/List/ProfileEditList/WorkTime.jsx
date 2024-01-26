@@ -57,6 +57,7 @@ const WorkTime = ({ style }) => {
           />
           <h4>월요일</h4>
           <Select
+            id="mondayEndTime"
             options={time}
             style={{ width: '100px' }}
             disabled={!selectedDay.monday}

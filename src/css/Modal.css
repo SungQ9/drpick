@@ -23,9 +23,10 @@
 
 .modal-title {
   display: flex;
-  border-bottom: 1px solid #cecece;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid #cecece;
+  width: 90%;
   padding-left: 20px;
   padding-right: 20px;
 }
@@ -114,4 +115,21 @@
 .patientInfo tr td:nth-child(2),
 .patientInfo tr td:nth-child(4) {
   width: 130px;
+}
+
+/* 수정 */
+
+.modify-content {
+  width: 800px;
+  height: 750px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modify-button {
+  display: flex;
+  justify-content: center;
+  width: 520px;
+  margin: 20px 0px 10px 0px;
 }

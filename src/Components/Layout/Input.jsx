@@ -1,4 +1,6 @@
 import React from 'react';
+import '../../css/UserStyle.css';
+import '../../css/Style.css';
 
 const Input = ({
   id,
