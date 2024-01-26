@@ -1,77 +1,141 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useModalContext } from '../../../Context/ModalContext';
-import { useDaumPostcodePopup } from 'react-daum-postcode';
-import { postcodeScriptUrl } from 'react-daum-postcode/lib/loadPostcode';
-import Select from '../../Select';
-import WorkTime from './WorkTime';
-import SearchHospitalModal from '../../../ModalComponent/Doctor/SearchHospitalModal';
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useModalContext } from '../../../Context/ModalContext'
+import { useDaumPostcodePopup } from 'react-daum-postcode'
+import { postcodeScriptUrl } from 'react-daum-postcode/lib/loadPostcode'
+import Select from '../../Select'
+import WorkTime from './WorkTime'
+import SearchHospitalModal from '../../../ModalComponent/Doctor/SearchHospitalModal'
+import { useTokenContext } from '../../../Context/TokenContext'
+import axios from 'axios'
 
 const ProfileEditList = ({ type, title }) => {
-  const [imageSrc, setImageSrc] = useState('');
-  const navigate = useNavigate();
-  const { openModal } = useModalContext();
-  const [hospitalName, setHospitalName] = useState('');
-  const [mainAddress, setMainAddress] = useState('');
-  const [detailAddress, setDetailAddress] = useState('');
+  const [imageSrc, setImageSrc] = useState('')
+  const navigate = useNavigate()
+  const { openModal } = useModalContext()
+  const [hospitalName, setHospitalName] = useState('')
+  const [mainAddress, setMainAddress] = useState('')
+  const [detailAddress, setDetailAddress] = useState('')
+  const { token, userId } = useTokenContext()
+  const [initialDataFetched, setInitialDataFetched] = useState(false)
+  const [selectedDay, setSelectedDay] = useState({
+    monday: false,
+    tuesday: false,
+    wednesday: false,
+    thursday: false,
+    friday: false,
+    saturday: false,
+    sunday: false,
+    holiday: false,
+  });
+  const formData = new FormData()
 
   const handleOpenModal = (component, name, type) => {
-    openModal(component, name, type);
-  };
+    openModal(component, name, type)
+  }
 
   // 파일 업로드 핸들러
   const handleFileInputChange = (event) => {
-    const file = event.target.files[0];
+    const file = event.target.files[0]
     if (!file) {
-      return;
+      return
     }
 
     // 업로드한 이미지 화면에 출력
-    const reader = new FileReader();
+    const reader = new FileReader()
     reader.onload = (e) => {
-      setImageSrc(e.target.result);
-    };
-    reader.readAsDataURL(file);
-  };
+      setImageSrc(e.target.result)
+    }
+    reader.readAsDataURL(file)
+  }
 
   // 업로드 버튼 핸들러
   const handleFileBtnClick = () => {
-    document.getElementById('selectedFile').click();
-  };
+    document.getElementById('selectedFile').click()
+  }
 
   // 선택한 병원이름
   const handleHospitalSelect = (selectedName) => {
-    setHospitalName(selectedName);
-  };
+    setHospitalName(selectedName)
+  }
 
-  const open = useDaumPostcodePopup(postcodeScriptUrl);
+  const open = useDaumPostcodePopup(postcodeScriptUrl)
 
   const setAddressDatas = (data) => {
-    let fullAddress = data.address;
-    let extraAddress = '';
-    let localAddress = data.sido + ' ' + data.sigungu;
+    let fullAddress = data.address
+    let extraAddress = ''
+    let localAddress = data.sido + ' ' + data.sigungu
 
     if (data.addressType === 'R') {
       if (data.bname !== '') {
-        extraAddress += data.bname;
+        extraAddress += data.bname
       }
       if (data.buildingName !== '') {
         extraAddress +=
-          extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
+          extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName
       }
 
-      fullAddress = fullAddress.replace(localAddress, '');
+      fullAddress = fullAddress.replace(localAddress, '')
       // mainAddress를 localAddress와 fullAddress로 구성된 주소로 설정
-      const combinedMainAddress = localAddress + fullAddress;
-      setMainAddress(combinedMainAddress);
+      const combinedMainAddress = localAddress + fullAddress
+      setMainAddress(combinedMainAddress)
 
       // detailAddress를 extraAddress로 설정
-      setDetailAddress(extraAddress);
+      setDetailAddress(extraAddress)
     }
-  };
+  }
 
   const searchAddress = () => {
-    open({ onComplete: setAddressDatas });
+    open({ onComplete: setAddressDatas })
+  }
+
+  useEffect(() => {
+    if (!initialDataFetched) {
+      fetchDataFromServer()
+    }
+  }, [initialDataFetched])
+
+  const fetchDataFromServer = async () => {
+    try {
+      let url = ""
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        params:{}
+      }
+      if(type === "doctor"){
+        url = ""
+        config.params.doctorId = userId;
+      }else{
+        url = "http://localhost:8080/drugstores/searchDrugstoreAndAvail"
+        config.params.drugstoreId = userId;
+      }
+
+      const response = await axios.get(url, config)
+      console.log(response.data)
+      // const data = await response.json()   
+
+      // 데이터를 가져온 후 상태를 업데이트
+      setInitialDataFetched(true)
+    } catch (error) {
+      console.error('데이터를 가져오는 동안 오류가 발생했습니다:', error)
+    }
+  }
+
+  const handleSaveButtonClick = async () => {
+    // 선택된 요일과 해당 요일에 선택된 시간 값을 가져오기
+  const selectedDays = Object.keys(selectedDay).filter((day) => selectedDay[day]);
+  
+  const selectedTimes = selectedDays.reduce((acc, day) => {
+    const startTime = document.getElementById(`${day}StartTime`).value;
+    const endTime = document.getElementById(`${day}EndTime`).value;
+    acc.push(`${day}: ${startTime} ~ ${endTime}`);
+    return acc;
+  }, []);
+
+  // 가져온 값을 노출하거나 다른 작업 수행
+  alert(`저장 버튼 클릭!\n선택된 요일: ${selectedDays.join(', ')}\n선택된 시간: ${selectedTimes.join(', ')}`);
   };
 
   if (type === 'doctor') {
@@ -208,7 +272,7 @@ const ProfileEditList = ({ type, title }) => {
                         />,
                         '병원검색',
                         'Search',
-                      );
+                      )
                     }}
                   >
                     병원검색
@@ -279,7 +343,7 @@ const ProfileEditList = ({ type, title }) => {
           <h3 style={{ position: 'relative', right: '285px' }}>
             <span style={{ color: 'red' }}>*</span> 비대면 진료 시간 설정
           </h3>
-          <WorkTime />
+          <WorkTime selectedDay={selectedDay} />
         </div>
         <div
           style={{
@@ -293,6 +357,7 @@ const ProfileEditList = ({ type, title }) => {
           <button
             className='clinicSubBtn-mid'
             style={{ width: '180px', background: '#11c2ad' }}
+            onClick={handleSaveButtonClick}
           >
             저장
           </button>
@@ -300,14 +365,14 @@ const ProfileEditList = ({ type, title }) => {
             className='clinicSubBtn-mid'
             style={{ width: '180px' }}
             onClick={() => {
-              navigate(-1);
+              navigate(-1)
             }}
           >
             취소
           </button>
         </div>
       </div>
-    );
+    )
   } else {
     return (
       <div
@@ -336,14 +401,14 @@ const ProfileEditList = ({ type, title }) => {
                 <h5>
                   <span>*</span> 약국 이름을 입력해주세요
                 </h5>
-                <input type='text' />
+                <input id="drugstoreName" type='text' />
               </td>
               <td style={{ width: '280px' }}>
                 {' '}
                 <h5>
                   <span>*</span> 전화번호를 입력해주세요
                 </h5>
-                <input type='text' />
+                <input id="drugstoreTel" type='text' />
               </td>
             </tr>
             <tr>
@@ -386,7 +451,7 @@ const ProfileEditList = ({ type, title }) => {
               </td>
               <td style={{ width: '280px' }}>
                 <h5>나머지주소</h5>
-                <input type='text' placeholder='나머지 주소를 입력해주세요' />
+                <input id="drugstoreAddrDetail" type='text' placeholder='나머지 주소를 입력해주세요' />
               </td>
             </tr>
           </table>
@@ -425,6 +490,7 @@ const ProfileEditList = ({ type, title }) => {
             }}
           >
             <textarea
+              id="drugstoreComments"
               style={{
                 width: '725px',
                 height: '190px',
@@ -447,9 +513,7 @@ const ProfileEditList = ({ type, title }) => {
           <h3 style={{ position: 'relative', right: '285px' }}>
             <span style={{ color: 'red' }}>*</span> 영업 시간 설정
           </h3>
-          <WorkTime
-          // style={{ borderCollapse: "separate", borderSpacing: "5px 5px" }}
-          />
+          <WorkTime selectedDay={selectedDay}/>
         </div>
         <div
           style={{
@@ -463,6 +527,7 @@ const ProfileEditList = ({ type, title }) => {
           <button
             className='clinicSubBtn-mid'
             style={{ width: '180px', background: '#11c2ad' }}
+            onClick={handleSaveButtonClick}
           >
             저장
           </button>
@@ -470,15 +535,15 @@ const ProfileEditList = ({ type, title }) => {
             className='clinicSubBtn-mid'
             style={{ width: '180px' }}
             onClick={() => {
-              navigate(-1);
+              navigate(-1)
             }}
           >
             취소
           </button>
         </div>
       </div>
-    );
+    )
   }
-};
+}
 
-export default ProfileEditList;
+export default ProfileEditList
