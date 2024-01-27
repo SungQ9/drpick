@@ -87,7 +87,7 @@ const MemberProfileEdit = ({ onClose, item = {} }) => {
           </td>
         </tr>
         <tr>
-          <td colSpan={2}>
+          <td colSpan={2} style={{ width: '510px' }}>
             <Address onAddressSelect={handleAddressSelect} />
           </td>
         </tr>

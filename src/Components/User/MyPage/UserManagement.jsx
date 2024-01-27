@@ -27,7 +27,7 @@ const UserManagement = () => {
     params: {
       userEmail: userEmail,
       userAuth: userAuth,
-      memberId: userId
+      memberId: userId,
     },
   };
 
@@ -46,8 +46,6 @@ const UserManagement = () => {
             setTitle('진료내역조회');
             break;
           case 'inquiry':
-            alert(userEmail)
-            alert(userAuth)
             var response = await axios.get(
               'http://localhost:8080/members/currentHistory',
               config,

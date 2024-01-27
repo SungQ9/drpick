@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import star from '../../../img/star-icon.png';
@@ -14,6 +14,8 @@ const SelectDoctor = () => {
     console.log('Selected subject:', doctor);
     navigate(`/clinic/detail/`, { state: { doctor } });
   };
+
+  useEffect(() => {});
 
   return (
     <div className='selectDoctorWrapper'>

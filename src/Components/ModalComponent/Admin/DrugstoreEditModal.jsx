@@ -31,7 +31,11 @@ const DrugstoreEditModal = ({ onClose, type, item = {} }) => {
         alignItems: 'center',
       }}
     >
-      <table id='signUpInputForm' className='signUpTable'>
+      <table
+        id='signUpInputForm'
+        className='signUpTable'
+        style={{ width: '600px' }}
+      >
         <tr>
           <td colSpan={2}>
             <Input
@@ -59,7 +63,7 @@ const DrugstoreEditModal = ({ onClose, type, item = {} }) => {
           </td>
         </tr>
         <tr>
-          <td colSpan={2}>
+          <td colSpan={2} style={{ width: '510px' }}>
             <Address onAddressSelect={handleAddressSelect} />
           </td>
         </tr>
