@@ -5,6 +5,7 @@ import axios from 'axios';
 import headers from '../../SampleData/Headers';
 import List from '../../Layout/List';
 import ListTitle from '../../Layout/List/ListTitle';
+import Loading from '../../User/ImageSearch/Loading';
 
 const UserManagement = () => {
   const location = useLocation();
@@ -76,7 +77,11 @@ const UserManagement = () => {
   }, [selectedType, token]);
 
   if (isLoading) {
-    return <div>로딩 중...</div>;
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   }
 
   return (

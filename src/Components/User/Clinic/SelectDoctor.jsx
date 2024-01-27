@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-
+import { useTokenContext } from '../../Context/TokenContext';
+import axios from 'axios';
+import Loading from '../ImageSearch/Loading';
 import star from '../../../img/star-icon.png';
 import back from '../../../img/back-arrow-icon.png';
 import doctor from '../../../img/doctor-icon.png';
@@ -8,15 +10,73 @@ import doctor from '../../../img/doctor-icon.png';
 const SelectDoctor = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { token, userAuth, userEmail, userId } = useTokenContext();
   const selectSubject = location.state ? location.state.subject : null;
+  const [isLoading, setIsLoading] = useState(true);
+  const [doctors, setDoctors] = useState([]);
 
-  const doctorHandler = (doctor) => {
-    console.log('Selected subject:', doctor);
-    navigate(`/clinic/detail/`, { state: { doctor } });
+  const doctorHandler = (name, item) => {
+    console.log('Selected Doctor:', name);
+    navigate(`/clinic/detail/`, { state: { doctor: item } });
   };
 
-  useEffect(() => {});
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    params: {
+      userEmail: userEmail,
+      userAuth: userAuth,
+      memberId: userId,
+      doctorSubject: selectSubject,
+    },
+  };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get(
+          'http://localhost:8080/doctors/getDoctorClinicList',
+          config,
+        );
+        setDoctors(response.data);
+      } catch (err) {
+        console.error('의사 목록 에러 :', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  }
+
+  if (doctors.length === 0) {
+    return (
+      <div>
+        <div className='titleWrapper'>
+          <img
+            className='backIcon'
+            src={back}
+            onClick={() => {
+              navigate(-1);
+            }}
+            alt='back'
+          />
+          <h1 className='stepTitle' style={{ marginLeft: '280px' }}>
+            등록된 의사가 없습니다{' '}
+          </h1>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className='selectDoctorWrapper'>
       <div className='titleWrapper'>
@@ -32,56 +92,39 @@ const SelectDoctor = () => {
       </div>
       <div className='doctorList'>
         <ul>
-          <li className='doctor' onClick={() => doctorHandler('백의사')}>
-            <div className='content'>
-              <div className='name'>
-                <h2>백의사</h2>
-                <span>밝은이비인후과</span>
+          {doctors.map((item) => (
+            <li
+              key={item.doctorId}
+              className='doctor'
+              onClick={() => doctorHandler(item.doctorName, item)}
+            >
+              <div className='content'>
+                <div className='name'>
+                  <h2>{item.doctorName}</h2>
+                  <span>{item.hospitalName}</span>
+                </div>
+                <div className='grade'>
+                  <img
+                    src={star}
+                    alt='star'
+                    style={{ width: '25px', height: '25px' }}
+                  />{' '}
+                  <p>{item.rating}</p> <span>(200+)</span>
+                </div>
+                <div className='status'>
+                  {/* 의사 진료시간이랑 비교해서 진료시간 내면 접수가능, 아니면 불가능   */}
+                  <h5>접수가능</h5>
+                  {/* 의사 진료시간  */}
+                  <span>(수) 15:00 ~ 20:00</span>
+                </div>
+                <div className='major'>
+                  <p>{item.doctorMajor}</p>
+                </div>
               </div>
-              <div className='grade'>
-                <img
-                  src={star}
-                  alt='star'
-                  style={{ width: '25px', height: '25px' }}
-                />{' '}
-                <p>5.0</p> <span>(200+)</span>
-              </div>
-              <div className='status'>
-                <h5>접수가능</h5>
-                <span>(수) 15:00 ~ 20:00</span>
-              </div>
-              <div className='major'>
-                <p>내과전문의</p>
-                <p>영상진료</p>
-              </div>
-            </div>
-            <img src={doctor} alt='doctor' />
-          </li>
-          <li className='doctor' onClick={() => doctorHandler('림의사')}>
-            <div className='content'>
-              <div className='name'>
-                <h2>림의사</h2>
-                <span>하림병원</span>
-              </div>
-              <div className='grade'>
-                <img
-                  src={star}
-                  alt='star'
-                  style={{ width: '25px', height: '25px' }}
-                />{' '}
-                <p>5.0</p> <span>(200+)</span>
-              </div>
-              <div className='status'>
-                <h5>접수가능</h5>
-                <span>(수) 15:00 ~ 20:00</span>
-              </div>
-              <div className='major'>
-                <p>내과전문의</p>
-                <p>영상진료</p>
-              </div>
-            </div>
-            <img src={doctor} alt='doctor' />
-          </li>
+              {/* 파일연동해서 의사 사진  */}
+              <img src={doctor} alt='doctor' />
+            </li>
+          ))}
         </ul>
       </div>
     </div>

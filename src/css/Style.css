@@ -58,7 +58,7 @@ input {
   color: #cecece;
 }
 
-input[type="checkbox"] {
+input[type='checkbox'] {
   width: 20px;
   margin: 0px;
 }
@@ -409,6 +409,21 @@ Input {
   margin: 2px;
 }
 
+/* ProgressBar 스타일 */
+.progress-bar {
+  width: 200px;
+  background-color: #e0e0e0;
+  border-radius: 8px;
+}
+
+.progress-bar-fill {
+  height: 20px;
+  background-color: #11c2ad;
+  text-align: center;
+  line-height: 20px;
+  color: white;
+  border-radius: 8px;
+}
 /* CRUD  목록 */
 /* className 수정 하지말고 id로 stlye 추가 및 변경 해주세요*/
 
@@ -439,7 +454,7 @@ Input {
   z-index: 30;
 }
 
-.searchDateForm input[type="text"] {
+.searchDateForm input[type='text'] {
   width: 250px;
   height: 35px;
 }
