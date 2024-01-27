@@ -426,6 +426,24 @@ Input {
 }
 /* CRUD  목록 */
 /* className 수정 하지말고 id로 stlye 추가 및 변경 해주세요*/
+.bottom_ui {
+  position: absolute;
+}
+
+.button_div {
+  position: absolute;
+  z-index: 30;
+  left: 100px;
+  bottom: 150px;
+}
+
+.pagination_div {
+  width: 800px;
+  position: absolute;
+  z-index: 30;
+  left: 150px;
+  bottom: 150px;
+}
 
 .searchDateWrapper {
   display: flex;
