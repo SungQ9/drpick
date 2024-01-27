@@ -23,7 +23,7 @@ const SelectPayment = () => {
   };
 
   useEffect(() => {
-    if (clinicContext.clinicState.isPaymentSelected) {
+    if (clinicContext.clinicState.isPaymentSelected == true) {
       const formData = {
         memberId: clinicContext.clinicState.memberId,
         doctorId: clinicContext.clinicState.selectDoctorId,
@@ -45,19 +45,27 @@ const SelectPayment = () => {
         },
       };
 
-      axios
-        .post(
-          'http://localhost:8080/members/registReservation',
-          formData,
-          config,
-        )
-        .then((response) => {
-          console.log(response.data);
-          navigate('/clinic/complete');
-        })
-        .catch((error) => {
-          console.error('진료신청에러', error);
-        });
+      try {
+        axios
+          .post(
+            'http://localhost:8080/members/registReservation',
+            formData,
+            config,
+          )
+          .then((response) => {
+            console.log(response.data);
+            navigate('/clinic/complete');
+          });
+      } catch (error) {
+        console.error('진료신청에러', error);
+      } finally {
+        clinicContext.setClinicState((prev) => ({
+          ...prev,
+          selectPayment: '',
+          isPaymentSelected: false,
+          uploadedFiles: [],
+        }));
+      }
     }
   }, [clinicContext.clinicState, navigate]);
 
