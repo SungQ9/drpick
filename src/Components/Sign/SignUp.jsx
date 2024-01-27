@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Input from '../Layout/Input';
 import Select from '../Layout/Select';
-import Adress from '../Layout/Adress';
+import Address from '../Layout/Address';
 import '../../css/UserStyle.css';
 import '../../css/Style.css';
 
@@ -353,7 +353,7 @@ const SignUp = () => {
               </tr>
               <tr>
                 <td colSpan={2}>
-                  <Adress onAddressSelect={handleAddressSelect} />
+                  <Address onAddressSelect={handleAddressSelect} />
                 </td>
               </tr>
               <tr>
