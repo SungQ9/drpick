@@ -7,6 +7,8 @@ const SearchBar = ({
   searchBarStyle,
   placeholder,
   onSearch,
+  startDate,
+  endDate,
 }) => {
   const [inputText, setInputText] = useState("");
   const { setSearchKeyword } = useModalContext(); // ModalContext에서 검색 키워드 가져오기
@@ -21,17 +23,18 @@ const SearchBar = ({
 
     // 검색어가 변경될 때마다 결과 업데이트
     onSearch(searchValue);
-    setSearchKeyword(searchValue);
-
-    console.log("검색어 입력 중:", searchValue);
+    // setSearchKeyword(searchValue);
   };
 
-  const handleSearch = () => {
+  const handleSearch = (evt) => {
+    evt.preventDefault(); // Prevent default form submission behavior
     // 검색 버튼 클릭 시 검색 결과 업데이트
     if (onSearch) {
-      onSearch(inputText);
+      // 검색어와 날짜 정보를 함께 전달
+      onSearch(inputText, startDate, endDate);
       setSearchKeyword(inputText);
     }
+    // alert(startDate + "-" + endDate);
   };
 
   const handleReset = () => {
@@ -54,11 +57,13 @@ const SearchBar = ({
         <input
           value={inputText}
           onChange={onChangeInput}
-          onKeyPress={handleSubmit} /* 엔터 키 - 이벤트 막기 */
           type="text"
           placeholder={placeholder}
         />
-        <button className="clinicSubBtn-short" onClick={handleSearch}>
+        <button
+          className="clinicSubBtn-short"
+          onClick={(evt) => handleSearch(evt)}
+        >
           검색
         </button>
       </form>
@@ -70,7 +75,6 @@ const SearchBar = ({
           style={{ width: "370px", height: "50px" }}
           value={inputText}
           onChange={onChangeInput}
-          onKeyPress={handleSubmit}
           type="text"
           placeholder={placeholder}
         />

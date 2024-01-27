@@ -13,19 +13,48 @@ const List = ({
   buttonName,
   selectable,
 }) => {
-  console.log("List의 콘솔", items);
-
   const [startDate, setStartDate] = React.useState(new Date());
   const [endDate, setEndDate] = React.useState(new Date());
+  const [searchValue, setSearchValue] = React.useState("");
+  const [filteredDateItems, setFilteredDateItems] = React.useState(items);
 
-  // 검색어만 업데이트를 위한 함수
-  const handleSearch = (searchValue) => {
-    // 검색어를 콘솔에 출력
-    console.log("검색어:", searchValue);
+  const handleSearch = (value, startDate, endDate) => {
+    console.log("검색어:", value);
+    console.log("시작 날짜:", startDate);
+    console.log("종료 날짜:", endDate);
 
-    // 여기에 필요한 검색 로직을 추가
+    setSearchValue(value);
 
-    // 이후에 필요한 로직을 추가하세요
+    const filteredItems = items.filter((item) =>
+      headers.some((header) => {
+        if (
+          type === "Date" &&
+          header.value === "inquiryRegdate" &&
+          item[header.value]
+        ) {
+          const inquiryDate = new Date(item[header.value]);
+          const isDateInRange =
+            inquiryDate >= new Date(startDate) &&
+            inquiryDate <= new Date(endDate);
+
+          const includesSearchValue =
+            !value ||
+            (item[header.value] &&
+              typeof item[header.value] === "string" &&
+              item[header.value].includes(value));
+
+          return isDateInRange || includesSearchValue;
+        } else {
+          return (
+            item[header.value] &&
+            typeof item[header.value] === "string" &&
+            item[header.value].includes(value)
+          );
+        }
+      })
+    );
+
+    setFilteredDateItems(filteredItems);
   };
 
   // DatePicker가 있는 목록
@@ -40,20 +69,24 @@ const List = ({
       >
         <div className="searchDateWrapper">
           <SearchDate
-            onSearch={handleSearch} // 검색어만 넘김
+            items={items}
+            headers={headers}
+            onSearch={(value, start, end) => handleSearch(value, start, end)}
+            searchValue={searchValue}
           />
         </div>
         <div className="listForm">
           <CurrentList
             headers={headers}
-            items={items}
-            selectable={selectable}
+            items={items} // 필터링된 결과 사용
             type={type}
+            selectable={selectable}
             buttonType={buttonType}
             buttonName={buttonName}
             listbutton={listbutton}
             style={style}
             handleSearch={handleSearch}
+            filteredDateItems={filteredDateItems}
           />
         </div>
       </div>
@@ -64,7 +97,7 @@ const List = ({
       <div className="listForm">
         <CurrentList
           headers={headers}
-          items={items}
+          items={filteredDateItems} // 기본 데이터들 사용
           selectable={selectable}
           buttonType={buttonType}
           buttonName={buttonName}
