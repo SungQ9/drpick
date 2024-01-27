@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useTokenContext } from "../../Context/TokenContext";
+import { useNavigate } from "react-router-dom"; 
+
 
 function BillingRecord() {
   const urlParams = new URLSearchParams(window.location.search);
   const customerKey = urlParams.get("customerKey");
   const authKey = urlParams.get("authKey");
   const { token, userAuth } = useTokenContext();
+  const navigate = useNavigate();
 
   const [displayedCustomerKey, setDisplayedCustomerKey] = useState(customerKey);
   const [displayedAuthKey, setDisplayedAuthKey] = useState(authKey);
@@ -37,17 +40,18 @@ function BillingRecord() {
     axios
       .request(axiosOptions)
       .then(function (response) {
-        const billingKey = response.data.billingKey;
-        const customerKey = response.data.customerKey;
-        console.log("키: ", billingKey, customerKey);
+        
         axios.put("http://localhost:8080/payments/recordBillingKey", null, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
           params: {
-            billingKey: billingKey,
-            customerKey: customerKey,
+            billingKey: response.data.billingKey,
+            customerKey: response.data.customerKey,
+            memberCreditNum: response.data.card.number,
             memberId: localStorage.getItem("userId"),
+            cardType: response.data.card.cardType,
+            issuerCode: response.data.card.issuerCode
           },
         });
       })
@@ -56,9 +60,14 @@ function BillingRecord() {
       });
   }, [customerKey, authKey, displayedAuthKey, displayedCustomerKey, token]);
 
+  const handleButtonClick = () => {
+    navigate("/user/payment"); 
+  };
+
   return (
     <div className="billing-success-container">
       <h1>자동결제 카드 등록 성공</h1>
+      <button onClick={handleButtonClick}>등록된 카드 확인</button> 
     </div>
   );
 }
