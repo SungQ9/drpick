@@ -3,15 +3,16 @@ import axios from "axios";
 import { useLocation,useNavigate } from "react-router-dom";
 import { useTokenContext } from "../../Context/TokenContext";
 
-function BillingCharge() {
+// 자동결제 토스에 요청
+function BillingCharge({amount}) {
   const [memberData, setMemberData] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
   const { token, userAuth } = useTokenContext();
 
+  //토스에 결재 요청
   useEffect(() => {
-    //결제 금액 받아오기
-    const amount = new URLSearchParams(location.search).get("totalPrice");
+    const amount = location.state?.amount;
 
     // 회원정보 불러오기
     axios
@@ -53,7 +54,7 @@ function BillingCharge() {
             },
             data: {
               customerKey: data.customerKey,
-              amount: parseInt(amount), 
+              amount: amount, 
               orderId: randomOrderId,
               orderName: "진료비",
               customerEmail: data.memberEmail,
@@ -61,19 +62,20 @@ function BillingCharge() {
             },
           })
           .then(function (response) {
+            //결재 성공 후 데이터 넘기기
             const responseData = encodeURIComponent(JSON.stringify(response.data));
             navigate(`/payment/billingSuccess?billingData=${responseData}`);
           })          
           .catch(function (error) {
             console.error(error);
-            navigate('/payment/billingFailure')
+            navigate('/payment/Failure')
           });
           
       })
       .catch(function (error) {
         console.error(error);
       });
-  }, []);
+  }, [location]);
 
 
 }

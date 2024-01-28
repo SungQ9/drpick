@@ -10,17 +10,11 @@ export function PaymentSuccess() {
   const [paymentInfo, setPaymentInfo] = useState(null);
   const { token, userAuth } = useTokenContext();
 
-  const queryParams = {};
-  searchParams.forEach((value, key) => {
-    queryParams[key] = value;
-  });
-
   useEffect(() => {
     const requestData = {
-      orderId: queryParams["orderId"],
-      amount: queryParams["amount"],
-      paymentKey: queryParams["paymentKey"],
-      paymentId: queryParams["paymentId"],
+      orderId: searchParams.get("orderId"),
+      amount: searchParams.get("amount"),
+      paymentKey: searchParams.get("paymentKey"),
     };
 
     const secretKey = "test_sk_QbgMGZzorz5A4kmB9dElVl5E1em4";
@@ -52,13 +46,6 @@ export function PaymentSuccess() {
         };
         setPaymentInfo(updatedPaymentInfo);
 
-
-        let transType = "CASH"; 
-
-        if (updatedPaymentInfo.card && updatedPaymentInfo.card.cardType) {
-          transType = "CARD"
-        }
-
         //transanctionType 넣는 값 나중에 변동
         await axios.put(
           "http://localhost:8080/payments/completePayment",
@@ -68,8 +55,8 @@ export function PaymentSuccess() {
               Authorization: `Bearer ${token}`,
             },
             params: {
-              paymentId: queryParams["paymentId"],
-              transactionType: transType,
+              paymentId: searchParams["paymentId"],
+              transactionType: "Point",
             },
           }
         )

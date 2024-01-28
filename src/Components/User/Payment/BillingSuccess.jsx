@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
+// 자동결제 성공
 function BillingSuccess() {
   const location = useLocation();
   const billingDataParam = new URLSearchParams(location.search).get("billingData");
