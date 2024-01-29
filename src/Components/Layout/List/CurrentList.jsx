@@ -1,15 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import GenerateButtons from "../Button/GenerateButtons";
 import SearchBar from "../SearchBar";
 import Button from "../Button";
 import { useModalContext } from "../../Context/ModalContext";
 import InquiryModal from "../../ModalComponent/InquiryModal";
-import { useState } from "react";
 import Pagination from "./Pagination";
 
 const CurrentList = ({
   headers,
-  items,
+  items: originalItems,
   selectable = false,
   style,
   searchBarStyle,
@@ -18,12 +17,14 @@ const CurrentList = ({
   buttonName,
   listbutton,
   handleSearch,
+  filteredDateItems,
 }) => {
+  // filteredDateItems 값이 존재하면 해당 값을 items로 사용, 그렇지 않으면 originalItems 사용
+  const items = filteredDateItems ? filteredDateItems : originalItems;
+
   const { openModal } = useModalContext();
 
   const handleButtonClick = (item, listbutton) => {
-    console.log("CurrenList 내부의 콘솔 ", buttonName);
-    console.log("PK : ", item.pk, "버튼이 클릭되었습니다");
     if (buttonName === "작성") {
       openModal(<InquiryModal item={item} />, "1:1문의");
     } else if (listbutton === "수정") {
@@ -37,9 +38,11 @@ const CurrentList = ({
   const [pageNumber, setPageNumber] = useState(0);
   const itemsPerPage = 5;
 
-  /* 검색어 필터 */
-  const [searchInput, setSearchInput] = useState("");
-  const [filteredItems, setFilteredItems] = useState(items);
+  // useState hooks를 조건에 따라 두 번 호출하지 않도록 수정
+  const [searchInput, setSearchInput] = useState(filteredDateItems ? "" : null);
+  const [filteredItems, setFilteredItems] = useState(
+    filteredDateItems ? items : null
+  );
 
   // 검색어 필터링 함수
   const searchItems = (searchValue) => {
@@ -61,12 +64,12 @@ const CurrentList = ({
   // 검색 결과가 변경될 때마다 페이지 번호 초기화
   useEffect(() => {
     setPageNumber(0);
-  }, [filteredItems]);
+  }, [items]);
 
   const pagesVisited = pageNumber * itemsPerPage;
   const displayItems =
-    filteredItems && filteredItems.length > 0
-      ? filteredItems.slice(pagesVisited, pagesVisited + itemsPerPage)
+    items && items.length > 0
+      ? items.slice(pagesVisited, pagesVisited + itemsPerPage)
       : [];
 
   const changePage = ({ selected }) => {
@@ -156,23 +159,26 @@ const CurrentList = ({
                   handleButtonClick={handleButtonClick}
                 />
 
-                <SearchBar
-                  searchBarStyle={searchBarStyle}
-                  handleSearch={handleSearch}
-                  onSearch={searchItems}
+                {filteredDateItems ? null : (
+                  <SearchBar
+                    searchBarStyle={searchBarStyle}
+                    onSearch={handleSearch}
+                  />
+                )}
+              </div>
+            )}
+            {type !== "Lite" && (
+              <div className="tfootPaginationWrapper">
+                <Pagination
+                  pageCount={
+                    filteredItems
+                      ? Math.ceil(filteredItems.length / itemsPerPage)
+                      : 0
+                  }
+                  onPageChange={changePage}
                 />
               </div>
             )}
-            <div className="tfootPaginationWrapper">
-              <Pagination
-                pageCount={
-                  filteredItems
-                    ? Math.ceil(filteredItems.length / itemsPerPage)
-                    : 0
-                }
-                onPageChange={changePage}
-              />
-            </div>
           </div>
         </tfoot>
       </table>

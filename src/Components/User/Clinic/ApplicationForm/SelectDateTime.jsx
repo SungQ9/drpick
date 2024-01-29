@@ -63,7 +63,10 @@ const SelectDateTime = () => {
           borderBottom: '30px',
         }}
         onClick={() => {
-          console.log('Selected Date:', selectedDate);
+          console.log(
+            'Selected Date:',
+            selectedDate.toISOString().split('T')[0],
+          );
           navigate('/clinic/application');
         }}
       >

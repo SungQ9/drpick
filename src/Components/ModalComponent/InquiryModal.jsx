@@ -120,10 +120,11 @@ const InquiryModal = ({ onClose, item = {} }) => {
         formData,
         config,
       );
-      console.log(res.data);
+      
       const message = res.data.body.message;
       alert(message);
       onClose();
+      
     } catch (error) {
       console.log(error.response);
       if (error.response) {

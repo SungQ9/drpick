@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/esm/locale";
 import SearchBar from "../SearchBar";
 
-const SearchDate = ({ type, onSearch }) => {
+const SearchDate = ({ type, onSearch, searchValue }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
-  // 날짜를 'YYYY-MM-DD' 형식의 문자열로 변환하는 함수
   const formatDateForDB = (date) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -20,19 +19,18 @@ const SearchDate = ({ type, onSearch }) => {
   const formattedEndDate = formatDateForDB(endDate);
 
   const handleSearch = (searchValue) => {
-    // 검색 로직을 수행
-    console.log("검색어:", searchValue);
-
-    // 검색어만 전달
+    // 필터링된 결과를 부모 컴포넌트로 전달
     if (onSearch) {
-      onSearch(searchValue);
+      onSearch(searchValue, formattedStartDate, formattedEndDate);
     }
   };
 
   const nowDateClick = () => {
     setStartDate(new Date());
     setEndDate(new Date());
+    handleSearch(searchValue, startDate, endDate); // 검색어가 없는 상태로 전체 데이터 검색
   };
+
   const monthDateClick = () => {
     const today = new Date();
     const newDay = new Date();
@@ -40,6 +38,23 @@ const SearchDate = ({ type, onSearch }) => {
 
     setStartDate(newDay);
     setEndDate(today);
+    handleSearch(searchValue, newDay, today); // 검색어가 없는 상태로 전체 데이터 검색
+  };
+
+  useEffect(() => {
+    console.log("SearchDate에서 ", startDate, "~", endDate);
+    console.log("날짜만 추출 ", formattedStartDate, formattedEndDate);
+  }, [startDate, endDate]);
+
+  const handleDateChange = (date, type) => {
+    if (type === "start") {
+      setStartDate(date);
+    } else {
+      setEndDate(date);
+    }
+
+    // DatePicker 값이 변경되면 검색 수행
+    handleSearch(searchValue, startDate, endDate);
   };
 
   return (
@@ -54,7 +69,7 @@ const SearchDate = ({ type, onSearch }) => {
           dateFormat="yyyy년 MM월 dd일"
           locale={ko}
           selected={startDate}
-          onChange={(date) => setStartDate(date)}
+          onChange={(date) => handleDateChange(date, "start")}
           selectsStart
           startDate={startDate}
           endDate={endDate}
@@ -64,7 +79,7 @@ const SearchDate = ({ type, onSearch }) => {
           dateFormat="yyyy년 MM월 dd일"
           locale={ko}
           selected={endDate}
-          onChange={(date) => setEndDate(date)}
+          onChange={(date) => handleDateChange(date, "end")}
           selectsEnd
           startDate={startDate}
           endDate={endDate}
@@ -77,13 +92,11 @@ const SearchDate = ({ type, onSearch }) => {
           최근1개월
         </button>
         <SearchBar
-          type={type}
-          props={[formattedStartDate, formattedEndDate]}
+          type={"Date"}
           onSearch={handleSearch}
+          startDate={formattedStartDate}
+          endDate={formattedEndDate}
         />
-        {/* <button className='clinicSubBtn-short' onClick={handleSearch}>
-          검색
-        </button> */}
       </div>
     </div>
   );
