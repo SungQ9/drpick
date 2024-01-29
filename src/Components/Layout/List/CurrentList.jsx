@@ -44,23 +44,6 @@ const CurrentList = ({
     filteredDateItems ? items : null
   );
 
-  // 검색어 필터링 함수
-  const searchItems = (searchValue) => {
-    setSearchInput(searchValue);
-    console.log("검색어 : " + searchValue);
-
-    // 검색어에 따라 필터링된 결과 업데이트
-    const newFilteredItems = items.filter((item) =>
-      headers.some(
-        (header) =>
-          item[header.value] &&
-          typeof item[header.value] === "string" &&
-          item[header.value].includes(searchValue)
-      )
-    );
-    setFilteredItems(newFilteredItems);
-  };
-
   // 검색 결과가 변경될 때마다 페이지 번호 초기화
   useEffect(() => {
     setPageNumber(0);
@@ -167,18 +150,12 @@ const CurrentList = ({
                 )}
               </div>
             )}
-            {type !== "Lite" && (
-              <div className="tfootPaginationWrapper">
-                <Pagination
-                  pageCount={
-                    filteredItems
-                      ? Math.ceil(filteredItems.length / itemsPerPage)
-                      : 0
-                  }
-                  onPageChange={changePage}
-                />
-              </div>
-            )}
+            <div className="tfootPaginationWrapper">
+              <Pagination
+                pageCount={items ? Math.ceil(items.length / itemsPerPage) : 0}
+                onPageChange={changePage}
+              />
+            </div>
           </div>
         </tfoot>
       </table>
