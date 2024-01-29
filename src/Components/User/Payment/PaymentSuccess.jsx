@@ -10,24 +10,11 @@ export function PaymentSuccess() {
   const [paymentInfo, setPaymentInfo] = useState(null);
   const { token, userAuth } = useTokenContext();
 
-  const queryParams = {};
-  searchParams.forEach((value, key) => {
-    queryParams[key] = value;
-  });
-
   useEffect(() => {
-    const orderId = queryParams["orderId"];
-    const paymentId = queryParams["paymentId"];
-    if (!orderId && paymentId) {
-      setPaymentInfo({ message: "포인트로 결제" });
-      return;
-    }
-
     const requestData = {
-      orderId: orderId,
-      amount: queryParams["amount"],
-      paymentKey: queryParams["paymentKey"],
-      paymentId: paymentId,
+      orderId: searchParams.get("orderId"),
+      amount: searchParams.get("amount"),
+      paymentKey: searchParams.get("paymentKey"),
     };
 
     const secretKey = "test_sk_QbgMGZzorz5A4kmB9dElVl5E1em4";
@@ -59,22 +46,6 @@ export function PaymentSuccess() {
         };
         setPaymentInfo(updatedPaymentInfo);
 
-
-        let transType = "POINT"; // 아래 해당하는 결재방식이 없으면 포인트 결재로 간주
-
-        if (
-          (updatedPaymentInfo.card && updatedPaymentInfo.card.cardType) ||
-          (updatedPaymentInfo.virtualAccount && updatedPaymentInfo.virtualAccount.accountType) ||
-          (updatedPaymentInfo.easyPay && updatedPaymentInfo.easyPay.provider) ||
-          (updatedPaymentInfo.giftCertificate && updatedPaymentInfo.giftCertificate.approveNo) ||
-          (updatedPaymentInfo.mobilePhone && updatedPaymentInfo.mobilePhone.settlementStatus) ||
-          (updatedPaymentInfo.transfer && updatedPaymentInfo.transfer.settlementStatus)
-        ) {
-          transType = "CASH";
-        } else if (updatedPaymentInfo.card && updatedPaymentInfo.card.cardType) {
-          transType = "CARD";
-        }
-        
         //transanctionType 넣는 값 나중에 변동
         await axios.put(
           "http://localhost:8080/payments/completePayment",
@@ -84,8 +55,8 @@ export function PaymentSuccess() {
               Authorization: `Bearer ${token}`,
             },
             params: {
-              paymentId: queryParams["paymentId"],
-              transactionType: transType,
+              paymentId: searchParams["paymentId"],
+              transactionType: "Point",
             },
           }
         )

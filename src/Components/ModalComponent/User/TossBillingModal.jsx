@@ -17,14 +17,13 @@ export function TossBillingModal() {
           .requestBillingAuth("카드", {
             customerKey: customerKey,
             successUrl: window.location.origin + "/payment/billingRecord",
-            failUrl: window.location.origin + "/payment/billingFailure",
+            failUrl: window.location.origin + "/payment/Failure",
           })
           .catch(function (error) {
           });
       })
       .catch((error) => {
-
-        console.error("Error:", error);
+        console.error("에러:", error);
       });
   }, []);
 

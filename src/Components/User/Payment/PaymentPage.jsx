@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useModalContext } from "../../Context/ModalContext";
 import TossPaymentModal from "../../ModalComponent/User/TossPaymentModal";
 import TossBillingModal from "../../ModalComponent/User/TossBillingModal";
 
+//추후 삭제
 function PaymentPage() {
   const modalContext = useModalContext();
+  const navigate = useNavigate();
+  const amount = 1000;
 
   // 토스 페이먼츠 모달 호출
   const openTossPaymentModal = () => {
@@ -21,16 +24,16 @@ function PaymentPage() {
     modalContext.openModal(tossBillingModalContent, "자동결제");
   };
 
-  useEffect(() => {}, []);
+  const handleAutomaticPayment = () => {
+    navigate("/payment/billingCharge", { state: { amount } });
+  };
 
   return (
     <div className="payment-container">
       <h1>결제 페이지</h1>
       <button onClick={openTossPaymentModal}>결제하기</button>
       <button onClick={openTossBillingModal}>자동결제 등록</button>
-      <Link to="/payment/billingCharge?totalPrice=1000">
-        <button>자동결제 진행</button>
-      </Link>
+      <button onClick={handleAutomaticPayment}>자동결제 진행</button>
     </div>
   );
 }
