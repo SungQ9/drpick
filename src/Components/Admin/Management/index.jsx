@@ -6,7 +6,6 @@ import headers from "../../SampleData/Headers";
 import ListTitle from "../../Layout/List/ListTitle";
 import List from "../../Layout/List";
 import Loading from "../../User/ImageSearch/Loading";
-import { response } from "express";
 
 const InquiryManage = () => {
   const location = useLocation();
