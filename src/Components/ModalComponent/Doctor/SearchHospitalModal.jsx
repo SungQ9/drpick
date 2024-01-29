@@ -9,7 +9,7 @@ const SearchHospitalModal = ({ onHospitalSelect }) => {
   const [hospitals, setHospitals] = useState([]); // 전체 병원 목록
   const [loading, setLoading] = useState(false);
   const { token } = useTokenContext();
-  const { searchKeyword } = useModalContext(); // ModalContext에서 검색 키워드 가져오기
+  const { searchKeyword, setSearchKeyword } = useModalContext(); // ModalContext에서 검색 키워드 가져오기
   const { closeModal } = useModalContext();
 
   // 병원 클릭 핸들러
@@ -51,6 +51,7 @@ const SearchHospitalModal = ({ onHospitalSelect }) => {
       </div>
     );
   }
+
   // 검색 키워드에 따라 병원 데이터를 필터링
   const filteredHospitals = hospitals.filter((hospital) =>
     hospital.hospitalName.toLowerCase().includes(searchKeyword.toLowerCase()),

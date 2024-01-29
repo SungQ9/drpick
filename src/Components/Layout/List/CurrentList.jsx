@@ -9,6 +9,7 @@ import MemberProfileEditModal from '../../ModalComponent/Admin/MemberProfileEdit
 import DoctorProfileEditModal from '../../ModalComponent/Admin/DoctorProfileEditModal';
 import HospitalEditModal from '../../ModalComponent/Admin/HospitalEditModal';
 import DrugstoreEditModal from '../../ModalComponent/Admin/DrugstoreEditModal';
+import DoctorRequestModal from '../../ModalComponent/Admin/DoctorRequestModal';
 
 const CurrentList = ({
   headers,
@@ -49,6 +50,8 @@ const CurrentList = ({
       );
     } else if (buttonName === '추가') {
       openModal(<InquiryModal item={item} />, '추가');
+    } else if (listbutton === '상세보기') {
+      openModal(<DoctorRequestModal item={item} />, '요청 상세보기');
     }
   };
 

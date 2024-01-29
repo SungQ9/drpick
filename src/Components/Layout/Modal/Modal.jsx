@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../../css/Modal.css';
 import SearchBar from '../../Layout/SearchBar/index';
+import { useModalContext } from '../../Context/ModalContext';
 
 const Modal = ({ Name, children, isOpen, onClose, type }) => {
   if (!isOpen) return null;
