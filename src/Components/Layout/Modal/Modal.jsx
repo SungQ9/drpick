@@ -4,7 +4,6 @@ import SearchBar from "../../Layout/SearchBar/index";
 
 const Modal = ({ Name, children, isOpen, onClose, type }) => {
   const [searchValue, setSearchValue] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
 
   if (!isOpen) return null;
 
