@@ -4,7 +4,9 @@ const Select = ({ id, options, onChange, value, style, disabled }) => {
   return (
     <select
       id={id}
-      onChange={onChange}
+      onChange={(e) =>
+        onChange(options.find((option) => option.value === e.target.value))
+      }
       value={value}
       style={style}
       disabled={disabled}

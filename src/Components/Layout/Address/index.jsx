@@ -3,16 +3,24 @@ import Input from '../Input';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { postcodeScriptUrl } from 'react-daum-postcode/lib/loadPostcode';
 
-const Address = ({ onAddressSelect, address, itemAddr, itemAddrDetail }) => {
+const Address = ({
+  onAddressSelect,
+  address,
+  itemAddr,
+  itemAddrDetail,
+  itemAddrSubdetail,
+}) => {
   const [mainAddress, setMainAddress] = useState(itemAddr || '');
   const [detailAddress, setDetailAddress] = useState(itemAddrDetail || '');
-  const [subDetailAddress, setSubDetailAddress] = useState('');
+  const [subdetailAddress, setSubdetailAddress] = useState(
+    itemAddrSubdetail || '',
+  );
 
   useEffect(() => {
     if (address) {
       setMainAddress(address.main || '');
       setDetailAddress(address.detail || '');
-      setSubDetailAddress(address.subdetail || '');
+      setSubdetailAddress(address.subdetail || '');
     }
   }, [address]);
 
@@ -40,13 +48,13 @@ const Address = ({ onAddressSelect, address, itemAddr, itemAddrDetail }) => {
       // detailAddress를 extraAddress로 설정
       setDetailAddress(extraAddress);
 
-      setSubDetailAddress('');
+      setSubdetailAddress('');
 
       // 상위 컴포넌트에 주소 데이터 전달
       onAddressSelect({
         main: combinedMainAddress,
         detail: extraAddress,
-        subdetail: subDetailAddress,
+        subdetail: subdetailAddress,
       });
     }
   };
@@ -57,7 +65,7 @@ const Address = ({ onAddressSelect, address, itemAddr, itemAddrDetail }) => {
 
   const handleSubDetailChange = (e) => {
     const newSubDetailAddress = e.target.value;
-    setSubDetailAddress(newSubDetailAddress);
+    setSubdetailAddress(newSubDetailAddress);
 
     // 상위 컴포넌트에 새로운 subDetailAddress 전달
     onAddressSelect({
@@ -109,7 +117,7 @@ const Address = ({ onAddressSelect, address, itemAddr, itemAddrDetail }) => {
               textIndent: '0px',
             }}
             placeholder='나머지 주소를 입력해주세요'
-            value={subDetailAddress}
+            value={subdetailAddress}
             onChange={handleSubDetailChange}
           />
         </td>

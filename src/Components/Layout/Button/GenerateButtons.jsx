@@ -3,6 +3,7 @@ import React from 'react';
 import { useModalContext } from '../../Context/ModalContext';
 import { useNavigate } from 'react-router-dom';
 import ImgModal from '../../ModalComponent/User/ImgModal';
+import InquiryAnswerModal from '../../ModalComponent/Admin/InquiryAnswerModal';
 
 const GenerateButtons = ({ status, item = {} }) => {
   const { openModal } = useModalContext();
@@ -52,7 +53,9 @@ const GenerateButtons = ({ status, item = {} }) => {
       return (
         <button
           className='clinicSubBtn-mid'
-          onClick={() => handleOpenModal()}
+          onClick={() =>
+            handleOpenModal(<InquiryAnswerModal item={item} />, '문의')
+          }
           style={{ background: '#11c2ad' }}
         >
           답변대기

@@ -7,8 +7,11 @@ import SearchHospitalModal from '../Doctor/SearchHospitalModal';
 import WorkTime from '../../Layout/List/ProfileEditList/WorkTime';
 
 const DoctorProfileEdit = ({ onClose, item = {} }) => {
-  const [hospitalName, setHospitalName] = useState('');
-  const [selectedName, setSelectedName] = useState('');
+  const [hospitalName, setHospitalName] = useState(item.hospitalName || '');
+  const [selectedSubject, setSelectedSubject] = useState(
+    item.doctorSubject || '',
+  );
+  const [selectedName, setSelectedName] = useState(item.doctorName || '');
 
   const { openModal } = useModalContext();
 
@@ -17,6 +20,11 @@ const DoctorProfileEdit = ({ onClose, item = {} }) => {
   };
   const handleHospitalSelect = (selectedName) => {
     setHospitalName(selectedName);
+  };
+
+  const handleSubjectChange = (selectedOption) => {
+    console.log('handleSubjectChange', selectedOption);
+    setSelectedSubject(selectedOption.value);
   };
 
   return (
@@ -39,8 +47,10 @@ const DoctorProfileEdit = ({ onClose, item = {} }) => {
               type='text'
               placeholder='이름을 입력하세요'
               style={{ width: '580px', height: '40px' }}
-              value={selectedName.trim()}
-              onChange={(e) => setSelectedName(e.target.value)}
+              value={selectedName}
+              onChange={(e) => {
+                setSelectedName(e.target.value);
+              }}
             />
           </td>
         </tr>
@@ -51,8 +61,7 @@ const DoctorProfileEdit = ({ onClose, item = {} }) => {
               className='member_name'
               label='진료과목'
               type='text'
-              placeholder='이름을 입력하세요'
-              value={selectedName.trim()}
+              value={selectedSubject}
               style={{ height: '40px' }}
             />
           </td>
@@ -75,6 +84,7 @@ const DoctorProfileEdit = ({ onClose, item = {} }) => {
                 { value: '치과', label: '치과' },
               ]}
               style={{ width: '100%', height: '45px' }}
+              onChange={handleSubjectChange}
             />
           </td>
         </tr>
@@ -118,7 +128,7 @@ const DoctorProfileEdit = ({ onClose, item = {} }) => {
               className='member_name'
               label='전공'
               type='text'
-              placeholder='이름을 입력하세요'
+              value={item.doctorSubject}
               style={{ width: '580px', height: '40px' }}
             />
           </td>

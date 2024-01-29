@@ -6,6 +6,9 @@ import { useModalContext } from '../../Context/ModalContext';
 import InquiryModal from '../../ModalComponent/InquiryModal';
 import Pagination from './Pagination';
 import MemberProfileEditModal from '../../ModalComponent/Admin/MemberProfileEditModal';
+import DoctorProfileEditModal from '../../ModalComponent/Admin/DoctorProfileEditModal';
+import HospitalEditModal from '../../ModalComponent/Admin/HospitalEditModal';
+import DrugstoreEditModal from '../../ModalComponent/Admin/DrugstoreEditModal';
 
 const CurrentList = ({
   headers,
@@ -17,6 +20,7 @@ const CurrentList = ({
   buttonType,
   buttonName,
   listbutton,
+  listType,
   handleSearch,
   filteredDateItems,
 }) => {
@@ -26,10 +30,23 @@ const CurrentList = ({
   const { openModal } = useModalContext();
 
   const handleButtonClick = (item, listbutton) => {
+    console.log(buttonName, '클릭', listbutton, listType);
     if (buttonName === '작성') {
       openModal(<InquiryModal item={item} />, '1:1문의');
-    } else if (listbutton === '수정') {
-      openModal(<MemberProfileEditModal item={item} />, '수정');
+    } else if (listbutton === '수정' && listType === 'user') {
+      openModal(<MemberProfileEditModal item={item} />, '회원정보수정');
+    } else if (listbutton === '수정' && listType === 'doctor') {
+      openModal(<DoctorProfileEditModal item={item} />, '의사정보수정');
+    } else if (listbutton === '수정' && listType === 'hospital') {
+      openModal(
+        <HospitalEditModal item={item} type={'modify'} />,
+        '병원정보수정',
+      );
+    } else if (listbutton === '수정' && listType === 'drugstore') {
+      openModal(
+        <DrugstoreEditModal item={item} type={'modify'} />,
+        '약국정보수정',
+      );
     } else if (buttonName === '추가') {
       openModal(<InquiryModal item={item} />, '추가');
     }
