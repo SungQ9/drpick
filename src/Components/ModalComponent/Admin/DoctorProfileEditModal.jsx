@@ -23,8 +23,7 @@ const DoctorProfileEdit = ({ onClose, item = {} }) => {
   };
 
   const handleSubjectChange = (selectedOption) => {
-    console.log('handleSubjectChange', selectedOption);
-    setSelectedSubject(selectedOption.value);
+    setSelectedSubject(selectedOption);
   };
 
   return (
@@ -84,7 +83,7 @@ const DoctorProfileEdit = ({ onClose, item = {} }) => {
                 { value: '치과', label: '치과' },
               ]}
               style={{ width: '100%', height: '45px' }}
-              onChange={handleSubjectChange}
+              onChange={(e) => handleSubjectChange(e.target.value)}
             />
           </td>
         </tr>
