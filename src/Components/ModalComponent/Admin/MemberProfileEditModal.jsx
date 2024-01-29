@@ -13,7 +13,7 @@ const MemberProfileEdit = ({ onClose, item = {} }) => {
     detail: "",
     subdetail: "",
   });
-  const [memberId, setMemberId] = useState("");
+  const [memberId, setMemberId] = useState(item.memberId);
   const [memberBirth, setMemberBirth] = useState(item.memberBirth);
   const [memberName, setMemberName] = useState(item.memberName);
   const [memberEmail, setMemberEmail] = useState(item.memberEmail);
@@ -34,9 +34,10 @@ const MemberProfileEdit = ({ onClose, item = {} }) => {
   };
 
   const data = {
+    memberId: memberId,
     memberName: memberName,
     memberEmail: memberEmail,
-    memberPwd: memberPwd,
+    memberPwd: memberPwd === "" ? "" : memberPwd,
     memberTel: memberTel,
     memberAddrMain: address.main,
     memberAddrDetail: address.detail,
@@ -45,13 +46,20 @@ const MemberProfileEdit = ({ onClose, item = {} }) => {
 
   const updateMemberInfo = async () => {
     try {
-      const response = await axios.post(
+      const res = await axios.post(
         "http://localhost:8080/members/updateMemberInfo",
         data,
         config
       );
 
-      console.log("수정될 정보 : ", data);
+      const message = res.data.body.message;
+
+      if (res.data.body) {
+        alert(message);
+        return;
+      }
+
+      console.log("수정된 정보 : ", data);
     } catch (error) {
       console.error(error);
     }
@@ -70,6 +78,21 @@ const MemberProfileEdit = ({ onClose, item = {} }) => {
         <tr>
           <td colSpan={2}>
             <Input
+              id="email"
+              className="member_email"
+              label="이메일"
+              type="text"
+              disabled="disabled"
+              placeholder="　이메일형식"
+              style={{ width: "500px" }}
+              value={memberEmail}
+              onChange={(e) => setMemberEmail(e.target.value)}
+            />
+          </td>
+        </tr>
+        <tr>
+          <td colSpan={2}>
+            <Input
               id="name"
               className="member_name"
               label="이름"
@@ -84,20 +107,6 @@ const MemberProfileEdit = ({ onClose, item = {} }) => {
         <tr>
           <td colSpan={2}>
             <Input
-              id="email"
-              className="member_email"
-              label="이메일"
-              type="text"
-              placeholder="　이메일형식"
-              style={{ width: "500px" }}
-              value={memberEmail}
-              onChange={(e) => setMemberEmail(e.target.value)}
-            />
-          </td>
-        </tr>
-        <tr>
-          <td colSpan={2}>
-            <Input
               id="pwd"
               className="member_pwd"
               label="비밀번호"
@@ -106,6 +115,7 @@ const MemberProfileEdit = ({ onClose, item = {} }) => {
               placeholder="　영어,숫자,특수문자를 포함한 8~20자 "
               minLength={8}
               maxLength={20}
+              value={memberPwd}
               onChange={(e) => setMemberPwd(e.target.value)}
             />
           </td>
