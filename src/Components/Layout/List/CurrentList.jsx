@@ -5,6 +5,7 @@ import Button from "../Button";
 import { useModalContext } from "../../Context/ModalContext";
 import InquiryModal from "../../ModalComponent/InquiryModal";
 import Pagination from "./Pagination";
+import MemberProfileEdit from "../../ModalComponent/Admin/MemberProfileEditModal";
 
 const CurrentList = ({
   headers,
@@ -28,7 +29,7 @@ const CurrentList = ({
     if (buttonName === "작성") {
       openModal(<InquiryModal item={item} />, "1:1문의");
     } else if (listbutton === "수정") {
-      openModal(<InquiryModal item={item} />, "수정하기");
+      openModal(<MemberProfileEdit item={item} />, "수정");
     } else if (buttonName === "추가") {
       openModal(<InquiryModal item={item} />, "추가");
     }

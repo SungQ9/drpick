@@ -3,11 +3,10 @@ import { loadPaymentWidget, ANONYMOUS } from "@tosspayments/payment-widget-sdk";
 
 const generateRandomString = () => window.btoa(Math.random()).slice(0, 20);
 
-export function TossPaymentModal() {
+export function TossPaymentModal({amount, orderName}) {
   const paymentWidgetRef = useRef(null);
   const paymentMethodsWidgetRef = useRef(null);
   const agreementWidgetRef = useRef(null);
-  const [price, setPrice] = useState(1000);
 
   useEffect(() => {
     (async () => {
@@ -19,7 +18,7 @@ export function TossPaymentModal() {
 
       const paymentMethodsWidget = paymentWidgetRef.current.renderPaymentMethods(
         "#payment-method",
-        { value: price },
+        { value: amount },
         { variantKey: "DEFAULT" }
       );
       
@@ -27,24 +26,20 @@ export function TossPaymentModal() {
 
       paymentMethodsWidgetRef.current = paymentMethodsWidget;
     })();
-  }, []);
+  }, [amount]);
 
   //결제요청
   const handlePaymentClick = async () => {
     const paymentWidget = paymentWidgetRef.current;
 
     try {
-      /**
-       * 결제 요청
-       * @docs https://docs.tosspayments.com/reference/widget-sdk#requestpayment%EA%B2%B0%EC%A0%9C-%EC%A0%95%EB%B3%B4
-       */
       await paymentWidget?.requestPayment({
         orderId: generateRandomString(),
-        orderName: "토스 티셔츠 외 2건",
-        customerName: "김토스",
-        customerEmail: "customer123@gmail.com",
-        successUrl: window.location.origin + "/payment/paymentSuccess?paymentId=1", //paymentId파라메타는 추후 payment_id값을 받아서 1과 교체
-        failUrl: window.location.origin + "/payment/paymentFailure"
+        orderName: orderName,
+        customerName: localStorage.getItem("userName"),
+        customerEmail: localStorage.getItem("userEmail"),
+        successUrl: window.location.origin + "/payment/chargePoint", 
+        failUrl: window.location.origin + "/payment/Failure"
       });
     } catch (error) {
       // TODO: 에러 처리

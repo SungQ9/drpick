@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useTokenContext } from "../../Context/TokenContext";
+import { useNavigate } from "react-router-dom";
 
+// 자동결제 카드 등록
 function BillingRecord() {
   const urlParams = new URLSearchParams(window.location.search);
   const customerKey = urlParams.get("customerKey");
   const authKey = urlParams.get("authKey");
   const { token, userAuth } = useTokenContext();
+  const navigate = useNavigate();
 
   const [displayedCustomerKey, setDisplayedCustomerKey] = useState(customerKey);
   const [displayedAuthKey, setDisplayedAuthKey] = useState(authKey);
@@ -32,24 +35,26 @@ function BillingRecord() {
       },
     };
 
-
     //빌링키 DB에 저장
     axios
       .request(axiosOptions)
       .then(function (response) {
-        const billingKey = response.data.billingKey;
-        const customerKey = response.data.customerKey;
-        console.log("키: ", billingKey, customerKey);
-        axios.put("http://localhost:8080/payments/recordBillingKey", null, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          params: {
-            billingKey: billingKey,
-            customerKey: customerKey,
+        axios.put(
+          "http://localhost:8080/payments/recordBillingKey",
+          {
+            billingKey: response.data.billingKey,
+            customerKey: response.data.customerKey,
+            memberCreditNum: response.data.card.number,
             memberId: localStorage.getItem("userId"),
+            cardType: response.data.card.cardType,
+            issuerCode: response.data.card.issuerCode,
           },
-        });
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
       })
       .catch(function (error) {
         console.error(error);
@@ -59,6 +64,13 @@ function BillingRecord() {
   return (
     <div className="billing-success-container">
       <h1>자동결제 카드 등록 성공</h1>
+      <button
+        onClick={() => {
+          navigate("/user/payment");
+        }}
+      >
+        등록된 카드 확인
+      </button>
     </div>
   );
 }
