@@ -3,9 +3,10 @@ import Input from '../Input';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { postcodeScriptUrl } from 'react-daum-postcode/lib/loadPostcode';
 
-const Adress = ({ onAddressSelect }) => {
+const Address = ({ onAddressSelect }) => {
   const [mainAddress, setMainAddress] = useState('');
   const [detailAddress, setDetailAddress] = useState('');
+  const [subDetailAddress, setSubDetailAddress] = useState('');
 
   const open = useDaumPostcodePopup(postcodeScriptUrl);
 
@@ -32,7 +33,11 @@ const Adress = ({ onAddressSelect }) => {
       setDetailAddress(extraAddress);
 
       // 상위 컴포넌트에 주소 데이터 전달
-      onAddressSelect({ main: combinedMainAddress, detail: extraAddress });
+      onAddressSelect({
+        main: combinedMainAddress,
+        detail: extraAddress,
+        subdetail: subDetailAddress,
+      });
       console.log(
         '메인주소 :',
         combinedMainAddress,
@@ -73,10 +78,23 @@ const Adress = ({ onAddressSelect }) => {
             className='member_addr_detail'
             type='text'
             label='상세주소'
-            style={{ width: '500px' }}
-            placeholder='나머지 주소를 입력해주세요'
+            style={{ width: '240px' }}
             value={detailAddress}
-            onChange={(e) => setDetailAddress(e.target.value)}
+          />
+          <input
+            id='addr_detail'
+            className='member_addr_detail'
+            type='text'
+            label='상세주소'
+            style={{
+              width: '240px',
+              marginLeft: '10px',
+              textAlign: 'center',
+              textIndent: '0px',
+            }}
+            placeholder='나머지 주소를 입력해주세요'
+            value={subDetailAddress}
+            onChange={(e) => setSubDetailAddress(e.target.value)}
           />
         </td>
       </tr>
@@ -84,4 +102,4 @@ const Adress = ({ onAddressSelect }) => {
   );
 };
 
-export default Adress;
+export default Address;

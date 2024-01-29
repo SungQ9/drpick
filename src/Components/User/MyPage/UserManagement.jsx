@@ -5,6 +5,7 @@ import axios from 'axios';
 import headers from '../../SampleData/Headers';
 import List from '../../Layout/List';
 import ListTitle from '../../Layout/List/ListTitle';
+import Loading from '../../User/ImageSearch/Loading';
 
 const UserManagement = () => {
   const location = useLocation();
@@ -27,7 +28,7 @@ const UserManagement = () => {
     params: {
       userEmail: userEmail,
       userAuth: userAuth,
-      memberId: userId
+      memberId: userId,
     },
   };
 
@@ -46,8 +47,6 @@ const UserManagement = () => {
             setTitle('진료내역조회');
             break;
           case 'inquiry':
-            alert(userEmail)
-            alert(userAuth)
             var response = await axios.get(
               'http://localhost:8080/members/currentHistory',
               config,
@@ -78,7 +77,11 @@ const UserManagement = () => {
   }, [selectedType, token]);
 
   if (isLoading) {
-    return <div>로딩 중...</div>;
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   }
 
   return (

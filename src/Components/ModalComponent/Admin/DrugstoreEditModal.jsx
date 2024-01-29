@@ -1,7 +1,7 @@
 // 약국 추가,수정 모달
 import React, { useState, useEffect } from 'react';
 import Input from '../../Layout/Input';
-import Adress from '../../Layout/Adress';
+import Address from '../../Layout/Address';
 import WorkTime from '../../Layout/List/ProfileEditList/WorkTime';
 
 // data = PK ( 넘어온 PK로 해당 컴포넌트에서 데이터 조회 )
@@ -31,7 +31,11 @@ const DrugstoreEditModal = ({ onClose, type, item = {} }) => {
         alignItems: 'center',
       }}
     >
-      <table id='signUpInputForm' className='signUpTable'>
+      <table
+        id='signUpInputForm'
+        className='signUpTable'
+        style={{ width: '600px' }}
+      >
         <tr>
           <td colSpan={2}>
             <Input
@@ -59,8 +63,8 @@ const DrugstoreEditModal = ({ onClose, type, item = {} }) => {
           </td>
         </tr>
         <tr>
-          <td colSpan={2}>
-            <Adress onAddressSelect={handleAddressSelect} />
+          <td colSpan={2} style={{ width: '510px' }}>
+            <Address onAddressSelect={handleAddressSelect} />
           </td>
         </tr>
       </table>

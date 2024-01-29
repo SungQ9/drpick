@@ -41,7 +41,6 @@ const ApplicationForm = () => {
   const renderFileList = () => {
     // selectedFileName이 배열인지 확인
     if (!Array.isArray(selectedFileName)) {
-      console.log('배열확인');
       return null; // 또는 다른 적절한 처리를 추가하세요.
     }
 
@@ -57,17 +56,24 @@ const ApplicationForm = () => {
 
   // 입력받은 주민등록번호 뒷자리 contex에 저장
   const handleResiNumChange = (evt) => {
-    clinicContext.writeResidentNumber = evt.target.value; // 수정된 부분
-    console.log(evt.value);
+    clinicContext.setClinicState((prev) => ({
+      ...prev,
+      writeResidentNumber: evt.target.value,
+    }));
   };
   // 입력받은 증상  contex에 저장
   const handleSymptomChange = (evt) => {
-    clinicContext.writeSymptom = evt.target.value;
-    console.log(evt.value);
+    clinicContext.setClinicState((prev) => ({
+      ...prev,
+      writeSymptom: evt.target.value,
+    }));
   };
 
   const handleNextBtn = () => {
-    clinicContext.uploadedFiles = selectedFileName;
+    clinicContext.setClinicState((prev) => ({
+      ...prev,
+      uploadedFiles: selectedFileName,
+    }));
     navigate('/clinic/payment');
   };
 

@@ -3,18 +3,23 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Input from '../Layout/Input';
 import Select from '../Layout/Select';
-import Adress from '../Layout/Adress';
+import Address from '../Layout/Address';
 import '../../css/UserStyle.css';
 import '../../css/Style.css';
 
 const SignUp = () => {
   const navigate = useNavigate();
   const getElementValue = (id) => document.getElementById(id).value;
-  const getCheckedValue = (className) => document.querySelector(`.${className}:checked`).value;
+  const getCheckedValue = (className) =>
+    document.querySelector(`.${className}:checked`).value;
   const [selectedFileName, setSelectedFileName] = useState('');
   const [selectedName, setSelectedName] = useState('');
   const [selectedOption, setSelectedOption] = useState('');
-  const [address, setAddress] = useState({ main: '', detail: '' });
+  const [address, setAddress] = useState({
+    main: '',
+    detail: '',
+    subdetail: '',
+  });
   const [emailKey, setEmailKey] = useState('');
   const formData = new FormData();
 
@@ -60,63 +65,63 @@ const SignUp = () => {
 
   // 파일 업로드 핸들러
   const handleFileInputChange = (event) => {
-    const fileInput = event.target
-    const newFiles = Array.from(fileInput.files)
-  
-    const totalFiles = selectedFileName.length + newFiles.length
-  
+    const fileInput = event.target;
+    const newFiles = Array.from(fileInput.files);
+
+    const totalFiles = selectedFileName.length + newFiles.length;
+
     if (totalFiles > 3) {
-      alert('파일은 3개까지 올릴 수 있습니다.')
-      return
+      alert('파일은 3개까지 올릴 수 있습니다.');
+      return;
     }
-  
-    setSelectedFileName((prevFiles) => [...prevFiles, ...newFiles])
-  }
+
+    setSelectedFileName((prevFiles) => [...prevFiles, ...newFiles]);
+  };
 
   // 업로드 파일 삭제 핸들러
   const handleDeleteFile = (index) => {
     setSelectedFileName((prevFiles) =>
-      prevFiles.filter((prevFile, i) => i !== index)
-    )
-  
+      prevFiles.filter((prevFile, i) => i !== index),
+    );
+
     // formData에서 삭제
-    formData.delete(`fileList[${index}]`)
-  }
+    formData.delete(`fileList[${index}]`);
+  };
 
   // 업로드 버튼 핸들러
   const handleFileBtnClick = () => {
-    const fileInput = document.getElementById('selectedFile')
+    const fileInput = document.getElementById('selectedFile');
     if (fileInput) {
-      fileInput.click()
+      fileInput.click();
     }
-  }
+  };
 
   // 파일다중선택 return
   const renderFileList = () => {
     if (!Array.isArray(selectedFileName)) {
-      return null
+      return null;
     }
 
     return selectedFileName.map((file, index) => (
-        <p
-          className='uploadFileList'
-          key={index}  // 수정: file.id가 아니라 index를 사용
-          style={{ width: '100px', margin: '0px' }}
+      <p
+        className='uploadFileList'
+        key={index} // 수정: file.id가 아니라 index를 사용
+        style={{ width: '100px', margin: '0px' }}
+      >
+        <span
+          style={{
+            fontSize: '12px',
+            marginRight: '5px',
+            width: '100px',
+            height: '20px',
+          }}
         >
-          <span
-            style={{
-              fontSize: '12px',
-              marginRight: '5px',
-              width: '100px',
-              height: '20px',
-            }}
-          >
-            {file.name}
-          </span>
-          <p onClick={() => handleDeleteFile(index)}>X</p>
-        </p>
-      ))
-    }
+          {file.name}
+        </span>
+        <p onClick={() => handleDeleteFile(index)}>X</p>
+      </p>
+    ));
+  };
 
   // 주소
   const handleAddressSelect = (selectedAddress) => {
@@ -353,7 +358,7 @@ const SignUp = () => {
               </tr>
               <tr>
                 <td colSpan={2}>
-                  <Adress onAddressSelect={handleAddressSelect} />
+                  <Address onAddressSelect={handleAddressSelect} />
                 </td>
               </tr>
               <tr>

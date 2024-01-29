@@ -1,7 +1,7 @@
 // 병원 추가,수정 모달
 import React, { useState, useEffect } from 'react';
 import Input from '../../Layout/Input';
-import Adress from '../../Layout/Adress';
+import Address from '../../Layout/Address';
 
 // data = PK ( 넘어온 PK로 해당 컴포넌트에서 데이터 조회 )
 // type = 추가인지 수정인지 (수정일때만 type='modify')
@@ -58,8 +58,8 @@ const HospitalEditModal = ({ onClose, type, item = {} }) => {
           </td>
         </tr>
         <tr>
-          <td colSpan={2}>
-            <Adress onAddressSelect={handleAddressSelect} />
+          <td colSpan={2} style={{ width: '510px' }}>
+            <Address onAddressSelect={handleAddressSelect} />
           </td>
         </tr>
       </table>

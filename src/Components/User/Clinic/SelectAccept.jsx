@@ -9,17 +9,26 @@ const SelectAccept = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const clinicContext = useClinicContext();
+  const doctorId = location.state ? location.state.doctorId : null;
+  const today = new Date();
+  const formattedDate = today.toISOString().substring(0, 10);
 
-  clinicContext.selectDoctor = location.state ? location.state.doctor : null;
-
+  // 선택한 방법에 따라 다른 페이지로 이동하면서 clinicContext에 대기방법 업데이트
   const selectBtnHandler = (temp) => {
-    clinicContext.acceptStatus = temp;
     if (temp === 'normal') {
-      navigate('/clinic/application');
+      clinicContext.setClinicState((prevState) => ({
+        ...prevState,
+        selectDate: formattedDate,
+        acceptStatus: 'W',
+      }));
+      navigate('/clinic/application', { state: { doctorId } });
     } else {
-      navigate('/clinic/datetime');
+      clinicContext.setClinicState((prevState) => ({
+        ...prevState,
+        acceptStatus: 'R',
+      }));
+      navigate('/clinic/datetime', { state: { doctorId } });
     }
-    console.log(temp);
   };
 
   return (

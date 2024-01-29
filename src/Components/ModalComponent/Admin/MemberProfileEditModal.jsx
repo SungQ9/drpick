@@ -1,7 +1,7 @@
 // 회원정보수정 모달
 import React, { useState } from 'react';
 import Input from '../../Layout/Input';
-import Adress from '../../Layout/Adress';
+import Address from '../../Layout/Address';
 
 const MemberProfileEdit = ({ onClose, item = {} }) => {
   const [selectedName, setSelectedName] = useState('');
@@ -87,8 +87,8 @@ const MemberProfileEdit = ({ onClose, item = {} }) => {
           </td>
         </tr>
         <tr>
-          <td colSpan={2}>
-            <Adress onAddressSelect={handleAddressSelect} />
+          <td colSpan={2} style={{ width: '510px' }}>
+            <Address onAddressSelect={handleAddressSelect} />
           </td>
         </tr>
       </table>
