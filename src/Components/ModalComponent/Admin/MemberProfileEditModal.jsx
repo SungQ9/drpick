@@ -56,6 +56,8 @@ const MemberProfileEdit = ({ onClose, item = {} }) => {
 
       if (res.data.body) {
         alert(message);
+        onClose(); // 모달 닫기
+        window.location.reload(); // 페이지 새로고침
         return;
       }
 

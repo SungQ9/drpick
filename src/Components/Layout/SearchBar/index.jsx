@@ -23,7 +23,7 @@ const SearchBar = ({
 
     // 검색어가 변경될 때마다 결과 업데이트
     onSearch(searchValue);
-    // setSearchKeyword(searchValue);
+    setSearchKeyword(searchValue);
   };
 
   const handleSearch = () => {
