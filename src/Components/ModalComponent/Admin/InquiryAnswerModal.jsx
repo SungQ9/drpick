@@ -31,6 +31,7 @@ const InquiryAnswerModal = ({ onClose, item = {} }) => {
               label='문의유형'
               type='text'
               style={{ width: '245px' }}
+              value={item.inquiryType}
               disabled={'disabled'}
             />
           </td>
@@ -42,6 +43,7 @@ const InquiryAnswerModal = ({ onClose, item = {} }) => {
               type='text'
               style={{ width: '245px' }}
               disabled={'disabled'}
+              value={item.inquiryRegdate}
             />
           </td>
         </tr>
@@ -140,9 +142,7 @@ const InquiryAnswerModal = ({ onClose, item = {} }) => {
                 e.stopPropagation();
                 handleOpenModal(<DoctorRequest />, '증명파일');
               }}
-            >
-              의사증명서_jpg
-            </div>
+            ></div>
           </td>
         </tr>
         <tr>

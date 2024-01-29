@@ -133,13 +133,24 @@ const InquiryManage = () => {
   return (
     <div className="listWrapper">
       <ListTitle title={title} />
-
-      {/*회원관리,의사관리 */}
-      {(selectedType === "user" || selectedType === "doctor") && (
+      {/* 회원 관리 (selectedType === 'user') */}
+      {selectedType === "user" && (
         <List
           headers={currentHeaders}
           items={items}
           listbutton={"수정"}
+          listType={"user"}
+          buttonType={"N"}
+        />
+      )}
+
+      {/* 의사 관리 (selectedType === 'doctor') */}
+      {selectedType === "doctor" && (
+        <List
+          headers={currentHeaders}
+          items={items}
+          listbutton={"수정"}
+          listType={"doctor"}
           buttonType={"N"}
         />
       )}
@@ -153,15 +164,26 @@ const InquiryManage = () => {
           buttonType={"N"}
         />
       )}
-
-      {/*병원관리,약국관리 */}
-      {(selectedType === "hospital" || selectedType === "drugstore") && (
+      {/*병원관리 */}
+      {selectedType === "hospital" && (
         <List
           headers={currentHeaders}
           items={items}
           buttonType={"Y"}
           buttonName={"추가"}
           listbutton={"수정"}
+          listType={"hospital"}
+        />
+      )}
+      {/*약국관리 */}
+      {selectedType === "drugstore" && (
+        <List
+          headers={currentHeaders}
+          items={items}
+          buttonType={"Y"}
+          buttonName={"추가"}
+          listbutton={"수정"}
+          listType={"drugstore"}
         />
       )}
 

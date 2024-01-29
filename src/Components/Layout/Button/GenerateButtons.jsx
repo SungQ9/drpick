@@ -53,7 +53,9 @@ const GenerateButtons = ({ status, item = {} }) => {
       return (
         <button
           className="clinicSubBtn-mid"
-          onClick={() => handleOpenModal(<InquiryAnswerModal />)}
+          onClick={() =>
+            handleOpenModal(<InquiryAnswerModal item={item} />, "문의")
+          }
           style={{ background: "#11c2ad" }}
         >
           답변대기
