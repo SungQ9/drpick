@@ -3,9 +3,9 @@ import Input from '../Input';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { postcodeScriptUrl } from 'react-daum-postcode/lib/loadPostcode';
 
-const Address = ({ onAddressSelect, address }) => {
-  const [mainAddress, setMainAddress] = useState('');
-  const [detailAddress, setDetailAddress] = useState('');
+const Address = ({ onAddressSelect, address, itemAddr, itemAddrDetail }) => {
+  const [mainAddress, setMainAddress] = useState(itemAddr || '');
+  const [detailAddress, setDetailAddress] = useState(itemAddrDetail || '');
   const [subDetailAddress, setSubDetailAddress] = useState('');
 
   useEffect(() => {

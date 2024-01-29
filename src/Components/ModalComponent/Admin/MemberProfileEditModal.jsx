@@ -65,19 +65,6 @@ const MemberProfileEdit = ({ onClose, item = {} }) => {
         <tr>
           <td colSpan={2}>
             <Input
-              id='ckpwd'
-              className='member_ckpwd'
-              label='비밀번호확인'
-              type='password'
-              style={{ width: '500px', fontSize: '12px' }}
-              minLength={8}
-              maxLength={20}
-            />
-          </td>
-        </tr>
-        <tr>
-          <td colSpan={2}>
-            <Input
               id='tel'
               className='member_tel'
               label='전화번호'
@@ -90,7 +77,11 @@ const MemberProfileEdit = ({ onClose, item = {} }) => {
         </tr>
         <tr>
           <td colSpan={2} style={{ width: '510px' }}>
-            <Address onAddressSelect={handleAddressSelect} />
+            <Address
+              onAddressSelect={handleAddressSelect}
+              itemAddr={item.memberAddrMain}
+              itemAddrDetail={item.memberAddrDetail}
+            />
           </td>
         </tr>
       </table>
