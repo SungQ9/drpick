@@ -1,39 +1,100 @@
 import React, { useEffect } from "react";
+import axios from "axios"; // Make sure to import axios
 import { useLocation, useNavigate } from "react-router-dom";
+import { useTokenContext } from "../../Context/TokenContext";
 
-// 자동결제 성공
 function BillingSuccess() {
   const location = useLocation();
-  const billingDataParam = new URLSearchParams(location.search).get("billingData");
-  const billingData = billingDataParam ? JSON.parse(decodeURIComponent(billingDataParam)) : null;
   const navigate = useNavigate();
+  const { token, userAuth } = useTokenContext();
+
+  const encodedBillingData = location.state?.responseData;
+  const billingData = encodedBillingData
+    ? JSON.parse(decodeURIComponent(encodedBillingData))
+    : null;
 
   useEffect(() => {
-    if (!billingData) {
-      navigate("/payment/billingFailure");
-    } else {
+    const completePayment = async () => {
+      if (!billingData) {
+        navigate("/payment/Failure");
+        return;
+      }
 
-    
-      const newUrl = window.location.pathname;
-      window.history.replaceState({}, "", newUrl);
-    }
-  }, [billingData, navigate]);
+      try {
+        await axios.put(
+          "http://localhost:8080/payments/completePayment",
+          null,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              paymentId: billingData.paymentId,
+              transactionType: "CARD",
+            },
+          }
+        );
+      } catch (error) {
+        console.error("에러: ", error);
+        navigate("/payment/Failure");
+      }
+    };
+    completePayment();
+  }, [billingData, navigate, token]);
 
   if (!billingData) {
     return (
       <div className="billing-success-container">
-        <h1>잘못된 경로</h1>
-        <p>잘못된 경로입니다.</p>
+        결제 정보를 불러올 수 없습니다.
       </div>
     );
   }
 
+  const formatCardNumber = (number) => {
+    // Split the number into segments of four, respecting asterisks
+    const segments = [];
+    let segment = "";
+
+    for (let char of number) {
+      segment += char;
+      if (segment.length === 4 || (char === "*" && segment.length > 4)) {
+        segments.push(segment);
+        segment = "";
+      }
+    }
+
+    if (segment) {
+      segments.push(segment); // Add the last segment if there's any remainder
+    }
+
+    return segments.join("-");
+  };
+
   return (
     <div className="billing-success-container">
-      <h1>자동결제 성공</h1>
-      <div>
-        <h2>자동결제 결과</h2>
-        <pre>{JSON.stringify(billingData, null, 2)}</pre>
+      <h1>결제에 성공하셨습니다</h1>
+      <div className="payment-details">
+        <p>
+          <strong>결제 금액:</strong> {billingData.totalAmount.toLocaleString()}{" "}
+          원
+        </p>
+        <p>
+          <strong>결제 수단:</strong> {billingData.method}
+        </p>
+        <p>
+          <strong>카드 타입:</strong> {billingData.card.cardType}
+        </p>
+        <p>
+          <strong>카드 번호:</strong>{" "}
+          {formatCardNumber(billingData.card.number)}
+        </p>
+        <button
+          onClick={() => {
+            navigate("/user/payment");
+          }}
+        >
+          결제수단관리 페이지로 이동
+        </button>
       </div>
     </div>
   );

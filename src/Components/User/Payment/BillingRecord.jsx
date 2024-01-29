@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useTokenContext } from "../../Context/TokenContext";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 
 // 자동결제 카드 등록
 function BillingRecord() {
@@ -35,7 +35,6 @@ function BillingRecord() {
       },
     };
 
-
     //빌링키 DB에 저장
     axios
       .request(axiosOptions)
@@ -62,14 +61,16 @@ function BillingRecord() {
       });
   }, [customerKey, authKey, displayedAuthKey, displayedCustomerKey, token]);
 
-  const moveUserPaymentPage = () => {
-    navigate("/user/payment"); 
-  };
-
   return (
     <div className="billing-success-container">
       <h1>자동결제 카드 등록 성공</h1>
-      <button onClick={moveUserPaymentPage}>등록된 카드 확인</button> 
+      <button
+        onClick={() => {
+          navigate("/user/payment");
+        }}
+      >
+        등록된 카드 확인
+      </button>
     </div>
   );
 }

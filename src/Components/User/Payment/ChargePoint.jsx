@@ -43,14 +43,15 @@ export function PaymentSuccess() {
         throw new Error('토스결제 확인 받아오기 실패');
       }
       setIsProcessed(true);
+      
       return chargePoint(amount, response.data.requestedAt);
     })
     .then(() => {
       navigate("/payment/ChargePoint", { replace: true });
     })
     .catch((error) => {
-      console.error("백엔드 에러:", error);
-      navigate(`/payment/paymentFailure`);
+      console.error("에러:", error);
+      navigate(`/payment/Failure`);
     });
   }, [searchParams, token, navigate, isProcessed]);
 
@@ -59,7 +60,7 @@ export function PaymentSuccess() {
       "http://localhost:8080/payments/chargePoint",
       {
         memberId: localStorage.getItem("userId"),
-        transactionType: "POINT",
+        transactionType: "CARD",
         amount: amount,
         transactionDate: transactionDate,
       },

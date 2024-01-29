@@ -1,33 +1,36 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
-import { useLocation,useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useTokenContext } from "../../Context/TokenContext";
 
 // 자동결제 토스에 요청
-function BillingCharge({amount}) {
-  const [memberData, setMemberData] = useState(null);
+function BillingCharge() {
   const location = useLocation();
   const navigate = useNavigate();
   const { token, userAuth } = useTokenContext();
 
   //토스에 결재 요청
   useEffect(() => {
-    const amount = location.state?.amount;
+    const { amount, paymentId } = location.state || {};
+
+    if (!amount || !paymentId) {
+      navigate("/payment/Failure");
+      return;
+    }
 
     // 회원정보 불러오기
     axios
       .get("http://localhost:8080/payments/getUserPaymentMethodAmount", {
         headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          Authorization: `Bearer ${token}`,
+        },
         params: {
-          memberId: localStorage.getItem('userId'), 
+          memberId: localStorage.getItem("userId"),
         },
       })
       .then(function (response) {
         const data = response.data;
-        setMemberData(data);
-        
+
         // orderId 생성
         const generateRandomOrderId = () => {
           const characters =
@@ -40,21 +43,21 @@ function BillingCharge({amount}) {
           }
           return orderId;
         };
-        const randomOrderId = generateRandomOrderId(); 
-        
+        const randomOrderId = generateRandomOrderId();
+
         // 토스 자동결제 진행
         axios
           .request({
             method: "POST",
-            url: "https://api.tosspayments.com/v1/billing/"+data.billingKey,
+            url: "https://api.tosspayments.com/v1/billing/" + data.billingKey,
             headers: {
               Authorization:
-                'Basic dGVzdF9za19RYmdNR1p6b3J6NUE0a21COWRFbFZsNUUxZW00Og==',
+                "Basic dGVzdF9za19RYmdNR1p6b3J6NUE0a21COWRFbFZsNUUxZW00Og==",
               "Content-Type": "application/json",
             },
             data: {
               customerKey: data.customerKey,
-              amount: amount, 
+              amount: amount,
               orderId: randomOrderId,
               orderName: "진료비",
               customerEmail: data.memberEmail,
@@ -63,21 +66,20 @@ function BillingCharge({amount}) {
           })
           .then(function (response) {
             //결재 성공 후 데이터 넘기기
-            const responseData = encodeURIComponent(JSON.stringify(response.data));
-            navigate(`/payment/billingSuccess?billingData=${responseData}`);
-          })          
+            const responseData = encodeURIComponent(
+              JSON.stringify({ ...response.data, paymentId })
+            );
+            navigate(`/payment/billingSuccess`, { state: { responseData } });
+          })
           .catch(function (error) {
             console.error(error);
-            navigate('/payment/Failure')
+            navigate("/payment/Failure");
           });
-          
       })
       .catch(function (error) {
         console.error(error);
       });
   }, [location]);
-
-
 }
 
 export default BillingCharge;
