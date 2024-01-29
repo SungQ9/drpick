@@ -26,15 +26,12 @@ const SearchBar = ({
     // setSearchKeyword(searchValue);
   };
 
-  const handleSearch = (evt) => {
-    evt.preventDefault(); // Prevent default form submission behavior
-    // 검색 버튼 클릭 시 검색 결과 업데이트
+  const handleSearch = () => {
     if (onSearch) {
       // 검색어와 날짜 정보를 함께 전달
       onSearch(inputText, startDate, endDate);
       setSearchKeyword(inputText);
     }
-    // alert(startDate + "-" + endDate);
   };
 
   const handleReset = () => {
@@ -43,11 +40,8 @@ const SearchBar = ({
   };
 
   const handleSubmit = (evt) => {
-    evt.preventDefault();
-    // 엔터 키 눌렀을 때는 초기화하지 않도록 수정
-    if (evt.key === "Enter") {
-      return;
-    }
+    evt.preventDefault(); // 이벤트 취소 추가
+
     handleSearch();
   };
 
@@ -60,10 +54,7 @@ const SearchBar = ({
           type="text"
           placeholder={placeholder}
         />
-        <button
-          className="clinicSubBtn-short"
-          onClick={(evt) => handleSearch(evt)}
-        >
+        <button className="clinicSubBtn-short" onClick={handleSearch}>
           검색
         </button>
       </form>
