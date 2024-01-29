@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTokenContext } from '../../Context/TokenContext';
+import { useModalContext } from '../../Context/ModalContext';
 import axios from 'axios';
 import headers from '../../SampleData/Headers';
 import List from '../../Layout/List';
@@ -16,6 +17,7 @@ const UserManagement = () => {
   const [items, setItems] = useState();
   const [currentHeaders, setCurrentHeaders] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const { isModalOpen } = useModalContext();
 
   const handleSearch = (key) => {
     setKeyword(key);
@@ -48,7 +50,7 @@ const UserManagement = () => {
             break;
           case 'inquiry':
             var response = await axios.get(
-              'http://localhost:8080/members/currentHistory',
+              'http://localhost:8080/members/getMemberInquiry',
               config,
             );
             setItems(response.data);
@@ -74,7 +76,7 @@ const UserManagement = () => {
     };
 
     fetchData();
-  }, [selectedType, token]);
+  }, [selectedType, token,isModalOpen]);
 
   if (isLoading) {
     return (
