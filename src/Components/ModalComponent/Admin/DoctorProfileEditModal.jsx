@@ -207,11 +207,7 @@ const DoctorProfileEdit = ({ onClose, item = {} }) => {
         >
           제한
         </button>
-        <button
-          className="clinicSubBtn-mid"
-          onClick={updateDoctorInfo}
-          style={{ background: "#11C2AD" }}
-        >
+        <button className="clinicSubBtn-mid" style={{ background: "#11C2AD" }}>
           저장
         </button>
         <button className="clinicSubBtn-mid" onClick={onClose}>

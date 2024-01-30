@@ -20,6 +20,7 @@ const ProfileEditList = ({ type, title }) => {
   const [doctorSubject, setDoctorSubject] = useState("");
   const [doctorMajor, setDoctorMajor] = useState("");
   const [doctorComments, setDoctorComments] = useState("");
+  const [doctorAvailability, setDoctorAvailability] = useState([]);
 
   const { token, userEmail } = useTokenContext();
   const [initialDataFetched, setInitialDataFetched] = useState(false);
@@ -124,6 +125,8 @@ const ProfileEditList = ({ type, title }) => {
 
       // 데이터를 가져온 후 상태를 업데이트
       const { doctorInfo, doctorAvailability } = response.data;
+      console.log("가져온 데이터 찍기 1: ", doctorInfo);
+      console.log("가져온 데이터 찍기 2: ", doctorAvailability);
 
       // 의사 정보 업데이트
       setDoctorName(doctorInfo.doctorName);
@@ -141,11 +144,20 @@ const ProfileEditList = ({ type, title }) => {
         // 시간 정보 업데이트
         setSelectedDay({ monday: true });
       }
+      setDoctorAvailability(doctorAvailability); // doctorAvailability 설정 추가
 
       setInitialDataFetched(true);
     } catch (error) {
       console.error("데이터를 가져오는 동안 오류가 발생했습니다:", error);
     }
+  };
+
+  // 선택된 요일 값 설정
+  const handleRadioChange = (day) => {
+    setSelectedDay((prevState) => ({
+      ...prevState,
+      [day]: !prevState[day],
+    }));
   };
 
   const handleSaveButtonClick = async () => {
@@ -162,7 +174,11 @@ const ProfileEditList = ({ type, title }) => {
     }, []);
 
     // 가져온 값을 노출하거나 다른 작업 수행
-    alert( `저장 버튼 클릭!\n선택된 요일: ${selectedDays.join(", ")}\n선택된 시간: ${selectedTimes.join(", ")}`);
+    alert(
+      `저장 버튼 클릭!\n선택된 요일: ${selectedDays.join(
+        ", "
+      )}\n선택된 시간: ${selectedTimes.join(", ")}`
+    );
   };
 
   if (type === "doctor") {
@@ -393,7 +409,11 @@ const ProfileEditList = ({ type, title }) => {
           <h3 style={{ position: "relative", right: "285px" }}>
             <span style={{ color: "red" }}>*</span> 비대면 진료 시간 설정
           </h3>
-          <WorkTime selectedDay={selectedDay} />
+          <WorkTime
+            selectedDay={selectedDay}
+            onRadioChange={handleRadioChange}
+            doctorAvailability={doctorAvailability}
+          />
         </div>
         <div
           style={{
@@ -567,7 +587,10 @@ const ProfileEditList = ({ type, title }) => {
           <h3 style={{ position: "relative", right: "285px" }}>
             <span style={{ color: "red" }}>*</span> 영업 시간 설정
           </h3>
-          <WorkTime selectedDay={selectedDay} />
+          <WorkTime
+            selectedDay={selectedDay}
+            onRadioChange={handleRadioChange}
+          />
         </div>
         <div
           style={{
