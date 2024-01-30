@@ -145,13 +145,16 @@ const CurrentList = ({
         </tbody>
 
         <tfoot>
-          <div className="tfootWrapper">
-            {type === "Date" && buttonType === "Y" && (
-              <Button
-                buttonName={buttonName}
-                buttonType={buttonType}
-                handleButtonClick={handleButtonClick}
-              />
+          <div className='tfootWrapper'>
+            {type === 'Date' && buttonType === 'Y' && (
+              <div className='tfootSearchWrapper'>
+                <Button
+                  buttonName={buttonName}
+                  buttonType={buttonType}
+                  handleButtonClick={handleButtonClick}
+                  className={'date-list'}
+                />
+              </div>
             )}
 
             {type !== "Date" && type !== "Lite" && (
@@ -160,8 +163,8 @@ const CurrentList = ({
                   buttonName={buttonName}
                   buttonType={buttonType}
                   handleButtonClick={handleButtonClick}
+                  className={'current-list'}
                 />
-
                 {filteredDateItems ? null : (
                   <SearchBar
                     searchBarStyle={searchBarStyle}

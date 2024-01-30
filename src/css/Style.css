@@ -516,7 +516,9 @@ Input {
   margin-bottom: 5%;
 }
 
-.listTable {
+.listTable,
+.checklistTable {
+  position: relative;
   margin-top: 3%;
   border-collapse: collapse;
   display: flex;
@@ -529,12 +531,15 @@ Input {
   border-radius: 15px;
 }
 
-.listTable thead {
+.listTable,
+.checklistTable thead {
   border-bottom: 1px solid #ddd;
 }
 
 .listTable th,
-.listTable td {
+.listTable td,
+.checklistTable th,
+.checklistTable td {
   border-left: none;
   border-right: none;
 }
@@ -586,35 +591,89 @@ td:nth-child(5) {
   width: 220px;
 }
 
+.listTable .checklistTable tbody tr:hover {
+  background-color: #ebebeb;
+  opacity: 0.9;
+}
+
+.checklistTable th:nth-child(1),
+.checklistTable td:nth-child(1) {
+  width: 200px;
+}
+
+.checklistTable th:nth-child(2),
+.checklistTable td:nth-child(2) {
+  width: 200px;
+}
+
+.checklistTable th:nth-child(3),
+.checklistTable td:nth-child(3) {
+  width: 200px;
+}
+
+.checklistTable:nth-child(4),
+.checklistTable td:nth-child(4) {
+  width: 200px;
+}
+.checklistTable th:nth-child(5),
+.checklistTable td:nth-child(5) {
+  vertical-align: middle;
+  width: 200px;
+}
+
+.checklistTable th:nth-child(6),
+.checklistTable td:nth-child(6) {
+  vertical-align: middle;
+  width: 200px;
+}
+
 .listTable tfoot {
   display: flex;
   flex-direction: column;
-  position: relative;
+  position: absolute;
   justify-content: center;
   width: 100%;
 }
 
 .listTable .tfootWrapper {
+  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
+  left: 550px;
+  top: 430px;
 }
 
 .listTable .tfootSearchWrapper {
+  position: absolute;
   display: flex;
   align-items: center;
 }
 
 .listTable .tfootPaginationWrapper {
+  position: absolute;
+  width: 800px;
+  top: 80px;
 }
 
-.listTable .tfootWrapper #deleteBtn {
-  position: relative;
-  right: 100px;
+.listTable .tfootWrapper .current-list #deleteBtn {
+  position: absolute;
+  right: 530px;
 }
-.listTable .tfootWrapper #addBtn {
-  position: relative;
-  right: 100px;
+.listTable .tfootWrapper .current-list#addBtn {
+  position: absolute;
+  right: 530px;
+}
+
+.listTable .tfootWrapper .date-list#deleteBtn {
+  position: absolute;
+  right: 390px;
+  top: 30px;
+}
+.listTable .tfootWrapper .date-list#addBtn {
+  position: absolute;
+  right: 390px;
+  top: 30px;
 }
 
 /* 대시보드  */
