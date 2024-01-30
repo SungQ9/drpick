@@ -89,15 +89,15 @@ const SelectPayment = () => {
               <td
                 className='clinicBtn'
                 onClick={btnHandler}
-                data-value={'card'}
+                data-value={'CARD'}
               >
-                <img src={card} alt='card' />
+                <img src={card} alt='CARD' />
                 <h1>카드</h1>
               </td>
               <td
                 className='clinicBtn'
                 onClick={btnHandler}
-                data-value={'point'}
+                data-value={'POINT'}
               >
                 <img src={point} alt='point' />
                 <h1>포인트</h1>

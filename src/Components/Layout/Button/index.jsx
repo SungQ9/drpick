@@ -1,6 +1,12 @@
 import React from 'react';
 
-const Button = ({ buttonType, buttonName, handleButtonClick, item = {} }) => {
+const Button = ({
+  buttonType,
+  buttonName,
+  handleButtonClick,
+  item = {},
+  className,
+}) => {
   if (buttonType === 'N') {
     return null;
   } else {
@@ -8,7 +14,7 @@ const Button = ({ buttonType, buttonName, handleButtonClick, item = {} }) => {
       return (
         <button
           id='deleteBtn'
-          className='listBtn'
+          className={className}
           onClick={() => {
             handleButtonClick(buttonName);
           }}
@@ -20,7 +26,7 @@ const Button = ({ buttonType, buttonName, handleButtonClick, item = {} }) => {
       return (
         <button
           id='addBtn'
-          className='listBtn'
+          className={className}
           onClick={() => {
             handleButtonClick(buttonName);
           }}
@@ -32,7 +38,7 @@ const Button = ({ buttonType, buttonName, handleButtonClick, item = {} }) => {
       return (
         <button
           id='addBtn'
-          className='listBtn'
+          className={className}
           onClick={() => {
             handleButtonClick(buttonName);
           }}
@@ -44,7 +50,7 @@ const Button = ({ buttonType, buttonName, handleButtonClick, item = {} }) => {
       return (
         <button
           id='addBtn'
-          className='listBtn'
+          className={className}
           onClick={() => {
             handleButtonClick(buttonName);
           }}
