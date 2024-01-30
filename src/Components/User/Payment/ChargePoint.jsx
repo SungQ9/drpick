@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios"; 
 import { useTokenContext } from '../../Context/TokenContext';
 
-export function PaymentSuccess() {
+export function ChargePoint() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { token } = useTokenContext();
@@ -90,4 +90,4 @@ export function PaymentSuccess() {
   );
 }
 
-export default PaymentSuccess;
+export default ChargePoint;

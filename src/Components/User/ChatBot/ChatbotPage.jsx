@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import $ from "jquery";
-import "./chatbot.css"; // 추후 삭제
+import styles from "./chatbot.css";
 
 // 변수
 let userName = null;
@@ -14,9 +14,12 @@ function Message(arg) {
   this.draw = (function (_this) {
     return function () {
       let $message;
-      $message = $($(".message_template").clone().html());
-      $message.addClass(_this.message_side).find(".text").html(_this.text);
-      $(".messages").append($message);
+      $message = $($(".chatbot_message_template").clone().html());
+      $message
+        .addClass(_this.message_side)
+        .find(".chatbot_text")
+        .html(_this.text);
+      $(".chatbot_messages").append($message);
 
       return setTimeout(function () {
         return $message.addClass("appeared");
@@ -28,26 +31,30 @@ function Message(arg) {
 
 function getMessageText() {
   let $message_input;
-  $message_input = $(".message_input");
+  $message_input = $(".chatbot_message_input");
   return $message_input.val();
 }
 
 function sendMessage(text, message_side) {
+  console.log(text);
   let $messages, message;
-  $(".message_input").val("");
-  $messages = $(".messages");
+  $(".chatbot_message_input").val("");
+  $messages = $(".chatbot_messages");
   message = new Message({
     text: text,
     message_side: message_side,
   });
+    
   message.draw();
   $messages.animate({ scrollTop: $messages.prop("scrollHeight") }, 300);
 }
 
 function greet() {
-  setTimeout(function () {
-    return sendMessage("사용할 닉네임을 알려주세요.", "left");
-  }, 2000);
+  if (userName === null) {
+    setTimeout(function () {
+      return sendMessage("사용할 닉네임을 알려주세요.", "left");
+    }, 2000);
+  }
 }
 
 function onClickAsEnter(e) {
@@ -58,28 +65,20 @@ function onClickAsEnter(e) {
 
 function setUserName(username) {
   if (username != null && username.replace(" ", "" !== "")) {
+    sendMessage("반갑습니다, " + username + "님. 닉네임이 설정되었습니다.", "left", 1000);
     setTimeout(function () {
-      return sendMessage(
-        "반갑습니다, " + username + "님. 닉네임이 설정되었습니다.",
-        "left"
-      );
+      sendMessage("저는 Dr.Pick챗봇입니다.", "left");
     }, 1000);
     setTimeout(function () {
-      return sendMessage("저는 Dr.Pick챗봇입니다.", "left");
+      sendMessage("어디가 아프신가요", "left");
     }, 2000);
-    setTimeout(function () {
-      return sendMessage("어디가 아프신가요", "left");
-    }, 3000);
-
     return username;
   } else {
-    setTimeout(function () {
-      return sendMessage("올바른 닉네임을 이용해주세요.", "left");
-    }, 1000);
-
+    sendMessage("올바른 닉네임을 이용해주세요.", "left");
     return null;
   }
 }
+
 
 function requestChat(messageText, url_pattern) {
   console.log(
@@ -171,60 +170,41 @@ function ChatbotPage() {
   }, []);
 
   return (
-    <html lang="en">
-      <head>
-        <meta charset="UTF-8" />
-        <title>Dr.Pick 챗봇</title>
-        {/* jquery+bootstrap, bootstrap은 추후 삭제*/}
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <link
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-          rel="stylesheet"
-          id="bootstrap-css"
-        />
-      </head>
-
-      <body>
-        <div className="chat_window">
-          <div className="top_menu">
-            <div className="buttons">
-              <div className="button close_button"></div>
-              <div className="button minimize"></div>
-              <div className="button maximize"></div>
-            </div>
-            <div className="title">Dr.Pick챗봇</div>
+    <div className="chatbot_container">
+        <div className="chatbot_top_menu">
+          <div className="chatbot_buttons">
+            <div className="chatbot_button chatbot_close_button"></div>
+            <div className="chatbot_button chatbot_minimize"></div>
+            <div className="chatbot_button chatbot_maximize"></div>
           </div>
-          <ul className="messages"></ul>
-          <div className="bottom_wrapper clearfix">
-            <div className="message_input_wrapper">
-              <input
-                className="message_input"
-                onKeyUp={(event) => onClickAsEnter(event)}
-                placeholder="내용을 입력하세요."
-              />
-            </div>
-
-            <div
-              className="send_message"
-              id="send_message"
-              onClick={() => onSendButtonClicked()}
-            >
-              <div className="icon"></div>
-              <div className="text">보내기</div>
-            </div>
+          <div className="chatbot_title">Dr.Pick챗봇</div>
+        </div>
+        <ul className="chatbot_messages"></ul>
+        <div className="chatbot_bottom_wrapper">
+          <div className="chatbot_message_input_wrapper">
+            <input
+              className="chatbot_message_input"
+              onKeyUp={(event) => onClickAsEnter(event)}
+              placeholder="여기에 내용을 입력하세요."
+            />
+          </div>
+          <div
+            className="chatbot_send_message"
+            id="send_message"
+            onClick={() => onSendButtonClicked()}
+          >
+            <div className="chatbot_text">보내기</div>
           </div>
         </div>
-        <div className="message_template">
-          <li className="message">
-            <div className="avatar"></div>
-            <div className="text_wrapper">
-              <div className="text"></div>
+        <div className="chatbot_message_template" style={{ display: "none" }}>
+          <li className="chatbot_message">
+            <div className="chatbot_avatar"></div>
+            <div className="chatbot_text_wrapper">
+              <div className="chatbot_text"></div>
             </div>
           </li>
         </div>
-      </body>
-    </html>
+    </div>
   );
 }
 

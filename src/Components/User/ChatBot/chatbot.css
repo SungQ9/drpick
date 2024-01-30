@@ -1,225 +1,230 @@
-/* * {
-  box-sizing: border-box;
-  font-weight: bold;
-}
-
-body {
-  background-color: #edeff2;
-}
-
-.chat_window {
+/* 챗봇 컨테이너 */
+.chatbot_container {
   position: absolute;
-  width: calc(100% - 20px);
-  max-width: 950px;
-  height: 750px;
-  border-radius: 10px;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  background-color: #f8f8f8;
-  overflow: hidden;
+  width: calc(100% - 20px); /* 화면 너비에서 20px를 뺀 너비로 설정 */
+  max-width: 1000px; /* 최대 너비 설정 */
+  height: 850px; /* 높이 설정 */
+  border-radius: 10px; /* 테두리 모서리를 둥글게 설정 */
+  left: 50%; /* 가로 가운데 정렬을 위한 위치 설정 */
+  top: 50%; /* 세로 가운데 정렬을 위한 위치 설정 */
+  transform: translateX(-50%) translateY(-50%); /* 수평 및 수직 가운데 정렬 */
+  background-color: #daf6ee; /* 배경 색상 설정 */
+  overflow: hidden; /* 내부 내용이 넘칠 경우 가려짐 설정 */
+  border: 10px solid #11c2ad; /* 테두리 스타일 */
 }
 
-.top_menu {
-  background-color: #fff;
-  width: 100%;
-  padding: 20px 0 15px;
-  box-shadow: 0 1px 30px rgba(0, 0, 0, 0.1);
+/* 챗봇 상단 메뉴 */
+.chatbot_top_menu {
+  background-color: #f2f2f2; /* 배경 색상 설정 */
+  width: 100%; /* 가로 너비 100% 설정 */
+  padding: 20px 0 15px; /* 내부 여백 설정 */
+  box-shadow: 0 1px 30px rgba(0, 0, 0, 0.1); /* 그림자 효과 설정 */
 }
 
-.top_menu .buttons {
-  margin: 3px 0 0 20px;
-  position: absolute;
+/* 챗봇 버튼 그룹 */
+.chatbot_buttons {
+  margin: 3px 0 0 20px; /* 외부 여백 설정 */
+  position: absolute; /* 절대 위치 설정 */
 }
 
-.top_menu .buttons .button {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  display: inline-block;
-  margin-right: 10px;
-  position: relative;
+/* 챗봇 버튼 */
+.chatbot_buttons .chatbot_button {
+  width: 16px; /* 너비 설정 */
+  height: 16px; /* 높이 설정 */
+  border-radius: 50%; /* 원형 모양 설정 */
+  display: inline-block; /* 인라인 블록 요소 설정 */
+  margin-right: 10px; /* 오른쪽 여백 설정 */
+  position: relative; /* 상대 위치 설정 */
 }
 
-.top_menu .buttons .button.close_button {
-  background-color: #f5886e;
+/* 챗봇 버튼 스타일 (닫기, 최소화, 최대화) */
+.chatbot_buttons .chatbot_button.chatbot_close_button,
+.chatbot_buttons .chatbot_button.minimize,
+.chatbot_buttons .chatbot_button.maximize {
+  background-color: #11c2ad; /* 배경 색상 설정 */
 }
 
-.top_menu .buttons .button.minimize {
-  background-color: #fdbf68;
+/* 챗봇 타이틀 */
+.chatbot_title {
+  text-align: center; /* 가운데 정렬 설정 */
+  color: #bcbdc0; /* 글자 색상 설정 */
+  font-size: 20px; /* 글자 크기 설정 */
 }
 
-.top_menu .buttons .button.maximize {
-  background-color: #a3d063;
+/* 챗봇 메시지 목록 */
+.chatbot_messages {
+  position: relative; /* 상대 위치 설정 */
+  list-style: none; /* 리스트 스타일 제거 */
+  padding: 20px 10px 0 10px; /* 내부 여백 설정 */
+  margin: 0; /* 마진 제거 */
+  height: 600px; /* 높이 설정 */
+  overflow: hidden; /* 내용이 넘칠 경우 가려짐 설정 */
 }
 
-.top_menu .title {
-  text-align: center;
-  color: #bcbdc0;
-  font-size: 20px;
+/* 챗봇 메시지 스타일 */
+.chatbot_message {
+  clear: both; /* 양쪽 모두를 지우고 다음 줄로 이동 */
+  overflow: hidden; /* 내용이 넘칠 경우 가려짐 설정 */
+  margin-bottom: 20px; /* 아래 여백 설정 */
+  transition: all 0.5s linear; /* 모든 속성에 대한 전환 효과 설정 */
+  opacity: 0; /* 투명도 설정 */
 }
 
-.messages {
-  position: relative;
-  list-style: none;
-  padding: 20px 10px 0 10px;
-  margin: 0;
-  overflow-y: auto;
-  max-height: 600px;
+/* 왼쪽 메시지 스타일 */
+.chatbot_message.left .chatbot_avatar {
+  background-color: #45aaf2; /* 왼쪽 아바타 배경색 설정 */
+  float: left; /* 왼쪽으로 부유 설정 */
 }
 
-.messages .message {
-  clear: both;
-  overflow: hidden;
-  margin-bottom: 20px;
-  transition: all 0.5s linear;
-  opacity: 0;
+.chatbot_message.left .chatbot_text_wrapper {
+  background-color: #23d1a0; /* 왼쪽 메시지 배경색 설정 */
+  margin-left: 20px; /* 왼쪽 여백 설정 */
 }
 
-.messages .message.left .avatar {
-  background-color: #f5886e;
-  float: left;
+.chatbot_message.left .chatbot_text_wrapper::after,
+.chatbot_message.left .chatbot_text_wrapper::before {
+  right: 100%; /* 오른쪽 끝에 위치 */
+  border-right-color: #ffe6cb; /* 오른쪽 테두리 색상 설정 */
 }
 
-.messages .message.left .text_wrapper {
-  background-color: #ffe6cb;
-  margin-left: 20px;
+.chatbot_message.left .chatbot_text {
+  color: #c44343; /* 왼쪽 메시지 글자 색상 설정 */
 }
 
-.messages .message.left .text_wrapper::after,
-.messages .message.left .text_wrapper::before {
-  right: 100%;
-  border-right-color: #ffe6cb;
+/* 오른쪽 메시지 스타일 */
+.chatbot_message.right .chatbot_avatar {
+  background-color: #ff69b4; /* 오른쪽 아바타 배경색 설정 */
+  float: right; /* 오른쪽으로 부유 설정 */
 }
 
-.messages .message.left .text {
-  color: #c48843;
+.chatbot_message.right .chatbot_text_wrapper {
+  background-color: #c7eafc; /* 오른쪽 메시지 배경색 설정 */
+  margin-right: 20px; /* 오른쪽 여백 설정 */
 }
 
-.messages .message.right .avatar {
-  background-color: #fdbf68;
-  float: right;
+.chatbot_message.right .chatbot_text_wrapper::after,
+.chatbot_message.right .chatbot_text_wrapper::before {
+  left: 100%; /* 왼쪽 끝에 위치 */
+  border-left-color: #c7eafc; /* 왼쪽 테두리 색상 설정 */
 }
 
-.messages .message.right .text_wrapper {
-  background-color: #c7eafc;
-  margin-right: 20px;
-  float: right;
+.chatbot_message.right .chatbot_text {
+  color: #45829b; /* 오른쪽 메시지 글자 색상 설정 */
 }
 
-.messages .message.right .text_wrapper::after,
-.messages .message.right .text_wrapper::before {
-  left: 100%;
-  border-left-color: #c7eafc;
+/* 메시지 나타남 효과 */
+.chatbot_message.appeared {
+  opacity: 1; /* 투명도 설정 */
 }
 
-.messages .message.right .text {
-  color: #45829b;
+/* 챗봇 아바타 스타일 */
+.chatbot_message .chatbot_avatar {
+  width: 60px; /* 너비 설정 */
+  height: 60px; /* 높이 설정 */
+  border-radius: 50%; /* 원형 모양 설정 */
+  display: inline-block; /* 인라인 블록 요소 설정 */
 }
 
-.messages .message.appeared {
-  opacity: 1;
-  max-width: 100%;
+/* 챗봇 메시지 텍스트 래퍼 스타일 */
+.chatbot_message .chatbot_text_wrapper {
+  display: inline-block; /* 인라인 블록 요소 설정 */
+  padding: 20px; /* 내부 여백 설정 */
+  border-radius: 6px; /* 테두리 모서리 둥글게 설정 */
+  width: calc(100% - 200px); /* 최대 너비 설정 */
+  min-width: 100px; /* 최소 너비 설정 */
+  position: width 0.7s linear; /* 너비 변화에 대한 전환 설정 */
 }
 
-.messages .message .avatar {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  display: inline-block;
+/* 메시지 텍스트 래퍼 가상요소 설정 */
+.chatbot_message .chatbot_text_wrapper::after,
+.chatbot_message .chatbot_text_wrapper::before {
+  top: 18px; /* 상단 위치 설정 */
+  border: solid transparent; /* 투명한 테두리 설정 */
+  content: " "; /* 내용 없음 */
+  height: 0; /* 높이 0으로 설정 */
+  width: 0; /* 너비 0으로 설정 */
+  position: absolute; /* 절대 위치 설정 */
+  pointer-events: none; /* 이벤트 무시 설정 */
 }
 
-.messages .message .text_wrapper {
-  display: inline-block;
-  padding: 20px;
-  border-radius: 6px;
-  width: calc(100% - 85px);
-  min-width: 100px;
-  position: relative;
+.chatbot_message .chatbot_text_wrapper::after {
+  border-width: 13px; /* 가상요소의 테두리 두께 설정 */
+  margin-top: 0px; /* 위 여백 설정 */
 }
 
-.messages .message .text_wrapper::after,
-.messages .message .text_wrapper:before {
-  top: 18px;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
+.chatbot_message .chatbot_text_wrapper::before {
+  border-width: 15px; /* 가상요소의 테두리 두께 설정 */
+  margin-top: -2px; /* 위 여백 설정 */
 }
 
-.messages .message .text_wrapper::after {
-  border-width: 13px;
-  margin-top: 0px;
+/* 챗봇 메시지 텍스트 스타일 */
+.chatbot_message .chatbot_text_wrapper .chatbot_text {
+  font-size: 18px; /* 글자 크기 설정 */
+  font-weight: 300; /* 글꼴 두께 설정 */
 }
 
-.messages .message .text_wrapper::before {
-  border-width: 15px;
-  margin-top: -2px;
+/* 챗봇 하단 영역 스타일 */
+.chatbot_bottom_wrapper {
+  display: flex; /* 플렉스 레이아웃 설정 */
+  justify-content: space-between; /* 가로 공간 동일하게 배치 */
+  align-items: center; /* 세로 중앙 정렬 설정 */
+  width: 98%; /* 너비 설정 */
+  background-color: #f2f2f2; /* 배경 색상 설정 */
+  padding: 20px 10px; /* 내부 여백 설정 */
+  position: absolute; /* 절대 위치 설정 */
+  bottom: 0; /* 아래에 위치 설정 */
 }
 
-.messages .message .text_wrapper .text {
-  font-size: 18px;
-  font-weight: 300;
+/* 메시지 입력란 래퍼 스타일 */
+.chatbot_message_input_wrapper {
+  flex-grow: 0; /* 플렉스 요소의 확장 여부 설정 */
+  width: 100%; /* 너비 설정 */
+  margin-right: 10px; /* 오른쪽 여백 설정 */
 }
 
-.bottom_wrapper {
-  position: relative;
-  width: 100%;
-  background-color: #fff;
-  padding: 20px 20px;
-  position: absolute;
-  bottom: 0;
+/* 메시지 입력란 스타일 */
+.chatbot_message_input {
+  border: none; /* 테두리 제거 */
+  height: 100%; /* 높이 100% 설정 */
+  box-sizing: border-box; /* 상자 모델로 설정 */
+  width: 100%; /* 너비 100% 설정 */
+  outline-width: 0; /* 포커스 테두리 제거 */
+  color: #11c2ad; /* 글자 색상 설정 */
+  padding: 20px; /* 내부 여백 설정 */
+  font-size: 16px; /* 글자 크기 설정 */
 }
 
-.bottom_wrapper .message_input_wrapper {
-  display: inline-block;
-  height: 50px;
-  border-radius: 25px;
-  border: 1px solid #bcbdc0;
-  width: calc(100% - 160px);
-  position: relative;
-  padding: 0 20px;
+/* 메시지 보내기 버튼 스타일 */
+.chatbot_send_message {
+  width: 120px; /* 너비 설정 */
+  height: 50px; /* 높이 설정 */
+  display: inline-block; /* 인라인 블록 요소 설정 */
+  border-radius: 50px; /* 원형 모양 설정 */
+  background-color:  #11c2ad; /* 배경 색상 설정 */
+  border: 2px solid  #11c2ad; /* 테두리 설정 */
+  color: #fff; /* 글자 색상 설정 */
+  cursor: pointer; /* 커서 포인터로 설정 */
+  transition: all 0.2s linear; /* 모든 속성에 대한 전환 설정 */
+  text-align: center; /* 가운데 정렬 설정 */
+  flex-shrink: 0; /* 플렉스 요소의 축소 여부 설정 */
+  margin-left: 10px; /* 왼쪽 여백 설정 */
 }
 
-.bottom_wrapper .message_input_wrapper .message_input {
-  border: none;
-  height: 100%;
-  box-sizing: border-box;
-  width: calc(100% - 40px);
-  position: absolute;
-  outline-width: 0;
-  color: gray;
+/* 메시지 보내기 버튼 호버 스타일 */
+.chatbot_send_message:hover {
+  color: #daf6ee; /* 호버 시 글자 색상 설정 */
+  background-color: #fff; /* 호버 시 배경 색상 설정 */
 }
 
-.bottom_wrapper .send_message {
-  width: 140px;
-  height: 50px;
-  display: inline-block;
-  border-radius: 50px;
-  background-color: #a3d063;
-  border: 2px solid #a3d063;
-  color: #fff;
-  cursor: pointer;
-  transition: all 0.2s linear;
-  text-align: center;
-  float: right;
+/* 메시지 보내기 버튼 텍스트 스타일 */
+.chatbot_send_message .chatbot_text {
+  font-size: 18px; /* 글자 크기 설정 */
+  font-weight: 300; /* 글꼴 두께 설정 */
+  display: inline-block; /* 인라인 블록 요소 설정 */
+  line-height: 48px; /* 줄 높이 설정 */
 }
 
-.bottom_wrapper .send_message:hover {
-  color: #a3d063;
-  background-color: #fff;
+/* 챗봇 메시지 템플릿 (숨김) */
+.chatbot_message_template {
+  display: none; /* 숨김 설정 */
 }
-
-.bottom_wrapper .send_message .text {
-  font-size: 18px;
-  font-weight: 300;
-  display: inline-block;
-  line-height: 48px;
-}
-
-.message_template {
-  display: none;
-} */
