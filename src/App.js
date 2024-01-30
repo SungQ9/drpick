@@ -13,7 +13,7 @@ import SearchDrugStrore from './Components/User/SearchDrugStrore';
 import ChatBot from './Components/User/ChatBot';
 import SignUp from './Components/Sign/SignUp';
 import Login from './Components/Sign/Login';
-import Payment from './Components/User/Payment'
+import Payment from './Components/User/Payment';
 
 import UserMyPage from './Components/User/MyPage/index';
 

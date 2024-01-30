@@ -28,6 +28,18 @@ const Button = ({ buttonType, buttonName, handleButtonClick, item = {} }) => {
           {buttonName}
         </button>
       );
+    else if (buttonName === '상세보기')
+      return (
+        <button
+          id='addBtn'
+          className='listBtn'
+          onClick={() => {
+            handleButtonClick(buttonName);
+          }}
+        >
+          {buttonName}
+        </button>
+      );
     else {
       return (
         <button
