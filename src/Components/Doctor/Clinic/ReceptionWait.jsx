@@ -1,8 +1,7 @@
 import React from 'react';
 import PatientList from './PatientList';
 
-const ReceptionWait = () => {
-  const data = '';
+const ReceptionWait = ( {data} ) => {
   return (
     <div className='doctorClinic-form'>
       <div className='doctorClinic-title'>

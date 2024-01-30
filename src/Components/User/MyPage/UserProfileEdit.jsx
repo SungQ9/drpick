@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import back from "../../../img/back-arrow-icon.png";
-import axios from "axios";
-import { useTokenContext } from "../../Context/TokenContext";
-import Input from "../../Layout/Input";
-import Address from "../../Layout/Address";
-import Loading from "../ImageSearch/Loading";
+import React, { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import back from "../../../img/back-arrow-icon.png"
+import axios from "axios"
+import { useTokenContext } from "../../Context/TokenContext"
+import Input from "../../Layout/Input"
+import Address from "../../Layout/Address"
+import Loading from "../ImageSearch/Loading"
 
 const UserProfileEdit = () => {
-  const navigate = useNavigate();
-  const { token, userEmail } = useTokenContext();
-  const [isLoading, setIsLoading] = useState(true);
-  const [address, setAddress] = useState("");
-  const [memberId, setMemberId] = useState("");
-  const [memberBirth, setMemberBirth] = useState("");
-  const [memberName, setMemberName] = useState("");
-  const [memberEmail, setMemberEmail] = useState("");
-  const [memberTel, setMemberTel] = useState("");
+  const navigate = useNavigate()
+  const { token, userEmail } = useTokenContext()
+  const [isLoading, setIsLoading] = useState(true)
+  const [address, setAddress] = useState("")
+  const [memberId, setMemberId] = useState("")
+  const [memberBirth, setMemberBirth] = useState("")
+  const [memberName, setMemberName] = useState("")
+  const [memberEmail, setMemberEmail] = useState("")
+  const [memberTel, setMemberTel] = useState("")
 
   const config = {
     headers: {
@@ -25,105 +25,105 @@ const UserProfileEdit = () => {
     params: {
       memberEmail: userEmail,
     },
-  };
+  }
 
   const fetchData = async () => {
-    setIsLoading(true);
+    setIsLoading(true)
     try {
       // 최근진료내역
       const response = await axios.get(
         "http://localhost:8080/members/getMemberInfo",
         config
-      );
+      )
 
-      setMemberEmail(response.data.memberEmail);
-      setMemberBirth(formatBirthDate(response.data.memberBirth));
-      setMemberName(response.data.memberName);
-      setMemberTel(response.data.memberTel);
-      setMemberId(response.data.memberId);
+      setMemberEmail(response.data.memberEmail)
+      setMemberBirth(formatBirthDate(response.data.memberBirth))
+      setMemberName(response.data.memberName)
+      setMemberTel(response.data.memberTel)
+      setMemberId(response.data.memberId)
 
       setAddress({
         main: response.data.memberAddrMain,
         detail: response.data.memberAddrDetail,
         subdetail: response.data.memberAddrSubdetail,
-      });
+      })
     } catch (error) {
-      console.error("마이페이지 에러 :", error);
+      console.error("마이페이지 에러 :", error)
       if (error.response) {
         // 서버 응답이 있을 경우
         if (error.response.data && error.response.data.error) {
           // 서버에서 에러 응답을 보냈을 때
-          const details = error.response.data.details;
-          const errorMessages = Object.values(details).join("\n");
+          const details = error.response.data.details
+          const errorMessages = Object.values(details).join("\n")
 
-          alert(`유효성 검증 오류:\n${errorMessages}`);
+          alert(`유효성 검증 오류:\n${errorMessages}`)
         } else {
           // 기타 서버 응답 오류 처리
           const errorMessage =
-            error.response.data.body.message || "서버 응답 오류";
-          alert(`${errorMessage}`);
+            error.response.data.body.message || "서버 응답 오류"
+          alert(`${errorMessage}`)
         }
       } else if (error.request) {
         // 서버로의 요청이 실패했을 경우
-        console.error("서버에 요청을 보내는 중 오류가 발생했습니다.");
+        console.error("서버에 요청을 보내는 중 오류가 발생했습니다.")
       } else {
         // 오류를 발생시킨 요청을 설정하는 중에 오류가 발생했을 경우
-        console.error("오류를 설정하는 중에 문제가 발생했습니다.");
+        console.error("오류를 설정하는 중에 문제가 발생했습니다.")
       }
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   // 날짜 형식 포맷팅
   const formatBirthDate = (rawDate) => {
-    const year = rawDate.substring(0, 4);
-    const month = rawDate.substring(4, 6);
-    const day = rawDate.substring(6, 8);
-    return `${year}-${month}-${day}`;
-  };
+    const year = rawDate.substring(0, 4)
+    const month = rawDate.substring(4, 6)
+    const day = rawDate.substring(6, 8)
+    return `${year}-${month}-${day}`
+  }
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
   if (isLoading) {
-    return <Loading />;
+    return <Loading />
   }
 
   // 주소
   const handleAddressSelect = (selectedAddress) => {
-    setAddress(selectedAddress);
-  };
+    setAddress(selectedAddress)
+  }
 
   // onChange Event
   const handleNameChange = (event) => {
-    setMemberName(event.target.value);
-  };
+    setMemberName(event.target.value)
+  }
 
   const handleTelChange = (event) => {
-    setMemberTel(event.target.value);
-  };
+    setMemberTel(event.target.value)
+  }
 
   // Update Submit
   const updateMemberInfo = async () => {
-    const formData = new FormData();
-    const pwd = document.getElementById("pwd").value;
-    const ckpwd = document.getElementById("ckpwd").value;
+    const formData = new FormData()
+    const pwd = document.getElementById("pwd").value
+    const ckpwd = document.getElementById("ckpwd").value
 
     if (pwd !== ckpwd) {
-      alert("비밀번호가 다릅니다.");
-      return;
+      alert("비밀번호가 다릅니다.")
+      return
     }
 
-    formData.append("memberId", memberId);
-    formData.append("memberName", memberName);
-    formData.append("memberBirth", memberBirth);
-    formData.append("memberPwd", pwd);
-    formData.append("memberTel", memberTel);
-    formData.append("memberAddrMain", address.main);
-    formData.append("memberAddrDetail", address.detail);
-    formData.append("memberAddrSubdetail", address.subdetail);
+    formData.append("memberId", memberId)
+    formData.append("memberName", memberName)
+    formData.append("memberBirth", memberBirth)
+    formData.append("memberPwd", pwd)
+    formData.append("memberTel", memberTel)
+    formData.append("memberAddrMain", address.main)
+    formData.append("memberAddrDetail", address.detail)
+    formData.append("memberAddrSubdetail", address.subdetail)
 
     try {
       const res = await axios.post(
@@ -135,40 +135,41 @@ const UserProfileEdit = () => {
             "Content-Type": "application/json", // JSON 형태로 데이터 전송을 위해 추가
           },
         }
-      );
-      const message = res.data.body.message;
+      )
+      const message = res.data.body.message
 
       if (res.data.body.success) {
-        alert(message);
-        navigate(-1);
+        alert(message)
+        navigate(-1)
       } else {
-        alert(message);
-        return;
+        alert(message)
+        return
       }
     } catch (error) {
       if (error.response) {
         // 서버 응답이 있을 경우
         if (error.response.data && error.response.data.error) {
           // 서버에서 에러 응답을 보냈을 때
-          const details = error.response.data.details;
-          const errorMessages = Object.values(details).join("\n");
+          const details = error.response.data.details
+          const errorMessages = Object.values(details).join("\n")
 
-          alert(`유효성 검증 오류:\n${errorMessages}`);
+          alert(`유효성 검증 오류:\n${errorMessages}`)
         } else {
           // 기타 서버 응답 오류 처리
           const errorMessage =
-            error.response.data.body.message || "서버 응답 오류";
-          alert(`${errorMessage}`);
+            error.response.data.body.message || "서버 응답 오류"
+          alert(`${errorMessage}`)
         }
       } else if (error.request) {
         // 서버로의 요청이 실패했을 경우
-        console.error("서버에 요청을 보내는 중 오류가 발생했습니다.");
+        console.error("서버에 요청을 보내는 중 오류가 발생했습니다.")
       } else {
         // 오류를 발생시킨 요청을 설정하는 중에 오류가 발생했을 경우
-        console.error("오류를 설정하는 중에 문제가 발생했습니다.");
+        console.error("오류를 설정하는 중에 문제가 발생했습니다.")
       }
     }
-  };
+  }
+
 
   return (
     <div className="listWrapper">
@@ -177,7 +178,7 @@ const UserProfileEdit = () => {
           className="backIcon"
           src={back}
           onClick={() => {
-            navigate(-1);
+            navigate(-1)
           }}
           alt="back"
         />
@@ -276,7 +277,7 @@ const UserProfileEdit = () => {
               <button className="signUpBtn" onClick={updateMemberInfo}>
                 수정
               </button>
-              <button className="signUpBtn" style={{ background: "#AECCC8" }}>
+              <button className="signUpBtn" onClick={() => {navigate(-1)}} style={{ background: "#AECCC8" }}>
                 취소
               </button>
             </td>
@@ -284,7 +285,7 @@ const UserProfileEdit = () => {
         </table>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default UserProfileEdit;
+export default UserProfileEdit

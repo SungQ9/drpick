@@ -92,7 +92,7 @@ const ApplicationForm = () => {
       </div>
 
       <div className='writeFormWrapper'>
-        <div className='residentNumber'>
+        {/* <div className='residentNumber'>
           <h4>주민등록번호 뒷자리를 입력해주세요</h4>
           <input type='text' value={'991122'} readOnly /> -{' '}
           <input
@@ -101,7 +101,7 @@ const ApplicationForm = () => {
             minLength={7}
             maxLength={7}
           />
-        </div>
+        </div> */}
         <div className='writeSymptom'>
           <h4> 증상에 대해 알려주세요</h4>
           <textarea

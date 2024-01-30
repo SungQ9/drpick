@@ -28,7 +28,7 @@ const SelectPayment = () => {
         memberId: clinicContext.clinicState.memberId,
         doctorId: clinicContext.clinicState.selectDoctorId,
         patientComments: clinicContext.clinicState.writeSymptom,
-        reservationPayment: clinicContext.clinicState.selectPayment,
+        reservationPayment: clinicContext.clinicState.selectPayment.toUpperCase(),
         fileList: clinicContext.clinicState.uploadedFiles,
         reservationStatus: clinicContext.clinicState.acceptStatus,
         reservationDate: clinicContext.clinicState.selectDate,

@@ -1,9 +1,7 @@
 import React from 'react';
 import PatientList from './PatientList';
 
-const CertificateList = () => {
-  const data = '';
-
+const CertificateList = ( {data} ) => {
   return (
     <div className='doctorClinic-form'>
       <div className='doctorClinic-title'>
