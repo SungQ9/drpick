@@ -50,9 +50,11 @@ function sendMessage(text, message_side) {
 }
 
 function greet() {
-  setTimeout(function () {
-    return sendMessage("사용할 닉네임을 알려주세요.", "left");
-  }, 2000);
+  if (userName === null) {
+    setTimeout(function () {
+      return sendMessage("사용할 닉네임을 알려주세요.", "left");
+    }, 2000);
+  }
 }
 
 function onClickAsEnter(e) {
@@ -63,7 +65,7 @@ function onClickAsEnter(e) {
 
 function setUserName(username) {
   if (username != null && username.replace(" ", "" !== "")) {
-    sendMessage("반갑습니다, " + username + "님. 닉네임이 설정되었습니다.", "left");
+    sendMessage("반갑습니다, " + username + "님. 닉네임이 설정되었습니다.", "left", 1000);
     setTimeout(function () {
       sendMessage("저는 Dr.Pick챗봇입니다.", "left");
     }, 1000);
@@ -169,7 +171,6 @@ function ChatbotPage() {
 
   return (
     <div className="chatbot_container">
-      <div className="chatbot_chat_window">
         <div className="chatbot_top_menu">
           <div className="chatbot_buttons">
             <div className="chatbot_button chatbot_close_button"></div>
@@ -184,7 +185,7 @@ function ChatbotPage() {
             <input
               className="chatbot_message_input"
               onKeyUp={(event) => onClickAsEnter(event)}
-              placeholder="내용을 입력하세요."
+              placeholder="여기에 내용을 입력하세요."
             />
           </div>
           <div
@@ -203,7 +204,6 @@ function ChatbotPage() {
             </div>
           </li>
         </div>
-      </div>
     </div>
   );
 }
