@@ -124,8 +124,6 @@ const ProfileEditList = ({ type, title }) => {
 
       // 데이터를 가져온 후 상태를 업데이트
       const { doctorInfo, doctorAvailability } = response.data;
-      console.log("의사 정보 : ", doctorInfo);
-      console.log("진료 정보 : ", doctorAvailability);
 
       // 의사 정보 업데이트
       setDoctorName(doctorInfo.doctorName);
@@ -164,11 +162,7 @@ const ProfileEditList = ({ type, title }) => {
     }, []);
 
     // 가져온 값을 노출하거나 다른 작업 수행
-    alert(
-      `저장 버튼 클릭!\n선택된 요일: ${selectedDays.join(
-        ", "
-      )}\n선택된 시간: ${selectedTimes.join(", ")}`
-    );
+    alert( `저장 버튼 클릭!\n선택된 요일: ${selectedDays.join(", ")}\n선택된 시간: ${selectedTimes.join(", ")}`);
   };
 
   if (type === "doctor") {

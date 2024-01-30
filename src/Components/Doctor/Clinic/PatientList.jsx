@@ -18,7 +18,6 @@ const PatientList = ({ type, data }) => {
       default:
         break;
     }
-    console.log(type, '버튼 클릭');
   };
 
   return (

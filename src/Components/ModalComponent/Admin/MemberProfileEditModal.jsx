@@ -61,7 +61,6 @@ const MemberProfileEdit = ({ onClose, item = {} }) => {
         return;
       }
 
-      console.log("수정된 정보 : ", data);
     } catch (error) {
       console.error(error);
     }

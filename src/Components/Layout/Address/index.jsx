@@ -27,7 +27,6 @@ const Address = ({
   const open = useDaumPostcodePopup(postcodeScriptUrl);
 
   const setAddressDatas = (data) => {
-    console.log(data);
     let fullAddress = data.address;
     let extraAddress = "";
     let localAddress = data.sido + " " + data.sigungu;

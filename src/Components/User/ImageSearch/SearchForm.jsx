@@ -62,7 +62,6 @@ function DrugsSearch() {
       // 서버 응답 확인
       if (response.status === 200) {
         const result = response.data;
-        console.log('알약 정보:', result);
 
         // 예측 결과를 상태에 설정
         setPredictionResult(result);

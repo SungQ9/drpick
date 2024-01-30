@@ -38,13 +38,6 @@ const Login = () => {
         }
       );
 
-      // 로그인 성공 후에 할 작업들...
-      console.log("로그인 성공:", response.data);
-
-      // 토큰 콘솔에 출력
-      console.log("토큰:", response.data.body.accessToken);
-      console.log("리프레시 토큰:", response.data.body.refreshToken);
-
       // 토큰값, 아이디,이름,역할 로컬스토리지 저장
       if (response.data != null) {
         localStorage.setItem("accessToken", response.data.body.accessToken);
@@ -79,7 +72,6 @@ const Login = () => {
 
       navigate("/");
     } catch (error) {
-      console.log(error.response);
         if (error.response) {
           // 서버 응답이 있을 경우
           if (error.response.data && error.response.data.error) {

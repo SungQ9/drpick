@@ -18,7 +18,6 @@ const BarIndex = () => {
       .get("http://localhost:8080/hospitals/getHospitalRegionCnt", config)
       .then((response) => {
         setChartData(response.data);
-        console.log(response.data); // 값 출력
       });
   }, []);
   return (

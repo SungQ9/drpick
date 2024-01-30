@@ -4,7 +4,6 @@ import "../../../css/Pagination.css"; // 스타일 파일을 추가합니다.
 
 const Pagination = ({ pageCount, onPageChange }) => {
   const handlePageChange = (selected) => {
-    console.log("Selected Page:", selected.selected + 1); // 콘솔 로그 추가
     onPageChange(selected);
   };
 

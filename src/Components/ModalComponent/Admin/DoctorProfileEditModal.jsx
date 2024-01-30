@@ -17,8 +17,6 @@ const DoctorProfileEdit = ({ onClose, item = {} }) => {
   const [doctorMajor, setDoctorMajor] = useState(item.doctorMajor || "");
   const [hospitalName, setHospitalName] = useState(item.hospitalName || "");
 
-  // 넘어오는 item 값 확인
-  console.log(item);
   const { openModal } = useModalContext();
 
   const handleOpenModal = (component, name, type) => {

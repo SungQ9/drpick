@@ -38,7 +38,7 @@ const SearchBar = ({
     // 입력창 초기화
     setInputText('');
   };
-// z
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
     // 엔터 키 눌렀을 때는 초기화하지 않도록 수정

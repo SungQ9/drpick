@@ -1,44 +1,43 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import Input from '../Layout/Input';
-import Select from '../Layout/Select';
-import Address from '../Layout/Address';
-import '../../css/UserStyle.css';
-import '../../css/Style.css';
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import Input from '../Layout/Input'
+import Select from '../Layout/Select'
+import Address from '../Layout/Address'
+import '../../css/UserStyle.css'
+import '../../css/Style.css'
 
 const SignUp = () => {
-  const navigate = useNavigate();
-  const getElementValue = (id) => document.getElementById(id).value;
+  const navigate = useNavigate()
+  const getElementValue = (id) => document.getElementById(id).value
   const getCheckedValue = (className) =>
-    document.querySelector(`.${className}:checked`).value;
-  const [selectedFileName, setSelectedFileName] = useState('');
-  const [selectedName, setSelectedName] = useState('');
-  const [selectedOption, setSelectedOption] = useState('');
+    document.querySelector(`.${className}:checked`).value
+  const [selectedFileName, setSelectedFileName] = useState('')
+  const [selectedName, setSelectedName] = useState('')
+  const [selectedOption, setSelectedOption] = useState('')
   const [address, setAddress] = useState({
     main: '',
     detail: '',
     subdetail: '',
-  });
-  const [emailKey, setEmailKey] = useState('');
-  const formData = new FormData();
+  })
+  const [emailKey, setEmailKey] = useState('')
+  const formData = new FormData()
 
   // 이메일 도메인 핸들러
   const handleSelectChange = (value) => {
-    setSelectedOption(value);
-    console.log(value);
-  };
+    setSelectedOption(value)
+  }
 
   // 이메일 인증키
   const getEmailKey = async () => {
-    const email = document.getElementById('email').value;
-    const domain = document.getElementById('email_domain').value;
-    const memberEmail = domain === '' ? email : email + domain;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const email = document.getElementById('email').value
+    const domain = document.getElementById('email_domain').value
+    const memberEmail = domain === '' ? email : email + domain
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
     if (!emailRegex.test(memberEmail)) {
-      alert('인증받을 이메일을 올바르게 입력해주세요.');
-      return;
+      alert('인증받을 이메일을 올바르게 입력해주세요.')
+      return
     }
 
     try {
@@ -46,60 +45,59 @@ const SignUp = () => {
         params: {
           userEmail: memberEmail,
         },
-      };
+      }
 
-      console.log(config);
       const response = await axios.post(
         'http://localhost:8080/users/mailConfirm',
         null, // You can omit the second parameter or pass null
         config,
-      );
+      )
 
-      setEmailKey(response.data.body.mailKey);
-      alert(response.data.body.message);
+      setEmailKey(response.data.body.mailKey)
+      alert(response.data.body.message)
     } catch (error) {
       // 적절하게 오류 처리
-      console.error('이메일 키를 가져오는 중 오류 발생:', error);
+      console.error('이메일 키를 가져오는 중 오류 발생:', error)
     }
-  };
+  }
 
   // 파일 업로드 핸들러
   const handleFileInputChange = (event) => {
-    const fileInput = event.target;
-    const newFiles = Array.from(fileInput.files);
+    const fileInput = event.target
+    const newFiles = Array.from(fileInput.files)
 
-    const totalFiles = selectedFileName.length + newFiles.length;
+    const totalFiles = selectedFileName.length + newFiles.length
 
     if (totalFiles > 3) {
-      alert('파일은 3개까지 올릴 수 있습니다.');
-      return;
+      alert('파일은 3개까지 올릴 수 있습니다.')
+      return
     }
 
-    setSelectedFileName((prevFiles) => [...prevFiles, ...newFiles]);
-  };
+    setSelectedFileName((prevFiles) => [...prevFiles, ...newFiles])
+  }
 
   // 업로드 파일 삭제 핸들러
   const handleDeleteFile = (index) => {
     setSelectedFileName((prevFiles) =>
       prevFiles.filter((prevFile, i) => i !== index),
-    );
+    )
 
     // formData에서 삭제
-    formData.delete(`fileList[${index}]`);
-  };
+    formData.delete(`fileList[${index}]`)
+  }
 
   // 업로드 버튼 핸들러
   const handleFileBtnClick = () => {
-    const fileInput = document.getElementById('selectedFile');
+    const fileInput = document.getElementById('selectedFile')
     if (fileInput) {
-      fileInput.click();
+      fileInput.click()
     }
-  };
+  }
 
   // 파일다중선택 return
   const renderFileList = () => {
     if (!Array.isArray(selectedFileName)) {
-      return null;
+      return null
     }
 
     return selectedFileName.map((file, index) => (
@@ -120,101 +118,99 @@ const SignUp = () => {
         </span>
         <p onClick={() => handleDeleteFile(index)}>X</p>
       </p>
-    ));
-  };
+    ))
+  }
 
   // 주소
   const handleAddressSelect = (selectedAddress) => {
-    setAddress(selectedAddress);
-  };
+    setAddress(selectedAddress)
+  }
 
   // submit
   const submitBtnClick = (event) => {
     // 폼의 기본 동작 방지 (페이지 새로고침 방지)
-    event.preventDefault();
+    event.preventDefault()
 
-    const email = document.getElementById('email').value;
-    const domain = document.getElementById('email_domain').value;
+    const email = document.getElementById('email').value
+    const domain = document.getElementById('email_domain').value
     // 이메일과 도메인을 조합한 회원 이메일 생성
-    const memberEmail = domain === '' ? email : email + domain;
-    const name = getElementValue('name');
-    const birth = getElementValue('birth');
-    const sex = getCheckedValue('sex');
-    const tel = getElementValue('tel');
-    const pwd = getElementValue('pwd');
-    const ckpwd = getElementValue('ckpwd');
-    const auth = getCheckedValue('auth');
-    const accessNumber = getElementValue('accessNumber');
+    const memberEmail = domain === '' ? email : email + domain
+    const name = getElementValue('name')
+    const birth = getElementValue('birth')
+    const sex = getCheckedValue('sex')
+    const tel = getElementValue('tel')
+    const pwd = getElementValue('pwd')
+    const ckpwd = getElementValue('ckpwd')
+    const auth = getCheckedValue('auth')
+    const accessNumber = getElementValue('accessNumber')
 
     // 인증번호 체크
     if (accessNumber !== emailKey) {
-      alert('인증번호가 다릅니다.');
-      return;
+      alert('인증번호가 다릅니다.')
+      return
     }
 
     // 비밀번호 Check
     if (pwd !== ckpwd) {
-      alert('비밀번호가 다릅니다.');
-      return;
+      alert('비밀번호가 다릅니다.')
+      return
     }
 
     // 회원 정보를 FormData에 직접 추가
-    formData.append('userEmail', memberEmail);
-    formData.append('userPwd', pwd);
-    formData.append('userName', name);
-    formData.append('userBirth', birth);
-    formData.append('userSex', sex);
-    formData.append('userTel', tel);
-    formData.append('userAddrMain', address.main);
-    formData.append('userAddrDetail', address.detail);
-    formData.append('userAuth', auth);
+    formData.append('userEmail', memberEmail)
+    formData.append('userPwd', pwd)
+    formData.append('userName', name)
+    formData.append('userBirth', birth)
+    formData.append('userSex', sex)
+    formData.append('userTel', tel)
+    formData.append('userAddrMain', address.main)
+    formData.append('userAddrDetail', address.detail)
+    formData.append('userAuth', auth)
 
     // 선택된 파일이 있으면 FormData에 추가
-    const selectedFileInput = document.getElementById('selectedFile');
+    const selectedFileInput = document.getElementById('selectedFile')
     if (selectedFileInput && selectedFileInput.files.length > 0) {
       Array.from(selectedFileInput.files).forEach((file) => {
-        formData.append('fileList', file);
-      });
+        formData.append('fileList', file)
+      })
     }
     // 회원가입 요청을 서버에 전송
     axios
       .post('http://localhost:8080/users/signup', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data; charset=UTF-8', // 이 부분이 중요합니다.
+          'Content-Type': 'multipart/form-data charset=UTF-8'
         },
       })
       .then((res) => {
         // 성공적으로 응답 받았을 때의 처리
-        console.log(res.data);
-        const message = res.data.body.message;
-        alert(message);
-        navigate('/login');
+        const message = res.data.body.message
+        alert(message)
+        navigate('/login')
       })
       .catch((error) => {
-        console.log(error.response);
         if (error.response) {
           // 서버 응답이 있을 경우
           if (error.response.data && error.response.data.error) {
             // 서버에서 에러 응답을 보냈을 때
-            const details = error.response.data.details;
-            const errorMessages = Object.values(details).join('\n');
+            const details = error.response.data.details
+            const errorMessages = Object.values(details).join('\n')
 
-            alert(`유효성 검증 오류:\n${errorMessages}`);
+            alert(`유효성 검증 오류:\n${errorMessages}`)
           } else {
             // 기타 서버 응답 오류 처리
             const errorMessage =
-              error.response.data.body.message || '서버 응답 오류';
-            alert(`${errorMessage}`);
+              error.response.data.body.message || '서버 응답 오류'
+            alert(`${errorMessage}`)
           }
         } else if (error.request) {
           // 서버로의 요청이 실패했을 경우
-          console.error('서버에 요청을 보내는 중 오류가 발생했습니다.');
+          console.error('서버에 요청을 보내는 중 오류가 발생했습니다.')
         } else {
           // 오류를 발생시킨 요청을 설정하는 중에 오류가 발생했을 경우
-          console.error('오류를 설정하는 중에 문제가 발생했습니다.');
+          console.error('오류를 설정하는 중에 문제가 발생했습니다.')
         }
-      });
-  };
+      })
+  }
   return (
     <div className='mainContainer'>
       <div id='signUpForm' className='signUpForm'>
@@ -427,7 +423,7 @@ const SignUp = () => {
                   <button
                     className='signUpBtn'
                     onClick={() => {
-                      navigate(-1);
+                      navigate(-1)
                     }}
                   >
                     취소
@@ -439,7 +435,7 @@ const SignUp = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SignUp;
+export default SignUp

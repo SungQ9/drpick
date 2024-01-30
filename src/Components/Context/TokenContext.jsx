@@ -91,24 +91,6 @@ export const TokenProvider = ({ children }) => {
       roomName: null,
       userEmail:null
     });
-    // 상태 확인용 console
-    console.log(
-      '로그아웃 Context 값 ',
-      'accessToken : ',
-      localStorage.getItem('accessToken'),
-      'userId : ',
-      localStorage.getItem('userId'),
-      'userName : ',
-      localStorage.getItem('userName'),
-      'userAuth : ',
-      localStorage.getItem('userAuth'),
-      'refreshToken : ',
-      localStorage.getItem('refreshToken'),
-      'roomName : ',
-      localStorage.getItem('roomName'),
-      "userEmail: ",
-      localStorage.getItem("userEmail")
-    );
   };
   useEffect(() => {
     // 토큰 변경 시 로그인 여부 업데이트

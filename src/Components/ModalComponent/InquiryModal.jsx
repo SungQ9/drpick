@@ -111,9 +111,6 @@ const InquiryModal = ({ onClose, item = {} }) => {
       });
     }
 
-    // axios 요청 전에 FormData 확인
-    console.log('FormData before axios request:', formData);
-
     try {
       const res = await axios.post(
         'http://localhost:8080/inquiry/registInquiry',
@@ -126,7 +123,6 @@ const InquiryModal = ({ onClose, item = {} }) => {
       onClose();
       
     } catch (error) {
-      console.log(error.response);
       if (error.response) {
         // 서버 응답이 있을 경우
         if (error.response.data && error.response.data.error) {

@@ -38,7 +38,6 @@ const DrugStoreManagement = () => {
           );
           setCurrentHeaders(headers.drugstoreReceive);
           setItems(response.data);
-          console.log(response.data);
           setTitle('약주문목록');
         } else if (selectedType === 'inquiry') {
           response = await axios.get(

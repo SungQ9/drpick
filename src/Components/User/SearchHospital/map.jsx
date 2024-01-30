@@ -39,7 +39,7 @@ const KakaoHospital = ({ list, onListUpdate }) => {
       );
 
       onListUpdate(response.data); // 리스트 업데이트
-      console.log(response.data);
+      
     } catch (error) {
       console.error("Error sending location to server:", error);
     } finally {

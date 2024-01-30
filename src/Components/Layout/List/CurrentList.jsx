@@ -31,7 +31,6 @@ const CurrentList = ({
   const { openModal } = useModalContext();
 
   const handleButtonClick = (item, listbutton) => {
-    console.log(buttonName, "클릭", listbutton, listType);
     if (buttonName === "작성") {
       openModal(<InquiryModal item={item} />, "1:1문의");
     } else if (listbutton === "수정" && listType === "user") {

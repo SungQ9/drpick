@@ -16,7 +16,6 @@ const SelectDoctor = () => {
   const [doctors, setDoctors] = useState([]);
 
   const doctorHandler = (name, item) => {
-    console.log('Selected Doctor:', name);
     navigate(`/clinic/detail/`, { state: { doctor: item } });
   };
 

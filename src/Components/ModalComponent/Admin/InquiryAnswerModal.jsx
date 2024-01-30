@@ -1,14 +1,71 @@
 // 문의답변 모달
-import React from 'react';
-import { useModalContext } from '../../Context/ModalContext';
-import Input from '../../Layout/Input';
-import DoctorRequest from './DoctorRequest';
+import React, {useState} from 'react'
+import { useModalContext } from '../../Context/ModalContext'
+import Input from '../../Layout/Input'
+import DoctorRequest from './DoctorRequest'
+import axios from "axios"
+import { useTokenContext } from "../../Context/TokenContext"
+
 const InquiryAnswerModal = ({ onClose, item = {} }) => {
-  const { openModal } = useModalContext();
+  const { openModal } = useModalContext()
+  const { token } = useTokenContext()
+  const [adminComments, setAdminComments] = useState("")
+  const [refreshKey, setRefreshKey] = useState(0)
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
 
   const handleOpenModal = (component, name, type) => {
-    openModal(component, name, type);
-  };
+    openModal(component, name, type)
+  }
+
+  const updateInquiryAdminAnswer = async() => {
+    try{
+      const response = await axios.post(
+        "http://localhost:8080/admin/updateInquiryAnswer",
+        { inquiryId: item.inquiryId, inquiryAnswer: adminComments },
+        config
+      )
+
+    const message = response.data.body.message
+
+    if (response.data.body.success) {
+      alert(message)
+      onClose()
+      setRefreshKey((prevKey) => prevKey + 1)
+    } else {
+      alert(message)
+      return
+    }
+
+    }catch(err){
+      if (err.response) {
+        // 서버 응답이 있을 경우
+        if (err.response.data && err.response.data.error) {
+          // 서버에서 에러 응답을 보냈을 때
+          const details = err.response.data.details
+          const errorMessages = Object.values(details).join('\n')
+
+          alert(`유효성 검증 오류:\n${errorMessages}`)
+        } else {
+          // 기타 서버 응답 오류 처리
+          const errorMessage =
+          err.response.data.body.message || '서버 응답 오류'
+          alert(`${errorMessage}`)
+        }
+      } else if (err.request) {
+        // 서버로의 요청이 실패했을 경우
+        console.error('서버에 요청을 보내는 중 오류가 발생했습니다.')
+      } else {
+        // 오류를 발생시킨 요청을 설정하는 중에 오류가 발생했을 경우
+        console.error('오류를 설정하는 중에 문제가 발생했습니다.')
+      }
+    }
+  }
+
   return (
     <div
       style={{
@@ -50,24 +107,26 @@ const InquiryAnswerModal = ({ onClose, item = {} }) => {
         <tr>
           <td colSpan={2}>
             <Input
-              id='hospital_tel'
+              id='inquiry_title'
               className='member_tel'
               label='제목'
               type='text'
               style={{ width: '500px' }}
               disabled={'disabled'}
+              value={item.inquiryTitle}
             />
           </td>
         </tr>
         <tr>
           <td colSpan={2}>
             <Input
-              id='hospital_tel'
+              id='inquiryWriterEmail'
               className='member_tel'
-              label='이름'
+              label='이메일'
               type='text'
               style={{ width: '500px' }}
               disabled={'disabled'}
+              value={item.inquiryWriterEmail}
             />
           </td>
         </tr>
@@ -112,6 +171,7 @@ const InquiryAnswerModal = ({ onClose, item = {} }) => {
                   borderRadius: '10px',
                   padding: '5px 0px 0px 5px',
                 }}
+                value={item.inquiryComments}
                 disabled
               ></textarea>
             </p>
@@ -139,8 +199,8 @@ const InquiryAnswerModal = ({ onClose, item = {} }) => {
             <div
               style={{ marginLeft: '20px', cursor: 'pointer', color: 'blue' }}
               onClick={(e) => {
-                e.stopPropagation();
-                handleOpenModal(<DoctorRequest />, '증명파일');
+                e.stopPropagation()
+                handleOpenModal(<DoctorRequest />, '증명파일')
               }}
             ></div>
           </td>
@@ -186,6 +246,7 @@ const InquiryAnswerModal = ({ onClose, item = {} }) => {
                   borderRadius: '10px',
                   padding: '5px 0px 0px 5px',
                 }}
+                onChange={(e) => setAdminComments(e.target.value)}
               ></textarea>
             </p>
           </td>
@@ -200,7 +261,7 @@ const InquiryAnswerModal = ({ onClose, item = {} }) => {
           width: '400px',
         }}
       >
-        <button className='clinicSubBtn-mid' style={{ background: '#11c2ad' }}>
+        <button className='clinicSubBtn-mid' onClick={updateInquiryAdminAnswer} style={{ background: '#11c2ad' }}>
           확인
         </button>
         <button className='clinicSubBtn-mid' onClick={onClose}>
@@ -208,7 +269,7 @@ const InquiryAnswerModal = ({ onClose, item = {} }) => {
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default InquiryAnswerModal;
+export default InquiryAnswerModal

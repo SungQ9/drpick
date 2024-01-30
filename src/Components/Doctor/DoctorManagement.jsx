@@ -34,7 +34,6 @@ const DoctorManagement = () => {
             'http://localhost:8080/doctors/getDoctorCurrentHistory',
             config,
           );
-          console.log('Response from server:', response.data); // 콘솔에 출력
           setItems(response.data);
           setCurrentHeaders(headers.doctorhistory);
           setTitle('진료기록조회');
@@ -43,7 +42,6 @@ const DoctorManagement = () => {
             'http://localhost:8080/doctors/getDoctorInquiry',
             config,
           );
-          console.log('의사문의 ');
           setItems(response.data);
           setCurrentHeaders(headers.inquiry);
           setTitle('문의내역');
