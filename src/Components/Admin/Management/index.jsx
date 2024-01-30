@@ -1,27 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { useTokenContext } from "../../Context/TokenContext";
-import axios from "axios";
-import headers from "../../SampleData/Headers";
-import ListTitle from "../../Layout/List/ListTitle";
-import List from "../../Layout/List";
-import Loading from "../../User/ImageSearch/Loading";
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useTokenContext } from '../../Context/TokenContext';
+import { useModalContext } from '../../Context/ModalContext';
+import axios from 'axios';
+import headers from '../../SampleData/Headers';
+import ListTitle from '../../Layout/List/ListTitle';
+import List from '../../Layout/List';
+import Loading from '../../User/ImageSearch/Loading';
 
-const InquiryManage = () => {
+const AdminMangement = () => {
   const location = useLocation();
   const { token, userAuth } = useTokenContext();
-  const selectedType = location.state?.selectedType || "default";
-  const [title, setTitle] = useState("");
+  const selectedType = location.state?.selectedType || 'default';
+  const [title, setTitle] = useState('');
   const [items, setItems] = useState();
   const [currentHeaders, setCurrentHeaders] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const { isModalOpen } = useModalContext();
 
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
     params: {
-      memberId: localStorage.getItem("userId"),
+      memberId: localStorage.getItem('userId'),
     },
   };
 
@@ -35,11 +37,12 @@ const InquiryManage = () => {
         item.inquiryType = convertInquiryType(item.inquiryType);
         return item;
       });
+
       setItems(response.data);
       setCurrentHeaders(headers);
       setTitle(titleKey);
     } catch (err) {
-      console.error("데이터 요청 에러:", err);
+      console.error('데이터 요청 에러:', err);
       // 에러 발생 시 대체 데이터 설정 가능
     } finally {
       setIsLoading(false);
@@ -48,152 +51,152 @@ const InquiryManage = () => {
 
   const convertInquiryType = (inquiryType) => {
     switch (inquiryType) {
-      case "Q":
-        return "이용문의";
-      case "C":
-        return "진료문의";
-      case "P":
-        return "결제문의";
-      case "D":
-        return "배송문의";
+      case 'Q':
+        return '이용문의';
+      case 'C':
+        return '진료문의';
+      case 'P':
+        return '결제문의';
+      case 'D':
+        return '배송문의';
       default:
-        return "기타";
+        return '기타';
     }
   };
 
   useEffect(() => {
     switch (selectedType) {
-      case "user":
+      case 'user':
         fetchInquiryData(
-          "http://localhost:8080/admin/getMemberList",
+          'http://localhost:8080/admin/getMemberList',
           headers.members,
-          "회원관리"
+          '회원관리',
         );
         break;
-      case "doctor":
+      case 'doctor':
         fetchInquiryData(
-          "http://localhost:8080/admin/getDoctorsList",
+          'http://localhost:8080/admin/getDoctorsList',
           headers.doctors,
-          "의사관리"
+          '의사관리',
         );
         break;
-      case "request":
+      case 'request':
         fetchInquiryData(
-          "http://localhost:8080/admin/getRegistRequestList",
+          'http://localhost:8080/admin/getRegistRequestList',
           headers.requestDoctors,
-          "등록요청목록"
+          '등록요청목록',
         );
         break;
-      case "hospital":
+      case 'hospital':
         fetchInquiryData(
-          "http://localhost:8080/admin/getHospitalList",
+          'http://localhost:8080/admin/getHospitalList',
           headers.hospitals,
-          "병원관리"
+          '병원관리',
         );
         break;
-      case "drugstore":
+      case 'drugstore':
         fetchInquiryData(
-          "http://localhost:8080/admin/getDrugstoreList",
+          'http://localhost:8080/admin/getDrugstoreList',
           headers.drugstores,
-          "약국관리"
+          '약국관리',
         );
         break;
-      case "userInquiry":
+      case 'userInquiry':
         fetchInquiryData(
-          "http://localhost:8080/admin/getMemberInquiryList",
+          'http://localhost:8080/admin/getMemberInquiryList',
           headers.inquiry,
-          "회원 문의"
+          '회원 문의',
         );
         break;
-      case "doctorInquiry":
+      case 'doctorInquiry':
         fetchInquiryData(
-          "http://localhost:8080/admin/getDoctorInquiryList",
+          'http://localhost:8080/admin/getDoctorInquiryList',
           headers.inquiry,
-          "의사 문의"
+          '의사 문의',
         );
         break;
-      case "drugstoreInquiry":
+      case 'drugstoreInquiry':
         fetchInquiryData(
-          "http://localhost:8080/admin/getDrugstoreInquiryList",
+          'http://localhost:8080/admin/getDrugstoreInquiryList',
           headers.inquiry,
-          "약국 문의"
+          '약국 문의',
         );
         break;
       default:
         setIsLoading(false);
         break;
     }
-  }, [selectedType, token]);
+  }, [selectedType, token, isModalOpen]);
 
   if (isLoading) {
     return <Loading />;
   }
 
   return (
-    <div className="listWrapper">
+    <div className='listWrapper'>
       <ListTitle title={title} />
       {/* 회원 관리 (selectedType === 'user') */}
-      {selectedType === "user" && (
+      {selectedType === 'user' && (
         <List
           headers={currentHeaders}
           items={items}
-          listbutton={"수정"}
-          listType={"user"}
-          buttonType={"N"}
+          listbutton={'수정'}
+          listType={'user'}
+          buttonType={'N'}
         />
       )}
 
       {/* 의사 관리 (selectedType === 'doctor') */}
-      {selectedType === "doctor" && (
+      {selectedType === 'doctor' && (
         <List
           headers={currentHeaders}
           items={items}
-          listbutton={"수정"}
-          listType={"doctor"}
-          buttonType={"N"}
+          listbutton={'수정'}
+          listType={'doctor'}
+          buttonType={'N'}
         />
       )}
 
       {/*의사 등록요청 */}
-      {selectedType === "request" && (
+      {selectedType === 'request' && (
         <List
           headers={currentHeaders}
           items={items}
-          listbutton={"상세보기"}
-          buttonType={"N"}
+          listbutton={'상세보기'}
+          buttonType={'N'}
         />
       )}
       {/*병원관리 */}
-      {selectedType === "hospital" && (
+      {selectedType === 'hospital' && (
         <List
           headers={currentHeaders}
           items={items}
-          buttonType={"Y"}
-          buttonName={"추가"}
-          listbutton={"수정"}
-          listType={"hospital"}
+          buttonType={'Y'}
+          buttonName={'추가'}
+          listbutton={'수정'}
+          listType={'hospital'}
         />
       )}
       {/*약국관리 */}
-      {selectedType === "drugstore" && (
+      {selectedType === 'drugstore' && (
         <List
           headers={currentHeaders}
           items={items}
-          buttonType={"Y"}
-          buttonName={"추가"}
-          listbutton={"수정"}
-          listType={"drugstore"}
+          buttonType={'Y'}
+          buttonName={'추가'}
+          listbutton={'수정'}
+          listType={'drugstore'}
         />
       )}
 
       {/*문의관리 */}
-      {(selectedType === "userInquiry" ||
-        selectedType === "doctorInquiry" ||
-        selectedType === "drugstoreInquiry") && (
-        <List headers={currentHeaders} items={items} type={"Date"} />
+      {(selectedType === 'userInquiry' ||
+        selectedType === 'doctorInquiry' ||
+        selectedType === 'drugstoreInquiry') && (
+        <List headers={currentHeaders} items={items} type={'Date'} />
       )}
     </div>
   );
 };
 
-export default InquiryManage;
+export default AdminMangement;

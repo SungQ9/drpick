@@ -27,6 +27,7 @@ const DoctorRequestModal = ({ onClose, item = {} }) => {
               label='이름'
               type='text'
               style={{ width: '500px' }}
+              value={item.doctorName}
               readOnly={'readOnly'}
             />
           </td>
@@ -39,6 +40,7 @@ const DoctorRequestModal = ({ onClose, item = {} }) => {
               label='이메일'
               type='text'
               style={{ width: '500px' }}
+              value={item.doctorEmail}
               readOnly={'readOnly'}
             />
           </td>
@@ -51,6 +53,7 @@ const DoctorRequestModal = ({ onClose, item = {} }) => {
               label='비밀번호'
               type='text'
               style={{ width: '500px' }}
+              value={item.doctorPwd}
               readOnly={'readOnly'}
             />
           </td>
@@ -64,6 +67,7 @@ const DoctorRequestModal = ({ onClose, item = {} }) => {
               label='전화번호'
               type='text'
               style={{ width: '500px' }}
+              value={item.doctorTel}
               readOnly={'readOnly'}
             />
           </td>
@@ -76,6 +80,7 @@ const DoctorRequestModal = ({ onClose, item = {} }) => {
               label='생년월일'
               type='text'
               style={{ width: '270px' }}
+              value={item.doctorBirth}
               readOnly={'readOnly'}
             />
           </td>
@@ -86,7 +91,7 @@ const DoctorRequestModal = ({ onClose, item = {} }) => {
               id='sexM'
               value='M'
               name='sex'
-              defaultChecked
+              defaultChecked={item.doctorSex === 'M'}
               style={{
                 verticalAlign: 'middle',
                 width: '15px',
@@ -100,6 +105,7 @@ const DoctorRequestModal = ({ onClose, item = {} }) => {
               id='sexF'
               value='F'
               name='sex'
+              defaultChecked={item.doctorSex === 'F'}
               style={{
                 verticalAlign: 'middle',
                 width: '15px',
@@ -117,6 +123,7 @@ const DoctorRequestModal = ({ onClose, item = {} }) => {
               label='주소'
               type='text'
               style={{ width: '500px' }}
+              value={item.doctorAddrMain}
               readOnly={'readOnly'}
             />
           </td>
@@ -129,6 +136,7 @@ const DoctorRequestModal = ({ onClose, item = {} }) => {
               label='나머지주소'
               type='text'
               style={{ width: '500px' }}
+              value={item.doctorAddrDetail}
               readOnly={'readOnly'}
             />
           </td>

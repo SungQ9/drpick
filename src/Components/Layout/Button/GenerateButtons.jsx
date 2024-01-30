@@ -1,9 +1,9 @@
 // buttonHelpers.js
-import React from "react";
-import { useModalContext } from "../../Context/ModalContext";
-import { useNavigate } from "react-router-dom";
-import ImgModal from "../../ModalComponent/User/ImgModal";
-import InquiryAnswerModal from "../../ModalComponent/Admin/InquiryAnswerModal";
+import React from 'react';
+import { useModalContext } from '../../Context/ModalContext';
+import { useNavigate } from 'react-router-dom';
+import ImgModal from '../../ModalComponent/User/ImgModal';
+import InquiryAnswerModal from '../../ModalComponent/Admin/InquiryAnswerModal';
 
 const GenerateButtons = ({ status, item = {} }) => {
   const { openModal } = useModalContext();
@@ -18,10 +18,10 @@ const GenerateButtons = ({ status, item = {} }) => {
   };
 
   switch (status) {
-    case "UN":
+    case 'UN':
       return (
         <button
-          className="listBtn-mid"
+          className='listBtn-mid'
           onClick={() =>
             navigate(`/clinic/room/${item.certificateNum}`, {
               state: { certificateNum: item.certificateNum },
@@ -31,58 +31,69 @@ const GenerateButtons = ({ status, item = {} }) => {
           진료실입장하기
         </button>
       );
-    case "UY":
+    case 'UY':
       return (
         <div>
           <button
-            className="listBtn-short"
-            onClick={() => handleOpenModal(<ImgModal />, "진단서")}
+            className='listBtn-short'
+            onClick={() => handleOpenModal(<ImgModal />, '진단서')}
           >
             진단서
           </button>
           <button
-            className="listBtn-short"
-            onClick={() => handleOpenModal(<ImgModal />, "처방전")}
-            style={{ background: "#AECCC8" }}
+            className='listBtn-short'
+            onClick={() => handleOpenModal(<ImgModal />, '처방전')}
+            style={{ background: '#AECCC8' }}
           >
             처방전
           </button>
         </div>
       );
-    case "N":
+    case 'N':
       return (
         <button
-          className="clinicSubBtn-mid"
+          className='clinicSubBtn-mid'
           onClick={() =>
-            handleOpenModal(<InquiryAnswerModal item={item} />, "문의")
+            handleOpenModal(
+              <InquiryAnswerModal item={item} type={'user'} />,
+              '문의',
+            )
           }
-          style={{ background: "#11c2ad" }}
+          style={{ background: '#11c2ad' }}
         >
           답변대기
         </button>
       );
-    case "Y":
+    case 'Y':
       return (
-        <button className="listBtn-mid" onClick={() => handleOpenModal()}>
+        <button
+          className='listBtn-mid'
+          onClick={() =>
+            handleOpenModal(
+              <InquiryAnswerModal item={item} type={'user'} />,
+              '문의',
+            )
+          }
+        >
           답변완료
         </button>
       );
-    case "RN":
+    case 'RN':
       return (
         <button
-          className="listBtn-short"
+          className='listBtn-short'
           onClick={() => handleOpenModal()}
-          style={{ background: "#11c2ad" }}
+          style={{ background: '#11c2ad' }}
         >
           작성전
         </button>
       );
-    case "RY":
+    case 'RY':
       return (
         <button
-          className="listBtn-short"
+          className='listBtn-short'
           onClick={() => handleOpenModal()}
-          style={{ background: "#11c2ad" }}
+          style={{ background: '#11c2ad' }}
         >
           수정
         </button>

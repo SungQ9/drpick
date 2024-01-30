@@ -18,6 +18,7 @@ const UserManagement = () => {
   const [currentHeaders, setCurrentHeaders] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const { isModalOpen } = useModalContext();
+  const [selectedReviews, setSelectedReviews] = useState([]);
 
   const handleSearch = (key) => {
     setKeyword(key);
@@ -34,49 +35,87 @@ const UserManagement = () => {
     },
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        switch (selectedType) {
-          case 'history':
-            var response = await axios.get(
-              'http://localhost:8080/members/currentHistory',
-              config,
-            );
-            setItems(response.data);
-            setCurrentHeaders(headers.medeicalhistory);
-            setTitle('진료내역조회');
-            break;
-          case 'inquiry':
-            var response = await axios.get(
-              'http://localhost:8080/members/getMemberInquiry',
-              config,
-            );
-            setItems(response.data);
-            setCurrentHeaders(headers.inquiry);
-            setTitle('1:1문의');
-            break;
-          case 'review':
-            var response = await axios.get(
-              'http://localhost:8080/members/getMemberReview',
-              config,
-            );
-            setItems(response.data);
-            setCurrentHeaders(headers.reviews);
-            setTitle('리뷰관리');
-            break;
-        }
-      } catch (err) {
-        console.error('사용자 목록 에러 :', err);
-        // 여기서 에러 발생 시 대체 데이터 설정 가능
-      } finally {
-        setIsLoading(false);
+  const handleReviewSelect = (reviewId) => {
+    setSelectedReviews((prevSelected) => {
+      if (prevSelected.includes(reviewId)) {
+        return prevSelected.filter((id) => id !== reviewId);
+      } else {
+        return [...prevSelected, reviewId];
       }
-    };
+    });
+  };
 
+  const reviewDelete = async () => {
+    try {
+      console.log('전달된 리뷰 번호', selectedReviews);
+      const response = await axios.delete(
+        'http://localhost:8080/members/deleteReviewId',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          data: selectedReviews,
+        },
+      );
+      fetchData();
+      setSelectedReviews([]);
+      console.log(response.data);
+    } catch (error) {
+      console.error('리뷰처리 에러:', error);
+    }
+  };
+
+  const fetchDataMappings = {
+    history: async () => {
+      const response = await axios.get(
+        'http://localhost:8080/members/currentHistory',
+        config,
+      );
+      setItems(response.data);
+      setCurrentHeaders(headers.medeicalhistory);
+      setTitle('진료내역조회');
+    },
+    inquiry: async () => {
+      const response = await axios.get(
+        'http://localhost:8080/members/getMemberInquiry',
+        config,
+      );
+      setItems(response.data);
+      setCurrentHeaders(headers.inquiry);
+      setTitle('1:1문의');
+    },
+    review: async () => {
+      const response = await axios.get(
+        'http://localhost:8080/members/getMemberReview',
+        config,
+      );
+      setItems(response.data);
+      setCurrentHeaders(headers.reviews);
+      setTitle('리뷰관리');
+    },
+  };
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const fetchFunction = fetchDataMappings[selectedType];
+      if (fetchFunction) {
+        await fetchFunction();
+      } else {
+        // 기본 혹은 예외 처리
+        console.log('Selected type not found');
+      }
+    } catch (err) {
+      console.error('사용자 목록 에러 :', err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
-  }, [selectedType, token,isModalOpen]);
+  }, [selectedType, token, isModalOpen]);
 
   if (isLoading) {
     return (
@@ -99,6 +138,9 @@ const UserManagement = () => {
           buttonName='삭제'
           onSearch={handleSearch}
           selectable={true}
+          onDeleteReviews={reviewDelete}
+          onReviewSelect={handleReviewSelect}
+          selectedReviews={selectedReviews}
         />
       )}
 
