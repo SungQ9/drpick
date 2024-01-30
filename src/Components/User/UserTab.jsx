@@ -69,14 +69,6 @@ function UserTab() {
           </ul>
         )}
       </li>
-      <li
-        className='tabLi'
-        onClick={() => {
-          navigate('/payment');
-        }}
-      >
-        결제(추후 삭제)
-      </li>
     </ul>
   );
 }
