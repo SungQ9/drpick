@@ -57,7 +57,10 @@ const WorkTime = ({ style }) => {
           />
           <h4>월요일</h4>
           <Select
-            id="mondayEndTime"
+            id='mondayEndTime'
+            className={
+              selectedDay.monday ? 'select-enabled' : 'select-disabled'
+            }
             options={time}
             style={{ width: '100px' }}
             disabled={!selectedDay.monday}
@@ -67,6 +70,9 @@ const WorkTime = ({ style }) => {
         <td>
           <Select
             options={time}
+            className={
+              selectedDay.monday ? 'select-enabled' : 'select-disabled'
+            }
             style={{ width: '100px' }}
             disabled={!selectedDay.monday}
           />
@@ -80,6 +86,9 @@ const WorkTime = ({ style }) => {
           />
           <h4>화요일</h4>
           <Select
+            className={
+              selectedDay.tuesday ? 'select-enabled' : 'select-disabled'
+            }
             options={time}
             style={{ width: '100px' }}
             disabled={!selectedDay.tuesday}
@@ -88,6 +97,9 @@ const WorkTime = ({ style }) => {
         ~
         <td>
           <Select
+            className={
+              selectedDay.tuesday ? 'select-enabled' : 'select-disabled'
+            }
             options={time}
             style={{ width: '100px' }}
             disabled={!selectedDay.tuesday}
@@ -104,6 +116,9 @@ const WorkTime = ({ style }) => {
           />
           <h4>수요일</h4>
           <Select
+            className={
+              selectedDay.wednesday ? 'select-enabled' : 'select-disabled'
+            }
             options={time}
             style={{ width: '100px' }}
             disabled={!selectedDay.wednesday}
@@ -112,6 +127,9 @@ const WorkTime = ({ style }) => {
         ~
         <td>
           <Select
+            className={
+              selectedDay.wednesday ? 'select-enabled' : 'select-disabled'
+            }
             options={time}
             style={{ width: '100px' }}
             disabled={!selectedDay.wednesday}
@@ -126,6 +144,9 @@ const WorkTime = ({ style }) => {
           />
           <h4>목요일</h4>
           <Select
+            className={
+              selectedDay.thursday ? 'select-enabled' : 'select-disabled'
+            }
             options={time}
             style={{ width: '100px' }}
             disabled={!selectedDay.thursday}
@@ -134,6 +155,9 @@ const WorkTime = ({ style }) => {
         ~
         <td>
           <Select
+            className={
+              selectedDay.thursday ? 'select-enabled' : 'select-disabled'
+            }
             options={time}
             style={{ width: '100px' }}
             disabled={!selectedDay.thursday}
@@ -150,6 +174,9 @@ const WorkTime = ({ style }) => {
           />
           <h4>금요일</h4>
           <Select
+            className={
+              selectedDay.friday ? 'select-enabled' : 'select-disabled'
+            }
             options={time}
             style={{ width: '100px' }}
             disabled={!selectedDay.friday}
@@ -158,6 +185,9 @@ const WorkTime = ({ style }) => {
         <h3>~</h3>
         <td>
           <Select
+            className={
+              selectedDay.friday ? 'select-enabled' : 'select-disabled'
+            }
             options={time}
             style={{ width: '100px' }}
             disabled={!selectedDay.friday}
@@ -172,6 +202,9 @@ const WorkTime = ({ style }) => {
           />
           <h4>토요일</h4>
           <Select
+            className={
+              selectedDay.saturday ? 'select-enabled' : 'select-disabled'
+            }
             options={time}
             style={{ width: '100px' }}
             disabled={!selectedDay.saturday}
@@ -180,6 +213,9 @@ const WorkTime = ({ style }) => {
         ~
         <td>
           <Select
+            className={
+              selectedDay.saturday ? 'select-enabled' : 'select-disabled'
+            }
             options={time}
             style={{ width: '100px' }}
             disabled={!selectedDay.saturday}
@@ -196,6 +232,9 @@ const WorkTime = ({ style }) => {
           />
           <h4>일요일</h4>
           <Select
+            className={
+              selectedDay.sunday ? 'select-enabled' : 'select-disabled'
+            }
             options={time}
             style={{ width: '100px' }}
             disabled={!selectedDay.sunday}
@@ -204,6 +243,9 @@ const WorkTime = ({ style }) => {
         ~
         <td>
           <Select
+            className={
+              selectedDay.sunday ? 'select-enabled' : 'select-disabled'
+            }
             options={time}
             style={{ width: '100px' }}
             disabled={!selectedDay.sunday}
@@ -218,6 +260,9 @@ const WorkTime = ({ style }) => {
           />
           <h4>공휴일</h4>
           <Select
+            className={
+              selectedDay.holiday ? 'select-enabled' : 'select-disabled'
+            }
             options={time}
             style={{ width: '100px' }}
             disabled={!selectedDay.holiday}
@@ -226,6 +271,9 @@ const WorkTime = ({ style }) => {
         ~
         <td>
           <Select
+            className={
+              selectedDay.holiday ? 'select-enabled' : 'select-disabled'
+            }
             options={time}
             style={{ width: '100px' }}
             disabled={!selectedDay.holiday}
