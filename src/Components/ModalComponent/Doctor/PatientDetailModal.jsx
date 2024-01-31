@@ -10,13 +10,13 @@ const PatientDetailModal = ({ onClose, item = {} }) => {
           <td>
             <h3>이름</h3>
           </td>
-          <td>홍길동</td>
+          <td>{item.memberName}</td>
         </tr>
         <tr>
           <td>
             <h3>연락처</h3>
           </td>
-          <td>010-1234-1567</td>
+          <td>{item.memberTel}</td>
         </tr>
         <tr>
           <td>

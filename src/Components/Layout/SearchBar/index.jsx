@@ -12,9 +12,7 @@ const SearchBar = ({
 }) => {
   const [inputText, setInputText] = useState('');
   const { setSearchKeyword } = useModalContext(); // ModalContext에서 검색 키워드 가져오기
-  const prop1 = props[0];
-  const prop2 = props[1];
-  const [key, setKey] = useState('');
+
   placeholder = '검색어를 입력하세요';
 
   const onChangeInput = (evt) => {
@@ -42,7 +40,7 @@ const SearchBar = ({
   const handleSubmit = (evt) => {
     evt.preventDefault();
     // 엔터 키 눌렀을 때는 초기화하지 않도록 수정
-    if (evt.key === "Enter") {
+    if (evt.key === 'Enter') {
       return;
     }
     handleSearch();
@@ -58,7 +56,7 @@ const SearchBar = ({
           placeholder={placeholder}
         />
         <button
-          className="clinicSubBtn-short"
+          className='clinicSubBtn-short'
           onClick={(evt) => handleSearch(evt)}
         >
           검색
