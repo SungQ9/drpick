@@ -778,3 +778,12 @@ td:nth-child(5) {
   margin-left: 10px;
   margin-right: 10px;
 }
+
+.select-enabled {
+  border: 1px solid #777777;
+  color: #777777;
+}
+
+.select-disabled {
+  opacity: 50%;
+}

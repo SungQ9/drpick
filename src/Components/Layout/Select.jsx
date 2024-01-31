@@ -1,9 +1,18 @@
-import React from "react";
+import React from 'react';
 
-const Select = ({ id, options, onChange, value, style, disabled }) => {
+const Select = ({
+  id,
+  className,
+  options,
+  onChange,
+  value,
+  style,
+  disabled,
+}) => {
   return (
     <select
       id={id}
+      className={className}
       onChange={onChange}
       value={value}
       style={style}
