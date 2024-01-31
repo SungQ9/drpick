@@ -38,12 +38,14 @@ const PatientDetailModal = ({ onClose, item = {} }) => {
             <PatientDetail />
           </td>
         </tr>
+
         <tr>
           <td></td>
           <td className='patientDetail' colSpan={3} style={{ width: '530px' }}>
             <PatientDetail />
           </td>
         </tr>
+        
         <tr>
           <td></td>
           <td className='patientDetail' colSpan={3} style={{ width: '530px' }}>

@@ -14,16 +14,22 @@ const PatientList = ({ type, datas }) => {
 
   const handleBtnClick = async (type, data) => {
     let url = '';
-    let params = {};
-    const headers = { headers: { Authorization: `Bearer ${token}` } };
+    const config = {
+      headers: { 
+        Authorization: `Bearer ${token}` 
+      },
+      params:{}
+    }
 
     // eslint-disable-next-line default-case
     switch (type) {
       case 'detail': // 환자상세
         url = 'http://localhost:8080/doctors/getPatientDetail';
-        params = { memberId: data.memberId };
+        config.params.memberId = data.memberId
+
         try {
-          const response = await axios.get(url, headers, params);
+          const response = await axios.get(url, config);
+          console.log(response)
           openModal(<PatientDetailModal item={response.data} />, '환자상세');
         } catch (error) {
           console.error('Error:', error);
@@ -32,18 +38,18 @@ const PatientList = ({ type, datas }) => {
 
       case 'reservation-accept': // 진료접수
         url = '';
-        params = {};
+        // params = {};
         try {
-          const response = await axios.get(url, headers, params);
+          const response = await axios.get(url, config);
         } catch (error) {
           console.error('Error:', error);
         }
         break;
       case 'reservation-cancle': // 대기접수취소
         url = '';
-        params = {};
+        // params = {};
         try {
-          const response = await axios.get(url, headers, params);
+          const response = await axios.get(url, config);
         } catch (error) {
           console.error('Error:', error);
         }
@@ -51,9 +57,9 @@ const PatientList = ({ type, datas }) => {
 
       case 'request': // 입장 요청
         url = '';
-        params = {};
+        // params = {};
         try {
-          const response = await axios.get(url, headers, params);
+          const response = await axios.get(url, config);
         } catch (error) {
           console.error('Error:', error);
         }
@@ -66,9 +72,9 @@ const PatientList = ({ type, datas }) => {
 
       case 'cancle': // 진료취소
         url = '';
-        params = {};
+        // params = {};
         try {
-          const response = await axios.get(url, headers, params);
+          const response = await axios.get(url, config);
         } catch (error) {
           console.error('Error:', error);
         }
@@ -76,9 +82,9 @@ const PatientList = ({ type, datas }) => {
 
       case 'certificate': // 진단서
         url = '';
-        params = {};
+        // params = {};
         try {
-          const response = await axios.get(url, headers, params);
+          const response = await axios.get(url, config);
           openModal(<ImgModal item={response.data} />, '진단서');
         } catch (error) {
           console.error('Error:', error);
@@ -87,9 +93,9 @@ const PatientList = ({ type, datas }) => {
 
       case 'prescription': // 처방전
         url = '';
-        params = {};
+        // params = {};
         try {
-          const response = await axios.get(url, headers, params);
+          const response = await axios.get(url, config);
           openModal(<ImgModal item={response.data} />, '처방전');
         } catch (error) {
           console.error('Error:', error);
