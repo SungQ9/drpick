@@ -25,6 +25,21 @@ const AdminManagement = () => {
     },
   };
 
+  const convertInquiryType = (inquiryType) => {
+    switch (inquiryType) {
+      case 'Q':
+        return '이용문의';
+      case 'C':
+        return '진료문의';
+      case 'P':
+        return '결제문의';
+      case 'D':
+        return '배송문의';
+      default:
+        return '기타';
+    }
+  };
+
   const fetchDataMappings = {
     user: async () => {
       const response = await axios.get(
@@ -78,7 +93,11 @@ const AdminManagement = () => {
         'http://localhost:8080/admin/getMemberInquiryList',
         config,
       );
-      setItems(response.data);
+      const modifiedData = response.data.map((item) => ({
+        ...item,
+        inquiryType: convertInquiryType(item.inquiryType),
+      }));
+      setItems(modifiedData);
       setCurrentHeaders(headers.inquiry);
       setTitle('회원문의');
     },
@@ -87,7 +106,11 @@ const AdminManagement = () => {
         'http://localhost:8080/admin/getDoctorInquiryList',
         config,
       );
-      setItems(response.data);
+      const modifiedData = response.data.map((item) => ({
+        ...item,
+        inquiryType: convertInquiryType(item.inquiryType),
+      }));
+      setItems(modifiedData);
       setCurrentHeaders(headers.inquiry);
       setTitle('의사문의');
     },
@@ -96,7 +119,11 @@ const AdminManagement = () => {
         'http://localhost:8080/admin/getDrugstoreInquiryList',
         config,
       );
-      setItems(response.data);
+      const modifiedData = response.data.map((item) => ({
+        ...item,
+        inquiryType: convertInquiryType(item.inquiryType),
+      }));
+      setItems(modifiedData);
       setCurrentHeaders(headers.inquiry);
       setTitle('약국문의');
     },
