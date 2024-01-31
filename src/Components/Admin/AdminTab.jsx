@@ -58,7 +58,7 @@ function AdminTab() {
           <img src={doctor} alt='doctor' />
           의사관리
           {doctorSubtabVisible && (
-            <ul className='subtabUi' style={{ right: '35%' }}>
+            <ul className='subtabUi' style={{ right: '15%' }}>
               <li
                 style={{ marginRight: '0px' }}
                 className='subtabLi'
@@ -111,7 +111,7 @@ function AdminTab() {
           />
           문의관리
           {inquirySubtabVisible && (
-            <ul className='subtabUi' style={{ right: '35%' }}>
+            <ul className='subtabUi' style={{ right: '15%' }}>
               <li
                 className='subtabLi'
                 onClick={() => {
