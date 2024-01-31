@@ -78,7 +78,7 @@ const InquiryModal = ({ onClose, item = {}, fetchData }) => {
         >
           {file.name}
         </span>
-        <p onClick={() => handleDeleteFile(index)}>X</p>
+        <p onClick={() => handleDeleteFile(index)}> X </p>
       </p>
     ));
   };
