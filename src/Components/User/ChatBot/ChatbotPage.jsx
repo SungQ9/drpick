@@ -67,7 +67,7 @@ function setUserName(username) {
   if (username != null && username.replace(" ", "" !== "")) {
     sendMessage("반갑습니다, " + username + "님. 닉네임이 설정되었습니다.", "left", 1000);
     setTimeout(function () {
-      sendMessage("저는 Dr.Pick챗봇입니다.", "left");
+      sendMessage("안녕하세요,저는 Dr.Pick챗봇입니다.", "left");
     }, 1000);
     setTimeout(function () {
       sendMessage("어디가 아프신가요", "left");
@@ -102,31 +102,10 @@ function requestChat(messageText, url_pattern) {
     dataType: "json",
     success: function (data) {
       console.log("받은 JSON Data: " + JSON.stringify(data));
-      const entities = data["entity"];
-      const input = data["input"];
-
-      if (
-        entities.includes("B-APPOINTMENT_INTENT") ||
-        entities.includes("B-DATE") ||
-        entities.includes("B-TIME")
-      ) {
-        return sendMessage(
-          "예약 관련 도움이 필요하시군요. 병원 예약을 도와드리겠습니다.",
-          "left"
-        );
-      } else {
-        const symptomIndex = entities.indexOf("S-SYMPTOM");
-        if (symptomIndex !== -1) {
-          const symptom = input[symptomIndex];
-          return sendMessage(
-            symptom +
-              " 증상을 갖고 계시는 군요. 해당 진료과 의사를 찾겠습니다.",
-            "left"
-          );
-        } else {
-          return sendMessage("죄송합니다. 무슨 말인지 잘 모르겠어요.", "left");
-        }
-      }
+      return sendMessage(
+        data.entity,
+        "left"
+      );
     },
     error: function (request, status, error) {
       console.log(error);
