@@ -16,7 +16,6 @@ const Payment = () => {
   const [isCardRegistered, setIsCardRegistered] = useState(false);
   const [cardDisplayNum, setCardDisplayNum] = useState("카드 등록");
 
-
   // 발급사 코드 => 발급사명 연결
   const codeToNameMap = {
     "3K": "기업비씨",
@@ -49,40 +48,45 @@ const Payment = () => {
     //카드 등록 여부 확인 및 카드 화면에 배치
     const fetchPaymentData = async () => {
       try {
-
         // DB에서 카드번호 여부확인/카드번호 조회
-        const response = await axios.get("http://localhost:8080/payments/getUserPaymentMethodAmount", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          params: {
-            memberId: localStorage.getItem("userId"),
-          },
-        });
-  
+        const response = await axios.get(
+          "http://localhost:8080/payments/getUserPaymentMethodAmount",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              memberId: localStorage.getItem("userId"),
+            },
+          }
+        );
+
+        console.log(response.data)
+
         // 카드 등록 여부 확인
-        if (response.data.memberCreditNum) {
+        if (response.data.memberCreditNum && response.data.cardType) {
           setIsCardRegistered(true);
           const creditNum = response.data.memberCreditNum;
           const segmentedCreditNum = creditNum.match(/.{1,4}/g).join("-");
           const cardIssuer = codeToNameMap[response.data.issuerCode] || "기타";
           setCardDisplayNum(
             response.data.cardType +
-            "카드<br />" +
-            cardIssuer +
-            "<br/>" +
-            segmentedCreditNum
+              "카드<br />" +
+              cardIssuer +
+              "<br/>" +
+              segmentedCreditNum
           );
+        } else {
+          setIsCardRegistered(false); 
         }
       } catch (error) {
         console.error("마이페이지 에러:", error);
         // 여기서 에러 발생 시 대체 데이터 설정 가능
       }
     };
-  
+
     fetchPaymentData();
   }, [token]);
-  
 
   // 토스 자동결제 카드등록 모달 호출
   const openTossBillingModal = () => {
@@ -113,7 +117,7 @@ const Payment = () => {
           window.location.reload();
         })
         .catch((error) => {
-          alert("카드를 삭제 못하였습니다")
+          alert("카드를 삭제 못하였습니다");
         });
     }
   };

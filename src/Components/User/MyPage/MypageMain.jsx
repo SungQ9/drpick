@@ -59,7 +59,12 @@ const MypageMain = () => {
       }
     };
 
-    fetchData();
+    const state = navigate().state;
+    if (state && state.selectedType) {
+      fetchData(); 
+    } else {
+      setIsLoading(false);
+    }
   }, [token]);
 
   if (isLoading) {
