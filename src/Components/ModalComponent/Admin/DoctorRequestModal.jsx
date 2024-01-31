@@ -1,10 +1,15 @@
 // 의사 등록요청 상세보기 모달
 import React from 'react';
-import Input from '../../Layout/Input';
+import axios from 'axios';
+import { useTokenContext } from '../../Context/TokenContext';
 import { useModalContext } from '../../Context/ModalContext';
+import Input from '../../Layout/Input';
 import DoctorRequest from './DoctorRequest';
-const DoctorRequestModal = ({ onClose, item = {} }) => {
+import useAlert from '../../Layout/Alert';
+
+const DoctorRequestModal = ({ onClose, item = {}, fetchData }) => {
   const { openModal } = useModalContext();
+  const showAlert = useAlert();
 
   const handleOpenModal = (component, name, type) => {
     openModal(component, name, type);
@@ -41,19 +46,6 @@ const DoctorRequestModal = ({ onClose, item = {} }) => {
               type='text'
               style={{ width: '500px' }}
               value={item.doctorEmail}
-              readOnly={'readOnly'}
-            />
-          </td>
-        </tr>
-        <tr>
-          <td colSpan={2}>
-            <Input
-              id='pwd'
-              className='member_pwd'
-              label='비밀번호'
-              type='text'
-              style={{ width: '500px' }}
-              value={item.doctorPwd}
               readOnly={'readOnly'}
             />
           </td>
@@ -167,7 +159,7 @@ const DoctorRequestModal = ({ onClose, item = {} }) => {
               style={{ marginLeft: '20px', cursor: 'pointer', color: 'blue' }}
               onClick={(e) => {
                 e.stopPropagation();
-                handleOpenModal(<DoctorRequest />, '증명파일');
+                handleOpenModal(<DoctorRequest item={item} />, '증명파일');
               }}
             >
               의사증명서_jpg

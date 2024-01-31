@@ -28,6 +28,9 @@ const ClinicProvider = ({ children }) => {
     writeSymptom: '',
     selectPayment: '',
     uploadedFiles: [],
+    // 사용자에게 보여주는 값
+    selectSubject: '',
+    selectDoctor: '',
     isPaymentSelected: false,
   });
 

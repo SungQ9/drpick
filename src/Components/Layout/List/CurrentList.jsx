@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import GenerateButtons from '../Button/GenerateButtons';
 import SearchBar from '../SearchBar';
 import Button from '../Button';
 import { useModalContext } from '../../Context/ModalContext';
+import UpdateListContext from '../../Context/UpdateListContext';
 import InquiryModal from '../../ModalComponent/InquiryModal';
 import Pagination from './Pagination';
 import MemberProfileEditModal from '../../ModalComponent/Admin/MemberProfileEditModal';
@@ -30,7 +31,7 @@ const CurrentList = ({
 }) => {
   // filteredDateItems 값이 존재하면 해당 값을 items로 사용, 그렇지 않으면 originalItems 사용
   const items = filteredDateItems ? filteredDateItems : originalItems;
-
+  const fetchData = useContext(UpdateListContext);
   const { openModal } = useModalContext();
 
   const handleButtonClick = (item, listbutton) => {
@@ -40,37 +41,63 @@ const CurrentList = ({
 
     switch (actionType) {
       case '작성-inquiry':
-        openModal(<InquiryModal item={item} />, '1:1문의');
+        openModal(
+          <InquiryModal item={item} fetchData={fetchData} />,
+          '1:1문의',
+        );
         break;
       case '수정-user':
-        openModal(<MemberProfileEditModal item={item} />, '회원정보수정');
+        openModal(
+          <MemberProfileEditModal item={item} fetchData={fetchData} />,
+          '회원정보수정',
+        );
         break;
       case '수정-doctor':
-        openModal(<DoctorProfileEditModal item={item} />, '의사정보수정');
+        openModal(
+          <DoctorProfileEditModal item={item} fetchData={fetchData} />,
+          '의사정보수정',
+        );
         break;
       case '추가-hospital':
-        openModal(<HospitalEditModal item={item} />, '병원추가');
+        openModal(
+          <HospitalEditModal item={item} fetchData={fetchData} />,
+          '병원추가',
+        );
         break;
       case '수정-hospital':
         openModal(
-          <HospitalEditModal item={item} type={'modify'} />,
+          <HospitalEditModal
+            item={item}
+            type={'modify'}
+            fetchData={fetchData}
+          />,
           '병원정보수정',
         );
         break;
       case '추가-drugstore':
-        openModal(<DrugstoreEditModal item={item} />, '약국추가');
+        openModal(
+          <DrugstoreEditModal item={item} fetchData={fetchData} />,
+          '약국추가',
+        );
         break;
       case '수정-drugstore':
         openModal(
-          <DrugstoreEditModal item={item} type={'modify'} />,
+          <DrugstoreEditModal
+            item={item}
+            type={'modify'}
+            fetchData={fetchData}
+          />,
           '약국정보수정',
         );
         break;
       case '추가':
-        openModal(<InquiryModal item={item} />, '추가');
+        openModal(<InquiryModal item={item} fetchData={fetchData} />, '추가');
         break;
-      case '상세보기':
-        openModal(<DoctorRequestModal item={item} />, '추가');
+      case '상세보기-doctor':
+        openModal(
+          <DoctorRequestModal item={item} fetchData={fetchData} />,
+          '추가',
+        );
         break;
       case '삭제-review':
         console.log('리뷰삭제 실행');
@@ -140,7 +167,11 @@ const CurrentList = ({
                 {headerKey.map((key) => (
                   <td key={key + index}>
                     {key === 'status' ? (
-                      <GenerateButtons status={item[key]} item={item} />
+                      <GenerateButtons
+                        status={item[key]}
+                        item={item}
+                        fetchData={fetchData}
+                      />
                     ) : (
                       item[key]
                     )}

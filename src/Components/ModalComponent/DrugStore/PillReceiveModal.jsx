@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useTokenContext } from '../../Context/TokenContext';
+import useAlert from '../../Layout/Alert';
 
-const PillReceiveModal = ({ onClose, item = {}, type }) => {
+const PillReceiveModal = ({ onClose, item = {}, type, fetchData }) => {
   const [remarks, setRemarks] = useState('');
   const { token } = useTokenContext();
-  console.log(item.drugstoreHistoryId);
+  const showAlert = useAlert();
+
   useEffect(() => {
     if (item.remarks) {
       setRemarks(item.remarks);
@@ -32,10 +34,15 @@ const PillReceiveModal = ({ onClose, item = {}, type }) => {
         },
       );
       const message = response.data.body.message;
-      alert(message);
-      console.log(response.data);
-      onClose();
-      window.location.reload();
+
+      if (response.data.body.success) {
+        showAlert('수령정보 등록 완료', message, 'success').then((result) => {
+          if (result.isConfirmed) {
+            onClose();
+            fetchData();
+          }
+        });
+      }
     } catch (error) {
       console.error('수령확인 에러 ', error);
     }

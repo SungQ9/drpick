@@ -45,6 +45,17 @@
   border-radius: 15px;
 }
 
+/* sweetalert 버튼 색상*/
+.my-confirm-button {
+  background-color: #11c2ad; /* 예시 색상 */
+  color: white;
+}
+
+.my-cancel-button {
+  background-color: #aeccc8; /* 예시 색상 */
+  color: white;
+}
+
 input {
   width: 350px;
   height: 40px;

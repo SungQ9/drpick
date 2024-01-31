@@ -6,7 +6,7 @@ import ImgModal from '../../ModalComponent/User/ImgModal';
 import InquiryAnswerModal from '../../ModalComponent/Admin/InquiryAnswerModal';
 import PillReceiveModal from '../../ModalComponent/DrugStore/PillReceiveModal';
 
-const GenerateButtons = ({ status, item = {} }) => {
+const GenerateButtons = ({ status, item = {}, fetchData }) => {
   const { openModal } = useModalContext();
   const navigate = useNavigate();
 
@@ -56,7 +56,11 @@ const GenerateButtons = ({ status, item = {} }) => {
           className='clinicSubBtn-mid'
           onClick={() =>
             handleOpenModal(
-              <InquiryAnswerModal item={item} type={'user'} />,
+              <InquiryAnswerModal
+                item={item}
+                type={'user'}
+                fetchData={fetchData}
+              />,
               '문의',
             )
           }
@@ -71,7 +75,11 @@ const GenerateButtons = ({ status, item = {} }) => {
           className='clinicSubBtn-mid'
           onClick={() =>
             handleOpenModal(
-              <InquiryAnswerModal item={item} type={'user'} />,
+              <InquiryAnswerModal
+                item={item}
+                type={'user'}
+                fetchData={fetchData}
+              />,
               '문의',
             )
           }
@@ -106,7 +114,11 @@ const GenerateButtons = ({ status, item = {} }) => {
           style={{ width: '100px' }}
           onClick={() =>
             handleOpenModal(
-              <PillReceiveModal item={item} type={'update'} />,
+              <PillReceiveModal
+                item={item}
+                type={'update'}
+                fetchData={fetchData}
+              />,
               '수령확인',
             )
           }
@@ -119,7 +131,10 @@ const GenerateButtons = ({ status, item = {} }) => {
         <button
           className='listBtn-mid'
           onClick={() =>
-            handleOpenModal(<PillReceiveModal item={item} />, '수령확인')
+            handleOpenModal(
+              <PillReceiveModal item={item} fetchData={fetchData} />,
+              '수령확인',
+            )
           }
           style={{ background: '#AECCC8', color: '#ACACAC', width: '100px' }}
         >

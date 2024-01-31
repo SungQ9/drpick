@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTokenContext } from '../../Context/TokenContext';
 import { useModalContext } from '../../Context/ModalContext';
+import UpdateListContext from '../../Context/UpdateListContext';
 import axios from 'axios';
 import headers from '../../SampleData/Headers';
 import List from '../../Layout/List';
 import ListTitle from '../../Layout/List/ListTitle';
 import Loading from '../../User/ImageSearch/Loading';
+import useAlert from '../../Layout/Alert';
 
 const UserManagement = () => {
   const location = useLocation();
@@ -19,6 +21,7 @@ const UserManagement = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { isModalOpen } = useModalContext();
   const [selectedReviews, setSelectedReviews] = useState([]);
+  const showAlert = useAlert();
 
   const handleSearch = (key) => {
     setKeyword(key);
@@ -59,8 +62,14 @@ const UserManagement = () => {
             data: selectedReviews,
           },
         );
-        fetchData();
-        setSelectedReviews([]);
+        const message = response.data.body.message;
+        showAlert('리뷰삭제성공', message, 'success').then((result) => {
+          if (result.isConfirmed) {
+            fetchData();
+            setSelectedReviews([]);
+          }
+        });
+
         console.log(response.data);
       } catch (error) {
         console.error('리뷰처리 에러:', error);
@@ -128,45 +137,47 @@ const UserManagement = () => {
   }
 
   return (
-    <div className='listWrapper'>
-      <ListTitle title={title} />
+    <UpdateListContext.Provider value={fetchData}>
+      <div className='listWrapper'>
+        <ListTitle title={title} />
 
-      {selectedType === 'review' && (
-        <List
-          headers={currentHeaders}
-          items={items}
-          type='Date'
-          listType='review'
-          buttonType='Y'
-          buttonName='삭제'
-          onSearch={handleSearch}
-          selectable={true}
-          onDeleteReviews={reviewDelete}
-          onReviewSelect={handleReviewSelect}
-          selectedReviews={selectedReviews}
-        />
-      )}
+        {selectedType === 'review' && (
+          <List
+            headers={currentHeaders}
+            items={items}
+            type='Date'
+            listType='review'
+            buttonType='Y'
+            buttonName='삭제'
+            onSearch={handleSearch}
+            selectable={true}
+            onDeleteReviews={reviewDelete}
+            onReviewSelect={handleReviewSelect}
+            selectedReviews={selectedReviews}
+          />
+        )}
 
-      {selectedType === 'inquiry' && (
-        <List
-          headers={currentHeaders}
-          items={items}
-          type='Date'
-          buttonType='Y'
-          buttonName='작성'
-          listType='inquiry'
-        />
-      )}
+        {selectedType === 'inquiry' && (
+          <List
+            headers={currentHeaders}
+            items={items}
+            type='Date'
+            buttonType='Y'
+            buttonName='작성'
+            listType='inquiry'
+          />
+        )}
 
-      {selectedType !== 'review' && selectedType !== 'inquiry' && (
-        <List
-          headers={currentHeaders}
-          items={items}
-          type='Date'
-          buttonType={''}
-        />
-      )}
-    </div>
+        {selectedType !== 'review' && selectedType !== 'inquiry' && (
+          <List
+            headers={currentHeaders}
+            items={items}
+            type='Date'
+            buttonType={''}
+          />
+        )}
+      </div>
+    </UpdateListContext.Provider>
   );
 };
 
