@@ -25,14 +25,14 @@ const ProfileEditList = ({ type, title }) => {
   const { token, userEmail } = useTokenContext();
   const [initialDataFetched, setInitialDataFetched] = useState(false);
   const [selectedDay, setSelectedDay] = useState({
-    monday: false,
-    tuesday: false,
-    wednesday: false,
-    thursday: false,
-    friday: false,
-    saturday: false,
-    sunday: false,
-    holiday: false,
+    월요일: false,
+    화요일: false,
+    수요일: false,
+    목요일: false,
+    금요일: false,
+    토요일: false,
+    일요일: false,
+    공휴일: false,
   });
 
   const handleOpenModal = (component, name, type) => {
@@ -136,16 +136,31 @@ const ProfileEditList = ({ type, title }) => {
       setDoctorComments(doctorInfo.doctorComments);
 
       // 비대면 진료 시간 정보 업데이트 (선택한 날짜에 따라 업데이트 필요)
-      // 예시: 월요일에 대한 정보를 가져와 업데이트
-      const mondayAvailability = doctorAvailability.find(
-        (availability) => availability.day === "월요일"
-      );
-      if (mondayAvailability) {
-        // 시간 정보 업데이트
-        setSelectedDay({ monday: true });
-      }
-      setDoctorAvailability(doctorAvailability); // doctorAvailability 설정 추가
+      const daysOfWeek = [
+        "월요일",
+        "화요일",
+        "수요일",
+        "목요일",
+        "금요일",
+        "토요일",
+        "일요일",
+        "공휴일",
+      ];
+      daysOfWeek.forEach((day) => {
+        const availabilityOfDay = doctorAvailability.find(
+          (availability) => availability.day === day
+        );
 
+        if (availabilityOfDay) {
+          // 해당 요일이 존재하는 경우에만 업데이트
+          setSelectedDay((prevState) => ({
+            ...prevState,
+            [day.toLowerCase()]: true,
+          }));
+        }
+      });
+
+      setDoctorAvailability(doctorAvailability); // doctorAvailability 설정 추가
       setInitialDataFetched(true);
     } catch (error) {
       console.error("데이터를 가져오는 동안 오류가 발생했습니다:", error);
@@ -161,24 +176,30 @@ const ProfileEditList = ({ type, title }) => {
   };
 
   const handleSaveButtonClick = async () => {
-    // 선택된 요일과 해당 요일에 선택된 시간 값을 가져오기
-    const selectedDays = Object.keys(selectedDay).filter(
-      (day) => selectedDay[day]
-    );
+    // 필요한 데이터를 수집
+    const dataToSend = {
+      doctorName,
+      doctorSubject: doctorSubject, // Select 컴포넌트에서 선택된 값은 value 속성에 있을 것으로 가정
+      hospitalName,
+      doctorMajor,
+      doctorComments,
+      doctorAvailability,
 
-    const selectedTimes = selectedDays.reduce((acc, day) => {
-      const startTime = document.getElementById(`${day}StartTime`).value;
-      const endTime = document.getElementById(`${day}EndTime`).value;
-      acc.push(`${day}: ${startTime} ~ ${endTime}`);
-      return acc;
-    }, []);
+      selectedDays: Object.keys(selectedDay).filter((day) => selectedDay[day]),
+      selectedTimes: doctorAvailability
+        .filter((avail) => selectedDay[avail.day.toLowerCase()]) // 선택된 요일에 대한 정보만 필터링
+        .map((avail) => ({
+          day: avail.day,
+          startTime: avail.starttime,
+          endTime: avail.endtime,
+        })),
+    };
 
-    // 가져온 값을 노출하거나 다른 작업 수행
-    alert(
-      `저장 버튼 클릭!\n선택된 요일: ${selectedDays.join(
-        ", "
-      )}\n선택된 시간: ${selectedTimes.join(", ")}`
-    );
+    // 확인용 콘솔 로그
+    console.log("업데이트된 데이터:", dataToSend);
+
+    // 서버로 데이터 전송은 아직 구현하지 않음
+    // 실제 서버로의 요청을 추가하려면 이 부분을 수정하여 사용
   };
 
   if (type === "doctor") {
@@ -273,7 +294,7 @@ const ProfileEditList = ({ type, title }) => {
                   <h5>
                     <span>*</span> 진료과목을 선택해주세요
                   </h5>
-                  <input type="text" readOnly />
+                  <input type="text" value={doctorSubject} readOnly />
                 </td>
                 <td style={{ verticalAlign: "bottom" }}>
                   <Select

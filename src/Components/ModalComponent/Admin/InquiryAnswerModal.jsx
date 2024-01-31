@@ -1,20 +1,20 @@
 // 문의답변 모달
-import React, { useState } from 'react';
-import { useModalContext } from '../../Context/ModalContext';
-import Input from '../../Layout/Input';
-import DoctorRequest from './DoctorRequest';
-import axios from 'axios';
-import { useTokenContext } from '../../Context/TokenContext';
+import React, { useState } from "react";
+import { useModalContext } from "../../Context/ModalContext";
+import Input from "../../Layout/Input";
+import DoctorRequest from "./DoctorRequest";
+import axios from "axios";
+import { useTokenContext } from "../../Context/TokenContext";
 
 const InquiryAnswerModal = ({ onClose, item = {}, type }) => {
   const { openModal } = useModalContext();
   const { token } = useTokenContext();
-  const [adminComments, setAdminComments] = useState(item.inquiryAnswer || '');
+  const [adminComments, setAdminComments] = useState(item.inquiryAnswer || "");
   const [refreshKey, setRefreshKey] = useState(0);
 
   // 관리자인지 확인
-  const userAuth = localStorage.getItem('userAuth');
-  const isAdmin = userAuth === 'A';
+  const userAuth = localStorage.getItem("userAuth");
+  const isAdmin = userAuth === "A";
 
   const config = {
     headers: {
@@ -29,9 +29,9 @@ const InquiryAnswerModal = ({ onClose, item = {}, type }) => {
   const updateInquiryAdminAnswer = async () => {
     try {
       const response = await axios.post(
-        'http://localhost:8080/admin/updateInquiryAnswer',
+        "http://localhost:8080/admin/updateInquiryAnswer",
         { inquiryId: item.inquiryId, inquiryAnswer: adminComments },
-        config,
+        config
       );
 
       const message = response.data.body.message;
@@ -51,21 +51,21 @@ const InquiryAnswerModal = ({ onClose, item = {}, type }) => {
         if (err.response.data && err.response.data.error) {
           // 서버에서 에러 응답을 보냈을 때
           const details = err.response.data.details;
-          const errorMessages = Object.values(details).join('\n');
+          const errorMessages = Object.values(details).join("\n");
 
           alert(`유효성 검증 오류:\n${errorMessages}`);
         } else {
           // 기타 서버 응답 오류 처리
           const errorMessage =
-            err.response.data.body.message || '서버 응답 오류';
+            err.response.data.body.message || "서버 응답 오류";
           alert(`${errorMessage}`);
         }
       } else if (err.request) {
         // 서버로의 요청이 실패했을 경우
-        console.error('서버에 요청을 보내는 중 오류가 발생했습니다.');
+        console.error("서버에 요청을 보내는 중 오류가 발생했습니다.");
       } else {
         // 오류를 발생시킨 요청을 설정하는 중에 오류가 발생했을 경우
-        console.error('오류를 설정하는 중에 문제가 발생했습니다.');
+        console.error("오류를 설정하는 중에 문제가 발생했습니다.");
       }
     }
   };
@@ -73,37 +73,37 @@ const InquiryAnswerModal = ({ onClose, item = {}, type }) => {
   return (
     <div
       style={{
-        width: '600px',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        width: "600px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
       }}
     >
       <table
-        id='signUpInputForm'
-        className='signUpTable'
-        style={{ borderSpacing: '' }}
+        id="signUpInputForm"
+        className="signUpTable"
+        style={{ borderSpacing: "" }}
       >
         <tr>
           <td>
             <Input
-              id='inquiry_type'
-              className='member_name'
-              label='문의유형'
-              type='text'
-              style={{ width: '245px' }}
+              id="inquiry_type"
+              className="member_name"
+              label="문의유형"
+              type="text"
+              style={{ width: "245px" }}
               value={item.inquiryType}
-              disabled={'disabled'}
+              disabled={"disabled"}
             />
           </td>
           <td>
             <Input
-              id='inquiry_date'
-              className='member_name'
-              label='작성일'
-              type='text'
-              style={{ width: '245px' }}
-              disabled={'disabled'}
+              id="inquiry_date"
+              className="member_name"
+              label="작성일"
+              type="text"
+              style={{ width: "245px" }}
+              disabled={"disabled"}
               value={item.inquiryRegdate}
             />
           </td>
@@ -111,12 +111,12 @@ const InquiryAnswerModal = ({ onClose, item = {}, type }) => {
         <tr>
           <td colSpan={2}>
             <Input
-              id='inquiry_title'
-              className='member_tel'
-              label='제목'
-              type='text'
-              style={{ width: '500px' }}
-              disabled={'disabled'}
+              id="inquiry_title"
+              className="member_tel"
+              label="제목"
+              type="text"
+              style={{ width: "500px" }}
+              disabled={"disabled"}
               value={item.inquiryTitle}
             />
           </td>
@@ -124,12 +124,12 @@ const InquiryAnswerModal = ({ onClose, item = {}, type }) => {
         <tr>
           <td colSpan={2}>
             <Input
-              id='inquiryWriterEmail'
-              className='member_tel'
-              label='이메일'
-              type='text'
-              style={{ width: '500px' }}
-              disabled={'disabled'}
+              id="inquiryWriterEmail"
+              className="member_tel"
+              label="이메일"
+              type="text"
+              style={{ width: "500px" }}
+              disabled={"disabled"}
               value={item.inquiryWriterEmail}
             />
           </td>
@@ -140,42 +140,42 @@ const InquiryAnswerModal = ({ onClose, item = {}, type }) => {
               <td
                 colSpan={2}
                 style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
                 }}
               >
                 <h3
                   style={{
-                    color: '#11c2ad',
-                    margin: '0px 5px 5px 20px',
-                    position: 'relative',
-                    right: '235px',
+                    color: "#11c2ad",
+                    margin: "0px 5px 5px 20px",
+                    position: "relative",
+                    right: "235px",
                   }}
                 >
                   내용
                 </h3>
                 <p
                   style={{
-                    border: '1px solid #cecece',
-                    borderRadius: '10px',
-                    width: '500px',
-                    height: '150px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    margin: '0px',
+                    border: "1px solid #cecece",
+                    borderRadius: "10px",
+                    width: "500px",
+                    height: "150px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    margin: "0px",
                   }}
                 >
                   <textarea
-                    id='comments' // 수정: id 속성 추가
+                    id="comments" // 수정: id 속성 추가
                     style={{
-                      width: '99%',
-                      height: '96%',
-                      resize: 'none',
-                      border: 'none',
-                      borderRadius: '10px',
-                      padding: '5px 0px 0px 5px',
+                      width: "99%",
+                      height: "96%",
+                      resize: "none",
+                      border: "none",
+                      borderRadius: "10px",
+                      padding: "5px 0px 0px 5px",
                     }}
                     value={item.inquiryComments}
                     disabled
@@ -187,30 +187,30 @@ const InquiryAnswerModal = ({ onClose, item = {}, type }) => {
               <td
                 colSpan={2}
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  position: 'relative',
-                  right: '140px',
+                  display: "flex",
+                  alignItems: "center",
+                  position: "relative",
+                  right: "140px",
                 }}
               >
                 <h3
                   style={{
-                    margin: '0px',
-                    width: '80px',
-                    color: '#11c2ad',
+                    margin: "0px",
+                    width: "80px",
+                    color: "#11c2ad",
                   }}
                 >
                   증명파일
                 </h3>
                 <div
                   style={{
-                    marginLeft: '20px',
-                    cursor: 'pointer',
-                    color: 'blue',
+                    marginLeft: "20px",
+                    cursor: "pointer",
+                    color: "blue",
                   }}
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleOpenModal(<DoctorRequest />, '증명파일');
+                    handleOpenModal(<DoctorRequest />, "증명파일");
                   }}
                 ></div>
               </td>
@@ -219,42 +219,42 @@ const InquiryAnswerModal = ({ onClose, item = {}, type }) => {
               <td
                 colSpan={2}
                 style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
                 }}
               >
                 <h3
                   style={{
-                    color: '#11c2ad',
-                    margin: '30px 5px 5px 20px',
-                    position: 'relative',
-                    right: '235px',
+                    color: "#11c2ad",
+                    margin: "30px 5px 5px 20px",
+                    position: "relative",
+                    right: "235px",
                   }}
                 >
                   답변
                 </h3>
                 <p
                   style={{
-                    border: '1px solid #cecece',
-                    borderRadius: '10px',
-                    width: '500px',
-                    height: '150px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    margin: '0px',
+                    border: "1px solid #cecece",
+                    borderRadius: "10px",
+                    width: "500px",
+                    height: "150px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    margin: "0px",
                   }}
                 >
                   <textarea
-                    id='comments' // 수정: id 속성 추가
+                    id="comments" // 수정: id 속성 추가
                     style={{
-                      width: '99%',
-                      height: '96%',
-                      resize: 'none',
-                      border: 'none',
-                      borderRadius: '10px',
-                      padding: '5px 0px 0px 5px',
+                      width: "99%",
+                      height: "96%",
+                      resize: "none",
+                      border: "none",
+                      borderRadius: "10px",
+                      padding: "5px 0px 0px 5px",
                     }}
                     value={adminComments}
                     onChange={(e) => setAdminComments(e.target.value)}
@@ -269,42 +269,42 @@ const InquiryAnswerModal = ({ onClose, item = {}, type }) => {
               <td
                 colSpan={2}
                 style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
                 }}
               >
                 <h3
                   style={{
-                    color: '#11c2ad',
-                    margin: '30px 5px 5px 20px',
-                    position: 'relative',
-                    right: '235px',
+                    color: "#11c2ad",
+                    margin: "30px 5px 5px 20px",
+                    position: "relative",
+                    right: "235px",
                   }}
                 >
                   답변
                 </h3>
                 <p
                   style={{
-                    border: '1px solid #cecece',
-                    borderRadius: '10px',
-                    width: '500px',
-                    height: '150px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    margin: '0px',
+                    border: "1px solid #cecece",
+                    borderRadius: "10px",
+                    width: "500px",
+                    height: "150px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    margin: "0px",
                   }}
                 >
                   <textarea
-                    id='comments' // 수정: id 속성 추가
+                    id="comments" // 수정: id 속성 추가
                     style={{
-                      width: '99%',
-                      height: '96%',
-                      resize: 'none',
-                      border: 'none',
-                      borderRadius: '10px',
-                      padding: '5px 0px 0px 5px',
+                      width: "99%",
+                      height: "96%",
+                      resize: "none",
+                      border: "none",
+                      borderRadius: "10px",
+                      padding: "5px 0px 0px 5px",
                     }}
                     value={adminComments}
                     onChange={(e) => setAdminComments(e.target.value)}
@@ -317,42 +317,42 @@ const InquiryAnswerModal = ({ onClose, item = {}, type }) => {
               <td
                 colSpan={2}
                 style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
                 }}
               >
                 <h3
                   style={{
-                    color: '#11c2ad',
-                    margin: '0px 5px 5px 20px',
-                    position: 'relative',
-                    right: '235px',
+                    color: "#11c2ad",
+                    margin: "0px 5px 5px 20px",
+                    position: "relative",
+                    right: "235px",
                   }}
                 >
                   내용
                 </h3>
                 <p
                   style={{
-                    border: '1px solid #cecece',
-                    borderRadius: '10px',
-                    width: '500px',
-                    height: '150px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    margin: '0px',
+                    border: "1px solid #cecece",
+                    borderRadius: "10px",
+                    width: "500px",
+                    height: "150px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    margin: "0px",
                   }}
                 >
                   <textarea
-                    id='comments' // 수정: id 속성 추가
+                    id="comments" // 수정: id 속성 추가
                     style={{
-                      width: '99%',
-                      height: '96%',
-                      resize: 'none',
-                      border: 'none',
-                      borderRadius: '10px',
-                      padding: '5px 0px 0px 5px',
+                      width: "99%",
+                      height: "96%",
+                      resize: "none",
+                      border: "none",
+                      borderRadius: "10px",
+                      padding: "5px 0px 0px 5px",
                     }}
                     value={item.inquiryComments}
                     readOnly
@@ -364,30 +364,30 @@ const InquiryAnswerModal = ({ onClose, item = {}, type }) => {
               <td
                 colSpan={2}
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  position: 'relative',
-                  right: '140px',
+                  display: "flex",
+                  alignItems: "center",
+                  position: "relative",
+                  right: "140px",
                 }}
               >
                 <h3
                   style={{
-                    margin: '0px',
-                    width: '80px',
-                    color: '#11c2ad',
+                    margin: "0px",
+                    width: "80px",
+                    color: "#11c2ad",
                   }}
                 >
                   증명파일
                 </h3>
                 <div
                   style={{
-                    marginLeft: '20px',
-                    cursor: 'pointer',
-                    color: 'blue',
+                    marginLeft: "20px",
+                    cursor: "pointer",
+                    color: "blue",
                   }}
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleOpenModal(<DoctorRequest />, '증명파일');
+                    handleOpenModal(<DoctorRequest />, "증명파일");
                   }}
                 ></div>
               </td>
@@ -397,21 +397,21 @@ const InquiryAnswerModal = ({ onClose, item = {}, type }) => {
       </table>
       <div
         style={{
-          display: 'flex',
-          justifyContent: 'space-evenly',
-          marginBottom: '25px',
-          marginTop: '25px',
-          width: '400px',
+          display: "flex",
+          justifyContent: "space-evenly",
+          marginBottom: "25px",
+          marginTop: "25px",
+          width: "400px",
         }}
       >
         <button
-          className='clinicSubBtn-mid'
-          onClick={updateInquiryAdminAnswer}
-          style={{ background: '#11c2ad' }}
+          className="clinicSubBtn-mid"
+          onClick={isAdmin ? updateInquiryAdminAnswer : onClose}
+          style={{ background: "#11c2ad" }}
         >
           확인
         </button>
-        <button className='clinicSubBtn-mid' onClick={onClose}>
+        <button className="clinicSubBtn-mid" onClick={onClose}>
           취소
         </button>
       </div>
