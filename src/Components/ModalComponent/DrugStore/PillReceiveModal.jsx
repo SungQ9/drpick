@@ -1,6 +1,54 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useTokenContext } from '../../Context/TokenContext';
+import useAlert from '../../Layout/Alert';
 
-const PillReceiveModal = ({ onClose, item = {} }) => {
+const PillReceiveModal = ({ onClose, item = {}, type, fetchData }) => {
+  const [remarks, setRemarks] = useState('');
+  const { token } = useTokenContext();
+  const showAlert = useAlert();
+
+  useEffect(() => {
+    if (item.remarks) {
+      setRemarks(item.remarks);
+    }
+  }, [item.remarks]);
+
+  const saveRemarks = async () => {
+    console.log('보내는 Data:', {
+      drugstoreHistoryId: item.drugstoreHistoryId,
+      remarks: remarks,
+    });
+    try {
+      const response = await axios.post(
+        'http://localhost:8080/drugstores/updateDrugstoreHistory',
+        {
+          drugstoreHistoryId: item.drugstoreHistoryId,
+          remarks: remarks,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      const message = response.data.body.message;
+
+      if (response.data.body.success) {
+        showAlert('수령정보 등록 완료', message, 'success').then((result) => {
+          if (result.isConfirmed) {
+            onClose();
+            fetchData();
+          }
+        });
+      }
+    } catch (error) {
+      console.error('수령확인 에러 ', error);
+    }
+  };
+
+  const readOnly = !!item.remarks;
   return (
     <div
       style={{
@@ -34,6 +82,9 @@ const PillReceiveModal = ({ onClose, item = {} }) => {
             lineHeight: '150px',
           }}
           placeholder='퀵 배송기사 전화번호 또는 송장번호를 입력해주세요'
+          value={remarks}
+          onChange={(e) => setRemarks(e.target.value)}
+          readOnly={readOnly}
         ></textarea>
       </div>
       <div
@@ -43,12 +94,28 @@ const PillReceiveModal = ({ onClose, item = {} }) => {
           width: '350px',
         }}
       >
-        <button className='clinicSubBtn-mid' style={{ background: '#11C2AD' }}>
-          저장
-        </button>
-        <button className='clinicSubBtn-mid' onClick={onClose}>
-          취소
-        </button>
+        {type === 'update' ? (
+          <>
+            <button
+              className='clinicSubBtn-mid'
+              style={{ background: '#11C2AD' }}
+              onClick={saveRemarks}
+            >
+              저장
+            </button>
+            <button className='clinicSubBtn-mid' onClick={onClose}>
+              취소
+            </button>
+          </>
+        ) : (
+          <button
+            className='clinicSubBtn-mid'
+            style={{ background: '#11C2AD' }}
+            onClick={onClose}
+          >
+            확인
+          </button>
+        )}
       </div>
     </div>
   );

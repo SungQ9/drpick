@@ -1,8 +1,11 @@
 // 약국 추가,수정 모달
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useTokenContext } from '../../Context/TokenContext';
 import Input from '../../Layout/Input';
 import Address from '../../Layout/Address';
 import WorkTime from '../../Layout/List/ProfileEditList/WorkTime';
+import useAlert from '../../Layout/Alert';
 
 // type = 추가인지 수정인지 (수정일때만 type='modify')
 const DrugstoreEditModal = ({ onClose, type, item = {} }) => {
@@ -11,6 +14,8 @@ const DrugstoreEditModal = ({ onClose, type, item = {} }) => {
   );
   const [drugstoreTel, setDrugstoreTel] = useState(item.drugstoreTel || '');
   const [address, setAddress] = useState({ main: '', detail: '' });
+  const showAlert = useAlert();
+
   const handleAddressSelect = (selectedAddress) => {
     setAddress(selectedAddress);
   };

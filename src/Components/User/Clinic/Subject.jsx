@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useClinicContext } from '../../Context/ClinicContext';
 import back from '../../../img/back-arrow-icon.png';
 import hospital from '../../../img/subject-hospital-icon.png';
 import tooth from '../../../img/subject-tooth-icon.png';
@@ -13,8 +14,13 @@ import eye from '../../../img/subject-eye-icon.png';
 
 const Subject = () => {
   const navigate = useNavigate();
+  const clinicContext = useClinicContext();
 
   const subjectHandler = (subject) => {
+    clinicContext.setClinicState((prevState) => ({
+      ...prevState,
+      selectSubject: subject,
+    }));
     console.log('Selected subject:', subject);
     navigate(`/clinic/doctor/`, { state: { subject } });
   };

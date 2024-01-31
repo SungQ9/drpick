@@ -1,12 +1,13 @@
 import React, { useState, useRef } from 'react';
+import axios from 'axios';
+import { useTokenContext } from '../Context/TokenContext';
 import '../../css/Style.css';
 import '../../css/UserStyle.css';
 import Input from '../Layout/Input';
 import Select from '../Layout/Select';
-import { useTokenContext } from '../Context/TokenContext';
-import axios from 'axios';
+import useAlert from '../Layout/Alert';
 
-const InquiryModal = ({ onClose, item = {} }) => {
+const InquiryModal = ({ onClose, item = {}, fetchData }) => {
   const [selectedValue, setSelectedValue] = useState('');
   const [selectedLabel, setSelectedLabel] = useState('');
   const [selectedFileName, setSelectedFileName] = useState('');
@@ -15,6 +16,7 @@ const InquiryModal = ({ onClose, item = {} }) => {
   const name = userEmail;
   const commentsRef = useRef(null);
   const formData = new FormData();
+  const showAlert = useAlert();
 
   const handleSelectChange = (event) => {
     const selectedOption = event.target.options[event.target.selectedIndex];
@@ -76,7 +78,7 @@ const InquiryModal = ({ onClose, item = {} }) => {
         >
           {file.name}
         </span>
-        <p onClick={() => handleDeleteFile(index)}>X</p>
+        <p onClick={() => handleDeleteFile(index)}> X </p>
       </p>
     ));
   };
@@ -117,11 +119,14 @@ const InquiryModal = ({ onClose, item = {} }) => {
         formData,
         config,
       );
-      
+
       const message = res.data.body.message;
-      alert(message);
-      onClose();
-      
+      showAlert('문의등록성공', message, 'success').then((result) => {
+        if (result.isConfirmed) {
+          onClose();
+          fetchData();
+        }
+      });
     } catch (error) {
       if (error.response) {
         // 서버 응답이 있을 경우
@@ -130,12 +135,12 @@ const InquiryModal = ({ onClose, item = {} }) => {
           const details = error.response.data.details;
           const errorMessages = Object.values(details).join('\n');
 
-          alert(`유효성 검증 오류:\n${errorMessages}`);
+          showAlert('유효성 검증 오류', `${errorMessages}`, 'error');
         } else {
           // 기타 서버 응답 오류 처리
           const errorMessage =
             error.response.data.body.message || '서버 응답 오류';
-          alert(`${errorMessage}`);
+          showAlert('문의등록에러', `${errorMessage}`, 'error');
         }
       } else if (error.request) {
         // 서버로의 요청이 실패했을 경우

@@ -10,7 +10,7 @@ import point from '../../../img/point-icon.png';
 const SelectPayment = () => {
   const navigate = useNavigate();
   const clinicContext = useClinicContext();
-  const { token, userId } = useTokenContext();
+  const { token } = useTokenContext();
   // 선택한 결제수단을  context에 저장
   const btnHandler = (evt) => {
     const selectedPayment = evt.currentTarget.getAttribute('data-value');
@@ -23,25 +23,35 @@ const SelectPayment = () => {
   };
 
   useEffect(() => {
-    if (clinicContext.clinicState.isPaymentSelected == true) {
-      const formData = {
-        memberId: clinicContext.clinicState.memberId,
-        doctorId: clinicContext.clinicState.selectDoctorId,
-        patientComments: clinicContext.clinicState.writeSymptom,
-        reservationPayment: clinicContext.clinicState.selectPayment.toUpperCase(),
-        fileList: clinicContext.clinicState.uploadedFiles,
-        reservationStatus: clinicContext.clinicState.acceptStatus,
-        reservationDate: clinicContext.clinicState.selectDate,
-      };
+    if (clinicContext.clinicState.isPaymentSelected === true) {
+      let formData = new FormData();
+      formData.append('memberId', clinicContext.clinicState.memberId);
+      formData.append('doctorId', clinicContext.clinicState.selectDoctorId);
+      formData.append(
+        'patientComments',
+        clinicContext.clinicState.writeSymptom,
+      );
+      formData.append(
+        'reservationPayment',
+        clinicContext.clinicState.selectPayment.toUpperCase(),
+      );
+      formData.append(
+        'reservationStatus',
+        clinicContext.clinicState.acceptStatus,
+      );
+      formData.append('reservationDate', clinicContext.clinicState.selectDate);
+      if (clinicContext.clinicState.uploadedFiles.length > 0) {
+        clinicContext.clinicState.uploadedFiles.forEach((file) => {
+          formData.append('fileList', file);
+        });
+      }
+
       console.log('Form Data: ', formData);
 
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
-        },
-        params: {
-          memberId: userId,
         },
       };
 
@@ -54,6 +64,7 @@ const SelectPayment = () => {
           )
           .then((response) => {
             console.log(response.data);
+            alert(response.data);
             navigate('/clinic/complete');
           });
       } catch (error) {

@@ -33,13 +33,15 @@ const PatientList = ({ type, data }) => {
       {/* 반복문 시작지점 */}
       {data && Array.isArray(data) ? (
         data.length > 0 ? (
-          data.map((patient) => (
+          data.slice(0, 10).map((patient, index) => (
             <li
               key={patient.reservationNum}
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-around',
+                height: '60px',
+                borderBottom: index === 9 ? 'none' : '1px solid #cecece',
               }}
             >
               <div
@@ -48,6 +50,7 @@ const PatientList = ({ type, data }) => {
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'flex-start',
+                  width: '170px',
                 }}
               >
                 <div
@@ -61,17 +64,19 @@ const PatientList = ({ type, data }) => {
                   <h3 style={{ margin: 0 }}>
                     <a>{patient.memberName}</a> {/* 환자 이름 */}
                   </h3>
-                  <span style={{ marginLeft: '10px' }}>{patient.reservationStatus}</span>{' '}
                   {/* 접수시간 */}
+                  <span style={{ marginLeft: '10px' }}>
+                    {patient.reservationStatus}
+                  </span>{' '}
                 </div>
                 <div className='patientList-bottom' style={{ marginTop: 0 }}>
                   <span>
                     {' '}
-                    {patient.patientComments && patient.patientComments.length > 10
+                    {patient.patientComments &&
+                    patient.patientComments.length > 10
                       ? patient.patientComments.substring(0, 10) + '...'
                       : patient.patientComments}
                   </span>{' '}
-                  <hr />
                 </div>
               </div>
               {type === 'wait' && (
@@ -94,9 +99,7 @@ const PatientList = ({ type, data }) => {
                   >
                     취소
                   </button>
-                  <hr />
                 </div>
-                
               )}
               {type === 'list' && (
                 <div className='patientList-right'>
@@ -130,7 +133,6 @@ const PatientList = ({ type, data }) => {
                   >
                     취소
                   </button>
-                  <hr />
                 </div>
               )}
               {type === 'end' && (

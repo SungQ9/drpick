@@ -13,10 +13,8 @@ const ApplicationForm = () => {
   // 파일 업로드 핸들러
   const handleFileInputChange = (event) => {
     const fileInput = event.target;
-    const newFiles = Array.from(fileInput.files).map((file) => ({
-      name: file.name,
-      id: Date.now(),
-    }));
+    const newFiles = Array.from(fileInput.files);
+
     const totalFiles = selectedFileName.length + newFiles.length;
 
     if (totalFiles > 3) {
@@ -28,28 +26,30 @@ const ApplicationForm = () => {
   };
 
   // 업로드 파일 삭제 핸들러
-  const handleDeleteFile = (id) => {
+  const handleDeleteFile = (index) => {
     setSelectedFileName((prevFiles) =>
-      prevFiles.filter((file) => file.id !== id),
+      prevFiles.filter((prevFile, i) => i !== index),
     );
   };
+
   // 업로드 버튼 핸들러
   const handleFileBtnClick = () => {
-    document.getElementById('selectedFile').click();
-  };
+    const fileInput = document.getElementById('selectedFile');
+    if (fileInput) {
+      fileInput.click();
+    }
+  }
+
   // 파일다중선택 return
   const renderFileList = () => {
-    // selectedFileName이 배열인지 확인
     if (!Array.isArray(selectedFileName)) {
-      return null; // 또는 다른 적절한 처리를 추가하세요.
+      return null
     }
 
-    return selectedFileName.map((file) => (
-      <p className='uploadFileList' key={file.id}>
+    return selectedFileName.map((file, index) => (
+      <p className='uploadFileList' key={index}>
         <span style={{ marginRight: '5px' }}>{file.name}</span>
-        <p id='fileX' onClick={() => handleDeleteFile(file.id)}>
-          X
-        </p>
+        <p id='fileX' onClick={() => handleDeleteFile(index)}> X </p>
       </p>
     ));
   };
@@ -61,7 +61,8 @@ const ApplicationForm = () => {
       writeResidentNumber: evt.target.value,
     }));
   };
-  // 입력받은 증상  contex에 저장
+
+  // 입력받은 증상 contex에 저장
   const handleSymptomChange = (evt) => {
     clinicContext.setClinicState((prev) => ({
       ...prev,
@@ -122,6 +123,7 @@ const ApplicationForm = () => {
               style={{ display: 'none' }}
               accept='image/*'
               onChange={handleFileInputChange}
+              multiple
             />
             {renderFileList()}
           </div>

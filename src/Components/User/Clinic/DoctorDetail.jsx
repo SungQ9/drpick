@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useTokenContext } from '../../Context/TokenContext';
 import { useClinicContext } from '../../Context/ClinicContext';
 import axios from 'axios';
+import useAlert from '../../Layout/Alert';
 
 import Loading from '../ImageSearch/Loading';
 import back from '../../../img/back-arrow-icon.png';
@@ -30,11 +31,13 @@ const DoctorDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [reviews, setReviews] = useState([]);
   const clinicContext = useClinicContext();
+  const showAlert = useAlert();
 
   const doctorHandler = (doctor) => {
     clinicContext.setClinicState((prevState) => ({
       ...prevState,
       selectDoctorId: doctor.doctorId,
+      selectDoctor: doctor.doctorName,
     }));
     navigate(`/clinic/accept/`, { state: { doctorId: doctor.doctorId } });
   };
@@ -216,7 +219,7 @@ const DoctorDetail = () => {
         className='clinicBtn-mid'
         style={{ background: '#AECCC8' }}
         onClick={() => {
-          alert('02-0000-1234');
+          showAlert('병원전화번호', '02-0000-1234', 'info');
         }}
       >
         전화문의

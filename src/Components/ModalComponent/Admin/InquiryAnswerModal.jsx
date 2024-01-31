@@ -1,16 +1,18 @@
 // 문의답변 모달
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useModalContext } from '../../Context/ModalContext';
+import { useTokenContext } from '../../Context/TokenContext';
+import useAlert from '../../Layout/Alert';
 import Input from '../../Layout/Input';
 import DoctorRequest from './DoctorRequest';
-import axios from 'axios';
-import { useTokenContext } from '../../Context/TokenContext';
 
-const InquiryAnswerModal = ({ onClose, item = {}, type }) => {
+const InquiryAnswerModal = ({ onClose, item = {}, fetchData }) => {
   const { openModal } = useModalContext();
   const { token } = useTokenContext();
   const [adminComments, setAdminComments] = useState(item.inquiryAnswer || '');
   const [refreshKey, setRefreshKey] = useState(0);
+  const showAlert = useAlert();
 
   // 관리자인지 확인
   const userAuth = localStorage.getItem('userAuth');
@@ -37,12 +39,18 @@ const InquiryAnswerModal = ({ onClose, item = {}, type }) => {
       const message = response.data.body.message;
 
       if (response.data.body.success) {
-        alert(message);
-        onClose();
-        window.location.reload();
+        showAlert('문의답변 등록성공', message, 'success').then((result) => {
+          if (result.isConfirmed) {
+            onClose();
+            fetchData();
+          }
+        });
+
         setRefreshKey((prevKey) => prevKey + 1);
       } else {
-        alert(message);
+        showAlert('문의답변 등록에러', message, 'error');
+
+        // alert(message);
         return;
       }
     } catch (err) {
@@ -53,12 +61,12 @@ const InquiryAnswerModal = ({ onClose, item = {}, type }) => {
           const details = err.response.data.details;
           const errorMessages = Object.values(details).join('\n');
 
-          alert(`유효성 검증 오류:\n${errorMessages}`);
+          showAlert('유효성 검증 오류', `${errorMessages}`, 'error');
         } else {
           // 기타 서버 응답 오류 처리
           const errorMessage =
             err.response.data.body.message || '서버 응답 오류';
-          alert(`${errorMessage}`);
+          showAlert('문의답변 등록에러', `${errorMessage}`, 'error');
         }
       } else if (err.request) {
         // 서버로의 요청이 실패했을 경우
@@ -406,7 +414,7 @@ const InquiryAnswerModal = ({ onClose, item = {}, type }) => {
       >
         <button
           className='clinicSubBtn-mid'
-          onClick={updateInquiryAdminAnswer}
+          onClick={isAdmin ? updateInquiryAdminAnswer : onClose}
           style={{ background: '#11c2ad' }}
         >
           확인

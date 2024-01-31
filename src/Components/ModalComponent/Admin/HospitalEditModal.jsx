@@ -1,13 +1,17 @@
 // 병원 추가,수정 모달
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useTokenContext } from '../../Context/TokenContext';
 import Input from '../../Layout/Input';
 import Address from '../../Layout/Address';
+import useAlert from '../../Layout/Alert';
 
 // type = 추가인지 수정인지 (수정일때만 type='modify')
-const HospitalEditModal = ({ onClose, type, item = {} }) => {
+const HospitalEditModal = ({ onClose, type, item = {}, fetchData }) => {
   const [hospitalName, setHospitalName] = useState(item.hospitalName || '');
   const [hospitalTel, setHospitalTel] = useState(item.hospitalTel || '');
   const [address, setAddress] = useState({ main: '', detail: '' });
+  const showAlert = useAlert();
 
   const handleAddressSelect = (selectedAddress) => {
     setAddress(selectedAddress);
