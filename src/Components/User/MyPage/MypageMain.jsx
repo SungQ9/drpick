@@ -10,11 +10,11 @@ import Loading from '../ImageSearch/Loading';
 
 const MypageMain = () => {
   const navigate = useNavigate();
-  const { token, userAuth } = useTokenContext();
+  const { token } = useTokenContext();
   const [items, setItems] = useState();
   const [currentHeaders, setCurrentHeaders] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [memberPoint, setMemberPoint] = useState("");
+  const [memberPoint, setMemberPoint] = useState('');
 
   // 버튼 클릭시 지정해둔 입력값에 따라서 해당 목록 전달
   const handleButtonClick = (type) => {
@@ -27,7 +27,7 @@ const MypageMain = () => {
     },
     params: {
       memberId: localStorage.getItem('userId'),
-      memberEmail: localStorage.getItem('userEmail')
+      memberEmail: localStorage.getItem('userEmail'),
     },
   };
 
@@ -47,9 +47,11 @@ const MypageMain = () => {
         const pointCheck = await axios.get(
           'http://localhost:8080/members/getMemberInfo',
           config,
-        )
-        
-        const formattedPoint = new Intl.NumberFormat('ko-KR', { style: 'decimal' }).format(pointCheck.data.memberPoint);
+        );
+
+        const formattedPoint = new Intl.NumberFormat('ko-KR', {
+          style: 'decimal',
+        }).format(pointCheck.data.memberPoint);
         setMemberPoint(formattedPoint);
       } catch (err) {
         console.error('마이페이지 에러 :', err);
@@ -58,13 +60,13 @@ const MypageMain = () => {
         setIsLoading(false);
       }
     };
+    fetchData();
 
-    const state = navigate().state;
-    if (state && state.selectedType) {
-      fetchData(); 
-    } else {
-      setIsLoading(false);
-    }
+    // const state = navigate().state;
+    // if (state && state.selectedType) {
+    // } else {
+    //   setIsLoading(false);
+    // }
   }, [token]);
 
   if (isLoading) {

@@ -195,6 +195,7 @@ const CurrentList = ({
                 colSpan={
                   headerKey.length + (selectable ? 1 : 0) + (listbutton ? 1 : 0)
                 }
+                style={{ borderBottom: 'none' }}
               >
                 조회된 데이터가 없습니다.
               </td>
@@ -209,6 +210,7 @@ const CurrentList = ({
                 buttonName={buttonName}
                 buttonType={buttonType}
                 handleButtonClick={handleButtonClick}
+                className={'date-list'}
               />
             )}
 
@@ -218,6 +220,7 @@ const CurrentList = ({
                   buttonName={buttonName}
                   buttonType={buttonType}
                   handleButtonClick={handleButtonClick}
+                  className={'current-list'}
                 />
 
                 {filteredDateItems ? null : (

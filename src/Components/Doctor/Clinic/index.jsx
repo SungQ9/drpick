@@ -1,43 +1,43 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import ReceptionWait from './ReceptionWait';
 import CertificateList from './CertificateList';
 import EndList from './EndList';
-import axios from 'axios'
-import { useTokenContext } from '../../Context/TokenContext'
+import axios from 'axios';
+import { useTokenContext } from '../../Context/TokenContext';
 
 const DoctorClinic = () => {
-  const { token, userId } = useTokenContext()
-  const [wait, setWait] = useState([])
-  const [list, setList] = useState([])
-  const [end, setEnd] = useState([])
+  const { token, userId } = useTokenContext();
+  const [wait, setWait] = useState([]);
+  const [list, setList] = useState([]);
+  const [end, setEnd] = useState([]);
 
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
     params: {
-      doctorId: userId
+      doctorId: userId,
     },
-  }
+  };
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        'http://localhost:8080/doctors/getDoctorNonFaceToFaceList',
+        config,
+      );
+      setWait(response.data.waitList || []);
+      setList(response.data.confirmList || []);
+      setEnd(response.data.finishList || []);
+    } catch (err) {
+      console.error('의사 목록 에러 :', err);
+      // 여기서 에러 발생 시 대체 데이터 설정 가능
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          'http://localhost:8080/doctors/getDoctorNonFaceToFaceList',
-          config,
-        )
-        setWait(response.data.waitList || [])
-        setList(response.data.confirmList || [])
-        setEnd(response.data.finishList || [])
-      } catch (err) {
-        console.error('의사 목록 에러 :', err)
-        // 여기서 에러 발생 시 대체 데이터 설정 가능
-      }
-    }
-
-    fetchData()
-  }, [token])
+    fetchData();
+  }, [token]);
 
   return (
     <div>
@@ -58,9 +58,9 @@ const DoctorClinic = () => {
           justifyContent: 'center',
         }}
       >
-        <ReceptionWait data={wait}/>
-        <CertificateList data={list}/>
-        <EndList data={end}/>
+        <ReceptionWait datas={wait} fetchData={fetchData} />
+        <CertificateList datas={list} fetchData={fetchData} />
+        <EndList datas={end} fetchData={fetchData} />
       </div>
     </div>
   );

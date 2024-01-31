@@ -5,10 +5,11 @@ import { ko } from 'date-fns/esm/locale';
 import SearchBar from '../SearchBar';
 
 const SearchDate = ({ type, onSearch, searchValue }) => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   const formatDateForDB = (date) => {
+    if (!date) return '';
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
