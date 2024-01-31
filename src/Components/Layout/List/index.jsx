@@ -1,6 +1,6 @@
-import React from 'react';
-import CurrentList from './CurrentList';
-import SearchDate from '../SearchDate';
+import React from "react";
+import CurrentList from "./CurrentList";
+import SearchDate from "../SearchDate";
 
 const List = ({
   headers,
@@ -17,67 +17,39 @@ const List = ({
   onReviewSelect,
   selectedReviews,
 }) => {
-  const [searchValue, setSearchValue] = React.useState('');
+  const [searchValue, setSearchValue] = React.useState("");
   const [filteredDateItems, setFilteredDateItems] = React.useState(items);
+  const [searchBarItem, setSearchBarItem] = React.useState([]);
 
   const handleSearch = (value, startDate, endDate) => {
-    console.log('검색어:', value);
-    console.log('시작 날짜:', startDate);
-    console.log('종료 날짜:', endDate);
-
+    console.log("검색어:", value);
+    console.log("시작날짜:", startDate);
+    console.log("종료날짜:", endDate);
     setSearchValue(value);
-
-    const filteredItems = items.filter((item) =>
-      headers.some((header) => {
-        if (
-          type === 'Date' &&
-          header.value === 'inquiryRegdate' &&
-          item[header.value]
-        ) {
-          const inquiryDate = new Date(item[header.value]);
-          const isDateInRange =
-            inquiryDate >= new Date(startDate) &&
-            inquiryDate <= new Date(endDate);
-
-          const includesSearchValue =
-            !value ||
-            (item[header.value] &&
-              typeof item[header.value] === 'string' &&
-              item[header.value].includes(value));
-
-          return isDateInRange || includesSearchValue;
-        } else {
-          return (
-            item[header.value] &&
-            typeof item[header.value] === 'string' &&
-            item[header.value].includes(value)
-          );
-        }
-      }),
-    );
-
-    setFilteredDateItems(filteredItems);
   };
 
   // DatePicker가 있는 목록
-  if (type === 'Date') {
+  if (type === "Date") {
     return (
       <div
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
-        <div className='searchDateWrapper'>
+        <div className="searchDateWrapper">
           <SearchDate
             items={items}
             headers={headers}
-            onSearch={(value, start, end) => handleSearch(value, start, end)}
+            onSearch={(value, startDate, endDate, items) =>
+              handleSearch(value, startDate, endDate, items)
+            }
             searchValue={searchValue}
+            setSearchBarItem={setSearchBarItem}
           />
         </div>
-        <div className='listForm'>
+        <div className="listForm">
           <CurrentList
             headers={headers}
             items={items} // 필터링된 결과 사용
@@ -93,6 +65,7 @@ const List = ({
             onDeleteReviews={onDeleteReviews}
             onReviewSelect={onReviewSelect}
             selectedReviews={selectedReviews}
+            searchBarItem={searchBarItem}
           />
         </div>
       </div>
@@ -100,7 +73,7 @@ const List = ({
   } else {
     // 일반 목록
     return (
-      <div className='listForm'>
+      <div className="listForm">
         <CurrentList
           headers={headers}
           items={filteredDateItems} // 기본 데이터들 사용

@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
-import GenerateButtons from '../Button/GenerateButtons';
-import SearchBar from '../SearchBar';
-import Button from '../Button';
-import { useModalContext } from '../../Context/ModalContext';
-import UpdateListContext from '../../Context/UpdateListContext';
-import InquiryModal from '../../ModalComponent/InquiryModal';
-import Pagination from './Pagination';
-import MemberProfileEditModal from '../../ModalComponent/Admin/MemberProfileEditModal';
-import DoctorProfileEditModal from '../../ModalComponent/Admin/DoctorProfileEditModal';
-import HospitalEditModal from '../../ModalComponent/Admin/HospitalEditModal';
-import DrugstoreEditModal from '../../ModalComponent/Admin/DrugstoreEditModal';
-import DoctorRequestModal from '../../ModalComponent/Admin/DoctorRequestModal';
+import React, { useContext, useEffect, useState } from "react";
+import GenerateButtons from "../Button/GenerateButtons";
+import SearchBar from "../SearchBar";
+import Button from "../Button";
+import { useModalContext } from "../../Context/ModalContext";
+import UpdateListContext from "../../Context/UpdateListContext";
+import InquiryModal from "../../ModalComponent/InquiryModal";
+import Pagination from "./Pagination";
+import MemberProfileEditModal from "../../ModalComponent/Admin/MemberProfileEditModal";
+import DoctorProfileEditModal from "../../ModalComponent/Admin/DoctorProfileEditModal";
+import HospitalEditModal from "../../ModalComponent/Admin/HospitalEditModal";
+import DrugstoreEditModal from "../../ModalComponent/Admin/DrugstoreEditModal";
+import DoctorRequestModal from "../../ModalComponent/Admin/DoctorRequestModal";
 const CurrentList = ({
   headers,
   items: originalItems,
@@ -27,9 +27,27 @@ const CurrentList = ({
   onDeleteReviews,
   onReviewSelect,
   selectedReviews,
+  searchBarItem,
 }) => {
   // filteredDateItems 값이 존재하면 해당 값을 items로 사용, 그렇지 않으면 originalItems 사용
-  const items = filteredDateItems ? filteredDateItems : originalItems;
+  console.log("searchBarItem :", searchBarItem);
+  console.log("filteredDateItems :", filteredDateItems);
+  console.log("originalItems :", originalItems);
+  const [items, setItems] = useState(originalItems);
+
+  useEffect(() => {
+    // searchBarItem이 있으면 그것을 사용합니다.
+    // 그렇지 않고 filteredDateItems가 있으면 그것을 사용합니다.
+    // 둘 다 없으면 originalItems를 사용합니다.
+    if (searchBarItem) {
+      setItems(searchBarItem);
+    } else if (filteredDateItems) {
+      setItems(filteredDateItems);
+    } else {
+      setItems(originalItems);
+    }
+  }, [searchBarItem, filteredDateItems, originalItems]);
+
   const fetchData = useContext(UpdateListContext);
   const { openModal } = useModalContext();
 
@@ -39,84 +57,78 @@ const CurrentList = ({
       : `${buttonName}-${listType}`;
 
     switch (actionType) {
-      case '작성-inquiry':
+      case "작성-inquiry":
         openModal(
           <InquiryModal item={item} fetchData={fetchData} />,
-          '1:1문의',
+          "1:1문의"
         );
         break;
-      case '수정-user':
+      case "수정-user":
         openModal(
           <MemberProfileEditModal item={item} fetchData={fetchData} />,
-          '회원정보수정',
+          "회원정보수정"
         );
         break;
-      case '수정-doctor':
+      case "수정-doctor":
         openModal(
           <DoctorProfileEditModal item={item} fetchData={fetchData} />,
-          '의사정보수정',
+          "의사정보수정"
         );
         break;
-      case '추가-hospital':
+      case "추가-hospital":
         openModal(
           <HospitalEditModal item={item} fetchData={fetchData} />,
-          '병원추가',
+          "병원추가"
         );
         break;
-      case '수정-hospital':
+      case "수정-hospital":
         openModal(
           <HospitalEditModal
             item={item}
-            type={'modify'}
+            type={"modify"}
             fetchData={fetchData}
           />,
-          '병원정보수정',
+          "병원정보수정"
         );
         break;
-      case '추가-drugstore':
+      case "추가-drugstore":
         openModal(
           <DrugstoreEditModal item={item} fetchData={fetchData} />,
-          '약국추가',
+          "약국추가"
         );
         break;
-      case '수정-drugstore':
+      case "수정-drugstore":
         openModal(
           <DrugstoreEditModal
             item={item}
-            type={'modify'}
+            type={"modify"}
             fetchData={fetchData}
           />,
-          '약국정보수정',
+          "약국정보수정"
         );
         break;
-      case '추가':
-        openModal(<InquiryModal item={item} fetchData={fetchData} />, '추가');
+      case "추가":
+        openModal(<InquiryModal item={item} fetchData={fetchData} />, "추가");
         break;
-      case '상세보기-doctor':
+      case "상세보기-doctor":
         openModal(
           <DoctorRequestModal item={item} fetchData={fetchData} />,
-          '추가',
+          "추가"
         );
         break;
-      case '삭제-review':
-        console.log('리뷰삭제 실행');
+      case "삭제-review":
+        console.log("리뷰삭제 실행");
         console.log(selectedReviews);
         onDeleteReviews(selectedReviews);
         break;
       default:
-        console.log('알 수 없는 동작');
+        console.log("알 수 없는 동작");
     }
   };
 
   /* 페이징 */
   const [pageNumber, setPageNumber] = useState(0);
   const itemsPerPage = 5;
-
-  // useState hooks를 조건에 따라 두 번 호출하지 않도록 수정
-  const [searchInput, setSearchInput] = useState(filteredDateItems ? '' : null);
-  const [filteredItems, setFilteredItems] = useState(
-    filteredDateItems ? items : null,
-  );
 
   // 검색 결과가 변경될 때마다 페이지 번호 초기화
   useEffect(() => {
@@ -138,14 +150,14 @@ const CurrentList = ({
   return (
     <div>
       <table
-        className={`listTable ${selectable ? 'checklistTable' : ''}`}
+        className={`listTable ${selectable ? "checklistTable" : ""}`}
         style={style}
       >
         <thead>
           <tr>
             {selectable && (
-              <th style={{ width: '30px' }}>
-                <input type='checkbox' />
+              <th style={{ width: "30px" }}>
+                <input type="checkbox" />
               </th>
             )}
             {headers.map((header) => (
@@ -159,13 +171,13 @@ const CurrentList = ({
             displayItems.map((item, index) => (
               <tr key={index}>
                 {selectable && (
-                  <td style={{ width: '30px' }}>
-                    <input type='checkbox' />
+                  <td style={{ width: "30px" }}>
+                    <input type="checkbox" />
                   </td>
                 )}
                 {headerKey.map((key) => (
                   <td key={key + index}>
-                    {key === 'status' ? (
+                    {key === "status" ? (
                       <GenerateButtons
                         status={item[key]}
                         item={item}
@@ -203,8 +215,8 @@ const CurrentList = ({
         </tbody>
 
         <tfoot>
-          <div className='tfootWrapper'>
-            {type === 'Date' && buttonType === 'Y' && (
+          <div className="tfootWrapper">
+            {type === "Date" && buttonType === "Y" && (
               <Button
                 buttonName={buttonName}
                 buttonType={buttonType}
@@ -212,8 +224,8 @@ const CurrentList = ({
               />
             )}
 
-            {type !== 'Date' && type !== 'Lite' && (
-              <div className='tfootSearchWrapper'>
+            {type !== "Date" && type !== "Lite" && (
+              <div className="tfootSearchWrapper">
                 <Button
                   buttonName={buttonName}
                   buttonType={buttonType}
@@ -228,7 +240,7 @@ const CurrentList = ({
                 )}
               </div>
             )}
-            <div className='tfootPaginationWrapper'>
+            <div className="tfootPaginationWrapper">
               <Pagination
                 pageCount={items ? Math.ceil(items.length / itemsPerPage) : 0}
                 onPageChange={changePage}

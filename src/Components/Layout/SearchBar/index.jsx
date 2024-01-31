@@ -1,42 +1,43 @@
-import React, { useState } from 'react';
-import { useModalContext } from '../../Context/ModalContext';
+import React, { useState } from "react";
+import { useModalContext } from "../../Context/ModalContext";
 
 const SearchBar = ({
   type,
-  props = [],
+  items = [],
   searchBarStyle,
   placeholder,
   onSearch,
   startDate,
   endDate,
+  setSearchBarItem,
 }) => {
-  const [inputText, setInputText] = useState('');
+  const [inputText, setInputText] = useState("");
   const { setSearchKeyword } = useModalContext(); // ModalContext에서 검색 키워드 가져오기
-  const prop1 = props[0];
-  const prop2 = props[1];
-  const [key, setKey] = useState('');
-  placeholder = '검색어를 입력하세요';
+  placeholder = "검색어를 입력하세요";
+  console.log("SearchBar 아이템 :", items);
 
   const onChangeInput = (evt) => {
     const searchValue = evt.target.value;
     setInputText(searchValue);
     setSearchKeyword(searchValue);
+    setSearchBarItem(items);
     // 검색어가 변경될 때마다 결과 업데이트
-    onSearch(searchValue);
+    onSearch(searchValue, startDate, endDate); // items 추가
     setSearchKeyword(searchValue);
   };
 
   const handleSearch = () => {
     if (onSearch) {
-      // 검색어와 날짜 정보를 함께 전달
-      onSearch(inputText, startDate, endDate);
+      // 검색어와 날짜 정보를 전달
+      onSearch(inputText, startDate, endDate, items); // items 추가
       setSearchKeyword(inputText);
     }
+    console.log("SearchBar : ", inputText, startDate, endDate);
   };
 
   const handleReset = () => {
     // 입력창 초기화
-    setInputText('');
+    setInputText("");
   };
 
   const handleSubmit = (evt) => {
@@ -48,13 +49,13 @@ const SearchBar = ({
     handleSearch();
   };
 
-  if (type === 'Date') {
+  if (type === "Date") {
     return (
-      <form onSubmit={handleSubmit} className='searchBarWrapper'>
+      <form onSubmit={handleSubmit} className="searchBarWrapper">
         <input
           value={inputText}
           onChange={onChangeInput}
-          type='text'
+          type="text"
           placeholder={placeholder}
         />
         <button
@@ -65,20 +66,20 @@ const SearchBar = ({
         </button>
       </form>
     );
-  } else if (type === 'Chat') {
+  } else if (type === "Chat") {
     return (
-      <form onSubmit={handleSubmit} className='searchBarWrapper'>
+      <form onSubmit={handleSubmit} className="searchBarWrapper">
         <input
-          style={{ width: '370px', height: '50px' }}
+          style={{ width: "370px", height: "50px" }}
           value={inputText}
           onChange={onChangeInput}
-          type='text'
+          type="text"
           placeholder={placeholder}
         />
         <button
-          className='clinicSubBtn-short'
+          className="clinicSubBtn-short"
           onClick={handleSearch}
-          style={{ width: '120px', height: '50px' }}
+          style={{ width: "120px", height: "50px" }}
         >
           입력
         </button>
@@ -88,22 +89,21 @@ const SearchBar = ({
     return (
       <form
         onSubmit={handleSubmit}
-        className='searchBarWrapper'
+        className="searchBarWrapper"
         style={searchBarStyle}
       >
         <input
           value={inputText}
           onChange={onChangeInput}
-          // onKeyPress={handleSubmit}
-          type='text'
+          type="text"
           placeholder={placeholder}
         />
         <button
-          className='listBtn-short'
+          className="listBtn-short"
           onClick={handleReset}
-          style={{ background: '#aeccc8' }}
+          style={{ background: "#aeccc8" }}
         >
-          {' '}
+          {" "}
           초기화
         </button>
       </form>
