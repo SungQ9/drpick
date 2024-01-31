@@ -45,11 +45,11 @@ export const site = [
 
 export const department = [
   {
-    textTypes: ["가정의학과"],
+    textTypes: ["가정의학과", "가정의학"],
     text: "가정의학과 정보를 보여드릴게요.",
     site: "/clinic/doctor",
     linkText: "가정의학과 바로가기",
-    state:{ state: { subject: '가정의학과' } }
+    state: { subject: '가정의학과' } 
   },
   {
     textTypes: ["내과"],
@@ -156,6 +156,7 @@ export function handleTags(input, siteOrDepartmentOrSymptoms) {
     let text = "";
     let siteUrl = "";
     let linkText = "";
+    let state= null;
     let tagsToCheck;
   
     switch (siteOrDepartmentOrSymptoms) {
@@ -177,11 +178,14 @@ export function handleTags(input, siteOrDepartmentOrSymptoms) {
         text = tagItem.text;
         siteUrl = tagItem.site;
         linkText = tagItem.linkText;
+        if (tagItem.state) { 
+            state = tagItem.state;
+          }
         break;
       }
     }
   
-    return { text, site: siteUrl, linkText };
+    return { text, site: siteUrl, linkText, state };
   }
   
   export function handleDefaultResponse() {
