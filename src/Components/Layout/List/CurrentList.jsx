@@ -11,7 +11,6 @@ import DoctorProfileEditModal from '../../ModalComponent/Admin/DoctorProfileEdit
 import HospitalEditModal from '../../ModalComponent/Admin/HospitalEditModal';
 import DrugstoreEditModal from '../../ModalComponent/Admin/DrugstoreEditModal';
 import DoctorRequestModal from '../../ModalComponent/Admin/DoctorRequestModal';
-
 const CurrentList = ({
   headers,
   items: originalItems,
@@ -113,6 +112,12 @@ const CurrentList = ({
   const [pageNumber, setPageNumber] = useState(0);
   const itemsPerPage = 5;
 
+  // useState hooks를 조건에 따라 두 번 호출하지 않도록 수정
+  const [searchInput, setSearchInput] = useState(filteredDateItems ? '' : null);
+  const [filteredItems, setFilteredItems] = useState(
+    filteredDateItems ? items : null,
+  );
+
   // 검색 결과가 변경될 때마다 페이지 번호 초기화
   useEffect(() => {
     setPageNumber(0);
@@ -139,7 +144,7 @@ const CurrentList = ({
         <thead>
           <tr>
             {selectable && (
-              <th style={{ width: '200px' }}>
+              <th style={{ width: '30px' }}>
                 <input type='checkbox' />
               </th>
             )}
@@ -154,14 +159,8 @@ const CurrentList = ({
             displayItems.map((item, index) => (
               <tr key={index}>
                 {selectable && (
-                  <td style={{ width: '200px' }}>
-                    <input
-                      type='checkbox'
-                      onClick={() => {
-                        console.log(item.reviewId, '클릭');
-                        onReviewSelect(item.reviewId);
-                      }}
-                    />
+                  <td style={{ width: '30px' }}>
+                    <input type='checkbox' />
                   </td>
                 )}
                 {headerKey.map((key) => (
@@ -206,14 +205,11 @@ const CurrentList = ({
         <tfoot>
           <div className='tfootWrapper'>
             {type === 'Date' && buttonType === 'Y' && (
-              <div className='tfootSearchWrapper'>
-                <Button
-                  buttonName={buttonName}
-                  buttonType={buttonType}
-                  handleButtonClick={handleButtonClick}
-                  className={'date-list'}
-                />
-              </div>
+              <Button
+                buttonName={buttonName}
+                buttonType={buttonType}
+                handleButtonClick={handleButtonClick}
+              />
             )}
 
             {type !== 'Date' && type !== 'Lite' && (
@@ -222,8 +218,8 @@ const CurrentList = ({
                   buttonName={buttonName}
                   buttonType={buttonType}
                   handleButtonClick={handleButtonClick}
-                  className={'current-list'}
                 />
+
                 {filteredDateItems ? null : (
                   <SearchBar
                     searchBarStyle={searchBarStyle}
