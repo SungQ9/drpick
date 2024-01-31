@@ -84,6 +84,9 @@ const WorkTime = ({ style, onRadioChange, doctorAvailability }) => {
           <h4>월요일</h4>
           <Select
             id="mondayStartTime"
+            className={
+              selectedDay.monday ? "select-enabled" : "select-disabled"
+            }
             options={time}
             style={{ width: "100px" }}
             value={getAvailabilityForDay("월요일").starttime}
@@ -97,6 +100,9 @@ const WorkTime = ({ style, onRadioChange, doctorAvailability }) => {
             options={time}
             style={{ width: "100px" }}
             value={getAvailabilityForDay("월요일").endtime}
+            className={
+              selectedDay.monday ? "select-enabled" : "select-disabled"
+            }
             disabled={!selectedDay.monday}
           />
         </td>
@@ -109,6 +115,9 @@ const WorkTime = ({ style, onRadioChange, doctorAvailability }) => {
           />
           <h4>화요일</h4>
           <Select
+            className={
+              selectedDay.tuesday ? "select-enabled" : "select-disabled"
+            }
             options={time}
             style={{ width: "100px" }}
             value={getAvailabilityForDay("화요일").starttime}
@@ -118,6 +127,9 @@ const WorkTime = ({ style, onRadioChange, doctorAvailability }) => {
         ~
         <td>
           <Select
+            className={
+              selectedDay.tuesday ? "select-enabled" : "select-disabled"
+            }
             options={time}
             style={{ width: "100px" }}
             value={getAvailabilityForDay("화요일").endtime}
@@ -135,6 +147,9 @@ const WorkTime = ({ style, onRadioChange, doctorAvailability }) => {
           />
           <h4>수요일</h4>
           <Select
+            className={
+              selectedDay.wednesday ? "select-enabled" : "select-disabled"
+            }
             options={time}
             style={{ width: "100px" }}
             value={getAvailabilityForDay("수요일").starttime}
@@ -144,6 +159,9 @@ const WorkTime = ({ style, onRadioChange, doctorAvailability }) => {
         ~
         <td>
           <Select
+            className={
+              selectedDay.wednesday ? "select-enabled" : "select-disabled"
+            }
             options={time}
             style={{ width: "100px" }}
             value={getAvailabilityForDay("수요일").endtime}
@@ -159,6 +177,9 @@ const WorkTime = ({ style, onRadioChange, doctorAvailability }) => {
           />
           <h4>목요일</h4>
           <Select
+            className={
+              selectedDay.thursday ? "select-enabled" : "select-disabled"
+            }
             options={time}
             style={{ width: "100px" }}
             value={getAvailabilityForDay("목요일").starttime}
@@ -168,6 +189,9 @@ const WorkTime = ({ style, onRadioChange, doctorAvailability }) => {
         ~
         <td>
           <Select
+            className={
+              selectedDay.thursday ? "select-enabled" : "select-disabled"
+            }
             options={time}
             style={{ width: "100px" }}
             value={getAvailabilityForDay("목요일").endtime}
@@ -185,6 +209,9 @@ const WorkTime = ({ style, onRadioChange, doctorAvailability }) => {
           />
           <h4>금요일</h4>
           <Select
+            className={
+              selectedDay.friday ? "select-enabled" : "select-disabled"
+            }
             options={time}
             style={{ width: "100px" }}
             value={getAvailabilityForDay("금요일").starttime}
@@ -194,6 +221,9 @@ const WorkTime = ({ style, onRadioChange, doctorAvailability }) => {
         <h3>~</h3>
         <td>
           <Select
+            className={
+              selectedDay.friday ? "select-enabled" : "select-disabled"
+            }
             options={time}
             style={{ width: "100px" }}
             value={getAvailabilityForDay("금요일").endtime}
@@ -209,6 +239,9 @@ const WorkTime = ({ style, onRadioChange, doctorAvailability }) => {
           />
           <h4>토요일</h4>
           <Select
+            className={
+              selectedDay.saturday ? "select-enabled" : "select-disabled"
+            }
             options={time}
             style={{ width: "100px" }}
             value={getAvailabilityForDay("토요일").starttime}
@@ -218,6 +251,9 @@ const WorkTime = ({ style, onRadioChange, doctorAvailability }) => {
         ~
         <td>
           <Select
+            className={
+              selectedDay.saturday ? "select-enabled" : "select-disabled"
+            }
             options={time}
             style={{ width: "100px" }}
             value={getAvailabilityForDay("토요일").endtime}
@@ -235,6 +271,9 @@ const WorkTime = ({ style, onRadioChange, doctorAvailability }) => {
           />
           <h4>일요일</h4>
           <Select
+            className={
+              selectedDay.sunday ? "select-enabled" : "select-disabled"
+            }
             options={time}
             style={{ width: "100px" }}
             value={getAvailabilityForDay("일요일").starttime}
@@ -244,6 +283,9 @@ const WorkTime = ({ style, onRadioChange, doctorAvailability }) => {
         ~
         <td>
           <Select
+            className={
+              selectedDay.sunday ? "select-enabled" : "select-disabled"
+            }
             options={time}
             style={{ width: "100px" }}
             value={getAvailabilityForDay("일요일").endtime}
@@ -259,6 +301,9 @@ const WorkTime = ({ style, onRadioChange, doctorAvailability }) => {
           />
           <h4>공휴일</h4>
           <Select
+            className={
+              selectedDay.holiday ? "select-enabled" : "select-disabled"
+            }
             options={time}
             style={{ width: "100px" }}
             value={getAvailabilityForDay("공휴일").starttime}
@@ -268,6 +313,9 @@ const WorkTime = ({ style, onRadioChange, doctorAvailability }) => {
         ~
         <td>
           <Select
+            className={
+              selectedDay.holiday ? "select-enabled" : "select-disabled"
+            }
             options={time}
             style={{ width: "100px" }}
             value={getAvailabilityForDay("공휴일").endtime}
