@@ -83,7 +83,8 @@ const DrugStoreManagement = () => {
           items={items}
           type='Date'
           buttonType='Y'
-          buttonName='작성.'
+          buttonName='작성'
+          listType='inquiry'
         />
       )}
     </div>

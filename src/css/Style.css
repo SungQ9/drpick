@@ -531,7 +531,7 @@ Input {
   border-radius: 15px;
 }
 
-.listTable,
+.listTable thead,
 .checklistTable thead {
   border-bottom: 1px solid #ddd;
 }

@@ -46,23 +46,25 @@ const UserManagement = () => {
   };
 
   const reviewDelete = async () => {
-    try {
-      console.log('전달된 리뷰 번호', selectedReviews);
-      const response = await axios.delete(
-        'http://localhost:8080/members/deleteReviewId',
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
+    if (selectedReviews.length > 0) {
+      try {
+        console.log('전달된 리뷰 번호', selectedReviews);
+        const response = await axios.delete(
+          'http://localhost:8080/members/deleteReviewId',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+            data: selectedReviews,
           },
-          data: selectedReviews,
-        },
-      );
-      fetchData();
-      setSelectedReviews([]);
-      console.log(response.data);
-    } catch (error) {
-      console.error('리뷰처리 에러:', error);
+        );
+        fetchData();
+        setSelectedReviews([]);
+        console.log(response.data);
+      } catch (error) {
+        console.error('리뷰처리 에러:', error);
+      }
     }
   };
 
@@ -134,6 +136,7 @@ const UserManagement = () => {
           headers={currentHeaders}
           items={items}
           type='Date'
+          listType='review'
           buttonType='Y'
           buttonName='삭제'
           onSearch={handleSearch}
@@ -151,6 +154,7 @@ const UserManagement = () => {
           type='Date'
           buttonType='Y'
           buttonName='작성'
+          listType='inquiry'
         />
       )}
 

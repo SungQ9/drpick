@@ -406,7 +406,7 @@ const InquiryAnswerModal = ({ onClose, item = {}, type }) => {
       >
         <button
           className='clinicSubBtn-mid'
-          onClick={updateInquiryAdminAnswer}
+          onClick={isAdmin ? updateInquiryAdminAnswer : onClose}
           style={{ background: '#11c2ad' }}
         >
           확인

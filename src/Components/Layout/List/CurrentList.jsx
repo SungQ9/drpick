@@ -34,30 +34,51 @@ const CurrentList = ({
   const { openModal } = useModalContext();
 
   const handleButtonClick = (item, listbutton) => {
-    if (buttonName === '작성') {
-      openModal(<InquiryModal item={item} />, '1:1문의');
-    } else if (listbutton === '수정' && listType === 'user') {
-      openModal(<MemberProfileEditModal item={item} />, '회원정보수정');
-    } else if (listbutton === '수정' && listType === 'doctor') {
-      openModal(<DoctorProfileEditModal item={item} />, '의사정보수정');
-    } else if (listbutton === '수정' && listType === 'hospital') {
-      openModal(
-        <HospitalEditModal item={item} type={'modify'} />,
-        '병원정보수정',
-      );
-    } else if (listbutton === '수정' && listType === 'drugstore') {
-      openModal(
-        <DrugstoreEditModal item={item} type={'modify'} />,
-        '약국정보수정',
-      );
-    } else if (buttonName === '추가') {
-      openModal(<InquiryModal item={item} />, '추가');
-    } else if (listbutton === '상세보기') {
-      openModal(<DoctorRequestModal item={item} />, '추가');
-    } else if (buttonName === '삭제' && buttonType === 'Y') {
-      console.log('리뷰삭제 실행');
-      console.log(selectedReviews);
-      onDeleteReviews(selectedReviews);
+    const actionType = listbutton
+      ? `${listbutton}-${listType}`
+      : `${buttonName}-${listType}`;
+
+    switch (actionType) {
+      case '작성-inquiry':
+        openModal(<InquiryModal item={item} />, '1:1문의');
+        break;
+      case '수정-user':
+        openModal(<MemberProfileEditModal item={item} />, '회원정보수정');
+        break;
+      case '수정-doctor':
+        openModal(<DoctorProfileEditModal item={item} />, '의사정보수정');
+        break;
+      case '추가-hospital':
+        openModal(<HospitalEditModal item={item} />, '병원추가');
+        break;
+      case '수정-hospital':
+        openModal(
+          <HospitalEditModal item={item} type={'modify'} />,
+          '병원정보수정',
+        );
+        break;
+      case '추가-drugstore':
+        openModal(<DrugstoreEditModal item={item} />, '약국추가');
+        break;
+      case '수정-drugstore':
+        openModal(
+          <DrugstoreEditModal item={item} type={'modify'} />,
+          '약국정보수정',
+        );
+        break;
+      case '추가':
+        openModal(<InquiryModal item={item} />, '추가');
+        break;
+      case '상세보기':
+        openModal(<DoctorRequestModal item={item} />, '추가');
+        break;
+      case '삭제-review':
+        console.log('리뷰삭제 실행');
+        console.log(selectedReviews);
+        onDeleteReviews(selectedReviews);
+        break;
+      default:
+        console.log('알 수 없는 동작');
     }
   };
 

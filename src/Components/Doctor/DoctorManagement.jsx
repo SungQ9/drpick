@@ -10,7 +10,7 @@ import Loading from '../User/ImageSearch/Loading';
 const DoctorManagement = () => {
   const location = useLocation();
   const selectedType = location.state?.selectedType || 'default';
-  const { token, userAuth } = useTokenContext();
+  const { token } = useTokenContext();
   const [title, setTitle] = useState('');
   const [currentHeaders, setCurrentHeaders] = useState();
   const [items, setItems] = useState();
@@ -83,6 +83,7 @@ const DoctorManagement = () => {
           type='Date'
           buttonType='Y'
           buttonName='작성'
+          listType='inquiry'
         />
       )}
     </div>
