@@ -16,6 +16,7 @@ const SelectDoctor = () => {
   const [doctors, setDoctors] = useState([]);
 
   const doctorHandler = (name, item) => {
+    console.log('State passed when doctor is clicked:', item);
     navigate(`/clinic/detail/`, { state: { doctor: item } });
   };
 
@@ -32,6 +33,7 @@ const SelectDoctor = () => {
   };
 
   useEffect(() => {
+    console.log('State when SelectDoctor is opened:', location.state);
     const fetchData = async () => {
       setIsLoading(true);
       try {

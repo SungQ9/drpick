@@ -5,8 +5,7 @@ import doctor from "../../../../img/doctor-icon.png";
 import hospital from "../../../../img/hospital-icon.png";
 import { useTokenContext } from "../../../Context/TokenContext";
 
-//임시로 paymentId를 1로 설정, 추후 paymentId값을 넘기도록 수정
-//임시로 certificateNum을 1로 설정, 추후 certificateNum값을 넘기도록 수정
+//임시로 certificateNum을 1로 설정, 추후 certificateNum값을 넘기도록 수정 (handlePyamentclick=> axios.get => params)
 
 const Receipt = ({ selectedPrice }) => {
   const [price, setPrice] = useState(0); // 기존의 price 상태 (기본값 0으로 설정)
@@ -39,17 +38,17 @@ const Receipt = ({ selectedPrice }) => {
             },
           }
         );
-
+        
         if (response.status === 200) {
           //카드 결제
-          if (response.data === "CARD") {
+          if (response.data.reservationPayment === "CARD") {
             navigate("/payment/billingCharge", {
-              state: { amount: totalPrice, paymentId: 1 },
+              state: { amount: totalPrice, paymentId: response.data.paymentId },
             });
           //포인트 결제
-          } else if (response.data === "POINT") {
+          } else if (response.data.reservationPayment === "POINT") {
             navigate("/payment/pointPayment", {
-              state: { amount: totalPrice, paymentId: 1 },
+              state: { amount: totalPrice, paymentId: response.data.paymentId },
             });
           //DB오류
           } else {
