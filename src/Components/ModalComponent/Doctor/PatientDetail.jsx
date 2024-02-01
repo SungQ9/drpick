@@ -1,26 +1,30 @@
 import React from 'react';
 
-const PatientDetail = ({ item = {} }) => {
+const PatientDetail = ({ item = [] }) => {
+  console.log('환자상세', item);
+  const certificate = item.fileName ? item.fileName : '-';
+  const amount = item.amount ? item.amount : '-';
+
   return (
     <table className='patientInfo'>
       <tr>
         <td> 진료일 :</td>
-        <td> 2023.12.31</td>
+        <td> {item.certificateDate}</td>
         <td> 진료비:</td>
-        <td> 9,000</td>
+        <td> {amount}</td>
       </tr>
       <tr>
         <td> 진료의사 :</td>
-        <td> 김의사</td>
+        <td> {item.doctorName}</td>
         <td> 진단서:</td>
         <td>
           {' '}
-          <a>홍길동_처방전_pdf</a>
+          <a>{certificate}</a>
         </td>
       </tr>
       <tr>
         <td>증상:</td>
-        <td>심한 발열과 복통</td>
+        <td>{item.description}</td>
       </tr>
     </table>
   );
