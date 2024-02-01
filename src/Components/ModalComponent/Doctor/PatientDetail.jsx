@@ -1,7 +1,6 @@
 import React from 'react';
 
 const PatientDetail = ({ item = [] }) => {
-  console.log('환자상세', item);
   const certificate = item.fileName ? item.fileName : '-';
   const amount = item.amount ? item.amount : '-';
 
