@@ -8,16 +8,57 @@ import WorkTime from '../../Layout/List/ProfileEditList/WorkTime';
 import useAlert from '../../Layout/Alert';
 
 // type = 추가인지 수정인지 (수정일때만 type='modify')
-const DrugstoreEditModal = ({ onClose, type, item = {} }) => {
+const DrugstoreEditModal = ({ onClose, type, item = {}, fetchData }) => {
+  const { token, userEmail } = useTokenContext();
   const [selectedDrugstoreName, setSelectedDrugstoreName] = useState(
     item.drugstoreName || '',
   );
+  const [drugstoreId, setDrugstoreId] = useState(item.drugstoreId || '');
+  const [drugstoreName, setDrugstoreName] = useState(item.drugstoreName || '');
   const [drugstoreTel, setDrugstoreTel] = useState(item.drugstoreTel || '');
   const [address, setAddress] = useState({ main: '', detail: '' });
   const showAlert = useAlert();
 
   const handleAddressSelect = (selectedAddress) => {
     setAddress(selectedAddress);
+  };
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const drugstoreData = {
+    drugstoreId:drugstoreId,
+    drugstoreName:drugstoreName,
+    drugstoreTel:drugstoreTel,
+    drugstoreAddrMain: address.main,
+    drugstoreAddrDetail: address.detail
+  };
+
+  const updateDrugstoreInfo = async () => {
+    try {
+      // 병원 정보 업데이트
+      const infoRes = await axios.post(
+        "http://localhost:8080/admin/updateDrugstoreInfo",
+        drugstoreData,
+        config
+      );
+      if (infoRes.status === 200) {
+        const message = "약국정보수정 완료하였습니다.";
+        await showAlert("약국수정 성공", message, "success");
+        onClose();
+        fetchData();
+      } else {
+        console.error(
+          "약국 정보 업데이트 오류: 예상하지 못한 HTTP 상태 코드:",
+          infoRes.status
+        );
+      }
+    } catch (error) {
+      console.error("약국 정보 업데이트 오류:", error);
+    }
   };
 
   return (
@@ -92,7 +133,7 @@ const DrugstoreEditModal = ({ onClose, type, item = {} }) => {
             삭제
           </button>
         )}
-        <button className='clinicSubBtn-mid' style={{ background: '#11C2AD' }}>
+        <button className='clinicSubBtn-mid' style={{ background: '#11C2AD' }} onClick={updateDrugstoreInfo}>
           저장
         </button>
         <button className='clinicSubBtn-mid' onClick={onClose}>

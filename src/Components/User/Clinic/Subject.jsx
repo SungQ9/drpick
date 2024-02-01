@@ -21,7 +21,6 @@ const Subject = () => {
       ...prevState,
       selectSubject: subject,
     }));
-    console.log('Selected subject:', subject);
     navigate(`/clinic/doctor/`, { state: { subject } });
   };
 
