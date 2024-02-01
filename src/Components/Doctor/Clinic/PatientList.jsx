@@ -51,8 +51,10 @@ const PatientList = ({ type, datas, fetchData }) => {
         break;
 
       case 'reservation-cancel': // 대기접수취소
-        url = '';
-        // params = {}
+        url = 'http://localhost:8080/doctors/cancelReservation';
+        config.params.reservationNum = data.reservationNum;
+        config.params.memberId = data.memberId;
+
         try {
           const res = await axios.get(url, config);
           Alert('취소성공', '대기가 취소되었습니다', 'success').then(
@@ -65,8 +67,9 @@ const PatientList = ({ type, datas, fetchData }) => {
         break;
 
       case 'request': // 입장 요청
-        url = '';
-        // params = {}
+        url = 'http://localhost:8080/doctors/callSMSSendToPatient';
+        config.params.memberId = data.memberId;
+
         try {
           const res = await axios.get(url, config);
           Alert('입장요청', '입장요청을 보냈습니다', 'success').then(
@@ -84,8 +87,10 @@ const PatientList = ({ type, datas, fetchData }) => {
         break;
 
       case 'cancel': // 진료취소
-        url = '';
-        // params = {}
+        url = 'http://localhost:8080/doctors/cancelCertification';
+        config.params.certificateNum = data.certificateNum;
+        config.params.memberId = data.memberId;
+
         try {
           const res = await axios.get(url, config);
           Alert('취소성공', '진료가 취소되었습니다', 'success').then(
@@ -251,7 +256,7 @@ const PatientList = ({ type, datas, fetchData }) => {
                       className='listBtn-short'
                       style={{ width: '65px', fontSize: '12px' }}
                       onClick={() => {
-                        handleBtnClick('request');
+                        handleBtnClick('request', data);
                       }}
                     >
                       입장요청
@@ -261,7 +266,7 @@ const PatientList = ({ type, datas, fetchData }) => {
                     className='listBtn-short'
                     style={{ width: '65px', background: '#AECCC8' }}
                     onClick={() => {
-                      handleBtnClick('cancel');
+                      handleBtnClick('cancel', data);
                     }}
                   >
                     취소
