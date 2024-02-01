@@ -41,17 +41,17 @@ const PatientList = ({ type, datas }) => {
 
         try {
           const res = await axios.get(url, config)
-          alert(res.data.body.message)
 
-          
         } catch (error) {
           console.error('Error:', error)
         }
         break
 
       case 'reservation-cancle': // 대기접수취소
-        url = ''
-        // params = {}
+        url = 'http://localhost:8080/doctors/cancelReservation'
+        config.params.reservationNum = data.reservationNum
+        config.params.memberId = data.memberId
+
         try {
           const response = await axios.get(url, config)
         } catch (error) {
@@ -60,10 +60,11 @@ const PatientList = ({ type, datas }) => {
         break
 
       case 'request': // 입장 요청
-        url = ''
-        // params = {}
+        url = 'http://localhost:8080/doctors/callSMSSendToPatient'
+        config.params.memberId = data.memberId
+
         try {
-          const response = await axios.get(url, config)
+          const smsSuccess = await axios.get(url, config)
         } catch (error) {
           console.error('Error:', error)
         }
@@ -74,9 +75,10 @@ const PatientList = ({ type, datas }) => {
 
         break
 
-      case 'cancle': // 진료취소
-        url = ''
-        // params = {}
+      case 'cancel': // 진료취소
+        url = 'http://localhost:8080/doctors/cancelCertification'
+        config.params.certificateNum = data.certificateNum
+        config.params.memberId = data.memberId
         try {
           const response = await axios.get(url, config)
         } catch (error) {
@@ -195,7 +197,7 @@ const PatientList = ({ type, datas }) => {
                     className='listBtn-short'
                     style={{ width: '65px' }}
                     onClick={() => {
-                      handleBtnClick('reservation-accept',data)
+                      handleBtnClick('reservation-accept', data)
                     }}
                   >
                     접수
@@ -228,7 +230,7 @@ const PatientList = ({ type, datas }) => {
                       className='listBtn-short'
                       style={{ width: '65px' }}
                       onClick={() => {
-                        handleBtnClick('request')
+                        handleBtnClick('request', data)
                       }}
                     >
                       입장요청
@@ -238,7 +240,7 @@ const PatientList = ({ type, datas }) => {
                     className='listBtn-short'
                     style={{ width: '65px', background: '#AECCC8' }}
                     onClick={() => {
-                      handleBtnClick('cancel')
+                      handleBtnClick('cancel', data)
                     }}
                   >
                     취소
