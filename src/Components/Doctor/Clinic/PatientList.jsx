@@ -6,11 +6,12 @@ import { useModalContext } from '../../Context/ModalContext';
 import ImgModal from '../../ModalComponent/User/ImgModal';
 import Video from '../../User/Clinic/ApplicationForm/ClinicRoom/VideoChat/index';
 import PatientDetailModal from '../../ModalComponent/Doctor/PatientDetailModal';
+import useAlert from '../../Layout/Alert';
 
-const PatientList = ({ type, datas }) => {
+const PatientList = ({ type, datas, fetchData }) => {
   const { openModal } = useModalContext();
-
   const { token } = useTokenContext();
+  const { Alert } = useAlert();
 
   const handleBtnClick = async (type, data) => {
     let url = '';
@@ -41,28 +42,41 @@ const PatientList = ({ type, datas }) => {
 
         try {
           const res = await axios.get(url, config);
-          alert(res.data.body.message);
+          Alert('접수성공', res.data.body.message, 'success').then(fetchData());
         } catch (error) {
+          console.error('접수대기 접수 Error:', error);
+          Alert('접수취소 실패', '잠시후에 다시 시도해주세요', 'error');
           console.error('Error:', error);
         }
         break;
 
-      case 'reservation-cancle': // 대기접수취소
-        url = '';
-        // params = {}
+      case 'reservation-cancel': // 대기접수취소
+        url = 'http://localhost:8080/doctors/cancelReservation';
+        config.params.reservationNum = data.reservationNum;
+        config.params.memberId = data.memberId;
+
         try {
-          const response = await axios.get(url, config);
+          const res = await axios.get(url, config);
+          Alert('취소성공', '대기가 취소되었습니다', 'success').then(
+            fetchData(),
+          );
         } catch (error) {
+          Alert('접수취소 실패', '잠시후에 다시 시도해주세요', 'error');
           console.error('Error:', error);
         }
         break;
 
       case 'request': // 입장 요청
-        url = '';
-        // params = {}
+        url = 'http://localhost:8080/doctors/callSMSSendToPatient';
+        config.params.memberId = data.memberId;
+
         try {
-          const response = await axios.get(url, config);
+          const res = await axios.get(url, config);
+          Alert('입장요청', '입장요청을 보냈습니다', 'success').then(
+            fetchData(),
+          );
         } catch (error) {
+          Alert('입장요청 실패', '잠시후에 다시 시도해주세요', 'error');
           console.error('Error:', error);
         }
         break;
@@ -72,12 +86,18 @@ const PatientList = ({ type, datas }) => {
 
         break;
 
-      case 'cancle': // 진료취소
-        url = '';
-        // params = {}
+      case 'cancel': // 진료취소
+        url = 'http://localhost:8080/doctors/cancelCertification';
+        config.params.certificateNum = data.certificateNum;
+        config.params.memberId = data.memberId;
+
         try {
-          const response = await axios.get(url, config);
+          const res = await axios.get(url, config);
+          Alert('취소성공', '진료가 취소되었습니다', 'success').then(
+            fetchData(),
+          );
         } catch (error) {
+          Alert('진료취소실패', '잠시후에 다시 시도해주세요', 'error');
           console.error('Error:', error);
         }
         break;
@@ -86,9 +106,14 @@ const PatientList = ({ type, datas }) => {
         url = '';
         // params = {}
         try {
-          const response = await axios.get(url, config);
-          openModal(<ImgModal item={response.data} />, '진단서');
+          const res = await axios.get(url, config);
+          openModal(<ImgModal item={res.data} />, '진단서');
         } catch (error) {
+          Alert(
+            '진단서를 불러올 수 없습니다',
+            '잠시후에 다시 시도해주세요',
+            'error',
+          );
           console.error('Error:', error);
         }
         break;
@@ -97,9 +122,14 @@ const PatientList = ({ type, datas }) => {
         url = '';
         // params = {}
         try {
-          const response = await axios.get(url, config);
-          openModal(<ImgModal item={response.data} />, '처방전');
+          const res = await axios.get(url, config);
+          openModal(<ImgModal item={res.data} />, '처방전');
         } catch (error) {
+          Alert(
+            '처방전을 불러올 수 없습니다',
+            '잠시후에 다시 시도해주세요',
+            'error',
+          );
           console.error('Error:', error);
         }
         break;
@@ -202,7 +232,7 @@ const PatientList = ({ type, datas }) => {
                     className='listBtn-short'
                     style={{ width: '65px', background: '#AECCC8' }}
                     onClick={() => {
-                      handleBtnClick('reservation-cancle', data);
+                      handleBtnClick('reservation-cancel', data);
                     }}
                   >
                     취소
@@ -224,9 +254,9 @@ const PatientList = ({ type, datas }) => {
                   ) : (
                     <button
                       className='listBtn-short'
-                      style={{ width: '65px' }}
+                      style={{ width: '65px', fontSize: '12px' }}
                       onClick={() => {
-                        handleBtnClick('request');
+                        handleBtnClick('request', data);
                       }}
                     >
                       입장요청
@@ -236,7 +266,7 @@ const PatientList = ({ type, datas }) => {
                     className='listBtn-short'
                     style={{ width: '65px', background: '#AECCC8' }}
                     onClick={() => {
-                      handleBtnClick('cancel');
+                      handleBtnClick('cancel', data);
                     }}
                   >
                     취소

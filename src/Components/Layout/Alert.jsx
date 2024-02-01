@@ -19,8 +19,31 @@ const useAlert = () => {
       buttonsStyling: false,
     });
   };
+  const Question = async (title, text, icon) => {
+    const result = await MySwal.fire({
+      title: title,
+      text: text,
+      icon: icon,
+      showCancelButton: true,
+      confirmButtonText: '확인',
+      cancelButtonText: '취소',
+      customClass: {
+        confirmButton: 'my-confirm-button',
+        cancelButton: 'my-cancel-button',
+      },
+      buttonsStyling: false,
+    });
 
-  return Alert;
+    if (result.isConfirmed) {
+      return '확인';
+    } else if (result.isDismissed) {
+      return '취소';
+    } else {
+      return '아무 버튼도 누르지 않음';
+    }
+  };
+
+  return { Alert, Question };
 };
 
 export default useAlert;

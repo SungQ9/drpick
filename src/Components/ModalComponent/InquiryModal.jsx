@@ -16,7 +16,7 @@ const InquiryModal = ({ onClose, item = {}, fetchData }) => {
   const name = userEmail;
   const commentsRef = useRef(null);
   const formData = new FormData();
-  const showAlert = useAlert();
+  const { Alert } = useAlert();
 
   const handleSelectChange = (event) => {
     const selectedOption = event.target.options[event.target.selectedIndex];
@@ -121,7 +121,7 @@ const InquiryModal = ({ onClose, item = {}, fetchData }) => {
       );
 
       const message = res.data.body.message;
-      showAlert('문의등록성공', message, 'success').then((result) => {
+      Alert('문의등록성공', message, 'success').then((result) => {
         if (result.isConfirmed) {
           onClose();
           fetchData();
@@ -135,12 +135,12 @@ const InquiryModal = ({ onClose, item = {}, fetchData }) => {
           const details = error.response.data.details;
           const errorMessages = Object.values(details).join('\n');
 
-          showAlert('유효성 검증 오류', `${errorMessages}`, 'error');
+          Alert('유효성 검증 오류', `${errorMessages}`, 'error');
         } else {
           // 기타 서버 응답 오류 처리
           const errorMessage =
             error.response.data.body.message || '서버 응답 오류';
-          showAlert('문의등록에러', `${errorMessage}`, 'error');
+          Alert('문의등록에러', `${errorMessage}`, 'error');
         }
       } else if (error.request) {
         // 서버로의 요청이 실패했을 경우
