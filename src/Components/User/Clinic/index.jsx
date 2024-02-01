@@ -40,8 +40,8 @@ const Clinic = () => {
             <Route path='/application' element={<ApplicationForm />} />
             <Route path='/payment' element={<SelectPayment />} />
             <Route path='/complete' element={<AcceptComplete />} />
-            <Route path='/room/:roomName' element={<ClinicRoom />} />
-            <Route path='/clinicRoom/:roomName' element={<Video />} />
+            <Route path='/room/:certificateNum' element={<ClinicRoom />} />
+            <Route path='/clinicRoom/:certificateNum' element={<Video />} />
             <Route path='/pill' element={<SelectPillsReceive />} />
           </Routes>
         </div>

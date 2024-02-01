@@ -29,7 +29,6 @@ const PatientList = ({ type, datas }) => {
 
         try {
           const response = await axios.get(url, config);
-          console.log(response.data);
           openModal(<PatientDetailModal item={response.data} />, '환자상세');
         } catch (error) {
           console.error('Error:', error);
