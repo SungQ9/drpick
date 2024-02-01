@@ -2,9 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 
-const Video = ({ roomNum }) => {
+const Video = ({ certificateNum: propCertificateNum }) => {
   const navigate = useNavigate();
-  const { roomName } = useParams();
+  const { certificateNum: urlCertificateNum } = useParams();
+  const roomName = propCertificateNum || urlCertificateNum;
   const socketRef = useRef(); // 소켓 연결을 위한 ref
   const myVideoRef = useRef(null); // 나의 비디오 요소 ref
   const remoteVideoRef = useRef(null); // 원격 비디오 요소 ref
@@ -51,6 +52,21 @@ const Video = ({ roomNum }) => {
     }
   };
 
+  const getMedia = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+      });
+      myVideoRef.current.srcObject = stream;
+      stream.getTracks().forEach((track) => {
+        console.log('Adding track to the PeerConnection', track);
+        pcRef.current.addTrack(track, stream);
+      });
+    } catch (e) {
+      console.error('미디어 디바이스 접근 에러:', e);
+    }
+  };
   // 소켓 연결 및 이벤트 설정
   useEffect(() => {
     console.log('useEffect: 소켓 연결 및 WebRTC 설정');
@@ -83,21 +99,6 @@ const Video = ({ roomNum }) => {
     };
 
     // 미디어 스트림을 얻는 함수
-    const getMedia = async () => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: true,
-          audio: true,
-        });
-        myVideoRef.current.srcObject = stream;
-        stream.getTracks().forEach((track) => {
-          console.log('Adding track to the PeerConnection', track);
-          pcRef.current.addTrack(track, stream);
-        });
-      } catch (e) {
-        console.error('미디어 디바이스 접근 에러:', e);
-      }
-    };
 
     socketRef.current = io('http://175.114.130.12:4000');
 
@@ -114,8 +115,10 @@ const Video = ({ roomNum }) => {
       createOffer();
     });
 
-    socketRef.current.on('getOffer', (offer) => {
+    socketRef.current.on('getOffer', async (offer) => {
       console.log('getOffer: Offer 수신');
+      await getMedia();
+      createAnswer(offer);
       if (!offer) {
         console.error('Received offer is null or undefined.');
         return;
