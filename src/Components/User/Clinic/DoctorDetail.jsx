@@ -31,7 +31,7 @@ const DoctorDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [reviews, setReviews] = useState([]);
   const clinicContext = useClinicContext();
-  const showAlert = useAlert();
+  const { Alert } = useAlert();
 
   const doctorHandler = (doctor) => {
     clinicContext.setClinicState((prevState) => ({
@@ -219,7 +219,7 @@ const DoctorDetail = () => {
         className='clinicBtn-mid'
         style={{ background: '#AECCC8' }}
         onClick={() => {
-          showAlert('병원전화번호', '02-0000-1234', 'info');
+          Alert('병원전화번호', '02-0000-1234', 'info');
         }}
       >
         전화문의

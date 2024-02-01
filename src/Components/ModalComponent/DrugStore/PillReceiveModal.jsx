@@ -6,7 +6,7 @@ import useAlert from '../../Layout/Alert';
 const PillReceiveModal = ({ onClose, item = {}, type, fetchData }) => {
   const [remarks, setRemarks] = useState('');
   const { token } = useTokenContext();
-  const showAlert = useAlert();
+  const { Alert } = useAlert();
 
   useEffect(() => {
     if (item.remarks) {
@@ -36,7 +36,7 @@ const PillReceiveModal = ({ onClose, item = {}, type, fetchData }) => {
       const message = response.data.body.message;
 
       if (response.data.body.success) {
-        showAlert('수령정보 등록 완료', message, 'success').then((result) => {
+        Alert('수령정보 등록 완료', message, 'success').then((result) => {
           if (result.isConfirmed) {
             onClose();
             fetchData();

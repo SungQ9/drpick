@@ -21,7 +21,7 @@ const UserManagement = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { isModalOpen } = useModalContext();
   const [selectedReviews, setSelectedReviews] = useState([]);
-  const showAlert = useAlert();
+  const { Alert } = useAlert();
 
   const handleSearch = (key) => {
     setKeyword(key);
@@ -63,7 +63,7 @@ const UserManagement = () => {
           },
         );
         const message = response.data.body.message;
-        showAlert('리뷰삭제성공', message, 'success').then((result) => {
+        Alert('리뷰삭제성공', message, 'success').then((result) => {
           if (result.isConfirmed) {
             fetchData();
             setSelectedReviews([]);

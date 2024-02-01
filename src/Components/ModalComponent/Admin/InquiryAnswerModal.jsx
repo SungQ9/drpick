@@ -12,7 +12,7 @@ const InquiryAnswerModal = ({ onClose, item = {}, fetchData }) => {
   const { token } = useTokenContext();
   const [adminComments, setAdminComments] = useState(item.inquiryAnswer || '');
   const [refreshKey, setRefreshKey] = useState(0);
-  const showAlert = useAlert();
+  const { Alert } = useAlert();
 
   // 관리자인지 확인
   const userAuth = localStorage.getItem('userAuth');
@@ -39,7 +39,7 @@ const InquiryAnswerModal = ({ onClose, item = {}, fetchData }) => {
       const message = response.data.body.message;
 
       if (response.data.body.success) {
-        showAlert('문의답변 등록성공', message, 'success').then((result) => {
+        Alert('문의답변 등록성공', message, 'success').then((result) => {
           if (result.isConfirmed) {
             onClose();
             fetchData();
@@ -48,7 +48,7 @@ const InquiryAnswerModal = ({ onClose, item = {}, fetchData }) => {
 
         setRefreshKey((prevKey) => prevKey + 1);
       } else {
-        showAlert('문의답변 등록에러', message, 'error');
+        Alert('문의답변 등록에러', message, 'error');
 
         // alert(message);
         return;
@@ -61,12 +61,12 @@ const InquiryAnswerModal = ({ onClose, item = {}, fetchData }) => {
           const details = err.response.data.details;
           const errorMessages = Object.values(details).join('\n');
 
-          showAlert('유효성 검증 오류', `${errorMessages}`, 'error');
+          Alert('유효성 검증 오류', `${errorMessages}`, 'error');
         } else {
           // 기타 서버 응답 오류 처리
           const errorMessage =
             err.response.data.body.message || '서버 응답 오류';
-          showAlert('문의답변 등록에러', `${errorMessage}`, 'error');
+          Alert('문의답변 등록에러', `${errorMessage}`, 'error');
         }
       } else if (err.request) {
         // 서버로의 요청이 실패했을 경우
@@ -218,9 +218,14 @@ const InquiryAnswerModal = ({ onClose, item = {}, fetchData }) => {
                   }}
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleOpenModal(<DoctorRequest filePath={item.filePath} />, '증명파일');
+                    handleOpenModal(
+                      <DoctorRequest filePath={item.filePath} />,
+                      '증명파일',
+                    );
                   }}
-                >{item.originFileName}</div>
+                >
+                  {item.originFileName}
+                </div>
               </td>
             </tr>
             <tr>
@@ -395,9 +400,14 @@ const InquiryAnswerModal = ({ onClose, item = {}, fetchData }) => {
                   }}
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleOpenModal(<DoctorRequest filePath={item.filePath} />, "증명파일");
+                    handleOpenModal(
+                      <DoctorRequest filePath={item.filePath} />,
+                      '증명파일',
+                    );
                   }}
-                >{item.originFileName}</div>
+                >
+                  {item.originFileName}
+                </div>
               </td>
             </tr>
           </>

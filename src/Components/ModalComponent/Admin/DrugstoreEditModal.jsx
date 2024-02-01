@@ -17,7 +17,7 @@ const DrugstoreEditModal = ({ onClose, type, item = {}, fetchData }) => {
   const [drugstoreName, setDrugstoreName] = useState(item.drugstoreName || '');
   const [drugstoreTel, setDrugstoreTel] = useState(item.drugstoreTel || '');
   const [address, setAddress] = useState({ main: '', detail: '' });
-  const showAlert = useAlert();
+  const { Alert } = useAlert();
 
   const handleAddressSelect = (selectedAddress) => {
     setAddress(selectedAddress);
@@ -30,34 +30,34 @@ const DrugstoreEditModal = ({ onClose, type, item = {}, fetchData }) => {
   };
 
   const drugstoreData = {
-    drugstoreId:drugstoreId,
-    drugstoreName:drugstoreName,
-    drugstoreTel:drugstoreTel,
+    drugstoreId: drugstoreId,
+    drugstoreName: drugstoreName,
+    drugstoreTel: drugstoreTel,
     drugstoreAddrMain: address.main,
-    drugstoreAddrDetail: address.detail
+    drugstoreAddrDetail: address.detail,
   };
 
   const updateDrugstoreInfo = async () => {
     try {
       // 병원 정보 업데이트
       const infoRes = await axios.post(
-        "http://localhost:8080/admin/updateDrugstoreInfo",
+        'http://localhost:8080/admin/updateDrugstoreInfo',
         drugstoreData,
-        config
+        config,
       );
       if (infoRes.status === 200) {
-        const message = "약국정보수정 완료하였습니다.";
-        await showAlert("약국수정 성공", message, "success");
+        const message = '약국정보수정 완료하였습니다.';
+        await Alert('약국수정 성공', message, 'success');
         onClose();
         fetchData();
       } else {
         console.error(
-          "약국 정보 업데이트 오류: 예상하지 못한 HTTP 상태 코드:",
-          infoRes.status
+          '약국 정보 업데이트 오류: 예상하지 못한 HTTP 상태 코드:',
+          infoRes.status,
         );
       }
     } catch (error) {
-      console.error("약국 정보 업데이트 오류:", error);
+      console.error('약국 정보 업데이트 오류:', error);
     }
   };
 
@@ -133,7 +133,11 @@ const DrugstoreEditModal = ({ onClose, type, item = {}, fetchData }) => {
             삭제
           </button>
         )}
-        <button className='clinicSubBtn-mid' style={{ background: '#11C2AD' }} onClick={updateDrugstoreInfo}>
+        <button
+          className='clinicSubBtn-mid'
+          style={{ background: '#11C2AD' }}
+          onClick={updateDrugstoreInfo}
+        >
           저장
         </button>
         <button className='clinicSubBtn-mid' onClick={onClose}>

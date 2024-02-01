@@ -14,7 +14,7 @@ const HospitalEditModal = ({ onClose, type, item = {}, fetchData }) => {
   const [hospitalTel, setHospitalTel] = useState(item.hospitalTel || '');
   const [address, setAddress] = useState({ main: '', detail: '' });
 
-  const showAlert = useAlert();
+  const { Alert } = useAlert();
 
   const handleAddressSelect = (selectedAddress) => {
     setAddress(selectedAddress);
@@ -44,7 +44,7 @@ const HospitalEditModal = ({ onClose, type, item = {}, fetchData }) => {
       );
       if (infoRes.status === 200) {
         const message = '병원정보수정 완료하였습니다.';
-        await showAlert('정보수정 성공', message, 'success');
+        await Alert('정보수정 성공', message, 'success');
         onClose();
         fetchData();
       } else {

@@ -8,7 +8,7 @@ const ClinicEndModal = ({ onClose, item = [], type, fetchData }) => {
   const [clinicAmount, setClinicAmount] = useState('');
   const [certificateFileName, setCertificateFileName] = useState([]);
   const [prescriptionFileName, setPrescriptionFileName] = useState([]);
-  const showAlert = useAlert();
+  const { Alert } = useAlert();
   const formData = new FormData();
 
   const handleClinicAmountChange = (event) => {
@@ -133,18 +133,18 @@ const ClinicEndModal = ({ onClose, item = [], type, fetchData }) => {
 
       // 서버 응답에 따른 처리
       if (response.status === 200) {
-        showAlert('성공', '데이터 전송 성공', 'success').then(
+        Alert('성공', '데이터 전송 성공', 'success').then(
           fetchData(),
           onClose(),
         );
         // 서버 응답에 따른 처리를 추가할 수 있습니다.
       } else {
-        showAlert('요청실패', '데이터 전송 실패', 'error');
+        Alert('요청실패', '데이터 전송 실패', 'error');
       }
 
       // 저장 후 모달 닫기 또는 다른 작업 수행
     } catch (error) {
-      showAlert('요청실패', '데이터 전송 실패', 'error');
+      Alert('요청실패', '데이터 전송 실패', 'error');
       console.error('데이터 전송 오류:', error);
     }
   };

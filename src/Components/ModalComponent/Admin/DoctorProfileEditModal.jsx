@@ -18,7 +18,7 @@ const DoctorProfileEdit = ({ onClose, item = {}, fetchData }) => {
   const [doctorSubject, setDoctorSubject] = useState(item.doctorSubject || '');
   const [doctorMajor, setDoctorMajor] = useState(item.doctorMajor || '');
   const [hospitalName, setHospitalName] = useState(item.hospitalName || '');
-  const showAlert = useAlert();
+  const { Alert } = useAlert();
   const { openModal } = useModalContext();
 
   const handleOpenModal = (component, name, type) => {
@@ -57,7 +57,7 @@ const DoctorProfileEdit = ({ onClose, item = {}, fetchData }) => {
 
       if (infoRes.status === 200) {
         const message = '의사정보수정 완료하였습니다.';
-        await showAlert('정보수정 성공', message, 'success');
+        await Alert('정보수정 성공', message, 'success');
         onClose();
         fetchData();
       } else {

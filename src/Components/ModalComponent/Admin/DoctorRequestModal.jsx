@@ -10,7 +10,7 @@ import useAlert from '../../Layout/Alert';
 const DoctorRequestModal = ({ onClose, item = {}, fetchData }) => {
   const { openModal } = useModalContext();
   const { token } = useTokenContext();
-  const showAlert = useAlert();
+  const { Alert } = useAlert();
 
   const handleOpenModal = (component, name, type) => {
     openModal(component, name, type);
@@ -33,12 +33,12 @@ const DoctorRequestModal = ({ onClose, item = {}, fetchData }) => {
     axios
       .post(apiUrl, data, config)
       .then((response) => {
-        showAlert('Success', '의사 등록이 수락되었습니다.');
+        Alert('Success', '의사 등록이 수락되었습니다.');
         onClose();
         fetchData();
       })
       .catch((error) => {
-        showAlert('Error', '수락 중 오류가 발생했습니다.');
+        Alert('Error', '수락 중 오류가 발생했습니다.');
         console.error("Error accepting doctor's request:", error);
       });
   };

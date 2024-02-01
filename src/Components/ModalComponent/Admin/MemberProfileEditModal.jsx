@@ -20,7 +20,7 @@ const MemberProfileEdit = ({ onClose, item = {}, fetchData }) => {
   const [memberEmail, setMemberEmail] = useState(item.memberEmail);
   const [memberTel, setMemberTel] = useState(item.memberTel);
   const [memberPwd, setMemberPwd] = useState('');
-  const showAlert = useAlert();
+  const { Alert } = useAlert();
 
   const config = {
     headers: {
@@ -57,7 +57,7 @@ const MemberProfileEdit = ({ onClose, item = {}, fetchData }) => {
       const message = res.data.body.message;
 
       if (res.data.body) {
-        showAlert('등록성공', message, 'success').then((result) => {
+        Alert('등록성공', message, 'success').then((result) => {
           if (result.isConfirmed) {
             onClose();
             fetchData();
