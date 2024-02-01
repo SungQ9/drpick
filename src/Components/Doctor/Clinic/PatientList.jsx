@@ -52,7 +52,7 @@ const PatientList = ({ type, datas, fetchData }) => {
         }
         break;
 
-      case 'reservation-cancle': // 대기접수취소
+      case 'reservation-cancel': // 대기접수취소
         url = '';
         // params = {}
         try {
@@ -85,7 +85,7 @@ const PatientList = ({ type, datas, fetchData }) => {
 
         break;
 
-      case 'cancle': // 진료취소
+      case 'cancel': // 진료취소
         url = '';
         // params = {}
         try {
@@ -229,7 +229,7 @@ const PatientList = ({ type, datas, fetchData }) => {
                     className='listBtn-short'
                     style={{ width: '65px', background: '#AECCC8' }}
                     onClick={() => {
-                      handleBtnClick('reservation-cancle', data);
+                      handleBtnClick('reservation-cancel', data);
                     }}
                   >
                     취소
