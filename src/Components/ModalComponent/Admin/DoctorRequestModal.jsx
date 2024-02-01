@@ -159,10 +159,10 @@ const DoctorRequestModal = ({ onClose, item = {}, fetchData }) => {
               style={{ marginLeft: '20px', cursor: 'pointer', color: 'blue' }}
               onClick={(e) => {
                 e.stopPropagation();
-                handleOpenModal(<DoctorRequest item={item} />, '증명파일');
+                handleOpenModal(<DoctorRequest filePath={'https://storage.googleapis.com/download/storage/v1/b/doctorpick/o/3b937275-eb66-4f0e-bc36-d1b7cc839e28_%ED%8C%8C%EC%9D%B4%EC%96%B4.jpeg?generation=1706774330253983&alt=media'} />, '증명파일');
               }}
             >
-              의사증명서_jpg
+              {item.originFileName}
             </div>
           </td>
         </tr>

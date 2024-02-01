@@ -89,7 +89,8 @@ const UserManagement = () => {
     },
     inquiry: async () => {
       const response = await axios.get(
-        'http:/localhost:8080/members/getMemberInquiry',
+        'http://localhost:8080/members/getMemberInquiryList',
+
         config,
       );
       setItems(response.data);

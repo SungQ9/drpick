@@ -38,7 +38,7 @@ const DoctorManagement = () => {
     },
     inquiry: async () => {
       const response = await axios.get(
-        'http://localhost:8080/doctors/getDoctorInquiry',
+        'http://localhost:8080/doctors/getDoctorInquiryList',
         config,
       );
       setItems(response.data);
