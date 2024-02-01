@@ -224,12 +224,14 @@ const CurrentList = ({
                 )}
               </div>
             )}
-            <div className='tfootPaginationWrapper'>
-              <Pagination
-                pageCount={items ? Math.ceil(items.length / itemsPerPage) : 0}
-                onPageChange={changePage}
-              />
-            </div>
+            {type !== 'Lite' && (
+              <div className='tfootPaginationWrapper'>
+                <Pagination
+                  pageCount={items ? Math.ceil(items.length / itemsPerPage) : 0}
+                  onPageChange={changePage}
+                />
+              </div>
+            )}
           </div>
         </tfoot>
       </table>
