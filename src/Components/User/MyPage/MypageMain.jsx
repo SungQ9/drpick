@@ -11,8 +11,8 @@ import Loading from '../ImageSearch/Loading';
 const MypageMain = () => {
   const navigate = useNavigate();
   const { token } = useTokenContext();
-  const [items, setItems] = useState();
-  const [currentHeaders, setCurrentHeaders] = useState();
+  const [items, setItems] = useState([]);
+  const [currentHeaders, setCurrentHeaders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [memberPoint, setMemberPoint] = useState('');
 

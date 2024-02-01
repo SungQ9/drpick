@@ -73,7 +73,14 @@ const Video = ({ certificateNum: propCertificateNum }) => {
 
     // RTCPeerConnection 설정
     const pc = new RTCPeerConnection({
-      iceServers: [{ urls: 'stun:stun.l.google.com:19302' }],
+      iceServers: [
+        {
+          urls: 'stun:stun.l.google.com:19302',
+          urls: 'turn:drpickturnserver.com:6000', // TURN 서버 주소
+          username: 'sungq', // TURN 서버 사용자 이름
+          credential: '1234', // TURN 서버 비밀번호
+        },
+      ],
     });
     pcRef.current = pc;
 
@@ -100,7 +107,7 @@ const Video = ({ certificateNum: propCertificateNum }) => {
 
     // 미디어 스트림을 얻는 함수
 
-    socketRef.current = io('http://175.114.130.12:4000');
+    socketRef.current = io('https://175.114.130.12:4000');
 
     // 미디어 스트림을 얻음
     getMedia();

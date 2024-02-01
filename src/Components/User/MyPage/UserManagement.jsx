@@ -16,8 +16,8 @@ const UserManagement = () => {
   const selectedType = location.state?.selectedType || 'default';
   const [title, setTitle] = useState('');
   const [keyword, setKeyword] = useState('');
-  const [items, setItems] = useState();
-  const [currentHeaders, setCurrentHeaders] = useState();
+  const [items, setItems] = useState([]);
+  const [currentHeaders, setCurrentHeaders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { isModalOpen } = useModalContext();
   const [selectedReviews, setSelectedReviews] = useState([]);
@@ -89,7 +89,7 @@ const UserManagement = () => {
     },
     inquiry: async () => {
       const response = await axios.get(
-        'http://localhost:8080/members/getMemberInquiry',
+        'http:/localhost:8080/members/getMemberInquiry',
         config,
       );
       setItems(response.data);

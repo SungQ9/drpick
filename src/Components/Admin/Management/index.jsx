@@ -14,8 +14,8 @@ const AdminManagement = () => {
   const { token } = useTokenContext();
   const selectedType = location.state?.selectedType || 'default';
   const [title, setTitle] = useState('');
-  const [items, setItems] = useState();
-  const [currentHeaders, setCurrentHeaders] = useState();
+  const [items, setItems] = useState([]);
+  const [currentHeaders, setCurrentHeaders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { isModalOpen } = useModalContext();
 

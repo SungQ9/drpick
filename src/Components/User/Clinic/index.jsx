@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Redirect } from 'react-router-dom';
 import '../../../css/UserStyle.css';
 import '../../../css/Style.css';
 
@@ -39,8 +39,9 @@ const Clinic = () => {
               <Route path='/application' element={<ApplicationForm />} />
               <Route path='/payment' element={<SelectPayment />} />
               <Route path='/complete' element={<AcceptComplete />} />
+
               <Route path='/room/:certificateNum' element={<ClinicRoom />} />
-              <Route path='/clinicRoom/:certificateNum' element={<Video />} />
+
               <Route path='/pill' element={<SelectPillsReceive />} />
             </Routes>
           </div>

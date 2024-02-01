@@ -1,8 +1,12 @@
 const express = require('express');
 const app = express();
-const http = require('http');
+const https = require('https'); // HTTPS 모듈 추가
+const fs = require('fs');
 const { Server } = require('socket.io');
-const server = http.createServer(app);
+const server = https.createServer({
+  key: fs.readFileSync('key/175.114.130.12-key.pem'), // SSL/TLS 개인 키 파일 경로
+  cert: fs.readFileSync('key/175.114.130.12.pem'), // SSL/TLS 인증서 파일 경로
+});
 
 // cors 설정
 const io = new Server(server, {
@@ -88,6 +92,7 @@ app.get('/', (req, res) => {
   res.send('채팅 서버 실행중');
 });
 
+// HTTPS 서버로 시작
 server.listen(PORT, '0.0.0.0', () => {
-  console.log(`${PORT}에서 서버 실행중`);
+  console.log(`${PORT}에서 서버 실행중 (HTTPS)`);
 });

@@ -13,8 +13,8 @@ const DrugStoreManagement = () => {
   const selectedType = location.state?.selectedType || 'default';
   const { token } = useTokenContext();
   const [title, setTitle] = useState('');
-  const [currentHeaders, setCurrentHeaders] = useState();
-  const [items, setItems] = useState();
+  const [currentHeaders, setCurrentHeaders] = useState([]);
+  const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const config = {
