@@ -1,109 +1,114 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
-import axios from 'axios';
-import { useTokenContext } from '../../Context/TokenContext';
-import { useModalContext } from '../../Context/ModalContext';
-import ImgModal from '../../ModalComponent/User/ImgModal';
-import Video from '../../User/Clinic/ApplicationForm/ClinicRoom/VideoChat/index';
-import PatientDetailModal from '../../ModalComponent/Doctor/PatientDetailModal';
+import React from 'react'
+import axios from 'axios'
+import { useTokenContext } from '../../Context/TokenContext'
+import { useModalContext } from '../../Context/ModalContext'
+import ImgModal from '../../ModalComponent/User/ImgModal'
+import Video from '../../User/Clinic/ApplicationForm/ClinicRoom/VideoChat/index'
+import PatientDetailModal from '../../ModalComponent/Doctor/PatientDetailModal'
 
 const PatientList = ({ type, datas }) => {
-  const { openModal } = useModalContext();
+  const { openModal } = useModalContext()
 
-  const { token } = useTokenContext();
+  const { token } = useTokenContext()
 
   const handleBtnClick = async (type, data) => {
-    let url = '';
-    const config = {
+    let url = ''
+    let config = {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`
       },
       params: {},
-    };
+    }
 
     // eslint-disable-next-line default-case
     switch (type) {
       case 'detail': // 환자상세
-        url = 'http://localhost:8080/doctors/getPatientDetail';
-        config.params.memberId = data.memberId;
+        url = 'http://localhost:8080/doctors/getPatientDetail'
+        config.params.memberId = data.memberId
 
         try {
-          const response = await axios.get(url, config);
-          openModal(<PatientDetailModal item={response.data} />, '환자상세');
+          const response = await axios.get(url, config)
+          openModal(<PatientDetailModal item={response.data} />, '환자상세')
         } catch (error) {
-          console.error('Error:', error);
+          console.error('Error:', error)
         }
-        break;
+        break
 
       case 'reservation-accept': // 진료접수
-        url = '';
-        // params = {};
+        url = 'http://localhost:8080/doctors/registCertificate'
+        config.params.reservationNum = data.reservationNum
+
         try {
-          const response = await axios.get(url, config);
+          const res = await axios.get(url, config)
+          alert(res.data.body.message)
+
+          
         } catch (error) {
-          console.error('Error:', error);
+          console.error('Error:', error)
         }
-        break;
+        break
+
       case 'reservation-cancle': // 대기접수취소
-        url = '';
-        // params = {};
+        url = ''
+        // params = {}
         try {
-          const response = await axios.get(url, config);
+          const response = await axios.get(url, config)
         } catch (error) {
-          console.error('Error:', error);
+          console.error('Error:', error)
         }
-        break;
+        break
 
       case 'request': // 입장 요청
-        url = '';
-        // params = {};
+        url = ''
+        // params = {}
         try {
-          const response = await axios.get(url, config);
+          const response = await axios.get(url, config)
         } catch (error) {
-          console.error('Error:', error);
+          console.error('Error:', error)
         }
-        break;
+        break
 
       case 'start': // 진료시작
-        openModal(<Video item={data} />);
+        openModal(<Video item={data} />)
 
-        break;
+        break
 
       case 'cancle': // 진료취소
-        url = '';
-        // params = {};
+        url = ''
+        // params = {}
         try {
-          const response = await axios.get(url, config);
+          const response = await axios.get(url, config)
         } catch (error) {
-          console.error('Error:', error);
+          console.error('Error:', error)
         }
-        break;
+        break
 
       case 'certificate': // 진단서
-        url = '';
-        // params = {};
+        url = ''
+        // params = {}
         try {
-          const response = await axios.get(url, config);
-          openModal(<ImgModal item={response.data} />, '진단서');
+          const response = await axios.get(url, config)
+          openModal(<ImgModal item={response.data} />, '진단서')
         } catch (error) {
-          console.error('Error:', error);
+          console.error('Error:', error)
         }
-        break;
+        break
 
       case 'prescription': // 처방전
-        url = '';
-        // params = {};
+        url = ''
+        // params = {}
         try {
-          const response = await axios.get(url, config);
-          openModal(<ImgModal item={response.data} />, '처방전');
+          const response = await axios.get(url, config)
+          openModal(<ImgModal item={response.data} />, '처방전')
         } catch (error) {
-          console.error('Error:', error);
+          console.error('Error:', error)
         }
-        break;
+        break
 
       // 기타 필요한 케이스 추가
     }
-  };
+  }
   return (
     <ul
       className='patientList'
@@ -148,7 +153,7 @@ const PatientList = ({ type, datas }) => {
                   <h3 style={{ margin: 0 }}>
                     <a
                       onClick={() => {
-                        handleBtnClick('detail', data);
+                        handleBtnClick('detail', data)
                       }}
                       style={{ cursor: 'pointer' }}
                     >
@@ -190,7 +195,7 @@ const PatientList = ({ type, datas }) => {
                     className='listBtn-short'
                     style={{ width: '65px' }}
                     onClick={() => {
-                      handleBtnClick('reservation-accept');
+                      handleBtnClick('reservation-accept',data)
                     }}
                   >
                     접수
@@ -199,7 +204,7 @@ const PatientList = ({ type, datas }) => {
                     className='listBtn-short'
                     style={{ width: '65px', background: '#AECCC8' }}
                     onClick={() => {
-                      handleBtnClick('reservation-cancle');
+                      handleBtnClick('reservation-cancle', data)
                     }}
                   >
                     취소
@@ -213,7 +218,7 @@ const PatientList = ({ type, datas }) => {
                       className='listBtn-short'
                       style={{ width: '65px' }}
                       onClick={() => {
-                        handleBtnClick('start');
+                        handleBtnClick('start')
                       }}
                     >
                       진료시작
@@ -223,7 +228,7 @@ const PatientList = ({ type, datas }) => {
                       className='listBtn-short'
                       style={{ width: '65px' }}
                       onClick={() => {
-                        handleBtnClick('request');
+                        handleBtnClick('request')
                       }}
                     >
                       입장요청
@@ -233,7 +238,7 @@ const PatientList = ({ type, datas }) => {
                     className='listBtn-short'
                     style={{ width: '65px', background: '#AECCC8' }}
                     onClick={() => {
-                      handleBtnClick('cancel');
+                      handleBtnClick('cancel')
                     }}
                   >
                     취소
@@ -246,7 +251,7 @@ const PatientList = ({ type, datas }) => {
                     className='listBtn-short'
                     style={{ width: '65px' }}
                     onClick={() => {
-                      handleBtnClick('certificate', data);
+                      handleBtnClick('certificate', data)
                     }}
                   >
                     진단서
@@ -255,7 +260,7 @@ const PatientList = ({ type, datas }) => {
                     className='listBtn-short'
                     style={{ width: '65px', background: '#AECCC8' }}
                     onClick={() => {
-                      handleBtnClick('prescription', data);
+                      handleBtnClick('prescription', data)
                     }}
                   >
                     처방전
@@ -271,7 +276,7 @@ const PatientList = ({ type, datas }) => {
         <li>Loading...</li>
       )}
     </ul>
-  );
-};
+  )
+}
 
-export default PatientList;
+export default PatientList
