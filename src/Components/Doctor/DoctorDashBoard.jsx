@@ -3,9 +3,10 @@ import StatusTable from "../Layout/DashBoard/StatusTable";
 import StatusSubTable from "../Layout/DashBoard/StatusSubTable";
 import { useTokenContext } from "../Context/TokenContext";
 import axios from "axios";
+import SubjectChartIndex from "./subjectChartIndex";
 
 const DoctorDashBoard = () => {
-  const { token, userEmail, userId } = useTokenContext();
+  const { token, userId } = useTokenContext();
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -22,9 +23,12 @@ const DoctorDashBoard = () => {
   const [reviewCnt, setReviewCnt] = useState(0);
   const [reviewAvg, setReviewAvg] = useState(0);
 
+  const [reviewData, setReviewData] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // 의사 대시보드 데이터를 불러오는 API 호출
         const response = await axios.get(
           "http://localhost:8080/doctors/getDoctorDashBoardData",
           config
@@ -38,18 +42,23 @@ const DoctorDashBoard = () => {
         setTotalSales(response.data.totalSales);
         setReviewCnt(response.data.reviewCnt);
         setReviewAvg(response.data.reviewAvg);
+
+        // 리뷰 데이터를 불러오는 API 호출
+        const reviewResponse = await axios.get(
+          "http://localhost:8080/doctors/getRecentReviewsList",
+          config
+        );
+        console.log(reviewResponse.data[0].reviewTitle);
+        console.log(reviewResponse.data[0].comments);
+        console.log(reviewResponse.data[0].rating);
+
+        setReviewData(reviewResponse.data);
       } catch (error) {
         console.error("API 호출 에러:", error);
       }
     };
     fetchData();
   }, [token, userId]);
-
-  const reviewData = [
-    { date: "2024.01.11", name: "홍길동", description: "신청이 잘 안됩니다" },
-    { date: "2024.01.11", name: "홍길동", description: "신청이 잘 안됩니다" },
-    { date: "2024.01.11", name: "홍길동", description: "신청이 잘 안됩니다" },
-  ];
 
   return (
     <div className="dashBoardWrapper">
@@ -68,10 +77,12 @@ const DoctorDashBoard = () => {
           sixthLabel={"리뷰 평점"}
           sixthValue={`${reviewAvg}점`}
         />
-        <StatusSubTable title={"문의관리"} data={reviewData} />
+        <StatusSubTable title={"최근 작성된 리뷰"} data={reviewData} />
       </div>
       <div className="dashBoardBottom">
-        <div className="dashBoardGraph"></div>
+        <div className="dashBoardGraph">
+          <SubjectChartIndex />
+        </div>
       </div>
     </div>
   );
