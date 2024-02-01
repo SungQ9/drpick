@@ -13,8 +13,8 @@ const DoctorManagement = () => {
   const selectedType = location.state?.selectedType || 'default';
   const { token } = useTokenContext();
   const [title, setTitle] = useState('');
-  const [currentHeaders, setCurrentHeaders] = useState();
-  const [items, setItems] = useState();
+  const [currentHeaders, setCurrentHeaders] = useState([]);
+  const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const config = {
@@ -38,7 +38,7 @@ const DoctorManagement = () => {
     },
     inquiry: async () => {
       const response = await axios.get(
-        'http://localhost:8080/doctors/getDoctorInquiry',
+        'http://localhost:8080/doctors/getDoctorInquiryList',
         config,
       );
       setItems(response.data);

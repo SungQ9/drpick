@@ -15,21 +15,20 @@ const PatientList = ({ type, datas }) => {
   const handleBtnClick = async (type, data) => {
     let url = '';
     const config = {
-      headers: { 
-        Authorization: `Bearer ${token}` 
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-      params:{}
-    }
+      params: {},
+    };
 
     // eslint-disable-next-line default-case
     switch (type) {
       case 'detail': // 환자상세
         url = 'http://localhost:8080/doctors/getPatientDetail';
-        config.params.memberId = data.memberId
+        config.params.memberId = data.memberId;
 
         try {
           const response = await axios.get(url, config);
-          console.log(response)
           openModal(<PatientDetailModal item={response.data} />, '환자상세');
         } catch (error) {
           console.error('Error:', error);

@@ -218,9 +218,9 @@ const InquiryAnswerModal = ({ onClose, item = {}, fetchData }) => {
                   }}
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleOpenModal(<DoctorRequest />, '증명파일');
+                    handleOpenModal(<DoctorRequest filePath={item.filePath} />, '증명파일');
                   }}
-                ></div>
+                >{item.originFileName}</div>
               </td>
             </tr>
             <tr>
@@ -395,9 +395,9 @@ const InquiryAnswerModal = ({ onClose, item = {}, fetchData }) => {
                   }}
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleOpenModal(<DoctorRequest />, '증명파일');
+                    handleOpenModal(<DoctorRequest filePath={item.filePath} />, "증명파일");
                   }}
-                ></div>
+                >{item.originFileName}</div>
               </td>
             </tr>
           </>

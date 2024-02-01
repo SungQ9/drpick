@@ -1,14 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
-const ClinicRoomButton = ({ status, certificateNum }) => {
-  const navigate = useNavigate();
+const ClinicRoomButton = ({ status, onEnterVideoChat }) => {
   if (status === false) {
     return (
       <div className='clinicRoomBtn'>
         <button
           onClick={() => {
-            navigate(`/clinic/clinicRoom/${certificateNum}`);
+            onEnterVideoChat();
           }}
         >
           진료실입장

@@ -22,7 +22,7 @@ const Address = ({
       setDetailAddress(address.detail || "");
       setSubdetailAddress(address.subdetail || "");
     }
-  }, []);
+  }, [address]);
 
   const open = useDaumPostcodePopup(postcodeScriptUrl);
 

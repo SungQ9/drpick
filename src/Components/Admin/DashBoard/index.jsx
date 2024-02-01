@@ -19,23 +19,24 @@ const AdminDashBoard = () => {
     },
   };
   const [doctorRequestCount, setDoctorRequestCount] = useState(0);
+  const [reservationCnt, setReservationCnt] = useState(0);
+  const [certificateCnt, setCertificateCnt] = useState(0);
+  const [newUserCnt, setNewUserCnt] = useState(0);
+  const [newUserCntByYear, setNewUserCntByYear] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // 의사 등록 요청 수
-        const response_fifthValue = await axios.get(
-          "http://localhost:8080/admin/getDoctorRequestCnt",
+        const response = await axios.get(
+          "http://localhost:8080/admin/getDashBoardData",
           config
         );
-
-        // // 신규 이용자 수 - 회원가입 수 or 진료 처음 받은 회원 수 ?
-        // const response_secondValue = await axios.get(
-        //   "http://localhost:8080/doctors/getDoctorRequestCnt",
-        //   config
-        // );
-
-        setDoctorRequestCount(response_fifthValue.data);
+        console.log(response);
+        setDoctorRequestCount(response.data.requestCnt);
+        setReservationCnt(response.data.reservationCnt);
+        setCertificateCnt(response.data.certificateCnt);
+        setNewUserCnt(response.data.newUserCnt);
+        setNewUserCntByYear(response.data.newUserCntByYear);
       } catch (error) {
         console.error("API 호출 에러:", error);
       }
@@ -43,28 +44,22 @@ const AdminDashBoard = () => {
     fetchData();
   }, []);
 
-  const reviewData = [
-    { date: "2024.01.11", name: "홍길동", description: "신청이 잘 안됩니다" },
-    { date: "2024.01.11", name: "홍길동", description: "신청이 잘 안됩니다" },
-    { date: "2024.01.11", name: "홍길동", description: "신청이 잘 안됩니다" },
-  ];
-
   return (
     <>
       <div className="dashBoardWrapper">
         <div className="dashBoardTop">
           <StatusTable
-            firstLabel={"당일이용자"}
-            firstValue={`350명`}
-            secondLabel={"신규이용자"}
-            secondValue={`12명`}
-            thirdLabel={"접속중인의사수"}
-            thirdValue={`25명`}
-            fourthLabel={"확인하지않은문의"}
-            fourthValue={`12건`}
-            fifthLabel={"의사등록요청"}
+            firstLabel={"당일 총 예약"}
+            firstValue={`${reservationCnt}건`}
+            secondLabel={"당일 총 진료"}
+            secondValue={`${certificateCnt}건`}
+            thirdLabel={"당일 신규 회원"}
+            thirdValue={`${newUserCnt}명`}
+            fourthLabel={"올해 신규 회원"}
+            fourthValue={`${newUserCntByYear}건`}
+            fifthLabel={"의사 등록 요청"}
             fifthValue={`${doctorRequestCount}건`}
-            sixthLabel={"당일충전포인트"}
+            sixthLabel={"월 총 매출"}
             sixthValue={`1,230,000원`}
           />
           <LineIndex />

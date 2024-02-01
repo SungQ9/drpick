@@ -1,10 +1,10 @@
 import React from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Redirect } from 'react-router-dom';
 import '../../../css/UserStyle.css';
 import '../../../css/Style.css';
 
 import ClinicProvider from '../../Context/ClinicContext';
-
+import { VideoChatProvider } from '../../Context/VideoChatContext';
 import SelectClinicWay from './SelectcClinicWay'; // 과목,증상선택
 import Subject from './Subject'; //진료과목선택
 import Symptom from './Symptom'; // 진료증상선택
@@ -22,30 +22,31 @@ import SelectPillsReceive from './SelectPillsReceive/index';
 // 비대면 진료
 const Clinic = () => {
   const location = useLocation();
-  const isVideoRoute =
-    location.pathname.includes('/clinicRoom/') &&
-    !location.pathname.endsWith('/clinicRoom');
+  const isVideoRoute = location.pathname.includes('/room/');
   return (
     <ClinicProvider>
-      <div className='mainContainer'>
-        <div className={isVideoRoute ? 'mypageForm' : 'Form'}>
-          <Routes>
-            <Route path='/' element={<SelectClinicWay />} />
-            <Route path='/subject' element={<Subject />} />
-            <Route path='/symptom' element={<Symptom />} />
-            <Route path='/doctor' element={<SelectDoctor />} />
-            <Route path='/detail' element={<DoctorDetail />} />
-            <Route path='/accept' element={<SelectAccept />} />
-            <Route path='/datetime' element={<SelectDateTime />} />
-            <Route path='/application' element={<ApplicationForm />} />
-            <Route path='/payment' element={<SelectPayment />} />
-            <Route path='/complete' element={<AcceptComplete />} />
-            <Route path='/room/:roomName' element={<ClinicRoom />} />
-            <Route path='/clinicRoom/:roomName' element={<Video />} />
-            <Route path='/pill' element={<SelectPillsReceive />} />
-          </Routes>
+      <VideoChatProvider>
+        <div className='mainContainer'>
+          <div className={isVideoRoute ? 'mypageForm' : 'Form'}>
+            <Routes>
+              <Route path='/' element={<SelectClinicWay />} />
+              <Route path='/subject' element={<Subject />} />
+              <Route path='/symptom' element={<Symptom />} />
+              <Route path='/doctor' element={<SelectDoctor />} />
+              <Route path='/detail' element={<DoctorDetail />} />
+              <Route path='/accept' element={<SelectAccept />} />
+              <Route path='/datetime' element={<SelectDateTime />} />
+              <Route path='/application' element={<ApplicationForm />} />
+              <Route path='/payment' element={<SelectPayment />} />
+              <Route path='/complete' element={<AcceptComplete />} />
+
+              <Route path='/room/:certificateNum' element={<ClinicRoom />} />
+
+              <Route path='/pill' element={<SelectPillsReceive />} />
+            </Routes>
+          </div>
         </div>
-      </div>
+      </VideoChatProvider>
     </ClinicProvider>
   );
 };

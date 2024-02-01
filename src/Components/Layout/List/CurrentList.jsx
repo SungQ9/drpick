@@ -25,7 +25,6 @@ const CurrentList = ({
   handleSearch,
   filteredDateItems,
   onDeleteReviews,
-  onReviewSelect,
   selectedReviews,
 }) => {
   // filteredDateItems 값이 존재하면 해당 값을 items로 사용, 그렇지 않으면 originalItems 사용
@@ -111,12 +110,6 @@ const CurrentList = ({
   /* 페이징 */
   const [pageNumber, setPageNumber] = useState(0);
   const itemsPerPage = 5;
-
-  // useState hooks를 조건에 따라 두 번 호출하지 않도록 수정
-  const [searchInput, setSearchInput] = useState(filteredDateItems ? '' : null);
-  const [filteredItems, setFilteredItems] = useState(
-    filteredDateItems ? items : null,
-  );
 
   // 검색 결과가 변경될 때마다 페이지 번호 초기화
   useEffect(() => {
@@ -231,12 +224,15 @@ const CurrentList = ({
                 )}
               </div>
             )}
-            <div className='tfootPaginationWrapper'>
-              <Pagination
-                pageCount={items ? Math.ceil(items.length / itemsPerPage) : 0}
-                onPageChange={changePage}
-              />
-            </div>
+
+            {type !== 'Lite' && (
+              <div className='tfootPaginationWrapper'>
+                <Pagination
+                  pageCount={items ? Math.ceil(items.length / itemsPerPage) : 0}
+                  onPageChange={changePage}
+                />
+              </div>
+            )}
           </div>
         </tfoot>
       </table>

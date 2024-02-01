@@ -1,17 +1,40 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useModalContext } from '../../../../Context/ModalContext';
+import { useVideoChat } from '../../../../Context/VideoChatContext';
 import back from '../../../../../img/back-arrow-icon.png';
 import ClinicButton from './ClinicButton';
 import ClinicRoomButton from './ClinicRoomButton';
+import Video from './VideoChat';
 
 const ClinicRoom = ({ item = {} }) => {
+  const { videoChatActive, setVideoChatActive } = useVideoChat();
+  const { openModal } = useModalContext();
   const [clinicStatus, setClinicStatus] = useState(false);
   const location = useLocation();
   const { certificateNum } = location.state;
 
   const navigate = useNavigate();
+
+  const handleOpenModal = (certNum) => {
+    openModal(<Video certificateNum={certNum} />);
+  };
+
+  const handleEnterVideoChat = () => {
+    setVideoChatActive(true); // 비디오 채팅 활성화
+  };
+  if (videoChatActive) {
+    return (
+      <div>
+        <Video certificateNum={certificateNum} />
+      </div>
+    );
+  }
+
   return (
     <div>
+      {/*삭제예정 */}
+      <button onClick={() => handleOpenModal(certificateNum)}>모달 열기</button>
       <div className='titleWrapper'>
         <img
           className='backIcon'
@@ -30,6 +53,7 @@ const ClinicRoom = ({ item = {} }) => {
           <ClinicRoomButton
             status={clinicStatus}
             certificateNum={certificateNum}
+            onEnterVideoChat={handleEnterVideoChat}
           />
         </div>
         <div className='info'>

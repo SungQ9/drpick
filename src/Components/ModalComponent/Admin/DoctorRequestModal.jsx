@@ -9,11 +9,40 @@ import useAlert from '../../Layout/Alert';
 
 const DoctorRequestModal = ({ onClose, item = {}, fetchData }) => {
   const { openModal } = useModalContext();
+  const { token } = useTokenContext();
   const showAlert = useAlert();
 
   const handleOpenModal = (component, name, type) => {
     openModal(component, name, type);
   };
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const doctorEmail = item.doctorEmail;
+  const acceptDoctorsRequest = () => {
+    const apiUrl = 'http://localhost:8080/admin/updateDoctorRegister';
+
+    const data = {
+      doctorEmail: doctorEmail,
+    };
+
+    axios
+      .post(apiUrl, data, config)
+      .then((response) => {
+        showAlert('Success', '의사 등록이 수락되었습니다.');
+        onClose();
+        fetchData();
+      })
+      .catch((error) => {
+        showAlert('Error', '수락 중 오류가 발생했습니다.');
+        console.error("Error accepting doctor's request:", error);
+      });
+  };
+
   return (
     <div
       style={{
@@ -159,16 +188,28 @@ const DoctorRequestModal = ({ onClose, item = {}, fetchData }) => {
               style={{ marginLeft: '20px', cursor: 'pointer', color: 'blue' }}
               onClick={(e) => {
                 e.stopPropagation();
-                handleOpenModal(<DoctorRequest item={item} />, '증명파일');
+
+                handleOpenModal(
+                  <DoctorRequest
+                    filePath={
+                      'https://storage.googleapis.com/download/storage/v1/b/doctorpick/o/3b937275-eb66-4f0e-bc36-d1b7cc839e28_%ED%8C%8C%EC%9D%B4%EC%96%B4.jpeg?generation=1706774330253983&alt=media'
+                    }
+                  />,
+                  '증명파일',
+                );
               }}
             >
-              의사증명서_jpg
+              {item.originFileName}
             </div>
           </td>
         </tr>
       </table>
       <div className='modify-button' style={{ margin: '20px 0px 20px 0px' }}>
-        <button className='clinicSubBtn-mid' style={{ background: '#11C2AD' }}>
+        <button
+          className='clinicSubBtn-mid'
+          style={{ background: '#11C2AD' }}
+          onClick={acceptDoctorsRequest}
+        >
           수락
         </button>
         <button className='clinicSubBtn-mid' onClick={onClose}>

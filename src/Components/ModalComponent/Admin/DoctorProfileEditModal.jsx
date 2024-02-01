@@ -1,4 +1,5 @@
 // 의사 정보 수정 모달
+
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useModalContext } from '../../Context/ModalContext';
@@ -6,13 +7,13 @@ import { useTokenContext } from '../../Context/TokenContext';
 import Input from '../../Layout/Input';
 import Select from '../../Layout/Select';
 import SearchHospitalModal from '../Doctor/SearchHospitalModal';
-import WorkTime from '../../Layout/List/ProfileEditList/WorkTime';
 import useAlert from '../../Layout/Alert';
 
 const DoctorProfileEdit = ({ onClose, item = {}, fetchData }) => {
   const { token, userEmail } = useTokenContext();
   // 이름, 진료과목, 소속병원, 전공
-  const [doctorId, setDoctorId] = useState(item.hospitalName || '');
+
+  const [doctorId, setDoctorId] = useState(item.doctorId || '');
   const [doctorName, setDoctorName] = useState(item.doctorName || '');
   const [doctorSubject, setDoctorSubject] = useState(item.doctorSubject || '');
   const [doctorMajor, setDoctorMajor] = useState(item.doctorMajor || '');
@@ -35,19 +36,15 @@ const DoctorProfileEdit = ({ onClose, item = {}, fetchData }) => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    params: {
-      memberEmail: userEmail,
-    },
   };
 
   const doctorData = {
     doctorId: doctorId,
+    doctorName: doctorName,
     doctorSubject: doctorSubject,
     hospitalName: hospitalName,
     doctorMajor: doctorMajor,
   };
-
-  const doctorAvailData = {};
 
   const updateDoctorInfo = async () => {
     try {
@@ -57,37 +54,20 @@ const DoctorProfileEdit = ({ onClose, item = {}, fetchData }) => {
         doctorData,
         config,
       );
-      const message = infoRes.data.body.message;
-      showAlert('정보수정 성공', message, 'success').then((result) => {
-        if (result.isConfirmed) {
-          onClose();
-          fetchData();
-        }
-      });
-      // 예외 처리 및 결과 확인
-    } catch (error) {
-      console.error('Error updating doctor info:', error);
-    }
-  };
 
-  const updateDoctorAvailInfo = async () => {
-    try {
-      // 비대면 진료 시간 업데이트
-      const availRes = await axios.post(
-        'http://localhost:8080/admin/updateDoctorsAvailInfo',
-        doctorAvailData,
-        config,
-      );
-      const message = availRes.data.body.message;
-      showAlert('정보수정 성공', message, 'success').then((result) => {
-        if (result.isConfirmed) {
-          onClose();
-          fetchData();
-        }
-      });
-      // 예외 처리 및 결과 확인
+      if (infoRes.status === 200) {
+        const message = '의사정보수정 완료하였습니다.';
+        await showAlert('정보수정 성공', message, 'success');
+        onClose();
+        fetchData();
+      } else {
+        console.error(
+          '의사 정보 업데이트 오류: 예상하지 못한 HTTP 상태 코드:',
+          infoRes.status,
+        );
+      }
     } catch (error) {
-      console.error('Error updating doctor availability:', error);
+      console.error('의사 정보 업데이트 오류:', error);
     }
   };
 
@@ -188,12 +168,15 @@ const DoctorProfileEdit = ({ onClose, item = {}, fetchData }) => {
         <tr>
           <td colSpan={2}>
             <Input
-              id='doctor_hospital'
+              id='doctor_major'
               className='member_name'
               label='전공'
               type='text'
-              value={item.doctorMajor}
+              value={doctorMajor}
               style={{ width: '580px', height: '40px' }}
+              onChange={(e) => {
+                setDoctorMajor(e.target.value);
+              }}
             />
           </td>
         </tr>
@@ -207,20 +190,13 @@ const DoctorProfileEdit = ({ onClose, item = {}, fetchData }) => {
           alignItems: 'center',
           marginTop: '20px',
         }}
-      >
-        <h3 style={{ position: 'relative', right: '235px' }}>
-          <span style={{ color: 'red' }}>*</span> 비대면 진료 시간 설정
-        </h3>
-        <WorkTime style={{ position: 'relative', left: '40px' }} />
-      </div>
+      ></div>
       <div className='modify-button'>
         <button
-          className='clinicSubBtn-short'
-          style={{ background: 'red', height: '50px' }}
+          className='clinicSubBtn-mid'
+          style={{ background: '#11C2AD' }}
+          onClick={updateDoctorInfo}
         >
-          제한
-        </button>
-        <button className='clinicSubBtn-mid' style={{ background: '#11C2AD' }}>
           저장
         </button>
         <button className='clinicSubBtn-mid' onClick={onClose}>
