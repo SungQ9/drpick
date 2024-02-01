@@ -12,6 +12,7 @@ import ImgModal from '../../ModalComponent/User/ImgModal';
 import ReviewModal from '../../ModalComponent/User/ReviewModal';
 import TossBillingModal from '../../ModalComponent/User/TossBillingModal';
 import TossPaymentModal from '../../ModalComponent/User/TossPaymentModal';
+import ClinicEndModal from '../../ModalComponent/Doctor/ClinicEndModal';
 
 const ModalOpen = ({ onClick, componentName }) => {
   const { openModal } = useModalContext();
@@ -68,6 +69,13 @@ const ModalOpen = ({ onClick, componentName }) => {
           }}
         >
           환자상세
+        </button>
+        <button
+          onClick={() => {
+            handleOpenModal(<ClinicEndModal />, '진료종료');
+          }}
+        >
+          의사진료종료
         </button>
         <button
           onClick={() => {

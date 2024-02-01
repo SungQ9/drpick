@@ -192,15 +192,6 @@ const Video = ({ certificateNum: propCertificateNum }) => {
       });
     });
 
-    // 카메라 변경 시 호출될 함수
-    const changeCamera = async (newDeviceId) => {
-      console.log(`changeCamera: 카메라 변경 - ${newDeviceId}`);
-      await getMedia({
-        video: { deviceId: { exact: newDeviceId } },
-        audio: true,
-      });
-    };
-
     return () => {
       if (socketRef.current) {
         socketRef.current.disconnect();
@@ -211,6 +202,14 @@ const Video = ({ certificateNum: propCertificateNum }) => {
     };
   }, [roomName]); // 의존성 배열에 roomName 추가
 
+  // 카메라 변경 시 호출될 함수
+  const changeCamera = async (newDeviceId) => {
+    console.log(`changeCamera: 카메라 변경 - ${newDeviceId}`);
+    await getMedia({
+      video: { deviceId: { exact: newDeviceId } },
+      audio: true,
+    });
+  };
   // 마이크 및 카메라 장치 목록 가져오기
   useEffect(() => {
     console.log('useEffect: 마이크 및 카메라 장치 목록 가져오기');
@@ -317,10 +316,7 @@ const Video = ({ certificateNum: propCertificateNum }) => {
                   </option>
                 ))}
               </select>
-              <select
-                value={selectedVideoDevice || ''}
-                onChange={handleVideoDeviceChange}
-              >
+              <select value={selectedVideoDevice || ''} onChange={changeCamera}>
                 {videoDevices.map((device) => (
                   <option
                     style={{ width: '150px' }}
