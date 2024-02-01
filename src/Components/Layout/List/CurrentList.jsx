@@ -224,6 +224,7 @@ const CurrentList = ({
                 )}
               </div>
             )}
+
             {type !== 'Lite' && (
               <div className='tfootPaginationWrapper'>
                 <Pagination

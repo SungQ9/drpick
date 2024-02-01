@@ -13,6 +13,7 @@ const HospitalEditModal = ({ onClose, type, item = {}, fetchData }) => {
   const [hospitalName, setHospitalName] = useState(item.hospitalName || '');
   const [hospitalTel, setHospitalTel] = useState(item.hospitalTel || '');
   const [address, setAddress] = useState({ main: '', detail: '' });
+
   const showAlert = useAlert();
 
   const handleAddressSelect = (selectedAddress) => {
@@ -30,32 +31,34 @@ const HospitalEditModal = ({ onClose, type, item = {}, fetchData }) => {
     hospitalName: hospitalName,
     hospitalTel: hospitalTel,
     hospitalAddrMain: address.main,
-    hospitalAddrDetail: address.detail
+    hospitalAddrDetail: address.detail,
   };
 
   const updateHospitalInfo = async () => {
     try {
       // 병원 정보 업데이트
       const infoRes = await axios.post(
-        "http://localhost:8080/admin/updateHospitalInfo",
+        'http://localhost:8080/admin/updateHospitalInfo',
         hospitalData,
-        config
+        config,
       );
       if (infoRes.status === 200) {
-        const message = "병원정보수정 완료하였습니다.";
-        await showAlert("정보수정 성공", message, "success");
+        const message = '병원정보수정 완료하였습니다.';
+        await showAlert('정보수정 성공', message, 'success');
         onClose();
         fetchData();
       } else {
         console.error(
-          "병원 정보 업데이트 오류: 예상하지 못한 HTTP 상태 코드:",
-          infoRes.status
+          '병원 정보 업데이트 오류: 예상하지 못한 HTTP 상태 코드:',
+          infoRes.status,
         );
       }
     } catch (error) {
-      console.error("병원 정보 업데이트 오류:", error);
+      console.error('병원 정보 업데이트 오류:', error);
     }
   };
+
+  console.log(item);
 
   return (
     <div
@@ -114,7 +117,12 @@ const HospitalEditModal = ({ onClose, type, item = {}, fetchData }) => {
             삭제
           </button>
         )}
-        <button className='clinicSubBtn-mid' style={{ background: '#11C2AD' }}  onClick={updateHospitalInfo}> 
+
+        <button
+          className='clinicSubBtn-mid'
+          style={{ background: '#11C2AD' }}
+          onClick={updateHospitalInfo}
+        >
           저장
         </button>
         <button className='clinicSubBtn-mid' onClick={onClose}>
