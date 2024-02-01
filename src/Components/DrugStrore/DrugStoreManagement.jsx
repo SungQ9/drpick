@@ -41,8 +41,9 @@ const DrugStoreManagement = () => {
         'http://localhost:8080/drugstores/getDrugstoreInquiry',
         config,
       );
+      console.log(response.data);
       setItems(response.data);
-      setCurrentHeaders(headers.drugstoreInquiry);
+      setCurrentHeaders(headers.inquiry);
       setTitle('문의내역');
     },
   };

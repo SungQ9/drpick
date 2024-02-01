@@ -1,38 +1,27 @@
 import React, { useState } from "react";
 import { useModalContext } from "../../Context/ModalContext";
 
-const SearchBar = ({
-  type,
-  items = [],
-  searchBarStyle,
-  placeholder,
-  onSearch,
-  startDate,
-  endDate,
-  setSearchBarItem,
-}) => {
+const SearchBar = ({ type, searchBarStyle, placeholder, onSearch }) => {
   const [inputText, setInputText] = useState("");
   const { setSearchKeyword } = useModalContext(); // ModalContext에서 검색 키워드 가져오기
+
   placeholder = "검색어를 입력하세요";
-  console.log("SearchBar 아이템 :", items);
 
   const onChangeInput = (evt) => {
     const searchValue = evt.target.value;
     setInputText(searchValue);
     setSearchKeyword(searchValue);
-    setSearchBarItem(items);
     // 검색어가 변경될 때마다 결과 업데이트
-    onSearch(searchValue, startDate, endDate); // items 추가
+    onSearch(searchValue);
     setSearchKeyword(searchValue);
   };
 
   const handleSearch = () => {
     if (onSearch) {
-      // 검색어와 날짜 정보를 전달
-      onSearch(inputText, startDate, endDate, items); // items 추가
+      // 검색어와 날짜 정보를 함께 전달
+      onSearch(inputText);
       setSearchKeyword(inputText);
     }
-    console.log("SearchBar : ", inputText, startDate, endDate);
   };
 
   const handleReset = () => {
@@ -49,24 +38,7 @@ const SearchBar = ({
     handleSearch();
   };
 
-  if (type === "Date") {
-    return (
-      <form onSubmit={handleSubmit} className="searchBarWrapper">
-        <input
-          value={inputText}
-          onChange={onChangeInput}
-          type="text"
-          placeholder={placeholder}
-        />
-        <button
-          className="clinicSubBtn-short"
-          onClick={(evt) => handleSearch(evt)}
-        >
-          검색
-        </button>
-      </form>
-    );
-  } else if (type === "Chat") {
+  if (type === "Chat") {
     return (
       <form onSubmit={handleSubmit} className="searchBarWrapper">
         <input
@@ -95,6 +67,7 @@ const SearchBar = ({
         <input
           value={inputText}
           onChange={onChangeInput}
+          // onKeyPress={handleSubmit}
           type="text"
           placeholder={placeholder}
         />

@@ -1,7 +1,7 @@
 import React from 'react';
 import PatientList from './PatientList';
 
-const ReceptionWait = ( {data} ) => {
+const ReceptionWait = ({ datas, fetchData }) => {
   return (
     <div className='doctorClinic-form'>
       <div className='doctorClinic-title'>
@@ -15,7 +15,7 @@ const ReceptionWait = ( {data} ) => {
           alignItems: 'center',
         }}
       >
-        <PatientList type={'wait'} data={data} />
+        <PatientList type={'wait'} datas={datas} fetchData={fetchData} />
       </div>
     </div>
   );

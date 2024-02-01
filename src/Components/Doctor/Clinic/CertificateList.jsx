@@ -1,7 +1,7 @@
 import React from 'react';
 import PatientList from './PatientList';
 
-const CertificateList = ( {data} ) => {
+const CertificateList = ({ datas }) => {
   return (
     <div className='doctorClinic-form'>
       <div className='doctorClinic-title'>
@@ -15,7 +15,7 @@ const CertificateList = ( {data} ) => {
           alignItems: 'center',
         }}
       >
-        <PatientList type={'list'} data={data} />
+        <PatientList type={'list'} datas={datas} />
       </div>
     </div>
   );

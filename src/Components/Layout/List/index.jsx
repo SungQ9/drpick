@@ -22,10 +22,41 @@ const List = ({
   const [searchBarItem, setSearchBarItem] = React.useState([]);
 
   const handleSearch = (value, startDate, endDate) => {
-    console.log("검색어:", value);
-    console.log("시작날짜:", startDate);
-    console.log("종료날짜:", endDate);
     setSearchValue(value);
+
+    const filteredItems = items.filter((item) => {
+      let isDateValid = true;
+
+      // 날짜 필드 결정
+      const dateField = item.inquiryRegdate
+        ? "inquiryRegdate"
+        : item.certificateDate
+        ? "certificateDate"
+        : null;
+
+      if (startDate || (endDate && dateField)) {
+        const itemDate = new Date(item[dateField]);
+        const start = startDate ? new Date(startDate) : new Date("2022-01-01");
+        const end = endDate ? new Date(endDate) : new Date();
+        isDateValid =
+          (!itemDate || itemDate >= start) && (!itemDate || itemDate <= end);
+      }
+
+      const isKeywordValid =
+        !value ||
+        headers.some((header) => {
+          const headerValue = item[header.value];
+          return (
+            headerValue &&
+            typeof headerValue === "string" &&
+            headerValue.toLowerCase().includes(value.toLowerCase())
+          );
+        });
+
+      return isDateValid && isKeywordValid;
+    });
+
+    setFilteredDateItems(filteredItems);
   };
 
   // DatePicker가 있는 목록
