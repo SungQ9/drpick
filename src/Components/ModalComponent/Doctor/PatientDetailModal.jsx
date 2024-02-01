@@ -3,6 +3,7 @@ import React from 'react';
 import PatientDetail from './PatientDetail';
 
 const PatientDetailModal = ({ onClose, item = {} }) => {
+  console.log('이름:', item[0].memberName);
   return (
     <div className='patientDetail-modal'>
       <table className='patientDetail-top'>
@@ -10,19 +11,19 @@ const PatientDetailModal = ({ onClose, item = {} }) => {
           <td>
             <h3>이름</h3>
           </td>
-          <td>{item.memberName}</td>
+          <td>{item[0].memberName}</td>
         </tr>
         <tr>
           <td>
             <h3>연락처</h3>
           </td>
-          <td>{item.memberTel}</td>
+          <td>{item[0].memberTel}</td>
         </tr>
         <tr>
           <td>
             <h3>생년월일</h3>
           </td>
-          <td>2000.01.01</td>
+          <td>{item[0].memberBirth}</td>
           <td>
             <h3>최근진료일</h3>
           </td>
@@ -45,7 +46,7 @@ const PatientDetailModal = ({ onClose, item = {} }) => {
             <PatientDetail />
           </td>
         </tr>
-        
+
         <tr>
           <td></td>
           <td className='patientDetail' colSpan={3} style={{ width: '530px' }}>

@@ -1,15 +1,7 @@
 import React, { useState } from 'react';
 import { useModalContext } from '../../Context/ModalContext';
 
-const SearchBar = ({
-  type,
-  props = [],
-  searchBarStyle,
-  placeholder,
-  onSearch,
-  startDate,
-  endDate,
-}) => {
+const SearchBar = ({ type, searchBarStyle, placeholder, onSearch }) => {
   const [inputText, setInputText] = useState('');
   const { setSearchKeyword } = useModalContext(); // ModalContext에서 검색 키워드 가져오기
 
@@ -27,7 +19,7 @@ const SearchBar = ({
   const handleSearch = () => {
     if (onSearch) {
       // 검색어와 날짜 정보를 함께 전달
-      onSearch(inputText, startDate, endDate);
+      onSearch(inputText);
       setSearchKeyword(inputText);
     }
   };
@@ -46,24 +38,7 @@ const SearchBar = ({
     handleSearch();
   };
 
-  if (type === 'Date') {
-    return (
-      <form onSubmit={handleSubmit} className='searchBarWrapper'>
-        <input
-          value={inputText}
-          onChange={onChangeInput}
-          type='text'
-          placeholder={placeholder}
-        />
-        <button
-          className='clinicSubBtn-short'
-          onClick={(evt) => handleSearch(evt)}
-        >
-          검색
-        </button>
-      </form>
-    );
-  } else if (type === 'Chat') {
+  if (type === 'Chat') {
     return (
       <form onSubmit={handleSubmit} className='searchBarWrapper'>
         <input

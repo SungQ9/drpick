@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/esm/locale';
-import SearchBar from '../SearchBar';
+import DateSearchBar from '../SearchBar/DateSearchBar';
 
 const SearchDate = ({ type, onSearch, searchValue }) => {
   const [startDate, setStartDate] = useState(null);
@@ -18,14 +18,15 @@ const SearchDate = ({ type, onSearch, searchValue }) => {
 
   const formattedStartDate = formatDateForDB(startDate);
   const formattedEndDate = formatDateForDB(endDate);
+  useEffect(() => {
+    handleSearch(searchValue, formattedStartDate, formattedEndDate);
+  }, [startDate, endDate, searchValue, formattedStartDate, formattedEndDate]);
 
-  const handleSearch = (searchValue) => {
-    // 필터링된 결과를 부모 컴포넌트로 전달
+  const handleSearch = (searchValue, formattedStartDate, formattedEndDate) => {
     if (onSearch) {
       onSearch(searchValue, formattedStartDate, formattedEndDate);
     }
   };
-
   const nowDateClick = () => {
     setStartDate(new Date());
     setEndDate(new Date());
@@ -41,8 +42,6 @@ const SearchDate = ({ type, onSearch, searchValue }) => {
     setEndDate(today);
     handleSearch(searchValue, newDay, today); // 검색어가 없는 상태로 전체 데이터 검색
   };
-
-  useEffect(() => {}, [startDate, endDate]);
 
   const handleDateChange = (date, type) => {
     if (type === 'start') {
@@ -89,11 +88,12 @@ const SearchDate = ({ type, onSearch, searchValue }) => {
         <button className='clinicSubBtn-mid' onClick={monthDateClick}>
           최근1개월
         </button>
-        <SearchBar
+        <DateSearchBar
           type={'Date'}
           onSearch={handleSearch}
           startDate={formattedStartDate}
           endDate={formattedEndDate}
+          searchValue={searchValue}
         />
       </div>
     </div>

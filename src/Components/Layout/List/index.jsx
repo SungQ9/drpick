@@ -21,40 +21,39 @@ const List = ({
   const [filteredDateItems, setFilteredDateItems] = React.useState(items);
 
   const handleSearch = (value, startDate, endDate) => {
-    console.log('검색어:', value);
-    console.log('시작 날짜:', startDate);
-    console.log('종료 날짜:', endDate);
-
     setSearchValue(value);
 
-    const filteredItems = items.filter((item) =>
-      headers.some((header) => {
-        if (
-          type === 'Date' &&
-          header.value === 'inquiryRegdate' &&
-          item[header.value]
-        ) {
-          const inquiryDate = new Date(item[header.value]);
-          const isDateInRange =
-            inquiryDate >= new Date(startDate) &&
-            inquiryDate <= new Date(endDate);
+    const filteredItems = items.filter((item) => {
+      let isDateValid = true;
 
-          const includesSearchValue =
-            !value ||
-            (item[header.value] &&
-              typeof item[header.value] === 'string' &&
-              item[header.value].includes(value));
+      // 날짜 필드 결정
+      const dateField = item.inquiryRegdate
+        ? 'inquiryRegdate'
+        : item.certificateDate
+        ? 'certificateDate'
+        : null;
 
-          return isDateInRange || includesSearchValue;
-        } else {
+      if (startDate || (endDate && dateField)) {
+        const itemDate = new Date(item[dateField]);
+        const start = startDate ? new Date(startDate) : new Date('2022-01-01');
+        const end = endDate ? new Date(endDate) : new Date();
+        isDateValid =
+          (!itemDate || itemDate >= start) && (!itemDate || itemDate <= end);
+      }
+
+      const isKeywordValid =
+        !value ||
+        headers.some((header) => {
+          const headerValue = item[header.value];
           return (
-            item[header.value] &&
-            typeof item[header.value] === 'string' &&
-            item[header.value].includes(value)
+            headerValue &&
+            typeof headerValue === 'string' &&
+            headerValue.toLowerCase().includes(value.toLowerCase())
           );
-        }
-      }),
-    );
+        });
+
+      return isDateValid && isKeywordValid;
+    });
 
     setFilteredDateItems(filteredItems);
   };
