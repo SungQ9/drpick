@@ -26,27 +26,9 @@ const CurrentList = ({
   filteredDateItems,
   onDeleteReviews,
   selectedReviews,
-  searchBarItem,
 }) => {
   // filteredDateItems 값이 존재하면 해당 값을 items로 사용, 그렇지 않으면 originalItems 사용
-  console.log("searchBarItem :", searchBarItem);
-  console.log("filteredDateItems :", filteredDateItems);
-  console.log("originalItems :", originalItems);
-  const [items, setItems] = useState(originalItems);
-
-  useEffect(() => {
-    // searchBarItem이 있으면 그것을 사용합니다.
-    // 그렇지 않고 filteredDateItems가 있으면 그것을 사용합니다.
-    // 둘 다 없으면 originalItems를 사용합니다.
-    if (searchBarItem) {
-      setItems(searchBarItem);
-    } else if (filteredDateItems) {
-      setItems(filteredDateItems);
-    } else {
-      setItems(originalItems);
-    }
-  }, [searchBarItem, filteredDateItems, originalItems]);
-
+  const items = filteredDateItems ? filteredDateItems : originalItems;
   const fetchData = useContext(UpdateListContext);
   const { openModal } = useModalContext();
 
@@ -206,7 +188,7 @@ const CurrentList = ({
                 colSpan={
                   headerKey.length + (selectable ? 1 : 0) + (listbutton ? 1 : 0)
                 }
-                style={{ borderBottom: 'none' }}
+                style={{ borderBottom: "none" }}
               >
                 조회된 데이터가 없습니다.
               </td>
@@ -221,7 +203,7 @@ const CurrentList = ({
                 buttonName={buttonName}
                 buttonType={buttonType}
                 handleButtonClick={handleButtonClick}
-                className={'date-list'}
+                className={"date-list"}
               />
             )}
 
@@ -231,7 +213,7 @@ const CurrentList = ({
                   buttonName={buttonName}
                   buttonType={buttonType}
                   handleButtonClick={handleButtonClick}
-                  className={'current-list'}
+                  className={"current-list"}
                 />
 
                 {filteredDateItems ? null : (
