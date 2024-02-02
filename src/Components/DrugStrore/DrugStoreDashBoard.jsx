@@ -16,6 +16,13 @@ const DrugStoreDashBoard = () => {
   };
 
   const [newOrder, setNewOrder] = useState(0);
+  const [receiveWait, setReceiveWait] = useState(0);
+  const [received, setReceived] = useState(0);
+  const [totalOrderCnt, setTotalOrderCnt] = useState(0);
+  const [deliveryCnt, setDeliveryCnt] = useState(0);
+  const [pickupCnt, setPickupCnt] = useState(0);
+
+  const [reviewData, setReviewData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,6 +33,23 @@ const DrugStoreDashBoard = () => {
         );
         console.log(response);
         setNewOrder(response.data.newOrder);
+        setReceiveWait(response.data.receiveWait);
+        setReceived(response.data.received);
+        setTotalOrderCnt(response.data.totalOrderCnt);
+        setDeliveryCnt(response.data.deliveryCnt);
+        setPickupCnt(response.data.pickupCnt);
+
+        // 리뷰 데이터를 불러오는 API 호출
+        const reviewResponse = await axios.get(
+          "http://localhost:8080/drugstores/getRecentWaitingList",
+          config
+        );
+        // console.log(reviewResponse.data[0].reviewTitle);
+        // console.log(reviewResponse.data[0].comments);
+        // console.log(reviewResponse.data[0].rating);
+
+        console.log(reviewResponse);
+        setReviewData(reviewResponse.data);
       } catch (error) {
         console.error("API 호출 에러:", error);
       }
@@ -33,29 +57,24 @@ const DrugStoreDashBoard = () => {
     fetchData();
   }, [token, userId]);
 
-  const reviewData = [
-    { date: "2024.01.11", name: "홍길동", description: "신청이 잘 안됩니다" },
-    { date: "2024.01.11", name: "홍길동", description: "신청이 잘 안됩니다" },
-    { date: "2024.01.11", name: "홍길동", description: "신청이 잘 안됩니다" },
-  ];
   return (
     <div className="dashBoardWrapper">
       <div className="dashBoardTop">
         <StatusTable
-          firstLabel={"신규주문"}
+          firstLabel={"신규 주문"}
           firstValue={`${newOrder}건`}
-          secondLabel={"주문취소"}
-          secondValue={`3건`}
-          thirdLabel={"수령완료"}
-          thirdValue={`11건`}
-          fourthLabel={"총주문건"}
-          fourthValue={`25건`}
-          fifthLabel={"퀵배송"}
-          fifthValue={`3건`}
-          sixthLabel={"택배배송"}
-          sixthValue={`4건`}
+          secondLabel={"수령 대기"}
+          secondValue={`${receiveWait}건`}
+          thirdLabel={"수령 완료"}
+          thirdValue={`${received}건`}
+          fourthLabel={"총 주문건"}
+          fourthValue={`${totalOrderCnt}건`}
+          fifthLabel={"택배 배송"}
+          fifthValue={`${deliveryCnt}건`}
+          sixthLabel={"직접 수령"}
+          sixthValue={`${pickupCnt}건`}
         />
-        <StatusSubTable title={"문의관리"} data={reviewData} />
+        <StatusSubTable title={"수령 대기 고객"} data={reviewData} />
       </div>
       <div className="dashBoardBottom">
         <div className="dashBoardGraph"></div>

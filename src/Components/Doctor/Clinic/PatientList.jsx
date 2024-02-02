@@ -97,8 +97,8 @@ const PatientList = ({ type, datas, fetchData }) => {
             fetchData(),
           );
         } catch (error) {
-          Alert('진료취소실패', '잠시후에 다시 시도해주세요', 'error');
           console.error('Error:', error);
+          Alert('진료취소실패', '잠시후에 다시 시도해주세요', 'error');
         }
         break;
 
