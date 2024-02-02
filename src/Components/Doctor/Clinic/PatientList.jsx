@@ -9,7 +9,7 @@ import PatientDetailModal from '../../ModalComponent/Doctor/PatientDetailModal';
 import useAlert from '../../Layout/Alert';
 
 const PatientList = ({ type, datas, fetchData }) => {
-  const { openModal } = useModalContext();
+  const { openModal, onClose } = useModalContext();
   const { token } = useTokenContext();
   const { Alert } = useAlert();
 
@@ -80,8 +80,14 @@ const PatientList = ({ type, datas, fetchData }) => {
         break;
 
       case 'start': // 진료시작
-        console.log('넘겨받은 certificateNum', data.certificateNum);
-        openModal(<Video certificateNum={data.certificateNum} />);
+        openModal(
+          <Video
+            certificateNum={data.certificateNum}
+            type={'doctor'}
+            onClose={onClose}
+            fetchData={fetchData}
+          />,
+        );
 
         break;
 
@@ -195,6 +201,9 @@ const PatientList = ({ type, datas, fetchData }) => {
                   {data.reservationStatus === 'R' && (
                     <span
                       style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
                         marginLeft: '5px',
                         borderRadius: '7px',
                         background: '#11C2AD',
@@ -216,7 +225,8 @@ const PatientList = ({ type, datas, fetchData }) => {
                   </span>{' '}
                 </div>
               </div>
-              {type === 'wait' && (
+              {(data.reservationStatus === 'R' ||
+                data.reservationStatus === 'W') && (
                 <div className='patientList-right'>
                   <button
                     className='listBtn-short'
@@ -243,9 +253,9 @@ const PatientList = ({ type, datas, fetchData }) => {
                   {data.certificateStatus === 'Y' ? (
                     <button
                       className='listBtn-short'
-                      style={{ width: '65px' }}
+                      style={{ width: '65px', fontSize: '12px' }}
                       onClick={() => {
-                        handleBtnClick('start');
+                        handleBtnClick('start', data);
                       }}
                     >
                       진료시작

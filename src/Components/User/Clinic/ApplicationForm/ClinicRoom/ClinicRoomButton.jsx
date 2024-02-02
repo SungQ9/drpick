@@ -1,13 +1,24 @@
 import React from 'react';
 import axios from 'axios';
+import { useTokenContext } from '../../../../Context/TokenContext';
 
-const ClinicRoomButton = ({ status, onEnterVideoChat }) => {
+const ClinicRoomButton = ({ status, certificateNum, onEnterVideoChat }) => {
+  const { token } = useTokenContext();
+
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    params: { certificateNum: certificateNum },
+  };
+
   const enterClinicRoom = async () => {
     try {
-      //
-      const res = await axios.post('YOUR_BACKEND_ENDPOINT', {});
-
-      onEnterVideoChat();
+      const res = await axios
+        .get('http://localhost:8080/members/updateCertificateStaus', config)
+        .then(() => {
+          onEnterVideoChat();
+        });
     } catch (error) {
       console.error('진료실 입장 Error:', error);
     }

@@ -2,17 +2,16 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useTokenContext } from '../../Context/TokenContext';
 import useAlert from '../../Layout/Alert';
-import Input from '../../Layout/Input';
 
-const ClinicEndModal = ({ onClose, item = [], type, fetchData }) => {
+const ClinicEndModal = ({ onClose, certificateNum, type, fetchData }) => {
   const [clinicAmount, setClinicAmount] = useState('');
   const [certificateFileName, setCertificateFileName] = useState([]);
   const [prescriptionFileName, setPrescriptionFileName] = useState([]);
   const { Alert } = useAlert();
   const formData = new FormData();
+  const { token } = useTokenContext();
 
   const handleClinicAmountChange = (event) => {
-    // 진료비 입력값이 변경될 때 상태 업데이트
     setClinicAmount(event.target.value);
   };
 
@@ -26,7 +25,7 @@ const ClinicEndModal = ({ onClose, item = [], type, fetchData }) => {
     }
 
     setCertificateFileName(newFiles);
-    formData.append('fileList1', newFiles[0]); // 서버에서 파일 구분을 위한 키를 'fileList1'로 사용
+    formData.append('certificateFile', newFiles[0]);
   };
 
   const prescriptionFileInputChange = (event) => {
@@ -39,17 +38,17 @@ const ClinicEndModal = ({ onClose, item = [], type, fetchData }) => {
     }
 
     setPrescriptionFileName(newFiles);
-    formData.append('fileList2', newFiles[0]); // 서버에서 파일 구분을 위한 키를 'fileList2'로 사용
+    formData.append('prescriptionFile', newFiles[0]);
   };
 
   const certificateDeleteFile = () => {
     setCertificateFileName([]);
-    formData.delete('fileList1'); // 'fileList1' 키를 가진 파일 삭제
+    formData.delete('certificateFile');
   };
 
   const prescriptionDeleteFile = () => {
     setPrescriptionFileName([]);
-    formData.delete('fileList2'); // 'fileList2' 키를 가진 파일 삭제
+    formData.delete('prescriptionFile');
   };
 
   const certificateFileBtnClick = () => {
@@ -107,35 +106,48 @@ const ClinicEndModal = ({ onClose, item = [], type, fetchData }) => {
   };
 
   const handleSubmit = async () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    };
     try {
+      formData.append('certificateNum', certificateNum);
+
       // 클리닉 비용과 파일 데이터를 formData에 추가
-      formData.append('clinicAmount', clinicAmount);
+      formData.append('amount', clinicAmount);
 
-      if (certificateFileName.length > 0) {
-        formData.append('certificateFile', certificateFileName[0]);
-      }
+      // if (certificateFileName.length > 0) {
+      //   formData.append('certificateFile', certificateFileName[0]);
+      // }
 
-      if (prescriptionFileName.length > 0) {
-        formData.append('prescriptionFile', prescriptionFileName[0]);
-      }
+      // if (prescriptionFileName.length > 0) {
+      //   formData.append('prescriptionFile', prescriptionFileName[0]);
+      // }
 
-      console.log('전송하는데이터', formData);
+      console.log(
+        '전송하는데이터: ',
+        certificateNum,
+        '비용:',
+        clinicAmount,
+        '진단서:',
+        certificateFileName[0],
+        '처방전',
+        prescriptionFileName[0],
+      );
       // 서버로 데이터 전송
       const response = await axios.post(
-        'http://localhost:8080/123123123123',
+        'http://localhost:8080/doctors/finishCertificate',
         formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data', // 파일 업로드를 위한 설정
-          },
-        },
+        config,
       );
 
       // 서버 응답에 따른 처리
       if (response.status === 200) {
         Alert('성공', '데이터 전송 성공', 'success').then(
-          fetchData(),
           onClose(),
+          fetchData(),
         );
         // 서버 응답에 따른 처리를 추가할 수 있습니다.
       } else {

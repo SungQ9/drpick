@@ -21,7 +21,7 @@ const ClinicButton = ({ status }) => {
   } else {
     return (
       <button
-        onClick={navigate('')}
+        onClick={navigate('/clinic/pill')}
         style={{
           width: '650px',
           height: '80px',

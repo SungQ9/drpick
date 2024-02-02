@@ -1,8 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { io } from 'socket.io-client';
+import { useModalContext } from '../../../../../Context/ModalContext';
+import ClinicEndModal from '../../../../../ModalComponent/Doctor/ClinicEndModal';
 
-const Video = ({ certificateNum: propCertificateNum }) => {
+const Video = ({
+  certificateNum: propCertificateNum,
+  type,
+  onClose,
+  fetchData,
+}) => {
   const navigate = useNavigate();
   const { certificateNum: urlCertificateNum } = useParams();
   const roomName = propCertificateNum || urlCertificateNum;
@@ -19,6 +26,18 @@ const Video = ({ certificateNum: propCertificateNum }) => {
   const [videoDevices, setVideoDevices] = useState([]); // 카메라 장치 목록
   const [selectedAudioDevice, setSelectedAudioDevice] = useState(null); // 선택된 마이크 장치
   const [selectedVideoDevice, setSelectedVideoDevice] = useState(null); // 선택된 카메라 장치
+  const { openModal } = useModalContext();
+
+  const handleClick = () => {
+    if (type === 'doctor') {
+      onClose();
+      openModal(
+        <ClinicEndModal certificateNum={roomName} fetchData={fetchData} />,
+      );
+    } else if (type === 'user') {
+      navigate(-1);
+    }
+  };
 
   // Offer 생성 함수
   const createOffer = async () => {
@@ -364,9 +383,7 @@ const Video = ({ certificateNum: propCertificateNum }) => {
             </button>
             <button
               style={{ width: '500px', height: '45px', fontSize: '17px' }}
-              onClick={() => {
-                navigate(-1);
-              }}
+              onClick={handleClick}
             >
               종료하기
             </button>
