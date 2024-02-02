@@ -16,7 +16,7 @@ const DrugstoreEditModal = ({ onClose, type, item = {}, fetchData }) => {
   const [drugstoreId, setDrugstoreId] = useState(item.drugstoreId || '');
   const [drugstoreName, setDrugstoreName] = useState(item.drugstoreName || '');
   const [drugstoreTel, setDrugstoreTel] = useState(item.drugstoreTel || '');
-  const [address, setAddress] = useState({ main: '', detail: '', subdetail: '' });
+  const [address, setAddress] = useState({ main: item.drugstoreAddrMain || '', detail: item.drugstoreAddrDetail ||'', subdetail: item.drugstoreAddrSubdetail ||'' });
   const { Alert } = useAlert();
 
   const handleAddressSelect = (selectedAddress) => {

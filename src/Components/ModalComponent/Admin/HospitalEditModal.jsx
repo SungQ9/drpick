@@ -12,7 +12,7 @@ const HospitalEditModal = ({ onClose, type, item = {}, fetchData }) => {
   const [hospitalId, setHospitalId] = useState(item.hospitalId || '');
   const [hospitalName, setHospitalName] = useState(item.hospitalName || '');
   const [hospitalTel, setHospitalTel] = useState(item.hospitalTel || '');
-  const [address, setAddress] = useState({ main: '', detail: '', subdetail: '' });
+  const [address, setAddress] = useState({ main: item.hospitalAddrMain || '', detail: item.hospitalAddrDetail || '', subdetail: item.hospitalAddrSubdetail || '' });
 
   const { Alert } = useAlert();
 
