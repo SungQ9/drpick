@@ -24,6 +24,7 @@ const AdminDashBoard = () => {
   const [certificateCnt, setCertificateCnt] = useState(0);
   const [newUserCnt, setNewUserCnt] = useState(0);
   const [newUserCntByYear, setNewUserCntByYear] = useState(0);
+  const [totalSales, setTotalSales] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,6 +39,7 @@ const AdminDashBoard = () => {
         setCertificateCnt(response.data.certificateCnt);
         setNewUserCnt(response.data.newUserCnt);
         setNewUserCntByYear(response.data.newUserCntByYear);
+        setTotalSales(response.data.totalSales);
       } catch (error) {
         console.error("API 호출 에러:", error);
       }
@@ -61,7 +63,7 @@ const AdminDashBoard = () => {
             fifthLabel={"의사 등록 요청"}
             fifthValue={`${doctorRequestCount}건`}
             sixthLabel={"월 총 매출"}
-            sixthValue={`1,230,000원`}
+            sixthValue={`${totalSales.toLocaleString()}원`}
           />
           <LineIndex />
         </div>
