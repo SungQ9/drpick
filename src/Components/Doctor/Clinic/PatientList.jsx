@@ -57,9 +57,8 @@ const PatientList = ({ type, datas, fetchData }) => {
 
         try {
           const res = await axios.get(url, config);
-          Alert('취소성공', '대기가 취소되었습니다', 'success').then(
-            fetchData(),
-          );
+          console.log('접수대기취소: ', res);
+          Alert('취소성공', res.data.body.message, 'success').then(fetchData());
         } catch (error) {
           Alert('접수취소 실패', '잠시후에 다시 시도해주세요', 'error');
           console.error('Error:', error);
@@ -72,17 +71,17 @@ const PatientList = ({ type, datas, fetchData }) => {
 
         try {
           const res = await axios.get(url, config);
-          Alert('입장요청', '입장요청을 보냈습니다', 'success').then(
-            fetchData(),
-          );
+          console.log('진료목록 입장요청 :', res);
+          Alert('입장요청', res.data.body.message, 'success').then(fetchData());
         } catch (error) {
           Alert('입장요청 실패', '잠시후에 다시 시도해주세요', 'error');
-          console.error('Error:', error);
+          console.error('입장요청 Error:', error);
         }
         break;
 
       case 'start': // 진료시작
-        openModal(<Video item={data} />);
+        console.log('넘겨받은 certificateNum', data.certificateNum);
+        openModal(<Video certificateNum={data.certificateNum} />);
 
         break;
 
