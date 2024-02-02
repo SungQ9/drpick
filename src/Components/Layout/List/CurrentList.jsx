@@ -26,6 +26,7 @@ const CurrentList = ({
   filteredDateItems,
   onDeleteReviews,
   selectedReviews,
+  onReviewSelect,
 }) => {
   // filteredDateItems 값이 존재하면 해당 값을 items로 사용, 그렇지 않으면 originalItems 사용
   const items = filteredDateItems ? filteredDateItems : originalItems;
@@ -153,7 +154,12 @@ const CurrentList = ({
               <tr key={index}>
                 {selectable && (
                   <td style={{ width: '30px' }}>
-                    <input type='checkbox' />
+                    <input
+                      type='checkbox'
+                      onClick={() => {
+                        onReviewSelect(item.reviewId);
+                      }}
+                    />
                   </td>
                 )}
                 {headerKey.map((key) => (
