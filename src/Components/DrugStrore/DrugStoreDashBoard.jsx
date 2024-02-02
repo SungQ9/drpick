@@ -3,6 +3,7 @@ import StatusTable from "../Layout/DashBoard/StatusTable";
 import StatusSubTable from "../Layout/DashBoard/StatusSubTable";
 import { useTokenContext } from "../Context/TokenContext";
 import axios from "axios";
+import BarIndexForDS from "./BarIndexForDS";
 
 const DrugStoreDashBoard = () => {
   const { token, userEmail, userId } = useTokenContext();
@@ -44,10 +45,6 @@ const DrugStoreDashBoard = () => {
           "http://localhost:8080/drugstores/getRecentWaitingList",
           config
         );
-        // console.log(reviewResponse.data[0].reviewTitle);
-        // console.log(reviewResponse.data[0].comments);
-        // console.log(reviewResponse.data[0].rating);
-
         console.log(reviewResponse);
         setReviewData(reviewResponse.data);
       } catch (error) {
@@ -77,7 +74,9 @@ const DrugStoreDashBoard = () => {
         <StatusSubTable title={"수령 대기 고객"} data={reviewData} />
       </div>
       <div className="dashBoardBottom">
-        <div className="dashBoardGraph"></div>
+        <div className="dashBoardGraph">
+          <BarIndexForDS />
+        </div>
       </div>
     </div>
   );
