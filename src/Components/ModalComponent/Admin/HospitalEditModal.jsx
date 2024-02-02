@@ -12,7 +12,7 @@ const HospitalEditModal = ({ onClose, type, item = {}, fetchData }) => {
   const [hospitalId, setHospitalId] = useState(item.hospitalId || '');
   const [hospitalName, setHospitalName] = useState(item.hospitalName || '');
   const [hospitalTel, setHospitalTel] = useState(item.hospitalTel || '');
-  const [address, setAddress] = useState({ main: '', detail: '' });
+  const [address, setAddress] = useState({ main: '', detail: '', subdetail: '' });
 
   const { Alert } = useAlert();
 
@@ -32,10 +32,17 @@ const HospitalEditModal = ({ onClose, type, item = {}, fetchData }) => {
     hospitalTel: hospitalTel,
     hospitalAddrMain: address.main,
     hospitalAddrDetail: address.detail,
+    hospitalAddrSubdetail: address.subdetail,
   };
-
-  const updateHospitalInfo = async () => {
+   const updateHospitalInfo = async () => {
     try {
+      //주소를 다 적지 못하면
+      if (!address.subdetail) {
+        const message = 'Subdetail 주소를 입력해주세요.'; 
+        await Alert('주소 입력 오류', message, 'error');
+        return; 
+      }
+
       // 병원 정보 업데이트
       const infoRes = await axios.post(
         'http://localhost:8080/admin/updateHospitalInfo',
@@ -104,6 +111,7 @@ const HospitalEditModal = ({ onClose, type, item = {}, fetchData }) => {
               onAddressSelect={handleAddressSelect}
               itemAddr={item.hospitalAddrMain}
               itemAddrDetail={item.hospitalAddrDetail}
+              itemAddrSubdetail={item.hospitalAddrSubdetail}
             />
           </td>
         </tr>
