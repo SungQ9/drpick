@@ -26,6 +26,21 @@ const DoctorManagement = () => {
     },
   };
 
+  const convertInquiryType = (inquiryType) => {
+    switch (inquiryType) {
+      case 'Q':
+        return '이용문의';
+      case 'C':
+        return '진료문의';
+      case 'P':
+        return '결제문의';
+      case 'D':
+        return '배송문의';
+      default:
+        return '기타';
+    }
+  };
+
   const fetchDataMappings = {
     history: async () => {
       const response = await axios.get(
@@ -41,7 +56,11 @@ const DoctorManagement = () => {
         'http://localhost:8080/doctors/getDoctorInquiryList',
         config,
       );
-      setItems(response.data);
+      const modifiedData = response.data.map((item) => ({
+        ...item,
+        inquiryType: convertInquiryType(item.inquiryType),
+      }));
+      setItems(modifiedData);
       setCurrentHeaders(headers.inquiry);
       setTitle('문의내역');
     },

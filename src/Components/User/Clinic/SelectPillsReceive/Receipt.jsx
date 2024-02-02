@@ -4,6 +4,7 @@ import axios from 'axios';
 import doctor from '../../../../img/doctor-icon.png';
 import hospital from '../../../../img/hospital-icon.png';
 import { useTokenContext } from '../../../Context/TokenContext';
+import useAlert from '../../../Layout/Alert';
 
 //임시로 certificateNum을 1로 설정, 추후 certificateNum값을 넘기도록 수정 (handlePyamentclick=> axios.get => params)
 
@@ -11,7 +12,9 @@ const Receipt = ({ selectedPrice }) => {
   const [price, setPrice] = useState(0); // 기존의 price 상태 (기본값 0으로 설정)
   const [totalPrice, setTotalPrice] = useState(0); // 최종 가격을 저장할 상태
   const navigate = useNavigate();
-  const { token, userAuth } = useTokenContext();
+  const { token } = useTokenContext();
+  const { Alert } = useAlert();
+  const { Question } = useAlert();
 
   useEffect(() => {
     setPrice(2600);
@@ -25,8 +28,11 @@ const Receipt = ({ selectedPrice }) => {
   };
 
   const handlePaymentClick = async () => {
-    if (window.confirm('결제를 진행하시겠습니까?')) {
+    const result = await Question('결제를 진행하시겠습니까?', '', 'question');
+
+    if (result === '확인') {
       try {
+        // 결제 진행 코드
         const response = await axios.get(
           'http://localhost:8080/payments/getPaymentMethod',
           {
@@ -40,18 +46,19 @@ const Receipt = ({ selectedPrice }) => {
         );
 
         if (response.status === 200) {
-          //카드 결제
-
           if (response.data.reservationPayment === 'CARD') {
-            navigate('/payment/billingCharge', {
-              state: { amount: totalPrice, paymentId: response.data.paymentId },
-            });
-            //포인트 결제
+            Alert(
+              '결제가 완료되었습니다',
+              `총결제금액${totalPrice} \n ${response.data.paymentId}`,
+              'info',
+            ).then(() => navigate('/user'));
           } else if (response.data.reservationPayment === 'POINT') {
-            navigate('/payment/pointPayment', {
-              state: { amount: totalPrice, paymentId: response.data.paymentId },
-            });
-            //DB오류
+            Alert(
+              '결제가 완료되었습니다',
+              `총결제금액: ${totalPrice}원　　　　　　　　　　　　　　　　　　
+              결제방법: 포인트결제`,
+              'info',
+            ).then(() => navigate('/user'));
           } else {
             console.error('잘못입력된 결제방식:', response.data);
             navigate('/payment/Failure');
