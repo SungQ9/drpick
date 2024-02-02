@@ -46,7 +46,10 @@ const Clinic = () => {
                 />
               }
             />
-            <Route path='/pill' element={<SelectPillsReceive />} />
+            <Route
+              path='/pill/:certificateNum'
+              element={<SelectPillsReceive />}
+            />
           </Routes>
         </div>
       </div>

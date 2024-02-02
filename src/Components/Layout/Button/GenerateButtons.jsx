@@ -50,8 +50,21 @@ const GenerateButtons = ({ status, item = {}, fetchData }) => {
           </button>
         </div>
       );
-    case 'UC':
+    case 'UC': // 진료 취소
       return <div>진료 취소</div>;
+    case 'UP': // 결제 전
+      return (
+        <button
+          className='listBtn-mid'
+          onClick={() =>
+            navigate(`/clinic/pill/${item.certificateNum}`, {
+              state: { certificateNum: item.certificateNum },
+            })
+          }
+        >
+          결제하기
+        </button>
+      );
     case 'N': // 문의목록 상태
       return (
         <button
