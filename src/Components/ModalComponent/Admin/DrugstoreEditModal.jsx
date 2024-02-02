@@ -16,7 +16,7 @@ const DrugstoreEditModal = ({ onClose, type, item = {}, fetchData }) => {
   const [drugstoreId, setDrugstoreId] = useState(item.drugstoreId || '');
   const [drugstoreName, setDrugstoreName] = useState(item.drugstoreName || '');
   const [drugstoreTel, setDrugstoreTel] = useState(item.drugstoreTel || '');
-  const [address, setAddress] = useState({ main: '', detail: '' });
+  const [address, setAddress] = useState({ main: '', detail: '', subdetail: '' });
   const { Alert } = useAlert();
 
   const handleAddressSelect = (selectedAddress) => {
@@ -35,10 +35,18 @@ const DrugstoreEditModal = ({ onClose, type, item = {}, fetchData }) => {
     drugstoreTel: drugstoreTel,
     drugstoreAddrMain: address.main,
     drugstoreAddrDetail: address.detail,
+    drugstoreAddrSubdetail: address.subdetail,
   };
 
   const updateDrugstoreInfo = async () => {
     try {
+      //주소를 다 적지 못하면
+      if (!address.subdetail) {
+        const message = 'Subdetail 주소를 입력해주세요.'; 
+        await Alert('주소 입력 오류', message, 'error');
+        return; 
+      }
+
       // 병원 정보 업데이트
       const infoRes = await axios.post(
         'http://localhost:8080/admin/updateDrugstoreInfo',

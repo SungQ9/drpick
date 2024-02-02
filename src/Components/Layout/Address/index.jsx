@@ -12,9 +12,7 @@ const Address = ({
 }) => {
   const [mainAddress, setMainAddress] = useState(itemAddr || "");
   const [detailAddress, setDetailAddress] = useState(itemAddrDetail || "");
-  const [subdetailAddress, setSubdetailAddress] = useState(
-    itemAddrSubdetail || ""
-  );
+  const [subdetailAddress, setSubdetailAddress] = useState(itemAddrSubdetail || "");
 
   useEffect(() => {
     if (address) {

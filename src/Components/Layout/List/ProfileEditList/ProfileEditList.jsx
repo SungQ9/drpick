@@ -8,6 +8,7 @@ import WorkTime from "./WorkTime";
 import SearchHospitalModal from "../../../ModalComponent/Doctor/SearchHospitalModal";
 import { useTokenContext } from "../../../Context/TokenContext";
 import axios from "axios";
+import useAlert from "../../../Layout/Alert";
 
 const ProfileEditList = ({ type, title }) => {
   const [imageSrc, setImageSrc] = useState("");
@@ -16,11 +17,15 @@ const ProfileEditList = ({ type, title }) => {
   const [hospitalName, setHospitalName] = useState("");
   const [mainAddress, setMainAddress] = useState("");
   const [detailAddress, setDetailAddress] = useState("");
+  const [doctorId, setDoctorId] = useState();
   const [doctorName, setDoctorName] = useState("");
   const [doctorSubject, setDoctorSubject] = useState("");
   const [doctorMajor, setDoctorMajor] = useState("");
   const [doctorComments, setDoctorComments] = useState("");
   const [doctorAvailability, setDoctorAvailability] = useState([]);
+  const [filePath, setFilePath] = useState("");
+  const { Alert } = useAlert();
+  const formData = new FormData();
 
   const { token, userEmail } = useTokenContext();
   const [initialDataFetched, setInitialDataFetched] = useState(false);
@@ -113,6 +118,7 @@ const ProfileEditList = ({ type, title }) => {
         },
         params: {},
       };
+
       if (type === "doctor") {
         url = "http://localhost:8080/doctors/getDoctorEntireInfoList";
         config.params.doctorEmail = userEmail;
@@ -129,12 +135,15 @@ const ProfileEditList = ({ type, title }) => {
       console.log("가져온 데이터 찍기 2: ", doctorAvailability);
 
       // 의사 정보 업데이트
+      setDoctorId(doctorInfo.doctorId);
       setDoctorName(doctorInfo.doctorName);
       setDoctorSubject(doctorInfo.doctorSubject);
       setHospitalName(doctorInfo.hospitalName);
       setDoctorMajor(doctorInfo.doctorMajor);
       setDoctorComments(doctorInfo.doctorComments);
-
+      if (doctorInfo.filePath) {
+        setImageSrc(doctorInfo.filePath);
+      }
       // 비대면 진료 시간 정보 업데이트 (선택한 날짜에 따라 업데이트 필요)
       const daysOfWeek = [
         "월요일",
@@ -177,29 +186,38 @@ const ProfileEditList = ({ type, title }) => {
 
   const handleSaveButtonClick = async () => {
     // 필요한 데이터를 수집
-    const dataToSend = {
-      doctorName,
-      doctorSubject: doctorSubject, // Select 컴포넌트에서 선택된 값은 value 속성에 있을 것으로 가정
-      hospitalName,
-      doctorMajor,
-      doctorComments,
-      doctorAvailability,
+    formData.append("doctorId", doctorId);
+    formData.append("doctorName", doctorName);
+    formData.append("doctorSubject", doctorSubject);
+    formData.append("hospitalName", hospitalName);
+    formData.append("doctorMajor", doctorMajor);
+    formData.append("doctorComments", doctorComments);
+    formData.append("doctorId", doctorId);
+    formData.append("fileList", document.getElementById("selectedFile").files[0]);
 
-      selectedDays: Object.keys(selectedDay).filter((day) => selectedDay[day]),
-      selectedTimes: doctorAvailability
-        .filter((avail) => selectedDay[avail.day.toLowerCase()]) // 선택된 요일에 대한 정보만 필터링
-        .map((avail) => ({
-          day: avail.day,
-          startTime: avail.starttime,
-          endTime: avail.endtime,
-        })),
-    };
+    // 업데이트 요청
+    const infoRes = await axios.post(
+      "http://localhost:8080/doctors/updateDoctorInfo",
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data charset=UTF-8",
+        },
+      }
+    );
 
-    // 확인용 콘솔 로그
-    console.log("업데이트된 데이터:", dataToSend);
-
-    // 서버로 데이터 전송은 아직 구현하지 않음
-    // 실제 서버로의 요청을 추가하려면 이 부분을 수정하여 사용
+    //업데이트 완료 Alert
+    if (infoRes.status === 200) {
+      const message = "정보수정 완료하였습니다.";
+      await Alert("수정 성공", message, "success")
+      //window.location.reload();
+    } else {
+      console.error(
+        "의사 정보 업데이트 오류: 예상하지 못한 HTTP 상태 코드:",
+        infoRes.status
+      );
+    }
   };
 
   if (type === "doctor") {
