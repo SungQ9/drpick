@@ -126,7 +126,7 @@ const Video = ({
 
     // 미디어 스트림을 얻는 함수
 
-    socketRef.current = io('https://175.114.130.12:4000');
+    socketRef.current = io('http://localhost:4000');
 
     // 미디어 스트림을 얻음
     getMedia();
