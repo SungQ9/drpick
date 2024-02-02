@@ -113,6 +113,7 @@ const DrugstoreEditModal = ({ onClose, type, item = {}, fetchData }) => {
               onAddressSelect={handleAddressSelect}
               itemAddr={item.drugstoreAddrMain}
               itemAddrDetail={item.drugstoreAddrDetail}
+              itemAddrSubdetail={item.drugstoreAddrSubdetail}
             />
           </td>
         </tr>

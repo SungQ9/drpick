@@ -65,8 +65,6 @@ const HospitalEditModal = ({ onClose, type, item = {}, fetchData }) => {
     }
   };
 
-  console.log(item);
-
   return (
     <div
       style={{
