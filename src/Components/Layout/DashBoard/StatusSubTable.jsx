@@ -1,12 +1,12 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const StatusSubTable = (props) => {
   const navigate = useNavigate();
   const { title, data } = props;
 
   return (
-    <table className='dashBoardStatusSubTable'>
+    <table className="dashBoardStatusSubTable">
       <thead>
         <tr>
           <th>{title}</th>
@@ -17,9 +17,11 @@ const StatusSubTable = (props) => {
       <tbody>
         {data.map((item, index) => (
           <tr key={index}>
-            <td>{item.date}</td>
-            <td>{item.name}</td>
-            <td>{item.description}</td>
+            <td>{item.reviewTitle || item.memberName}</td>
+            <td>{item.comments || item.receiveTypeDescription}</td>
+            <td>
+              {item.rating ? `${item.rating}점` : item.paymentStatusDescription}
+            </td>
           </tr>
         ))}
       </tbody>

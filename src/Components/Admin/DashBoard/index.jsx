@@ -3,13 +3,14 @@ import React from "react";
 import StatusTable from "../../Layout/DashBoard/StatusTable";
 import StatusSubTable from "../../Layout/DashBoard/StatusSubTable";
 import BarIndex from "../Statistics/barIndex";
-import DoughnutChartIndex from "../Statistics/doughnutChartIndex";
+import DoughnutChartIndex from "../Statistics/DoughnutChartIndex";
 import "../../../css/GraphStyle.css";
 import { useTokenContext } from "../../Context/TokenContext";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import LineIndex from "../Statistics/lineIndex";
+import SubjectChartIndex from "../../Doctor/subjectChartIndex";
 
 const AdminDashBoard = () => {
   const { token } = useTokenContext();
@@ -74,7 +75,7 @@ const AdminDashBoard = () => {
             <DoughnutChartIndex />
           </div>
           <div className="dou">
-            <DoughnutChartIndex />
+            <SubjectChartIndex />
           </div>
         </div>
       </div>
