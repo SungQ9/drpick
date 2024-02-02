@@ -597,7 +597,7 @@ const ProfileEditList = ({ type, title }) => {
             ></textarea>
           </div>
         </div>
-        <div
+        {/* <div
           className="profile-bottom"
           style={{
             display: "flex",
@@ -612,7 +612,7 @@ const ProfileEditList = ({ type, title }) => {
             selectedDay={selectedDay}
             onRadioChange={handleRadioChange}
           />
-        </div>
+        </div> */}
         <div
           style={{
             display: "flex",
