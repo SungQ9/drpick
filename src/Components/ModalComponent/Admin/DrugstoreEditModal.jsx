@@ -16,7 +16,7 @@ const DrugstoreEditModal = ({ onClose, type, item = {}, fetchData }) => {
   const [drugstoreId, setDrugstoreId] = useState(item.drugstoreId || '');
   const [drugstoreName, setDrugstoreName] = useState(item.drugstoreName || '');
   const [drugstoreTel, setDrugstoreTel] = useState(item.drugstoreTel || '');
-  const [address, setAddress] = useState({ main: '', detail: '', subdetail: '' });
+  const [address, setAddress] = useState({ main: item.drugstoreAddrMain || '', detail: item.drugstoreAddrDetail ||'', subdetail: item.drugstoreAddrSubdetail ||'' });
   const { Alert } = useAlert();
 
   const handleAddressSelect = (selectedAddress) => {
@@ -88,8 +88,8 @@ const DrugstoreEditModal = ({ onClose, type, item = {}, fetchData }) => {
               type='text'
               placeholder='약국명을 입력하세요'
               style={{ width: '500px' }}
-              value={selectedDrugstoreName.trim()}
-              onChange={(e) => setDrugstoreTel(e.target.value)}
+              value={drugstoreName.trim()}
+              onChange={(e) => setDrugstoreName(e.target.value)}
             />
           </td>
         </tr>
@@ -103,7 +103,7 @@ const DrugstoreEditModal = ({ onClose, type, item = {}, fetchData }) => {
               placeholder='대표번호를 입력하세요'
               style={{ width: '500px' }}
               value={drugstoreTel.trim()}
-              onChange={(e) => setSelectedDrugstoreName(e.target.value)}
+              onChange={(e) => setDrugstoreTel(e.target.value)}
             />
           </td>
         </tr>
@@ -113,6 +113,7 @@ const DrugstoreEditModal = ({ onClose, type, item = {}, fetchData }) => {
               onAddressSelect={handleAddressSelect}
               itemAddr={item.drugstoreAddrMain}
               itemAddrDetail={item.drugstoreAddrDetail}
+              itemAddrSubdetail={item.drugstoreAddrSubdetail}
             />
           </td>
         </tr>
