@@ -1,16 +1,22 @@
 import React from 'react';
+import axios from 'axios';
 
 const ClinicRoomButton = ({ status, onEnterVideoChat }) => {
+  const enterClinicRoom = async () => {
+    try {
+      //
+      const res = await axios.post('YOUR_BACKEND_ENDPOINT', {});
+
+      onEnterVideoChat();
+    } catch (error) {
+      console.error('진료실 입장 Error:', error);
+    }
+  };
+
   if (status === false) {
     return (
       <div className='clinicRoomBtn'>
-        <button
-          onClick={() => {
-            onEnterVideoChat();
-          }}
-        >
-          진료실입장
-        </button>
+        <button onClick={enterClinicRoom}>진료실입장</button>
         <button style={{ marginLeft: '70px' }}>진료취소</button>
       </div>
     );

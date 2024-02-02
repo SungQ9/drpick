@@ -50,6 +50,8 @@ const GenerateButtons = ({ status, item = {}, fetchData }) => {
           </button>
         </div>
       );
+    case 'UC':
+      return <div>진료 취소</div>;
     case 'N': // 문의목록 상태
       return (
         <button
