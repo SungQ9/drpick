@@ -69,7 +69,7 @@ const ChargePoint = () => {
       const tossPaymentModalContent = (
         <TossPaymentModal amount={chargeAmount} orderName='포인트 충전' />
       );
-      modalContext.openModal(tossPaymentModalContent, '결재하기');
+      modalContext.openModal(tossPaymentModalContent, '결제하기');
     }
   };
 

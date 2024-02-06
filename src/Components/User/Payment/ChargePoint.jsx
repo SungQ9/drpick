@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import { useTokenContext } from '../../Context/TokenContext';
+import useAlert from '../../Layout/Alert';
 
 export function ChargePoint() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { token } = useTokenContext();
   const [isProcessed, setIsProcessed] = useState(false);
+  const { Alert } = useAlert();
 
   useEffect(() => {
     if (isProcessed) {

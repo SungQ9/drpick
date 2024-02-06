@@ -7,7 +7,7 @@ const useAlert = () => {
   const Alert = (title, text, icon) => {
     return MySwal.fire({
       title: title,
-      text: text,
+      html: "<div class='alert-text'>" + text + '</div>',
       icon: icon,
       timer: 5000,
       confirmButtonText: '확인',

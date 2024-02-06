@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTokenContext } from '../../Context/TokenContext';
 import useAlert from '../../Layout/Alert';
+import Loading from '../ImageSearch/Loading';
 
 // 자동결제 토스에 요청
 function PointPayment() {
@@ -16,6 +17,7 @@ function PointPayment() {
     if (result === 'success') {
       // 결제 성공 알림 표시
       Alert('성공', '결제가 성공적으로 완료되었습니다.', 'success');
+      navigate('/user');
     } else {
       // 결제 실패 알림 표시
       Alert('실패', '결제에 실패하였습니다.', 'error');
@@ -58,6 +60,7 @@ function PointPayment() {
               },
             },
           )
+
           .then(function (response) {
             // 결제 성공 시
             handlePaymentResult('success');
@@ -73,7 +76,11 @@ function PointPayment() {
       });
   }, [location, navigate, token]);
 
-  return <div>진행중</div>;
+  return (
+    <div>
+      <Loading />
+    </div>
+  );
 }
 
 export default PointPayment;
