@@ -3,10 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTokenContext } from '../../Context/TokenContext';
 import axios from 'axios';
-import card from '../../../img/card-icon.png';
-import headers from '../../SampleData/Headers';
 import CurrentList from '../../Layout/List/CurrentList';
 import Loading from '../ImageSearch/Loading';
+import headers from '../../SampleData/Headers';
+import card from '../../../img/card-icon.png';
+import clinicHistory from '../../../img/clinic-history-icon.png';
+import inquiry from '../../../img/inquiry-icon.png';
+import editProfile from '../../../img/edit-profile-icon.png';
+import review from '../../../img/review-icon.png';
 
 const MypageMain = () => {
   const navigate = useNavigate();
@@ -90,7 +94,7 @@ const MypageMain = () => {
                 handleButtonClick('history');
               }}
             >
-              <img src={card} alt='' />
+              <img src={clinicHistory} alt='clinicHistory' />
               <p>진료내역조회</p>
             </td>
             <td
@@ -99,7 +103,7 @@ const MypageMain = () => {
               }}
             >
               {' '}
-              <img src={card} alt='' />
+              <img src={inquiry} alt='inquiry' />
               <p>1:1 문의</p>
             </td>
             <td
@@ -108,7 +112,7 @@ const MypageMain = () => {
               }}
             >
               {' '}
-              <img src={card} alt='' />
+              <img src={editProfile} alt='editProfile' />
               <p>회원정보수정</p>
             </td>
             <td
@@ -126,7 +130,7 @@ const MypageMain = () => {
               }}
             >
               {' '}
-              <img src={card} alt='' />
+              <img src={review} alt='review' />
               <p>리뷰관리</p>
             </td>
           </tr>
