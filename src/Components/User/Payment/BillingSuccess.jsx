@@ -34,7 +34,7 @@ function BillingSuccess() {
             },
             params: {
               paymentId: billingData.paymentId,
-              transactionType: 'CARD',
+              reservationPayment: 'CARD',
             },
           },
         );

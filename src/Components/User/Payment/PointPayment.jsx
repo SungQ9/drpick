@@ -2,13 +2,14 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTokenContext } from '../../Context/TokenContext';
+import useAlert from '../../Layout/Alert';
 
 // 자동결제 토스에 요청
 function PointPayment() {
   const location = useLocation();
   const navigate = useNavigate();
   const { token, userAuth } = useTokenContext();
-
+  const { Alert } = useAlert();
   //포인트 결재진행
   useEffect(() => {
     const { amount, paymentId } = location.state || {};
@@ -37,7 +38,7 @@ function PointPayment() {
             'http://localhost:8080/payments/payPoints',
             {
               memberId: localStorage.getItem('userId'),
-              transactionType: 'POINT',
+              reservationPayment: 'POINT',
               amount: -amount, //결제를 위해서 음수처리
               transactionDate: new Date().toISOString(),
               paymentId: paymentId,
@@ -48,11 +49,7 @@ function PointPayment() {
               },
             },
           )
-          .then(function (response) {
-            return (
-              `/payment/PointPaymentSuccess`, { state: { amount: amount } }
-            );
-          });
+          .then(function (response) {});
       })
       .catch((error) => {
         console.error('에러:', error);

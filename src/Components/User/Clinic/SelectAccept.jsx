@@ -11,11 +11,17 @@ const SelectAccept = () => {
   const clinicContext = useClinicContext();
   const doctorId = location.state ? location.state.doctorId : null;
   const today = new Date();
-  const formattedDate = today.toISOString().substring(0, 10);
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  const hours = String(today.getHours()).padStart(2, '0');
+  const minutes = String(today.getMinutes()).padStart(2, '0');
+  const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}`;
 
   // 선택한 방법에 따라 다른 페이지로 이동하면서 clinicContext에 대기방법 업데이트
   const selectBtnHandler = (temp) => {
     if (temp === 'normal') {
+      console.log(formattedDate);
       clinicContext.setClinicState((prevState) => ({
         ...prevState,
         selectDate: formattedDate,

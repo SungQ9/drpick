@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useClinicContext } from '../../../Context/ClinicContext';
 import clock from '../../../../img/clock-icon.png';
 
 const generateTimeSlots = (startTime, endTime, interval) => {
@@ -19,18 +18,17 @@ const generateTimeSlots = (startTime, endTime, interval) => {
   return timeSlots;
 };
 
-const DateTime = ({ startTime, endTime }) => {
-  const clinicContext = useClinicContext();
-  const [selectedTime, setSelectedTime] = useState(null);
+const DateTime = ({ startTime, endTime, setSelectedTime }) => {
+  const [selectedTime, setSelectedTimeState] = useState(null);
 
   const interval = 20; // 진료 간격 (20분)
 
   const timeSlots = generateTimeSlots(startTime, endTime, interval);
 
-  const handleSelectTime = (selectedTime) => {
-    clinicContext.selectTime = selectedTime;
-    setSelectedTime(selectedTime);
-    console.log(selectedTime);
+  const handleSelectTime = (time) => {
+    setSelectedTime(time);
+    setSelectedTimeState(time);
+    console.log('Datetime에서 선택한 시간:', time);
   };
 
   return (
