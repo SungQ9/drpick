@@ -37,7 +37,7 @@ function PointPayment() {
             'http://localhost:8080/payments/payPoints',
             {
               memberId: localStorage.getItem('userId'),
-              transactionType: 'POINT',
+              reservationPayment: 'POINT',
               amount: -amount, //결제를 위해서 음수처리
               transactionDate: new Date().toISOString(),
               paymentId: paymentId,
