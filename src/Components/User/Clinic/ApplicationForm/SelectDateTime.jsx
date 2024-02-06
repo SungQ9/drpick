@@ -19,20 +19,25 @@ const SelectDateTime = () => {
   const [selectedTime, setSelectedTime] = useState('');
 
   const handleNextClick = () => {
-    const [hours, minutes] = selectedTime.split(':').map(Number);
-    const combinedDateTime = new Date(
-      selectedDate.getFullYear(),
-      selectedDate.getMonth(),
-      selectedDate.getDate(),
-      hours,
-      minutes,
-    );
+    const date = selectedDate;
+    const time = selectedTime; // 'DateTime' 컴포넌트에서 선택된 시간 (예: '15:30')
 
+    // 'YYYY-MM-DD' 형식으로 날짜 포맷팅
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
+
+    // 날짜와 시간 결합
+    const dateTime = `${formattedDate} ${time}`;
+
+    // 상태 업데이트 및 데이터베이스에 저장
     clinicContext.setClinicState((prevState) => ({
       ...prevState,
-      selectDate: combinedDateTime.toISOString(),
+      selectDate: dateTime,
     }));
-    console.log('SelectDateTime에서 마지막으로 지정한 시간:', combinedDateTime);
+    console.log('SelectDateTime에서 마지막으로 지정한 시간:', dateTime);
+
     // 페이지 이동
     navigate('/clinic/application', { state: { doctorId } });
   };

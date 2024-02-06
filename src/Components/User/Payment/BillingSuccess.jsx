@@ -23,20 +23,21 @@ function BillingSuccess() {
         return;
       }
 
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          paymentId: billingData.paymentId,
+          reservationPayment: 'CARD',
+        },
+      };
+
       try {
         // 결제 완료 요청.
         await axios.put(
           'http://localhost:8080/payments/completePayment',
-          null,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-            params: {
-              paymentId: billingData.paymentId,
-              reservationPayment: 'CARD',
-            },
-          },
+          config,
         );
       } catch (error) {
         console.error('에러: ', error);
