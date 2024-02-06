@@ -26,20 +26,32 @@ const SelectPayment = () => {
     if (clinicContext.clinicState.isPaymentSelected === true) {
       let formData = new FormData();
       formData.append('memberId', clinicContext.clinicState.memberId);
+      console.log('memberId: ', clinicContext.clinicState.memberId);
       formData.append('doctorId', clinicContext.clinicState.selectDoctorId);
+      console.log('doctorId:', clinicContext.clinicState.selectDoctorId);
       formData.append(
         'patientComments',
         clinicContext.clinicState.writeSymptom,
       );
+      console.log('patientComments :', clinicContext.clinicState.writeSymptom);
       formData.append(
         'reservationPayment',
+        clinicContext.clinicState.selectPayment.toUpperCase(),
+      );
+      console.log(
+        'reservationPayment:',
         clinicContext.clinicState.selectPayment.toUpperCase(),
       );
       formData.append(
         'reservationStatus',
         clinicContext.clinicState.acceptStatus,
       );
+      console.log(
+        'reservationStatus :',
+        clinicContext.clinicState.acceptStatus,
+      );
       formData.append('reservationDate', clinicContext.clinicState.selectDate);
+      console.log('reservationDate:', clinicContext.clinicState.selectDate);
       if (clinicContext.clinicState.uploadedFiles.length > 0) {
         clinicContext.clinicState.uploadedFiles.forEach((file) => {
           formData.append('fileList', file);

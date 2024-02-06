@@ -1,9 +1,10 @@
 const DateButton = ({ onClick, isSelected, label, setDateValue }) => {
   const handleClick = () => {
-    const newDate =
-      label === '오늘'
-        ? new Date()
-        : new Date(Date.now() + 24 * 60 * 60 * 1000);
+    let newDate = new Date();
+
+    if (label === '내일') {
+      newDate.setDate(newDate.getDate() + 1);
+    }
 
     // 날짜만 포맷팅
     const formattedDate = new Date(
