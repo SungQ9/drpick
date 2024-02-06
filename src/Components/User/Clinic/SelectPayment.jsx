@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useClinicContext } from '../../Context/ClinicContext';
 import { useTokenContext } from '../../Context/TokenContext';
 import axios from 'axios';
+import useAlert from '../../Layout/Alert';
 import back from '../../../img/back-arrow-icon.png';
 import card from '../../../img/card-icon.png';
 import point from '../../../img/point-icon.png';
@@ -11,54 +12,80 @@ const SelectPayment = () => {
   const navigate = useNavigate();
   const clinicContext = useClinicContext();
   const { token } = useTokenContext();
-  // 선택한 결제수단을  context에 저장
-  const btnHandler = (evt) => {
+  const { Question, Alert } = useAlert();
+
+  const selectDoctor = clinicContext.clinicState.selectDoctor;
+  const selectSubject = clinicContext.clinicState.selectSubject;
+  const selectDate = clinicContext.clinicState.selectDate;
+  const writeSymptom = clinicContext.clinicState.writeSymptom;
+
+  const btnHandler = async (evt) => {
+    // 선택한 결제수단을  context에 저장
     const selectedPayment = evt.currentTarget.getAttribute('data-value');
     clinicContext.setClinicState((prev) => ({
       ...prev,
       selectPayment: selectedPayment,
-      isPaymentSelected: true,
     }));
-    console.log('Clinic Context: ', clinicContext);
+
+    let paymentMethod;
+    if (selectedPayment === 'CARD') {
+      paymentMethod = '카드';
+    } else if (selectedPayment === 'POINT') {
+      paymentMethod = '포인트';
+    }
+
+    // Alert로 결제 정보 확인
+    const confirmation = await Question(
+      '해당 정보로 접수하시겠습니까?',
+      `의사명 :${selectDoctor} <br>
+        진료과목: ${selectSubject} <br>
+        진료날짜: ${selectDate} <br>
+        결제방법: ${paymentMethod} <br>
+        증상: ${writeSymptom} `,
+      'question',
+    );
+
+    if (confirmation === '확인') {
+      // 사용자가 확인을 누르면 접수 진행
+      clinicContext.setClinicState((prev) => ({
+        ...prev,
+        isPaymentSelected: true,
+      }));
+      console.log('Clinic Context: ', clinicContext);
+    } else {
+      return null;
+    }
   };
 
   useEffect(() => {
     if (clinicContext.clinicState.isPaymentSelected === true) {
       let formData = new FormData();
       formData.append('memberId', clinicContext.clinicState.memberId);
-      console.log('memberId: ', clinicContext.clinicState.memberId);
+
       formData.append('doctorId', clinicContext.clinicState.selectDoctorId);
-      console.log('doctorId:', clinicContext.clinicState.selectDoctorId);
+
       formData.append(
         'patientComments',
         clinicContext.clinicState.writeSymptom,
       );
-      console.log('patientComments :', clinicContext.clinicState.writeSymptom);
+
       formData.append(
         'reservationPayment',
         clinicContext.clinicState.selectPayment.toUpperCase(),
       );
-      console.log(
-        'reservationPayment:',
-        clinicContext.clinicState.selectPayment.toUpperCase(),
-      );
+
       formData.append(
         'reservationStatus',
         clinicContext.clinicState.acceptStatus,
       );
-      console.log(
-        'reservationStatus :',
-        clinicContext.clinicState.acceptStatus,
-      );
+
       formData.append('reservationDate', clinicContext.clinicState.selectDate);
-      console.log('reservationDate:', clinicContext.clinicState.selectDate);
+
       if (clinicContext.clinicState.uploadedFiles.length > 0) {
         clinicContext.clinicState.uploadedFiles.forEach((file) => {
           formData.append('fileList', file);
         });
       }
-
-      console.log('Form Data: ', formData);
 
       const config = {
         headers: {
@@ -75,11 +102,11 @@ const SelectPayment = () => {
             config,
           )
           .then((response) => {
-            console.log(response.data);
-            alert(response.data);
+            Alert('접수가 완료되었습니다', response.data, 'success');
             navigate('/clinic/complete');
           });
       } catch (error) {
+        Alert('접수를 실패하였습니다', '잠시후에 다시 시도하여주세요', 'error');
         console.error('진료신청에러', error);
       } finally {
         clinicContext.setClinicState((prev) => ({

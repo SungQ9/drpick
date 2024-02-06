@@ -1,20 +1,19 @@
-// 결제수단관리
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Payment from './Payment';
 import ChargePoint from './ChargePoint';
 
 const PaymentManagement = () => {
-  useEffect(() => {
-    // 컴포넌트가 마운트되거나 언마운트될 때 실행되는 코드
-    document.querySelector('.mypageForm').style.background = 'none';
+  const [backgroundStyle, setBackgroundStyle] = useState('none');
 
+  useEffect(() => {
+    setBackgroundStyle('none');
     return () => {
-      // 언마운트 시에 정리 코드
-      document.querySelector('.mypageForm').style.background = ''; // 원래의 스타일로 되돌리기
+      setBackgroundStyle('');
     };
-  }, []); // 빈 배열은 마운트 및 언마운트 시에만 실행
+  }, []);
+
   return (
-    <div className='formContainer'>
+    <div className='formContainer' style={{ background: backgroundStyle }}>
       <Payment />
       <ChargePoint />
     </div>

@@ -7,7 +7,7 @@ const useAlert = () => {
   const Alert = (title, text, icon) => {
     return MySwal.fire({
       title: title,
-      text: text,
+      html: "<div class='alert-text'>" + text + '</div>',
       icon: icon,
       timer: 5000,
       confirmButtonText: '확인',
@@ -22,7 +22,7 @@ const useAlert = () => {
   const Question = async (title, text, icon) => {
     const result = await MySwal.fire({
       title: title,
-      text: text,
+      html: "<div class='questionAlert-text'>" + text + '</div>',
       icon: icon,
       showCancelButton: true,
       confirmButtonText: '확인',

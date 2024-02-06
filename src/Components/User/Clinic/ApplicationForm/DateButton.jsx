@@ -14,9 +14,6 @@ const DateButton = ({ onClick, isSelected, label, setDateValue }) => {
     );
     setDateValue(formattedDate);
 
-    console.log(`Selected Button: ${label}`);
-    console.log(`Selected Date: ${formattedDate.toISOString().split('T')[0]}`);
-
     onClick();
   };
 

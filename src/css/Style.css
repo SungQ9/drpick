@@ -133,6 +133,22 @@ select::-ms-expand {
   display: none;
 }
 
+.questionAlert-text {
+  display: flex;
+  flex-direction: column;
+  text-align: justify;
+  align-items: center;
+  font-size: 20px;
+}
+
+.alert-text {
+  display: flex;
+  flex-direction: column;
+  text-align: justify;
+  align-items: center;
+  font-size: 20px;
+}
+
 /*///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 /* 헤더 스타일 */

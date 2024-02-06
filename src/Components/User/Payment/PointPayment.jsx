@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTokenContext } from '../../Context/TokenContext';
 import useAlert from '../../Layout/Alert';
+import Loading from '../ImageSearch/Loading';
 
 // 자동결제 토스에 요청
 function PointPayment() {
@@ -10,12 +11,22 @@ function PointPayment() {
   const navigate = useNavigate();
   const { token, userAuth } = useTokenContext();
   const { Alert } = useAlert();
+  const { amount, paymentId, certificateNum } = location.state || {};
+
+  const handlePaymentResult = (result) => {
+    if (result === 'success') {
+      // 결제 성공 알림 표시
+      Alert('성공', '결제가 성공적으로 완료되었습니다.', 'success');
+      navigate('/user');
+    } else {
+      // 결제 실패 알림 표시
+      Alert('실패', '결제에 실패하였습니다.', 'error');
+    }
+  };
   //포인트 결재진행
   useEffect(() => {
-    const { amount, paymentId } = location.state || {};
-
     if (!amount || !paymentId) {
-      navigate('/payment/Failure');
+      handlePaymentResult('fail');
       return;
     }
 
@@ -49,15 +60,27 @@ function PointPayment() {
               },
             },
           )
-          .then(function (response) {});
+
+          .then(function (response) {
+            // 결제 성공 시
+            handlePaymentResult('success');
+          });
       })
       .catch((error) => {
         console.error('에러:', error);
-        navigate(`/payment/Failure`);
+        handlePaymentResult('fail');
+      })
+      .catch((error) => {
+        console.error('에러:', error);
+        handlePaymentResult('fail');
       });
   }, [location, navigate, token]);
 
-  return <div>결제성공</div>;
+  return (
+    <div>
+      <Loading />
+    </div>
+  );
 }
 
 export default PointPayment;
