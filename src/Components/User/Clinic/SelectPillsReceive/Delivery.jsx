@@ -6,7 +6,7 @@ import delivery from '../../../../img/delivery-icon.png';
 import box from '../../../../img/box-icon.png';
 import pickup from '../../../../img/pill-market-icon.png';
 
-const Delivery = ({ onSelectPrice }) => {
+const Delivery = ({ onSelectPrice, certificateNum }) => {
   const navigate = useNavigate();
   return (
     <div>

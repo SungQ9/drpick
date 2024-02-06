@@ -21,7 +21,7 @@ const Login = () => {
     e.preventDefault();
 
     // 로그인 API 엔드포인트
-    const loginUrl = 'http://175.114.130.12:8080/users/login';
+    const loginUrl = 'http://localhost:8080/users/login';
 
     try {
       // 로그인 요청

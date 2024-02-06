@@ -13,12 +13,12 @@ const Payment = () => {
       <div className='Form'>
         <Routes>
           <Route path='/' element={<Failure />} />
-          <Route path='/Failure' element={<Failure />} />
-          <Route path='/billingRecord' element={<BillingRecord />} />
-          <Route path='/billingCharge' element={<BillingCharge />} />
-          <Route path='/billingSuccess' element={<BillingSuccess />} />
-          <Route path='/chargePoint' element={<ChargePoint />} />
-          <Route path='/pointPayment' element={<PointPayment />} />
+          <Route path='/Failure/' element={<Failure />} />
+          <Route path='/billingRecord/' element={<BillingRecord />} />
+          <Route path='/billingCharge/' element={<BillingCharge />} />
+          <Route path='/billingSuccess/' element={<BillingSuccess />} />
+          <Route path='/chargePoint/' element={<ChargePoint />} />
+          <Route path='/pointPayment/' element={<PointPayment />} />
         </Routes>
       </div>
     </div>
