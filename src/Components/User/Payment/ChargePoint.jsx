@@ -60,7 +60,7 @@ export function ChargePoint() {
       "http://localhost:8080/payments/chargePoint",
       {
         memberId: localStorage.getItem("userId"),
-        transactionType: "CARD",
+        reservationPayment: "CARD",
         amount: amount,
         transactionDate: transactionDate,
       },
