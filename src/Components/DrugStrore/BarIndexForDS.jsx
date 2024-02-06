@@ -24,6 +24,7 @@ const BarIndexForDS = () => {
       )
       .then((response) => {
         setChartData(response.data);
+        console.log(response.data);
       });
   }, []);
   return (
