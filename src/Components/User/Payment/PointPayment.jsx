@@ -53,6 +53,7 @@ function PointPayment() {
               amount: -amount, //결제를 위해서 음수처리
               transactionDate: new Date().toISOString(),
               paymentId: paymentId,
+              certificateNum: certificateNum,
             },
             {
               headers: {

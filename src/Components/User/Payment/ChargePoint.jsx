@@ -72,7 +72,7 @@ export function ChargePoint() {
   };
 
   const moveUserPaymentPage = () => {
-    navigate('/user/payment');
+    navigate(-1);
   };
 
   return (
@@ -83,7 +83,7 @@ export function ChargePoint() {
         </div>
         <div className='result wrapper'>
           <button onClick={moveUserPaymentPage}>
-            결재수단관리 페이지로 이동
+            결제수단관리 페이지로 이동
           </button>
         </div>
       </div>
