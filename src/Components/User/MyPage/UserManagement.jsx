@@ -98,7 +98,7 @@ const UserManagement = () => {
         'http://localhost:8080/members/currentHistory',
         config,
       );
-      console.log(response.data);
+
       setItems(response.data);
       setCurrentHeaders(headers.medeicalhistory);
       setTitle('진료내역조회');

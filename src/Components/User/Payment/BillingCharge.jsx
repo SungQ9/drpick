@@ -10,6 +10,15 @@ function BillingCharge() {
   const { token } = useTokenContext();
   const certificateNum = location.state?.certificateNum;
 
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    params: {
+      memberId: localStorage.getItem('userId'),
+    },
+  };
+
   //토스에 결재 요청
   useEffect(() => {
     const { amount, paymentId } = location.state || {};
@@ -23,14 +32,7 @@ function BillingCharge() {
 
     // 회원정보 불러오기
     axios
-      .get('http://localhost:8080/payments/getUserPaymentMethodAmount', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        params: {
-          memberId: localStorage.getItem('userId'),
-        },
-      })
+      .get('http://localhost:8080/payments/getUserPaymentMethodAmount', config)
       .then(function (response) {
         const data = response.data;
 
@@ -48,16 +50,18 @@ function BillingCharge() {
         };
         const randomOrderId = generateRandomOrderId();
 
+        var headers = {
+          Authorization:
+            'Basic dGVzdF9za19RYmdNR1p6b3J6NUE0a21COWRFbFZsNUUxZW00Og==',
+          'Content-Type': 'application/json',
+        };
+
         // 토스 자동결제 진행
         axios
           .request({
             method: 'POST',
             url: 'https://api.tosspayments.com/v1/billing/' + data.billingKey,
-            headers: {
-              Authorization:
-                'Basic dGVzdF9za19RYmdNR1p6b3J6NUE0a21COWRFbFZsNUUxZW00Og==',
-              'Content-Type': 'application/json',
-            },
+            headers,
             data: {
               customerKey: data.customerKey,
               amount: amount,
@@ -68,12 +72,11 @@ function BillingCharge() {
             },
           })
           .then(function (response) {
-            // 결제 성공하면 certificate Status 값 변경
-            // axios.get('http://localhost:8080/payments/getPaymentMethod');
-            //결재 성공 후 데이터 넘기기
+            console.log('토스를 다녀온 뒤 ', response);
             const responseData = encodeURIComponent(
               JSON.stringify({ ...response.data, paymentId }),
             );
+
             navigate(`/payment/billingSuccess`, {
               state: { responseData, certificateNum: certificateNum },
             });

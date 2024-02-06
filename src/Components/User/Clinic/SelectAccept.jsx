@@ -21,7 +21,6 @@ const SelectAccept = () => {
   // 선택한 방법에 따라 다른 페이지로 이동하면서 clinicContext에 대기방법 업데이트
   const selectBtnHandler = (temp) => {
     if (temp === 'normal') {
-      console.log(formattedDate);
       clinicContext.setClinicState((prevState) => ({
         ...prevState,
         selectDate: formattedDate,

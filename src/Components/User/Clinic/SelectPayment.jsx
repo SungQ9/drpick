@@ -87,8 +87,6 @@ const SelectPayment = () => {
         });
       }
 
-      console.log('Form Data: ', formData);
-
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -104,7 +102,6 @@ const SelectPayment = () => {
             config,
           )
           .then((response) => {
-            console.log(response.data);
             Alert('접수가 완료되었습니다', response.data, 'success');
             navigate('/clinic/complete');
           });

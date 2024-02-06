@@ -36,7 +36,6 @@ const SelectDateTime = () => {
       ...prevState,
       selectDate: dateTime,
     }));
-    console.log('SelectDateTime에서 마지막으로 지정한 시간:', dateTime);
 
     // 페이지 이동
     navigate('/clinic/application', { state: { doctorId } });

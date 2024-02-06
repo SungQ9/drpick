@@ -14,6 +14,7 @@ function BillingSuccess() {
   const billingData = encodedBillingData
     ? JSON.parse(decodeURIComponent(encodedBillingData))
     : null;
+  console.log(token);
 
   useEffect(() => {
     const completePayment = async () => {
@@ -23,21 +24,23 @@ function BillingSuccess() {
         return;
       }
 
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        params: {
-          paymentId: billingData.paymentId,
-          reservationPayment: 'CARD',
-        },
-      };
-
       try {
+        console.log('billingData.paymentId', billingData.paymentId);
         // 결제 완료 요청.
         await axios.put(
           'http://localhost:8080/payments/completePayment',
-          config,
+          null,
+          {
+            params: {
+              paymentId: billingData.paymentId,
+              certificateNum: certificateNum,
+              reservationPayment: 'CARD',
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          },
         );
       } catch (error) {
         console.error('에러: ', error);

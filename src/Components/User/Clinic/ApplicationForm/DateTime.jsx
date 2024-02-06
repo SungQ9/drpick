@@ -28,7 +28,6 @@ const DateTime = ({ startTime, endTime, setSelectedTime }) => {
   const handleSelectTime = (time) => {
     setSelectedTime(time);
     setSelectedTimeState(time);
-    console.log('Datetime에서 선택한 시간:', time);
   };
 
   return (

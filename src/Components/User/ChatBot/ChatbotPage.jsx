@@ -144,7 +144,7 @@ function greet(navigate) {
         );
       }, 1000); // 조금 후에 추가 메시지 전송
       setTimeout(function () {
-        sendMessage('무었을 도와드릴까요', 'left', null, null, null, navigate);
+        sendMessage('무엇을 도와드릴까요', 'left', null, null, null, navigate);
       }, 2000); // 조금 후에 추가 메시지 전송
     }, 1000);
   }
