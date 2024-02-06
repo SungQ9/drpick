@@ -23,6 +23,13 @@ const ProfileEditList = ({ type, title }) => {
   const [doctorMajor, setDoctorMajor] = useState("");
   const [doctorComments, setDoctorComments] = useState("");
   const [doctorAvailability, setDoctorAvailability] = useState([]);
+  const [drugstoreName, setDrugstoreName] = useState("");
+  const [drugstoreAddrMain, setDrugstoreAddrMain] = useState("");
+  const [drugstoreAddrDetail, setDrugstoreAddrDetail] = useState("");
+  const [drugstoreAddrSubdetail, setDrugstoreAddrSubdetail] = useState("");
+  const [drugstoreComments, setDrugstoreComments] = useState("");
+  const [drugstoreTel, setDrugstoreTel] = useState("");
+
   const [filePath, setFilePath] = useState("");
   const { Alert } = useAlert();
   const formData = new FormData();
@@ -122,54 +129,75 @@ const ProfileEditList = ({ type, title }) => {
       if (type === "doctor") {
         url = "http://localhost:8080/doctors/getDoctorEntireInfoList";
         config.params.doctorEmail = userEmail;
-      } else {
-        url = "http://localhost:8080/drugstores/searchDrugstoreAndAvail";
+      } else if (type === "drugstore") {
+        url = "http://localhost:8080/drugstores/getDrugstoreEntireInfoList";
         config.params.drugstoreEmail = userEmail;
       }
 
       const response = await axios.get(url, config);
 
+      console.log(response.data);
+      const drugstoreInfo = response.data;
+
       // 데이터를 가져온 후 상태를 업데이트
-      const { doctorInfo, doctorAvailability } = response.data;
-      console.log("가져온 데이터 찍기 1: ", doctorInfo);
-      console.log("가져온 데이터 찍기 2: ", doctorAvailability);
+      if (type === "doctor") {
+        const { doctorInfo, doctorAvailability } = response.data;
+        console.log("가져온 데이터 찍기 1: ", doctorInfo);
+        console.log("가져온 데이터 찍기 2: ", doctorAvailability);
 
-      // 의사 정보 업데이트
-      setDoctorId(doctorInfo.doctorId);
-      setDoctorName(doctorInfo.doctorName);
-      setDoctorSubject(doctorInfo.doctorSubject);
-      setHospitalName(doctorInfo.hospitalName);
-      setDoctorMajor(doctorInfo.doctorMajor);
-      setDoctorComments(doctorInfo.doctorComments);
-      if (doctorInfo.filePath) {
-        setImageSrc(doctorInfo.filePath);
-      }
-      // 비대면 진료 시간 정보 업데이트 (선택한 날짜에 따라 업데이트 필요)
-      const daysOfWeek = [
-        "월요일",
-        "화요일",
-        "수요일",
-        "목요일",
-        "금요일",
-        "토요일",
-        "일요일",
-        "공휴일",
-      ];
-      daysOfWeek.forEach((day) => {
-        const availabilityOfDay = doctorAvailability.find(
-          (availability) => availability.day === day
-        );
-
-        if (availabilityOfDay) {
-          // 해당 요일이 존재하는 경우에만 업데이트
-          setSelectedDay((prevState) => ({
-            ...prevState,
-            [day.toLowerCase()]: true,
-          }));
+        // 의사 정보가 있는 경우에만 업데이트
+        if (doctorInfo) {
+          setDoctorId(doctorInfo.doctorId);
+          setDoctorName(doctorInfo.doctorName);
+          setDoctorSubject(doctorInfo.doctorSubject);
+          setHospitalName(doctorInfo.hospitalName);
+          setDoctorMajor(doctorInfo.doctorMajor);
+          setDoctorComments(doctorInfo.doctorComments);
+          if (doctorInfo.filePath) {
+            setImageSrc(doctorInfo.filePath);
+          }
         }
-      });
 
-      setDoctorAvailability(doctorAvailability); // doctorAvailability 설정 추가
+        // 비대면 진료 시간 정보 업데이트 (선택한 날짜에 따라 업데이트 필요)
+        const daysOfWeek = [
+          "월요일",
+          "화요일",
+          "수요일",
+          "목요일",
+          "금요일",
+          "토요일",
+          "일요일",
+          "공휴일",
+        ];
+        daysOfWeek.forEach((day) => {
+          const availabilityOfDay = doctorAvailability.find(
+            (availability) => availability.day === day
+          );
+
+          if (availabilityOfDay) {
+            // 해당 요일이 존재하는 경우에만 업데이트
+            setSelectedDay((prevState) => ({
+              ...prevState,
+              [day.toLowerCase()]: true,
+            }));
+          }
+        });
+
+        setDoctorAvailability(doctorAvailability); // doctorAvailability 설정 추가
+      } else if (type === "drugstore") {
+        console.log("가져온 데이터 찍기 1 (약국): ", drugstoreInfo);
+
+        // 약국 정보가 있는 경우에만 업데이트
+        if (drugstoreInfo) {
+          setDrugstoreName(drugstoreInfo.drugstoreName);
+          setDrugstoreTel(drugstoreInfo.drugstoreTel);
+          setDrugstoreAddrMain(drugstoreInfo.drugstoreAddrMain);
+          setDrugstoreAddrDetail(drugstoreInfo.drugstoreAddrDetail);
+          setDrugstoreAddrSubdetail(drugstoreInfo.drugstoreAddrSubdetail);
+          setDrugstoreComments(drugstoreInfo.drugstoreComments);
+        }
+      }
+
       setInitialDataFetched(true);
     } catch (error) {
       console.error("데이터를 가져오는 동안 오류가 발생했습니다:", error);
@@ -193,7 +221,10 @@ const ProfileEditList = ({ type, title }) => {
     formData.append("doctorMajor", doctorMajor);
     formData.append("doctorComments", doctorComments);
     formData.append("doctorId", doctorId);
-    formData.append("fileList", document.getElementById("selectedFile").files[0]);
+    formData.append(
+      "fileList",
+      document.getElementById("selectedFile").files[0]
+    );
 
     // 업데이트 요청
     const infoRes = await axios.post(
@@ -210,7 +241,7 @@ const ProfileEditList = ({ type, title }) => {
     //업데이트 완료 Alert
     if (infoRes.status === 200) {
       const message = "정보수정 완료하였습니다.";
-      await Alert("수정 성공", message, "success")
+      await Alert("수정 성공", message, "success");
       //window.location.reload();
     } else {
       console.error(
@@ -510,14 +541,14 @@ const ProfileEditList = ({ type, title }) => {
                 <h5>
                   <span>*</span> 약국 이름을 입력해주세요
                 </h5>
-                <input id="drugstoreName" type="text" />
+                <input id="drugstoreName" type="text" value={drugstoreName} />
               </td>
               <td style={{ width: "280px" }}>
                 {" "}
                 <h5>
                   <span>*</span> 전화번호를 입력해주세요
                 </h5>
-                <input id="drugstoreTel" type="text" />
+                <input id="drugstoreTel" type="text" value={drugstoreTel} />
               </td>
             </tr>
             <tr>
@@ -530,7 +561,7 @@ const ProfileEditList = ({ type, title }) => {
                   className="member_addr_main"
                   type="text"
                   style={{ width: "500px" }}
-                  value={mainAddress}
+                  value={type === "drugstore" ? drugstoreAddrMain : mainAddress}
                   readOnly
                 />
                 <button
@@ -554,18 +585,32 @@ const ProfileEditList = ({ type, title }) => {
                   type="text"
                   id="addr_detail"
                   className="member_addr_detail"
-                  value={detailAddress}
-                  onChange={(e) => setDetailAddress(e.target.value)}
+                  value={
+                    type === "drugstore" ? drugstoreAddrDetail : detailAddress
+                  }
+                  onChange={(e) => {
+                    if (type === "drugstore") {
+                      // drugstore의 경우에 상세주소 변경
+                      setDrugstoreAddrDetail(e.target.value);
+                    } else {
+                      // 그 외의 경우에는 detailAddress 변경
+                      setDetailAddress(e.target.value);
+                    }
+                  }}
                 />
               </td>
-              <td style={{ width: "280px" }}>
-                <h5>나머지주소</h5>
-                <input
-                  id="drugstoreAddrDetail"
-                  type="text"
-                  placeholder="나머지 주소를 입력해주세요"
-                />
-              </td>
+              {type === "drugstore" && (
+                <td style={{ width: "280px" }}>
+                  <h5>나머지주소</h5>
+                  <input
+                    id="drugstoreAddrSubdetail"
+                    type="text"
+                    placeholder="나머지 주소를 입력해주세요"
+                    value={drugstoreAddrSubdetail}
+                    onChange={(e) => setDrugstoreAddrSubdetail(e.target.value)}
+                  />
+                </td>
+              )}
             </tr>
           </table>
         </div>
@@ -612,6 +657,7 @@ const ProfileEditList = ({ type, title }) => {
                 resize: "none",
                 padding: "10px 0px 0px 10px",
               }}
+              value={drugstoreComments}
             ></textarea>
           </div>
         </div>
