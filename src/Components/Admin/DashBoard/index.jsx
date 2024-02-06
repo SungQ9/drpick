@@ -62,8 +62,8 @@ const AdminDashBoard = () => {
             fourthValue={`${newUserCntByYear}건`}
             fifthLabel={'의사 등록 요청'}
             fifthValue={`${doctorRequestCount}건`}
-            sixthLabel={"월 총 매출"}
-            sixthValue={`${totalSales.toLocaleString()}원`}
+            sixthLabel={'월 총 매출'}
+            // sixthValue={`${totalSales.toLocaleString()}원`}
           />
           <LineIndex />
         </div>

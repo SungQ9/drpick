@@ -16,7 +16,6 @@ import SelectPayment from './SelectPayment'; // 결제수단선택
 import AcceptComplete from './AcceptComplete'; // 접수완료
 import ClinicRoom from './ApplicationForm/ClinicRoom'; // 비대면 진료실
 import SelectPillsReceive from './SelectPillsReceive/index';
-import Video from './ApplicationForm/ClinicRoom/VideoChat';
 
 // 비대면 진료
 const Clinic = () => {

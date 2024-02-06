@@ -36,7 +36,7 @@ const medeicalhistory = [
   },
   {
     text: '결제수단',
-    value: 'transactionType',
+    value: 'reservationPayment',
   },
   {
     text: '상태',
@@ -59,7 +59,7 @@ const medeicalhistoryMypage = [
   },
   {
     text: '결제수단',
-    value: 'transactionType',
+    value: 'reservationPayment',
   },
 ];
 
