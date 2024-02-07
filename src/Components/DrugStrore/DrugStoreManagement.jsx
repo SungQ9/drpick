@@ -47,6 +47,7 @@ const DrugStoreManagement = () => {
         'http://localhost:8080/drugstores/getDrugstoreHistoryList',
         config,
       );
+
       setItems(response.data);
       setCurrentHeaders(headers.drugstoreReceive);
       setTitle('약주문목록');
