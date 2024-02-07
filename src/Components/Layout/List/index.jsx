@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CurrentList from './CurrentList';
 import SearchDate from '../SearchDate';
 
@@ -58,6 +58,10 @@ const List = ({
 
     setFilteredDateItems(filteredItems);
   };
+
+  useEffect(() => {
+    setFilteredDateItems(items);
+  }, [items]);
 
   // DatePicker가 있는 목록
   if (type === 'Date') {
