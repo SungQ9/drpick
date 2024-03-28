@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/drpick/static/css/main.22168ac1.css",
+    "main.js": "/drpick/static/js/main.88722783.js",
+    "static/js/787.9e98e836.chunk.js": "/drpick/static/js/787.9e98e836.chunk.js",
+    "static/media/panel-pill.png": "/drpick/static/media/panel-pill.1724613c7b3a08a19cec.png",
+    "static/media/panel-drugstore.png": "/drpick/static/media/panel-drugstore.5efc6a02ae2331072e39.png",
+    "static/media/panel-chat.png": "/drpick/static/media/panel-chat.bbba258810b1a6a7c7ed.png",
+    "static/media/logo.png": "/drpick/static/media/logo.8bc860d686966781c3aa.png",
+    "static/media/panel-hospital.png": "/drpick/static/media/panel-hospital.c731a01ca07bae475fcf.png",
+    "static/media/spinner.gif": "/drpick/static/media/spinner.905cd7f15743bc957d9e.gif",
+    "static/media/panel-doctor.png": "/drpick/static/media/panel-doctor.a81e9129558d1aa52412.png",
+    "static/media/pill-icon.png": "/drpick/static/media/pill-icon.81986617943e950e1ac9.png",
+    "index.html": "/drpick/index.html",
+    "main.22168ac1.css.map": "/drpick/static/css/main.22168ac1.css.map",
+    "main.88722783.js.map": "/drpick/static/js/main.88722783.js.map",
+    "787.9e98e836.chunk.js.map": "/drpick/static/js/787.9e98e836.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.22168ac1.css",
+    "static/js/main.88722783.js"
+  ]
+}
