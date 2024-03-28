@@ -8,7 +8,7 @@ import { BrowserRouter } from "react-router-dom";
 const root = createRoot(document.getElementById("root"));
 
 root.render(
-  <BrowserRouter basename={process.env.PUBLIC_URL}>
+  <BrowserRouter basename="drpick">
     <App />
   </BrowserRouter>,
   document.getElementById("root")
