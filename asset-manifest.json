@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/drpick/static/css/main.22168ac1.css",
-    "main.js": "/drpick/static/js/main.44f86e28.js",
+    "main.js": "/drpick/static/js/main.d2fd7a46.js",
     "static/js/787.9e98e836.chunk.js": "/drpick/static/js/787.9e98e836.chunk.js",
     "static/media/panel-pill.png": "/drpick/static/media/panel-pill.1724613c7b3a08a19cec.png",
     "static/media/panel-drugstore.png": "/drpick/static/media/panel-drugstore.5efc6a02ae2331072e39.png",
@@ -13,11 +13,11 @@
     "static/media/pill-icon.png": "/drpick/static/media/pill-icon.81986617943e950e1ac9.png",
     "index.html": "/drpick/index.html",
     "main.22168ac1.css.map": "/drpick/static/css/main.22168ac1.css.map",
-    "main.44f86e28.js.map": "/drpick/static/js/main.44f86e28.js.map",
+    "main.d2fd7a46.js.map": "/drpick/static/js/main.d2fd7a46.js.map",
     "787.9e98e836.chunk.js.map": "/drpick/static/js/787.9e98e836.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.22168ac1.css",
-    "static/js/main.44f86e28.js"
+    "static/js/main.d2fd7a46.js"
   ]
 }
